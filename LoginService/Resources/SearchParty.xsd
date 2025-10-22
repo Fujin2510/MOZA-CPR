@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            xmlns:tns="http://www.mozabank.org/SearchParty" targetNamespace="http://www.mozabank.org/SearchParty"
+            elementFormDefault="qualified" attributeFormDefault="unqualified" nxsd:version="JSON"
+            nxsd:encoding="US-ASCII">
+  <xsd:element name="Request" type="tns:RequestType"/>
+  <xsd:element name="Response" type="tns:dataType"/>
+  <xsd:complexType name="dataType">
+    <xsd:sequence>
+      <xsd:element name="data" type="tns:ResponseType"/>
+       </xsd:sequence>
+  </xsd:complexType>   
+  <!-- Request Type -->
+  <xsd:complexType name="RequestType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="referenceNo" type="xsd:string"/>
+      <xsd:element name="interfaceId" type="xsd:string"/>
+      <xsd:element name="entity" type="xsd:string"/>
+      <xsd:element name="headersMap" minOccurs="0" nillable="true"/>
+      <xsd:element name="queryMap" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="hostName" type="xsd:string"/>
+      <xsd:element name="partyId" type="xsd:string"/>
+      <xsd:element name="partyName" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="firstName" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="middleName" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="lastName" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="birthDate" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ResponseType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="referenceNo" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="result" type="tns:Result"/>
+      <xsd:element name="hasMore" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="totalRecords" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="startSequence" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="partyDetailsList" type="tns:PartyDetailsList" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Result">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="externalReferenceId" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="status" type="xsd:string"/>
+      <xsd:element name="errorList" maxOccurs="unbounded" minOccurs="0" nillable="true">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="code" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="message" type="xsd:string" minOccurs="0" nillable="true"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="warningList" type="xsd:string" minOccurs="0" nillable="true"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="PartyDetailsList">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="personalInfo" type="tns:PersonalInfo"/>
+      <xsd:element name="contactInfo" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="partyId" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="PersonalInfo">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="salutation" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="gender" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="firstName" type="xsd:string"/>
+      <xsd:element name="middleName" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="lastName" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="maritalStatus" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="birthDate" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="email" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="fullName" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="partyType" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="addressInfo" type="xsd:string" minOccurs="0" nillable="true"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

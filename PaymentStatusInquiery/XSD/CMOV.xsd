@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            targetNamespace="http://www.mozabanca.org/cmov"
+            xmlns="http://www.mozabanca.org/cmov"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            nxsd:version="JSON"
+            nxsd:encoding="UTF-8">
+
+  <!-- Root Elements -->
+  <xsd:element name="CMOVRequest" type="CMOVRequestType"/>
+  
+    <!-- Encoded Wrapper -->
+  <xsd:element name="CMOVEncodedRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="RequestString" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  
+  <xsd:element name="Response" type="CMOVResponseType"/>
+
+  <!-- Request Type -->
+  <xsd:complexType name="CMOVRequestType">
+    <xsd:sequence>
+      <xsd:element name="user" type="xsd:string"/>
+      <xsd:element name="password" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="origin" type="xsd:string"/>
+      <xsd:element name="channelCode" type="xsd:string"/>
+      <xsd:element name="version" type="xsd:string"/>
+      <xsd:element name="licenceKey" type="xsd:string"/>
+      <xsd:element name="sessionId" type="xsd:string"/>
+      <xsd:element name="transactionCode" type="xsd:string"/>
+      <xsd:element name="operationData" type="CMOVRequestOperationDataType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="CMOVRequestOperationDataType">
+    <xsd:sequence>
+      <xsd:element name="CMOV_I_0001" type="xsd:string"/>
+      <xsd:element name="CMOV_I_0002" type="xsd:string"/>
+      <xsd:element name="CMOV_I_0003" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="CMOV_I_0004" type="xsd:string"/>
+      <xsd:element name="CMOV_I_0005" type="xsd:string"/>
+      <xsd:element name="CMOV_I_0006" type="xsd:string" />
+      <xsd:element name="CMOV_I_0007" type="xsd:string"/>
+      <xsd:element name="CMOV_I_9998" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="CMOV_I_9999" type="xsd:string" minOccurs="0" nillable="true"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Response Type -->
+  <xsd:complexType name="CMOVResponseType">
+    <xsd:sequence>
+      <xsd:element name="transactionCode" type="xsd:string"/>
+      <xsd:element name="operationData" type="CMOVResponseOperationDataType"/>
+      <xsd:element name="channelOperationLogKey" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="coreLogKey" type="xsd:string"/>
+      <xsd:element name="coreCancelationCode" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="errorCode" type="xsd:string"/>
+      <xsd:element name="errorMessage">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="messages" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="layoutVersion" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="user" type="xsd:string"/>
+      <xsd:element name="password" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="station" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="licenceKey" type="xsd:string"/>
+      <xsd:element name="encryption" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="code" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="version" type="xsd:string"/>
+      <xsd:element name="sessionId" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="language" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="channelCode" type="xsd:string"/>
+      <xsd:element name="origin" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- OperationData -->
+  <xsd:complexType name="CMOVResponseOperationDataType">
+    <xsd:sequence>
+      <xsd:element name="CMOV_O_0001" type="xsd:string"/>
+      <xsd:element name="CMOV_O_0002" type="xsd:string"/>
+      <xsd:element name="CMOV_O_0003" type="xsd:string"/>
+      <xsd:element name="CMOV_O_0004" type="xsd:string"/>
+      <xsd:element name="CMOV_O_0005" type="xsd:string"/>
+      <xsd:element name="CMOV_O_00051" type="xsd:string"/>
+      <xsd:element name="CMOV_O_00052" type="xsd:string"/>
+      <xsd:element name="CMOV_O_0006" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="CMOV_O_0007" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="CMOV_O_00071" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="CMOV_O_00072" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="CMOV_O_0008" type="xsd:string"/>
+      <xsd:element name="CMOV_O_00081" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="CMOV_O_00082" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="CMOV_O_00083" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="CMOV_O_00084" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="CMOV_O_00085" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="CMOV_O_00086" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="CMOV_O_00087" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="CMOV_O_0009" type="xsd:string"/>
+      <xsd:element name="CMOV_O_0010" type="xsd:string"/>
+      <xsd:element name="CMOV_O_0011" type="CMOVDetailListType" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- List of Items -->
+  <xsd:complexType name="CMOVDetailListType">
+    <xsd:sequence>
+      <xsd:element name="CMOV_O_0011_0001" type="xsd:string"/>
+      <xsd:element name="CMOV_O_0011_00011" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="CMOV_O_0011_0002" type="xsd:string"/>
+      <xsd:element name="CMOV_O_0011_0003" type="xsd:string"/>
+      <xsd:element name="CMOV_O_0011_0004" type="xsd:string"/>
+      <xsd:element name="CMOV_O_0011_0005" type="xsd:string"/>
+      <xsd:element name="CMOV_O_0011_0006" type="xsd:string"/>
+      <xsd:element name="CMOV_O_0011_0007" type="xsd:string"/>
+      <xsd:element name="CMOV_O_0011_0008" type="xsd:string"/>
+      <xsd:element name="CMOV_O_0011_0009" type="xsd:string"/>
+      <xsd:element name="CMOV_O_0011_0010" type="xsd:string"/>
+      <xsd:element name="CMOV_O_0011_0011" type="xsd:string"/>
+      <xsd:element name="CMOV_O_0011_0012" type="xsd:string"/>
+      <xsd:element name="CMOV_O_0011_0013" type="xsd:string"/>
+      <xsd:element name="CMOV_O_0011_0014" type="xsd:string"/>
+      <xsd:element name="CMOV_O_0011_0015" type="xsd:string"/>
+      <xsd:element name="CMOV_O_0011_0016" type="xsd:string"/>
+      <xsd:element name="CMOV_O_0011_0017" type="xsd:string"/>
+      <xsd:element name="CMOV_O_0011_0018" type="xsd:string"/>
+      <xsd:element name="CMOV_O_0011_0019" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

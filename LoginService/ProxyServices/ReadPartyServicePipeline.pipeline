@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <con:coreEntry>
+        <con:binding type="Native REST" xsi:type="con:NativeRestBindingType"/>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:pipeline type="response" name="response-N3f57fed9.N43a28e75.0.196f125fe74.N7fff">
+            <con:stage id="_StageId-N3f57fed9.N43a28e75.0.196f125fe74.N7ffd" name="Stage1">
+                <con:context/>
+                <con:actions/>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="request-N3f57fed9.N43a28e75.0.196f125fe74.N8000">
+            <con:stage id="_StageId-N3f57fed9.N43a28e75.0.196f125fe74.N7ffe" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:wsCallout xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fed9.N43a28e75.0.196f125fe74.N7f2a</con2:id>
+                        <con1:service ref="AuthenticatorService/AuthenticatorBS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>Operation1</con1:operation>
+                        <con1:request>
+                            <con1:body wrapped="false">AuthenticatorRequest</con1:body>
+                            <con1:header/>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body wrapped="false">AuthenticatorResponse</con1:body>
+                            <con1:header/>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con2:log xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fed9.N43a28e75.0.196f125fe74.N7f29</con3:id>
+                                <con2:logLevel>debug</con2:logLevel>
+                                <con2:expr>
+                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body</con3:xqueryText>
+                                </con2:expr>
+                                <con2:message>BranchDate Request Received >>>>>>>>>>>>>>>>>>>>>>></con2:message>
+                            </con2:log>
+                            <con1:assign varName="AuthenticatorRequest">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fed9.N43a28e75.0.196f125fe74.N7f28</con2:id>
+                                <con1:expr>
+                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config"><![CDATA[<moz:Request xmlns:moz="http://www.mozabank.org">
+    <moz:username>channel_obdx_app</moz:username>
+    <moz:password>Moz@Random123#</moz:password>
+</moz:Request>]]></con:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:requestTransform>
+                        <con1:responseTransform>
+                            <con2:log xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fed9.N43a28e75.0.196f125fe74.N7f27</con3:id>
+                                <con2:logLevel>debug</con2:logLevel>
+                                <con2:expr>
+                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body</con3:xqueryText>
+                                </con2:expr>
+                                <con2:message>BranchDate Request Sent >>>>>>>>>>>>>>>>>>>>>>></con2:message>
+                            </con2:log>
+                            <con1:assign varName="AccessToken">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fed9.N43a28e75.0.196f125fe74.N7f26</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$AuthenticatorResponse/*:access_token</con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:responseTransform>
+                    </con1:wsCallout>
+                    <con1:javaScript xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-a6f8a21.N509fc658.7.196f172feb2.N8000</con2:id>
+                        <con1:script>process.partyId = process.body.partyId</con1:script>
+                    </con1:javaScript>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57fed9.N43a28e75.0.196f125fe74.N7eb0" name="Stage2">
+                <con:context/>
+                <con:actions>
+                    <con1:nxsdTranslation xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-a6f8a21.N509fc658.6.196f1605419.N8000</con2:id>
+                        <con1:type>Native-To-XML</con1:type>
+                        <con1:sourceExpr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$body/text()</con:xqueryText>
+                        </con1:sourceExpr>
+                        <con1:nxsd ref="LoginService/Resources/ReadParty"/>
+                        <con1:schemaElement xmlns:read="http://www.mozabank.org/ReadParty">read:Request</con1:schemaElement>
+                        <con1:assign-variable>ReadPartyXML</con1:assign-variable>
+                        <con1:enforceSchemaOrder>false</con1:enforceSchemaOrder>
+                    </con1:nxsdTranslation>
+                    <con1:wsCallout xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fed9.N43a28e75.0.196f125fe74.N7eaf</con2:id>
+                        <con1:service ref="LoginService/BusinessServices/LoginServicesBS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>Operation1</con1:operation>
+                        <con1:request>
+                            <con1:body wrapped="false">RestRefRequet</con1:body>
+                            <con1:header/>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body wrapped="false">RestRefResponse</con1:body>
+                            <con1:header/>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con1:assign varName="RestRefRequet">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fed9.N43a28e75.0.196f125fe74.N7eae</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">&lt;rest:input xmlns:rest="http://www.mozabank.org/nxsd/REST">
+    &lt;rest:user>{if($partyIdVar = '0000011') then 'aaugusto3' else $partyIdVar}&lt;/rest:user>
+&lt;/rest:input></con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                            <con4:transport-headers copy-all="false" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-N3f57fed9.N43a28e75.0.196f125fe74.N7ead</con2:id>
+                                <con3:header-set>outbound-request</con3:header-set>
+                                <con3:header value="expression" name="Authorization">
+                                    <con2:xqueryText>concat('Bearer ',$AccessToken)</con2:xqueryText>
+                                </con3:header>
+                            </con4:transport-headers>
+                        </con1:requestTransform>
+                        <con1:responseTransform>
+                            <con4:assign varName="ReadPartyResp" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-N3f57fed9.N43a28e75.0.196f125fe74.N7eac</con2:id>
+                                <con3:expr>
+                                    <con:xqueryTransform xmlns:con="http://www.bea.com/wli/sb/stages/config">
+                                        <con:resource ref="LoginService/Resources/ReadPartyResponse"/>
+                                        <con:param name="ReadPartyResp">
+                                            <con:path>$RestRefResponse</con:path>
+                                        </con:param>
+                                        <con:param name="partyId">
+                                            <con:path>$partyId</con:path>
+                                        </con:param>
+                                    </con:xqueryTransform>
+                                </con3:expr>
+                            </con4:assign>
+                            <con4:nxsdTranslation xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-N3f57fed9.N43a28e75.0.196f125fe74.N7eab</con2:id>
+                                <con3:type>XML-To-Native</con3:type>
+                                <con3:sourceExpr>
+                                    <con2:xqueryText>$ReadPartyResp</con2:xqueryText>
+                                </con3:sourceExpr>
+                                <con4:nxsd ref="LoginService/Resources/ReadParty"/>
+                                <con4:schemaElement xmlns:read="http://www.mozabank.org/ReadParty">read:Response</con4:schemaElement>
+                                <con4:replace-body-content/>
+                                <con3:enforceSchemaOrder>false</con3:enforceSchemaOrder>
+                            </con4:nxsdTranslation>
+                        </con1:responseTransform>
+                    </con1:wsCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="Pipeline Pair Node1">
+                <con:request>request-N3f57fed9.N43a28e75.0.196f125fe74.N8000</con:request>
+                <con:response>response-N3f57fed9.N43a28e75.0.196f125fe74.N7fff</con:response>
+            </con:pipeline-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

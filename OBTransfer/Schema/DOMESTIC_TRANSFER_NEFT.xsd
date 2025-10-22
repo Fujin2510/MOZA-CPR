@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            targetNamespace="http://www.mozabanca.org/DOMESTIC_TRANSFER_NEFT"
+            xmlns="http://www.mozabanca.org/DOMESTIC_TRANSFER_NEFT" elementFormDefault="qualified"
+            attributeFormDefault="unqualified" nxsd:version="JSON" nxsd:encoding="UTF-8">
+  <xsd:element name="Request" type="RequestType"/>
+  <xsd:element name="Response" type="ResponseType"/>
+  <xsd:complexType name="RequestType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="DictionaryArrayType" maxOccurs="unbounded" minOccurs="0"/>
+      <xsd:element name="referenceNo" type="xsd:string"/>
+      <xsd:element name="interfaceId" type="xsd:string"/>
+      <xsd:element name="entity" type="xsd:string"/>
+      <xsd:element name="headersMap">
+        <xsd:complexType/>
+      </xsd:element>
+      <xsd:element name="queryMap" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="hostName" type="xsd:string"/>
+      <xsd:element name="partyId" type="xsd:string"/>
+      <xsd:element name="debitAccountId" type="xsd:string"/>
+      <xsd:element name="amount" type="CurrencyAmountType"/>
+      <xsd:element name="paymentDate" type="xsd:string"/>
+      <xsd:element name="remarks" type="xsd:string"/>
+      <xsd:element name="purposeId" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="beneficiary" type="BeneficiaryType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="BeneficiaryType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="accountName" type="xsd:string"/>
+      <xsd:element name="accountId" type="xsd:string"/>
+      <xsd:element name="bankDetails" type="BankDetailsType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="BankDetailsType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="network" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="networkCode" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="bankName" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="branchName" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="address" type="xsd:string" minOccurs="0" nillable="true"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ResponseType">
+    <xsd:sequence>
+      <xsd:element name="data">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="referenceNo" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="result" type="ResultType"/>
+            <xsd:element name="hasMore" type="xsd:boolean" minOccurs="0" nillable="true"/>
+            <xsd:element name="totalRecords" type="xsd:int" minOccurs="0" nillable="true"/>
+            <xsd:element name="startSequence" type="xsd:int" minOccurs="0" nillable="true"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ResultType" nxsd:mapOrder="dictionaryArray externalReferenceId status errorList warningList">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:anyType" minOccurs="0"/>
+      <xsd:element name="externalReferenceId" type="xsd:string"/>
+      <xsd:element name="status" type="xsd:string"/>
+      <xsd:element name="errorList" nillable="true" minOccurs="0" maxOccurs="unbounded">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="code" type="xsd:string"/>
+            <xsd:element name="message" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="warningList" type="xsd:anyType" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="CurrencyAmountType">
+    <xsd:sequence>
+      <xsd:element name="currency" type="xsd:string"/>
+      <xsd:element name="amount" type="xsd:decimal"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="DictionaryArrayType">
+    <xsd:sequence>
+      <xsd:element name="nameValuePairArray" type="NameValuePairType" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="NameValuePairType">
+    <xsd:sequence>
+      <xsd:element name="name" type="xsd:string"/>
+      <xsd:element name="genericName" type="xsd:string"/>
+      <xsd:element name="value" type="xsd:string"/>
+      <xsd:element name="datatype" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

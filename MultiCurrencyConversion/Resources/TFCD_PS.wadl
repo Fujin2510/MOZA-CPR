@@ -1,0 +1,20 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://www.mozabanca.org/SELF_FX_CCY_TRANSFER" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="TFCD_PS">RestService</doc>
+   <grammars>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabanca.org/SELF_FX_CCY_TRANSFER" schemaLocation="../Schema/SELF_FX_CCY_TRANSFER.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/multicurrency">
+         <method name="POST" soa:wsdlOperation="Operation1">
+            <request>
+               <representation mediaType="application/json" element="cns:SELF_FX_CCY_TRANSFER_Request" xmlns:cns="http://www.mozabanca.org/SELF_FX_CCY_TRANSFER"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:SELF_FX_CCY_TRANSFER_Response" xmlns:cns="http://www.mozabanca.org/SELF_FX_CCY_TRANSFER"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

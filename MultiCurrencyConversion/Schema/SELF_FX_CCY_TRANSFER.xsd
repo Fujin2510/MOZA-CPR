@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            xmlns:tns="http://www.mozabanca.org/SELF_FX_CCY_TRANSFER"
+            targetNamespace="http://www.mozabanca.org/SELF_FX_CCY_TRANSFER"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            nxsd:version="JSON" nxsd:encoding="UTF-8">
+
+  <!-- Root Elements -->
+  <xsd:element name="SELF_FX_CCY_TRANSFER_Request" type="tns:SelfFXRequestType"/>
+  <xsd:element name="SELF_FX_CCY_TRANSFER_Response" type="tns:SelfFXResponseType"/>
+
+  <!-- Request Type -->
+  <xsd:complexType name="SelfFXRequestType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="referenceNo" type="xsd:string"/>
+      <xsd:element name="interfaceId" type="xsd:string"/>
+      <xsd:element name="entity" type="xsd:string"/>
+      <xsd:element name="headersMap">
+        <xsd:complexType/>
+      </xsd:element>
+      <xsd:element name="queryMap" minOccurs="0" nillable="true">
+        <xsd:complexType/>
+      </xsd:element>
+      <xsd:element name="hostName" type="xsd:string"/>
+      <xsd:element name="debitAccount" type="xsd:string"/>
+      <xsd:element name="creditAccount" type="xsd:string"/>
+      <xsd:element name="amount">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="currency" type="xsd:string"/>
+            <xsd:element name="amount" type="xsd:decimal"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="currency" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="confirmationStatus" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Response Type -->
+  <xsd:complexType name="SelfFXResponseType">
+        <xsd:sequence>
+            <xsd:element name="data">
+        <xsd:complexType>
+          <xsd:sequence>
+          <xsd:element name="errorList" nillable="true" minOccurs="0" maxOccurs="unbounded">
+        <xsd:complexType>
+          <xsd:sequence>
+             <xsd:element name="code" type="xsd:string"/>
+              <xsd:element name="message" type="xsd:string"/>
+          </xsd:sequence>
+      </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="confirmationStatus" type="xsd:string"/>
+      <xsd:element name="referenceNo" type="xsd:string"/>
+      <xsd:element name="finalValue" type="xsd:string"/>
+      <xsd:element name="exchangeRate" type="xsd:string"/>
+      <xsd:element name="totalExpenses" type="xsd:string"/>
+      <xsd:element name="opterationLiquidValue" type="xsd:string"/>
+      <xsd:element name="expenseValue" type="xsd:string"/>
+      <xsd:element name="instanceNumber" type="xsd:string"/>
+      <xsd:element name="debitAmount" type="xsd:string"/>
+      <xsd:element name="debitCurrency" type="xsd:string"/>
+      <xsd:element name="creditAmount" type="xsd:string"/>
+      <xsd:element name="creditCurrency" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:schema>
