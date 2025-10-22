@@ -1,0 +1,45 @@
+<endpoint name="ProxyService$CASA$ProxyServices$GetAllProductsCASA" xmlns="http://www.bea.com/wli/sb/context">
+  <service>
+    <operation>CASARead</operation>
+  </service>
+  <transport>
+    <uri>/CASA</uri>
+    <mode>request-response</mode>
+    <qualityOfService>best-effort</qualityOfService>
+    <request xsi:type="http:HttpRequestMetaData" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:http="http://www.bea.com/wli/sb/transports/http">
+      <headers xsi:type="http:HttpRequestHeaders" xmlns="http://www.bea.com/wli/sb/transports">
+        <user-header name="Cache-Control" value="max-age=259200"/>
+        <user-header name="Via" value="1.1 svdcpsqp01 (squid/4.13)"/>
+        <user-header name="X-Forwarded-For" value="10.111.138.2"/>
+        <user-header name="X_OBDX_SESSION_PARAM" value="UeYfYj53BZNwRIeXM5TOfIREQO07O5~aaugusto3~RETUSER1"/>
+        <Accept xmlns="http://www.bea.com/wli/sb/transports/http">*/*</Accept>
+        <Connection xmlns="http://www.bea.com/wli/sb/transports/http">keep-alive</Connection>
+        <Content-Length xmlns="http://www.bea.com/wli/sb/transports/http">255</Content-Length>
+        <Content-Type xmlns="http://www.bea.com/wli/sb/transports/http">application/json</Content-Type>
+        <Host xmlns="http://www.bea.com/wli/sb/transports/http">10.111.138.34:7002</Host>
+        <User-Agent xmlns="http://www.bea.com/wli/sb/transports/http">curl/7.61.1</User-Agent>
+      </headers>
+      <encoding xmlns="http://www.bea.com/wli/sb/transports">iso-8859-1</encoding>
+      <relative-URI xmlns="http://www.bea.com/wli/sb/transports/http">casa-read</relative-URI>
+      <absolute-URI xmlns="http://www.bea.com/wli/sb/transports/http">http://10.111.138.34:7002/CASA/casa-read</absolute-URI>
+      <client-host xmlns="http://www.bea.com/wli/sb/transports/http">proxy.mozabanco.co.mz</client-host>
+      <client-address xmlns="http://www.bea.com/wli/sb/transports/http">10.111.0.12</client-address>
+      <http-method xmlns="http://www.bea.com/wli/sb/transports/http">POST</http-method>
+    </request>
+    <response xsi:type="http:HttpResponseMetaData" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns:http="http://www.bea.com/wli/sb/transports/http">
+      <headers xsi:type="http:HttpResponseHeaders" xmlns="http://www.bea.com/wli/sb/transports">
+        <Content-Type xmlns="http://www.bea.com/wli/sb/transports/http">application/json</Content-Type>
+      </headers>
+      <response-code xmlns="http://www.bea.com/wli/sb/transports">0</response-code>
+    </response>
+  </transport>
+  <security>
+    <transportClient>
+      <username>
+        <anonymous/>
+      </username>
+    </transportClient>
+  </security>
+</endpoint>

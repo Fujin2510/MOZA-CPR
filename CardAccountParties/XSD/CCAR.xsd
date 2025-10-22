@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+              xmlns:tns="http://www.mozabank.org/CCARDebitCard"
+              targetNamespace="http://www.mozabank.org/CCARDebitCard" elementFormDefault="qualified"
+              attributeFormDefault="unqualified"  nxsd:version="JSON" nxsd:encoding="UTF-8">
+ 
+  <!-- Root Elements -->
+<xsd:element name="Request" type="tns:RequestType"/>
+  <xsd:element name="CCARRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="RequestString" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="Response" type="tns:ResponseType"/>
+ 
+  <!-- RequestType Definition -->
+<xsd:complexType name="RequestType">
+<xsd:sequence>
+<xsd:element name="user" type="xsd:string"/>
+<xsd:element name="password" type="xsd:string" minOccurs="0"/>
+<xsd:element name="origin" type="xsd:string"/>
+<xsd:element name="channelCode" type="xsd:string"/>
+<xsd:element name="version" type="xsd:string"/>
+<xsd:element name="licenceKey" type="xsd:string"/>
+<xsd:element name="sessionId" type="xsd:string"/>
+<xsd:element name="transactionCode" type="xsd:string"/>
+<xsd:element name="operationData" type="tns:OperationDataRequestType"/>
+      <xsd:element name="validation"/>
+    </xsd:sequence>
+</xsd:complexType>
+ 
+  <!-- operationData inside Request -->
+<xsd:complexType name="OperationDataRequestType">
+<xsd:sequence>
+<xsd:element name="CCAR_I_0001" type="xsd:string"/>
+<xsd:element name="CCAR_I_0002" type="xsd:string" minOccurs='0' nillable="true"/>
+<xsd:element name="CCAR_I_0003" type="xsd:string"/>
+<xsd:element name="CCAR_I_0004" type="xsd:string"/>
+<xsd:element name="CCAR_I_0007" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+ 
+  <!-- ResponseType Definition -->
+<xsd:complexType name="ResponseType">
+<xsd:sequence>
+<xsd:element name="transactionCode" type="xsd:string"/>
+<xsd:element name="operationData" type="tns:OperationDataResponseType"/>
+<xsd:element name="channelOperationLogKey" type="xsd:string" minOccurs="0"/>
+<xsd:element name="coreLogKey" type="xsd:string" minOccurs="0"/>
+<xsd:element name="coreCancelationCode" type="xsd:string" minOccurs="0"/>
+<xsd:element name="errorCode" type="xsd:integer"/>
+<xsd:element name="errorMessage" type="tns:ErrorMessageType"/>
+<xsd:element name="validation" type="xsd:string"/>
+<xsd:element name="layoutVersion" type="xsd:string" minOccurs="0"/>
+<xsd:element name="user" type="xsd:string"/>
+<xsd:element name="password" type="xsd:string" minOccurs="0"/>
+<xsd:element name="station" type="xsd:string" minOccurs="0"/>
+<xsd:element name="licenceKey" type="xsd:string"/>
+<xsd:element name="encryption" type="xsd:string" minOccurs="0"/>
+<xsd:element name="code" type="xsd:string"/>
+<xsd:element name="version" type="xsd:string"/>
+<xsd:element name="sessionId" type="xsd:string"/>
+<xsd:element name="language" type="xsd:string" minOccurs="0"/>
+<xsd:element name="channelCode" type="xsd:string"/>
+<xsd:element name="origin" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+ 
+  <!-- operationData inside Response -->
+<xsd:complexType name="OperationDataResponseType">
+<xsd:sequence>
+<xsd:element name="CCAR_O_0001" type="xsd:string"/>
+<xsd:element name="CCAR_O_0002" type="xsd:string"/>
+<xsd:element name="CCAR_O_0003" type="tns:CardType"  maxOccurs="unbounded"/>
+</xsd:sequence>
+</xsd:complexType>
+  
+ 
+  <!-- Each Card -->
+<xsd:complexType name="CardType">
+<xsd:sequence>
+<xsd:element name="CCAR_O_0003_0001" type="xsd:string"/>
+<xsd:element name="CCAR_O_0003_0002" type="xsd:string"/>
+<xsd:element name="CCAR_O_0003_0003" type="xsd:string"/>
+<xsd:element name="CCAR_O_0003_0004" type="xsd:string"/>
+<xsd:element name="CCAR_O_0003_0005" type="xsd:string" minOccurs="0" />
+<xsd:element name="CCAR_O_0003_0006" type="xsd:string"/>
+<xsd:element name="CCAR_O_0003_0007" type="xsd:string"/>
+<xsd:element name="CCAR_O_0003_0008" type="xsd:string"/>
+<xsd:element name="CCAR_O_0003_0009" type="xsd:string"/>
+<xsd:element name="CCAR_O_0003_0010" type="xsd:string"/>
+<xsd:element name="CCAR_O_0003_00101" type="xsd:string"/>
+<xsd:element name="CCAR_O_0003_0011" type="xsd:string"/>
+<xsd:element name="CCAR_O_0003_0012" type="xsd:string"/>
+<xsd:element name="CCAR_O_0003_0013" type="xsd:string"/>
+<xsd:element name="CCAR_O_0003_0014" type="xsd:string"/>
+<xsd:element name="CCAR_O_0003_0015" type="xsd:string"/>
+<xsd:element name="CCAR_O_0003_00151" type="xsd:string"/>
+<xsd:element name="CCAR_O_0003_0016" type="xsd:string"/>
+<xsd:element name="CCAR_O_0003_00161" type="xsd:string"/>
+<xsd:element name="CCAR_O_0003_0017" type="xsd:string"/>
+<xsd:element name="CCAR_O_0003_0018" type="xsd:string"/>
+<xsd:element name="CCAR_O_0003_0019" type="xsd:string"/>
+<xsd:element name="CCAR_O_0003_0020" type="xsd:string"/>
+<xsd:element name="CCAR_O_0003_0021" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+ 
+  <!-- ErrorMessage -->
+<xsd:complexType name="ErrorMessageType">
+<xsd:sequence>
+<xsd:element name="messages" minOccurs="0" maxOccurs="unbounded" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+ 
+</xsd:schema>

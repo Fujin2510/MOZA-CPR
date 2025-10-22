@@ -1,0 +1,279 @@
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://msb.mozabanco.co.mz" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="UnidadesOrganicas" targetNamespace="http://msb.mozabanco.co.mz">
+<wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://msb.mozabanco.co.mz" elementFormDefault="unqualified" targetNamespace="http://msb.mozabanco.co.mz" version="1.0">
+<xs:element name="ConsultarUnidadesNegocio" type="tns:ConsultarUnidadesNegocio"/>
+<xs:element name="ConsultarUnidadesNegocioResponse" type="tns:ConsultarUnidadesNegocioResponse"/>
+<xs:element name="ConsultarUnidadesNegocioRetalho" type="tns:ConsultarUnidadesNegocioRetalho"/>
+<xs:element name="ConsultarUnidadesNegocioRetalhoResponse" type="tns:ConsultarUnidadesNegocioRetalhoResponse"/>
+<xs:element name="ConsultarUnidadesOrganicas" type="tns:ConsultarUnidadesOrganicas"/>
+<xs:element name="ConsultarUnidadesOrganicasResponse" type="tns:ConsultarUnidadesOrganicasResponse"/>
+<xs:complexType name="ConsultarUnidadesOrganicas">
+<xs:sequence>
+<xs:element minOccurs="0" name="input" type="tns:consultaUnidadeOrganicaInput"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="consultaUnidadeOrganicaInput">
+<xs:complexContent>
+<xs:extension base="tns:serviceInput">
+<xs:sequence>
+<xs:element minOccurs="0" name="codigoUnidadeOrganica" type="xs:string"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="serviceInput">
+<xs:sequence>
+<xs:element minOccurs="0" name="chaveConfirmacao" type="tns:chaveConfirmacao"/>
+<xs:element minOccurs="0" name="sessao" type="tns:serviceSession"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="chaveConfirmacao">
+<xs:sequence>
+<xs:element minOccurs="0" name="chave" type="xs:string"/>
+<xs:element minOccurs="0" name="posicoes" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="serviceSession">
+<xs:sequence>
+<xs:element minOccurs="0" name="id" type="xs:string"/>
+<xs:element minOccurs="0" name="versao" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ConsultarUnidadesOrganicasResponse">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="output" type="tns:consultaUnidadesOrganicasOutput"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="consultaUnidadesOrganicasOutput">
+<xs:complexContent>
+<xs:extension base="tns:serviceOutput">
+<xs:sequence>
+<xs:element minOccurs="0" name="unidadesOrganicas" type="tns:unidadesOrganicas"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="serviceOutput">
+<xs:sequence>
+<xs:element minOccurs="0" name="sessao" type="tns:serviceSession"/>
+<xs:element minOccurs="0" name="status" type="tns:serviceStatus"/>
+<xs:element minOccurs="0" name="transactionId" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="unidadesOrganicas">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="unidadeOrganica" nillable="true" type="tns:unidadeOrganica"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="unidadeOrganica">
+<xs:sequence>
+<xs:element name="codigo" type="xs:int"/>
+<xs:element minOccurs="0" name="codigoEstrutura" type="xs:string"/>
+<xs:element name="codigoModelo" type="xs:int"/>
+<xs:element minOccurs="0" name="codigoModeloOrganizativo" type="xs:string"/>
+<xs:element name="codigoRegiao" type="xs:int"/>
+<xs:element name="codigoSegmento" type="xs:int"/>
+<xs:element minOccurs="0" name="descricao" type="xs:string"/>
+<xs:element minOccurs="0" name="estadoActividade" type="xs:string"/>
+<xs:element minOccurs="0" name="estrutura" type="xs:string"/>
+<xs:element minOccurs="0" name="modelo" type="xs:string"/>
+<xs:element minOccurs="0" name="nivelOrganizacional" type="xs:string"/>
+<xs:element minOccurs="0" name="nome" type="xs:string"/>
+<xs:element minOccurs="0" name="regiao" type="xs:string"/>
+<xs:element minOccurs="0" name="segmento" type="xs:string"/>
+<xs:element name="unidadeParente" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="serviceStatus">
+<xs:sequence>
+<xs:element name="codigo" type="xs:int"/>
+<xs:element minOccurs="0" name="detalhes" type="tns:serviceStatusDetailList"/>
+<xs:element minOccurs="0" name="executado" type="xs:string"/>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="mensagens" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="serviceStatusDetailList">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="detalhe" nillable="true" type="tns:serviceStatusDetail"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="serviceStatusDetail">
+<xs:sequence>
+<xs:element minOccurs="0" name="causa" type="xs:string"/>
+<xs:element minOccurs="0" name="codigo" type="xs:string"/>
+<xs:element minOccurs="0" name="mensagem" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ConsultarUnidadesNegocioRetalho">
+<xs:sequence>
+<xs:element minOccurs="0" name="input" type="tns:consultaUnidadesNegocioRetalhoInput"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="consultaUnidadesNegocioRetalhoInput">
+<xs:complexContent>
+<xs:extension base="tns:serviceInput">
+<xs:sequence>
+<xs:element minOccurs="0" name="codBalcao" type="xs:int"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="ConsultarUnidadesNegocioRetalhoResponse">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="output" type="tns:consultaUnidadesNegocioRetalhoOutput"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="consultaUnidadesNegocioRetalhoOutput">
+<xs:complexContent>
+<xs:extension base="tns:serviceOutput">
+<xs:sequence>
+<xs:element minOccurs="0" name="unidadesNegocio" type="tns:unidadesNegocioRetalho"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="unidadesNegocioRetalho">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="unidadeNegocio" nillable="true" type="tns:unidadeNegocioRetalho"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="unidadeNegocioRetalho">
+<xs:complexContent>
+<xs:extension base="tns:unidadeOrganica">
+<xs:sequence>
+<xs:element minOccurs="0" name="codigoPostal" type="xs:string"/>
+<xs:element minOccurs="0" name="contactoGerente" type="xs:string"/>
+<xs:element minOccurs="0" name="contactoSubGerente" type="xs:string"/>
+<xs:element minOccurs="0" name="coordenada" type="xs:string"/>
+<xs:element minOccurs="0" name="email" type="xs:string"/>
+<xs:element minOccurs="0" name="fax" type="xs:string"/>
+<xs:element minOccurs="0" name="gerente" type="xs:string"/>
+<xs:element minOccurs="0" name="horario" type="xs:string"/>
+<xs:element minOccurs="0" name="morada" type="xs:string"/>
+<xs:element minOccurs="0" name="municipio" type="xs:string"/>
+<xs:element minOccurs="0" name="subGerente" type="xs:string"/>
+<xs:element minOccurs="0" name="telefone" type="xs:string"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="ConsultarUnidadesNegocio">
+<xs:sequence>
+<xs:element minOccurs="0" name="input" type="tns:consultaUnidadesNegocioInput"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="consultaUnidadesNegocioInput">
+<xs:complexContent>
+<xs:extension base="tns:serviceInput">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="ConsultarUnidadesNegocioResponse">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="output" type="tns:consultaUnidadesNegocioOutput"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="consultaUnidadesNegocioOutput">
+<xs:complexContent>
+<xs:extension base="tns:serviceOutput">
+<xs:sequence>
+<xs:element minOccurs="0" name="unidadesNegocio" type="tns:unidadesNegocio"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="unidadesNegocio">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="unidadeNegocio" nillable="true" type="tns:unidadeNegocio"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="unidadeNegocio">
+<xs:complexContent>
+<xs:extension base="tns:unidadeOrganica">
+<xs:sequence>
+<xs:element minOccurs="0" name="codigoPostal" type="xs:string"/>
+<xs:element minOccurs="0" name="contactoResponsavel" type="xs:string"/>
+<xs:element minOccurs="0" name="coordenada" type="xs:string"/>
+<xs:element minOccurs="0" name="email" type="xs:string"/>
+<xs:element minOccurs="0" name="fax" type="xs:string"/>
+<xs:element minOccurs="0" name="funcaoResponsavel" type="xs:string"/>
+<xs:element minOccurs="0" name="horario" type="xs:string"/>
+<xs:element minOccurs="0" name="morada" type="xs:string"/>
+<xs:element minOccurs="0" name="municipio" type="xs:string"/>
+<xs:element minOccurs="0" name="nomeResponsavel" type="xs:string"/>
+<xs:element minOccurs="0" name="telefone" type="xs:string"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+</xs:schema>
+</wsdl:types>
+<wsdl:message name="ConsultarUnidadesNegocioRetalhoResponse">
+<wsdl:part element="tns:ConsultarUnidadesNegocioRetalhoResponse" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="ConsultarUnidadesOrganicas">
+<wsdl:part element="tns:ConsultarUnidadesOrganicas" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="ConsultarUnidadesNegocioRetalho">
+<wsdl:part element="tns:ConsultarUnidadesNegocioRetalho" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="ConsultarUnidadesNegocioResponse">
+<wsdl:part element="tns:ConsultarUnidadesNegocioResponse" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="ConsultarUnidadesOrganicasResponse">
+<wsdl:part element="tns:ConsultarUnidadesOrganicasResponse" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="ConsultarUnidadesNegocio">
+<wsdl:part element="tns:ConsultarUnidadesNegocio" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:portType name="UnidadesOrganicas">
+<wsdl:operation name="ConsultarUnidadesOrganicas">
+<wsdl:input message="tns:ConsultarUnidadesOrganicas" name="ConsultarUnidadesOrganicas"> </wsdl:input>
+<wsdl:output message="tns:ConsultarUnidadesOrganicasResponse" name="ConsultarUnidadesOrganicasResponse"> </wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="ConsultarUnidadesNegocioRetalho">
+<wsdl:input message="tns:ConsultarUnidadesNegocioRetalho" name="ConsultarUnidadesNegocioRetalho"> </wsdl:input>
+<wsdl:output message="tns:ConsultarUnidadesNegocioRetalhoResponse" name="ConsultarUnidadesNegocioRetalhoResponse"> </wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="ConsultarUnidadesNegocio">
+<wsdl:input message="tns:ConsultarUnidadesNegocio" name="ConsultarUnidadesNegocio"> </wsdl:input>
+<wsdl:output message="tns:ConsultarUnidadesNegocioResponse" name="ConsultarUnidadesNegocioResponse"> </wsdl:output>
+</wsdl:operation>
+</wsdl:portType>
+<wsdl:binding name="UnidadesOrganicasSoapBinding" type="tns:UnidadesOrganicas">
+<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+<wsdl:operation name="ConsultarUnidadesOrganicas">
+<soap:operation soapAction="" style="document"/>
+<wsdl:input name="ConsultarUnidadesOrganicas">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="ConsultarUnidadesOrganicasResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="ConsultarUnidadesNegocioRetalho">
+<soap:operation soapAction="" style="document"/>
+<wsdl:input name="ConsultarUnidadesNegocioRetalho">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="ConsultarUnidadesNegocioRetalhoResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="ConsultarUnidadesNegocio">
+<soap:operation soapAction="" style="document"/>
+<wsdl:input name="ConsultarUnidadesNegocio">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="ConsultarUnidadesNegocioResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:service name="UnidadesOrganicas">
+<wsdl:port binding="tns:UnidadesOrganicasSoapBinding" name="UnidadesOrganicasPort">
+<soap:address location="http://svdcpmwd02:9084/MozaServiceBus/UnOrganicaGea/UnidadesOrganicas"/>
+</wsdl:port>
+</wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd" 
+              targetNamespace="http://www.mozabank.org/bankadate" 
+              xmlns="http://www.mozabank.org/bankadate" 
+              elementFormDefault="qualified"
+              attributeFormDefault="unqualified" nxsd:version="NXSD" nxsd:encoding="US-ASCII"> 
+  <xsd:element name="Response">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="status" type="xsd:string"/>
+        <xsd:element name="message" type="xsd:string"/>
+        <xsd:element name="data">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="businessValueDate" type="xsd:string"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element> 
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>
