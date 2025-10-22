@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="SessionParams/QuerySessionParams"/>
+            <con:binding>
+                <con:name>execute_bind</con:name>
+                <con:namespace>http://xmlns.oracle.com/ServiceBusApplication31/SessionParams/QuerySessionParams</con:namespace>
+            </con:binding>
+        </con:binding>
+        <oper:operations xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations">
+            <oper:monitoring enabled="true" level="service" aggregationInterval="1440"/>
+        </oper:operations>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:pipeline type="request" name="request-N3f57e23e.N47b5fcf.0.1978792b831.N7f8c">
+            <con:stage id="_StageId-N3f57e23e.N47b5fcf.0.1978792b831.N7f8a" name="Stage1">
+                <con:context/>
+                <con:actions/>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57e23e.N47b5fcf.0.1978792b831.N7f8b">
+            <con:stage id="_StageId-N3f57e23e.N47b5fcf.0.1978792b831.N7f89" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57e23e.N47b5fcf.0.1978792b831.N7f23</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="SessionParams/Resources/SessionDataResponse"/>
+                                <con2:param name="Resp">
+                                    <con2:path>$body/*</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="Pipeline Pair Node1">
+                <con:request>request-N3f57e23e.N47b5fcf.0.1978792b831.N7f8c</con:request>
+                <con:response>response-N3f57e23e.N47b5fcf.0.1978792b831.N7f8b</con:response>
+            </con:pipeline-node>
+            <con:route-node name="RouteNode1" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                <con:context>
+                    <con2:userNsDecl prefix="ses" namespace="http://www.mozabank.org/sessionprocess"/>
+                </con:context>
+                <con:actions>
+                    <con1:route>
+                        <con2:id>_ActionId-N3f57e23e.N47b5fcf.0.1978792b831.N7f8d</con2:id>
+                        <con1:service ref="SessionParams/QuerySessions" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>QuerySessionsSelect</con1:operation>
+                        <con1:outboundTransform>
+                            <con3:replace varName="body" contents-only="true" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-N3f57fff9.N1fd20bee.0.197d0bc1796.N7fce</con2:id>
+                                <con3:expr>
+                                    <con2:xqueryText>&lt;quer:QuerySessionsSelect_partyIdInputParameters 	xmlns:quer="http://xmlns.oracle.com/pcbpel/adapter/db/top/QuerySessions">
+&lt;quer:partyId>{fn:data($body/ses:Query/ses:QueryParam)}&lt;/quer:partyId>
+&lt;/quer:QuerySessionsSelect_partyIdInputParameters></con2:xqueryText>
+                                </con3:expr>
+                            </con3:replace>
+                        </con1:outboundTransform>
+                        <con1:responseTransform/>
+                    </con1:route>
+                </con:actions>
+            </con:route-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>
