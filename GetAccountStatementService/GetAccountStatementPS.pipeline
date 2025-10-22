@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="GetAccountStatementService/Resources/GetAccountStatementPS"/>
+            <con:binding>
+                <con:name>GetAccountStatementPS_ptt-binding</con:name>
+                <con:namespace>http://xmlns.oracle.com/ServiceBusApplication/GetAccountStatementService/GetAccountStatementPS</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:pipeline type="request" name="request-N3f57ffd2.4ca64298.0.196e8d12b4b.N7ff5">
+            <con:stage id="_StageId-N3f57ffd2.4ca64298.0.196e8d12b4b.N7ff3" name="Stage1">
+                <con:context/>
+                <con:actions/>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57ffd2.4ca64298.0.196e8d12b4b.N7ff4">
+            <con:stage id="_StageId-N3f57ffd2.4ca64298.0.196e8d12b4b.N7ff2" name="Stage1">
+                <con:context/>
+                <con:actions/>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="Pipeline Pair Node1">
+                <con:request>request-N3f57ffd2.4ca64298.0.196e8d12b4b.N7ff5</con:request>
+                <con:response>response-N3f57ffd2.4ca64298.0.196e8d12b4b.N7ff4</con:response>
+            </con:pipeline-node>
+            <con:route-node name="RouteNode1">
+                <con:context/>
+                <con:actions>
+                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffd2.4ca64298.0.196e8d12b4b.N7fed</con2:id>
+                        <con1:service ref="GetAccountStatementService/GetAccountStatementBS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:outboundTransform/>
+                        <con1:responseTransform/>
+                    </con1:route>
+                </con:actions>
+            </con:route-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

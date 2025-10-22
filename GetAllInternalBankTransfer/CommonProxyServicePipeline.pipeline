@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config">
+    <con:coreEntry>
+        <con:binding type="Any XML"/>
+        <oper:operations xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations">
+            <oper:monitoring enabled="true" level="service" aggregationInterval="1440"/>
+        </oper:operations>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router/>
+</con:pipelineEntry>
