@@ -1,0 +1,1569 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="LoanDetails/Resources/LoanScheduleDetails"/>
+            <con:binding>
+                <con:name>LoanScheduleDetails_ptt-binding</con:name>
+                <con:namespace>http://xmlns.oracle.com/MozaApplication/LoanDetails/LoanScheduleDetails</con:namespace>
+            </con:binding>
+        </con:binding>
+        <oper:operations xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations">
+            <oper:monitoring enabled="true" level="service" aggregationInterval="1440"/>
+        </oper:operations>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router errorHandler="error-a30598e.69b73a2b.0.197d93ae059.N7120">
+        <con:pipeline type="error" name="error-a30598e.69b73a2b.0.197d93ae059.N701e">
+            <con:stage id="_StageId-a30598e.69b73a2b.0.197d93ae059.N701d" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:Error xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-a30598e.69b73a2b.0.197d93ae059.N701a</con2:id>
+                        <con1:errCode>OSB005</con1:errCode>
+                    </con1:Error>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="error-a30598e.69b73a2b.0.197d93ae059.N5ebb">
+            <con:stage id="_StageId-a30598e.69b73a2b.0.197d93ae059.N5eba" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:Error xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-a30598e.69b73a2b.0.197d93ae059.N5eb7</con2:id>
+                        <con1:errCode>OSB002</con1:errCode>
+                    </con1:Error>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57fff8.N29c7c34f.0.19753cf9ac0.N7e85">
+            <con:stage id="_StageId-N3f57fff8.N29c7c34f.0.19753cf9ac0.N7e84" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:assign varName="CPFCObjectsResponse" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N29c7c34f.0.19753cf9ac0.N7e83</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">&lt;CPFCResponse xmlns="http://www.mozabank.org/CAPD">
+&lt;/CPFCResponse></con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="LoanCPFCRequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N29c7c34f.0.19753cf9ac0.N7e81</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="LoanDetails/Resources/LoanFetch/CCCRToCPFC_Request"/>
+                                <con2:param name="Request">
+                                    <con2:path>$CCCRResponse</con2:path>
+                                </con2:param>
+                                <con2:param name="accountIdVar">
+                                    <con2:path>fn:data($InitialRequest/*:loanAccountId)</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:nxsdTranslation xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N29c7c34f.0.19753cf9ac0.N7e80</con2:id>
+                        <con1:type>XML-To-Native</con1:type>
+                        <con1:sourceExpr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$LoanCPFCRequest</con2:xqueryText>
+                        </con1:sourceExpr>
+                        <con1:nxsd ref="LoanGetAllProducts/Resources/Schema/CPFC"/>
+                        <con1:schemaElement xmlns:cpfc="http://www.mozabanca.org/cpfc">cpfc:CPFCRequest</con1:schemaElement>
+                        <con1:assign-variable>LoanCPFCRequest_Bin</con1:assign-variable>
+                    </con1:nxsdTranslation>
+                    <con1:assign varName="LoanCPFCReq" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N29c7c34f.0.19753cf9ac0.N7e7f</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn-bea:binary-to-text($LoanCPFCRequest_Bin[@ref],$text)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="LoanCPFCRequestJSON" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.2d1b78fc.0.197593904fe.N7ffe</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn:replace($LoanCPFCReq,'null','""')</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:javaCallout varName="LoanCPFCRequestEncoded" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N29c7c34f.0.19753cf9ac0.N7e7e</con2:id>
+                        <con1:archive ref="DebitCardList/Resources/JsonToStringUrl"/>
+                        <con1:className>demo.MainClass</con1:className>
+                        <con1:method>public static java.lang.String encodeJsonToRequestParam(java.lang.String)</con1:method>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$LoanCPFCRequestJSON</con2:xqueryText>
+                        </con1:expr>
+                        <con1:return-param-as-ref>false</con1:return-param-as-ref>
+                    </con1:javaCallout>
+                    <con1:wsCallout xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N29c7c34f.0.19753cf9ac0.N7e7d</con2:id>
+                        <con1:service ref="LoanGetAllProducts/CPFC-BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>CPFC</con1:operation>
+                        <con1:request>
+                            <con1:body wrapped="false">CPFC_Request</con1:body>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body wrapped="false">CPFC_Response</con1:body>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con2:report xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57e065.25baaae9.0.1986532e082.N7a9c</con3:id>
+                                <con2:expr>
+                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat(fn:current-dateTime(),' | UUID :',$UUID,' | ',fn-bea:serialize($body))</con3:xqueryText>
+                                </con2:expr>
+                                <con2:labels>
+                                    <con2:key>MSB - request from CPFC</con2:key>
+                                    <con2:varName>body</con2:varName>
+                                    <con2:value>
+                                        <con3:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">./text()</con3:xpathText>
+                                    </con2:value>
+                                </con2:labels>
+                            </con2:report>
+                            <con1:assign varName="CPFC_Request">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N29c7c34f.0.19753cf9ac0.N7e7c</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">&lt;CPFCEncodedRequest  xmlns="http://www.mozabanca.org/cpfc">
+  &lt;RequestString>{$LoanCPFCRequestEncoded}&lt;/RequestString>
+&lt;/CPFCEncodedRequest></con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                            <con3:transport-headers xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N29c7c34f.0.19753cf9ac0.N7e7b</con4:id>
+                                <con2:header-set>outbound-request</con2:header-set>
+                                <con2:header value="expression" name="Authorization">
+                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat('Bearer ',$AccessToken)</con3:xqueryText>
+                                </con2:header>
+                            </con3:transport-headers>
+                        </con1:requestTransform>
+                        <con1:responseTransform>
+                            <con1:insert varName="CPFCObjectsResponse">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N29c7c34f.0.19753cf9ac0.N7e7a</con2:id>
+                                <con1:location>
+                                    <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+                                </con1:location>
+                                <con1:where>last-child</con1:where>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$CPFC_Response/*:operationData</con2:xqueryText>
+                                </con1:expr>
+                            </con1:insert>
+                            <con2:report xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57e065.25baaae9.0.1986532e082.N7a9a</con3:id>
+                                <con2:expr>
+                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat(fn:current-dateTime(),' | UUID :',$UUID,' | ',fn-bea:serialize($body))</con3:xqueryText>
+                                </con2:expr>
+                                <con2:labels>
+                                    <con2:key>MSB - response from CPFC</con2:key>
+                                    <con2:varName>body</con2:varName>
+                                    <con2:value>
+                                        <con3:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">./text()</con3:xpathText>
+                                    </con2:value>
+                                </con2:labels>
+                            </con2:report>
+                        </con1:responseTransform>
+                    </con1:wsCallout>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57fff8.N29c7c34f.0.19753cf9ac0.N7e79" name="Stage2">
+                <con:context/>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N29c7c34f.0.19753cf9ac0.N7e78</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="LoanDetails/Resources/LSD_Response"/>
+                                <con2:param name="Response-LSD">
+                                    <con2:path>$CCCRResponse</con2:path>
+                                </con2:param>
+                                <con2:param name="ResponseCPFC">
+                                    <con2:path>$CPFC_Response</con2:path>
+                                </con2:param>
+                                <con2:param name="loanAccountVar">
+                                    <con2:path>fn:data($InitialRequest/*:loanAccountId)</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57fff8.423ad1d1.0.1974e5c8c15.N7f18">
+            <con:stage id="_StageId-N3f57fff8.24565a45.0.1995cf122ba.N7e0d" name="Stage1">
+                <con:context>
+                    <con1:userNsDecl prefix="loan" namespace="http://www.mozabank.org/LoanAccountFetch" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.24565a45.0.1995cf122ba.N7e0c</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="LoanDetails/Resources/LoanFetch/LAC-CCCR-CPFC_Response"/>
+                                <con2:param name="CccrResponse">
+                                    <con2:path>$CCCRResponse</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                    <con1:ifThenElse xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.24565a45.0.1995cf122ba.N7e0b</con2:id>
+                        <con1:case id="_BranchId-N3f57fff8.24565a45.0.1995cf122ba.N7e0a">
+                            <con1:condition>
+                                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn:data($CCCRResponse/*:errorCode) != '0'</con2:xqueryText>
+                            </con1:condition>
+                            <con1:actions>
+                                <con2:reply isError="false" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                    <con2:id>_ActionId-N3f57fff8.24565a45.0.1995cf122ba.N7e09</con2:id>
+                                </con2:reply>
+                            </con1:actions>
+                        </con1:case>
+                        <con1:default/>
+                    </con1:ifThenElse>
+                    <con1:foreach xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.24565a45.0.1995cf122ba.N7e08</con2:id>
+                        <con1:variable>CCCRResponse</con1:variable>
+                        <con1:expression>
+                            <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">./*:operationData/*:CCCR_O_0003</con2:xpathText>
+                        </con1:expression>
+                        <con1:value-variable>data</con1:value-variable>
+                        <con1:index-variable>index</con1:index-variable>
+                        <con1:total-variable>count</con1:total-variable>
+                        <con1:actions>
+                            <con1:assign varName="LoanCPFCRequest">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.24565a45.0.1995cf122ba.N7e07</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                        <con2:resource ref="LoanDetails/Resources/LoanFetch/CCCRToCPFC_Request"/>
+                                        <con2:param name="Request">
+                                            <con2:path>$CCCRResponse</con2:path>
+                                        </con2:param>
+                                        <con2:param name="accountIdVar">
+                                            <con2:path>fn:data($data/*:CCCR_O_0003_0001)</con2:path>
+                                        </con2:param>
+                                    </con2:xqueryTransform>
+                                </con1:expr>
+                            </con1:assign>
+                            <con1:nxsdTranslation>
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.24565a45.0.1995cf122ba.N7e06</con2:id>
+                                <con1:type>XML-To-Native</con1:type>
+                                <con1:sourceExpr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$LoanCPFCRequest</con2:xqueryText>
+                                </con1:sourceExpr>
+                                <con1:nxsd ref="LoanGetAllProducts/Resources/Schema/CPFC"/>
+                                <con1:schemaElement xmlns:cpfc="http://www.mozabanca.org/cpfc">cpfc:CPFCRequest</con1:schemaElement>
+                                <con1:assign-variable>LoanCPFCRequest_Bin</con1:assign-variable>
+                                <con1:enforceSchemaOrder>false</con1:enforceSchemaOrder>
+                            </con1:nxsdTranslation>
+                            <con1:assign varName="LoanCPFCReq">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.24565a45.0.1995cf122ba.N7e05</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn-bea:binary-to-text($LoanCPFCRequest_Bin[@ref],$text)</con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                            <con1:assign varName="LoanCPFCRequest_JSON">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.24565a45.0.1995cf122ba.N7e04</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn:replace($LoanCPFCReq,'null','""')</con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                            <con1:javaCallout varName="LoanCPFCRequestEncoded">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.24565a45.0.1995cf122ba.N7e03</con2:id>
+                                <con1:archive ref="DebitCardList/Resources/JsonToStringUrl"/>
+                                <con1:className>demo.MainClass</con1:className>
+                                <con1:method>public static java.lang.String encodeJsonToRequestParam(java.lang.String)</con1:method>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$LoanCPFCRequest_JSON</con2:xqueryText>
+                                </con1:expr>
+                                <con1:return-param-as-ref>false</con1:return-param-as-ref>
+                            </con1:javaCallout>
+                            <con1:wsCallout>
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.24565a45.0.1995cf122ba.N7e02</con2:id>
+                                <con1:service ref="LoanGetAllProducts/CPFC-BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                <con1:operation>CPFC</con1:operation>
+                                <con1:request>
+                                    <con1:body wrapped="false">CPFC_Request</con1:body>
+                                    <con1:header/>
+                                </con1:request>
+                                <con1:response>
+                                    <con1:body wrapped="false">CPFC_Response</con1:body>
+                                    <con1:header/>
+                                </con1:response>
+                                <con1:requestTransform>
+                                    <con2:report xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                        <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.24565a45.0.1995cf122ba.N7e01</con3:id>
+                                        <con2:expr>
+                                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat(fn:current-dateTime(),' | UUID :',$UUID,' | ',fn-bea:serialize($body))</con3:xqueryText>
+                                        </con2:expr>
+                                        <con2:labels>
+                                            <con2:key>MSB - request from CPFC</con2:key>
+                                            <con2:varName>body</con2:varName>
+                                            <con2:value>
+                                                <con3:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">./text()</con3:xpathText>
+                                            </con2:value>
+                                        </con2:labels>
+                                    </con2:report>
+                                    <con1:assign varName="CPFC_Request">
+                                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.24565a45.0.1995cf122ba.N7e00</con2:id>
+                                        <con1:expr>
+                                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">&lt;CPFCEncodedRequest  xmlns="http://www.mozabanca.org/cpfc">
+  &lt;RequestString>{$LoanCPFCRequestEncoded}&lt;/RequestString>
+&lt;/CPFCEncodedRequest></con2:xqueryText>
+                                        </con1:expr>
+                                    </con1:assign>
+                                    <con3:transport-headers copy-all="false" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.24565a45.0.1995cf122ba.N7dff</con4:id>
+                                        <con2:header-set>outbound-request</con2:header-set>
+                                        <con2:header value="expression" name="Authorization">
+                                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat('Bearer ',$AccessToken)</con3:xqueryText>
+                                        </con2:header>
+                                    </con3:transport-headers>
+                                </con1:requestTransform>
+                                <con1:responseTransform>
+                                    <con1:insert varName="body">
+                                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.24565a45.0.1995cf122ba.N7dfe</con2:id>
+                                        <con1:location>
+                                            <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">./*:Response/*:data</con:xpathText>
+                                        </con1:location>
+                                        <con1:where>last-child</con1:where>
+                                        <con1:expr>
+                                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                                <con2:resource ref="LoanDetails/Resources/LoanFetch/loanAccounts_Response"/>
+                                                <con2:param name="CccrResponse">
+                                                    <con2:path>$data</con2:path>
+                                                </con2:param>
+                                                <con2:param name="CpfcResponse">
+                                                    <con2:path>$CPFC_Response</con2:path>
+                                                </con2:param>
+                                                <con2:param name="userIdVar">
+                                                    <con2:path>fn:data($InitialRequest/*:partyId)</con2:path>
+                                                </con2:param>
+                                            </con2:xqueryTransform>
+                                        </con1:expr>
+                                    </con1:insert>
+                                    <con2:report xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                        <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.24565a45.0.1995cf122ba.N7dfd</con3:id>
+                                        <con2:expr>
+                                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat(fn:current-dateTime(),' | UUID :',$UUID,' | ',fn-bea:serialize($body))</con3:xqueryText>
+                                        </con2:expr>
+                                        <con2:labels>
+                                            <con2:key>MSB - response from CPFC</con2:key>
+                                            <con2:varName>body</con2:varName>
+                                            <con2:value>
+                                                <con3:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">./text()</con3:xpathText>
+                                            </con2:value>
+                                        </con2:labels>
+                                    </con2:report>
+                                </con1:responseTransform>
+                            </con1:wsCallout>
+                        </con1:actions>
+                    </con1:foreach>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="request-N3f57fff8.N215a19e3.0.197532e34fc.N7de3">
+            <con:stage id="_StageId-N3f57fff8.N215a19e3.0.197532e34fc.N7de2" name="RequestParams3">
+                <con:context>
+                    <con1:userNsDecl prefix="loan" namespace="http://www.mozabank.org/LoanOutstandingDetails" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:assign varName="LoanCCCR-CCRDRequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N215a19e3.0.197532e34fc.N7de1</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="LoanDetails/Resources/LoanFetch/LAC-CCCR_Request"/>
+                                <con2:param name="UserIdVar">
+                                    <con2:path>fn:data($body/loan:LOAN_OUTSTANDING_DETAILSRequest/loan:partyId)</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:nxsdTranslation xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N215a19e3.0.197532e34fc.N7de0</con2:id>
+                        <con1:type>XML-To-Native</con1:type>
+                        <con1:sourceExpr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$LoanCCCR-CCRDRequest</con2:xqueryText>
+                        </con1:sourceExpr>
+                        <con1:nxsd ref="LoanGetAllProducts/Resources/Schema/CCCR-CCRD"/>
+                        <con1:schemaElement xmlns:cccr="http://www.mozabank.org/CCCR_CCRD">cccr:CCCRRequest</con1:schemaElement>
+                        <con1:assign-variable>LoanCCCR-CCRDRequestBin</con1:assign-variable>
+                    </con1:nxsdTranslation>
+                    <con1:assign varName="LoanCCCR-CCRDReq" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N215a19e3.0.197532e34fc.N7ddf</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn-bea:binary-to-text($LoanCCCR-CCRDRequestBin[@ref],$text)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="LoanCCCR-CCRDReqJSON" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N215a19e3.0.197532e34fc.N7dde</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn:replace($LoanCCCR-CCRDReq,'null','""')</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:javaCallout varName="LoanCCCR-CCRDJSONEncodedRequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N215a19e3.0.197532e34fc.N7ddd</con2:id>
+                        <con1:archive ref="DebitCardList/Resources/JsonToStringUrl"/>
+                        <con1:className>demo.MainClass</con1:className>
+                        <con1:method>public static java.lang.String encodeJsonToRequestParam(java.lang.String)</con1:method>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$LoanCCCR-CCRDReqJSON</con2:xqueryText>
+                        </con1:expr>
+                        <con1:return-param-as-ref>false</con1:return-param-as-ref>
+                    </con1:javaCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="request-N3f57fff8.423ad1d1.0.1974e5c8c15.N7f1f">
+            <con:stage id="_StageId-N3f57fff8.423ad1d1.0.1974e5c8c15.N7f1e" name="RequestParams3">
+                <con:context>
+                    <con1:userNsDecl prefix="loan" namespace="http://www.mozabank.org/LoanAccountFetch" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:assign varName="LoanCCCR-CCRDRequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.423ad1d1.0.1974e5c8c15.N7f1d</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="LoanDetails/Resources/LoanFetch/LAC-CCCR_Request"/>
+                                <con2:param name="UserIdVar">
+                                    <con2:path>fn:data($body/loan:Request/loan:partyId)</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:nxsdTranslation xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.423ad1d1.0.1974e5c8c15.N7f1c</con2:id>
+                        <con1:type>XML-To-Native</con1:type>
+                        <con1:sourceExpr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$LoanCCCR-CCRDRequest</con2:xqueryText>
+                        </con1:sourceExpr>
+                        <con1:nxsd ref="LoanGetAllProducts/Resources/Schema/CCCR-CCRD"/>
+                        <con1:schemaElement xmlns:cccr="http://www.mozabank.org/CCCR_CCRD">cccr:CCCRRequest</con1:schemaElement>
+                        <con1:assign-variable>LoanCCCR-CCRDRequestBin</con1:assign-variable>
+                    </con1:nxsdTranslation>
+                    <con1:assign varName="LoanCCCR-CCRDReq" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.423ad1d1.0.1974e5c8c15.N7f1b</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn-bea:binary-to-text($LoanCCCR-CCRDRequestBin[@ref],$text)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="LoanCCCR-CCRDReqJSON" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.423ad1d1.0.1974e5c8c15.N7f1a</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn:replace($LoanCCCR-CCRDReq,'null','""')</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:javaCallout varName="LoanCCCR-CCRDJSONEncodedRequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.423ad1d1.0.1974e5c8c15.N7f19</con2:id>
+                        <con1:archive ref="DebitCardList/Resources/JsonToStringUrl"/>
+                        <con1:className>demo.MainClass</con1:className>
+                        <con1:method>public static java.lang.String encodeJsonToRequestParam(java.lang.String)</con1:method>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$LoanCCCR-CCRDReqJSON</con2:xqueryText>
+                        </con1:expr>
+                        <con1:return-param-as-ref>false</con1:return-param-as-ref>
+                    </con1:javaCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="error-a30598e.69b73a2b.0.197d93ae059.N708b">
+            <con:stage id="_StageId-a30598e.69b73a2b.0.197d93ae059.N708a" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:Error xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-a30598e.69b73a2b.0.197d93ae059.N7087</con2:id>
+                        <con1:errCode>OSB001</con1:errCode>
+                    </con1:Error>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57fff8.26a170e8.0.19758689f90.N7dbd">
+            <con:stage id="_StageId-N3f57fff8.26a170e8.0.19758689f90.N7dbc" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:ifThenElse xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffd.N475e70ac.0.199759941dc.N7fe8</con2:id>
+                        <con1:case id="_BranchId-N3f57fffd.N475e70ac.0.199759941dc.N7fe7">
+                            <con1:condition>
+                                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$CCCRResponse/*:errorCode != '0'</con2:xqueryText>
+                            </con1:condition>
+                            <con1:actions>
+                                <con1:replace varName="body" contents-only="true" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                    <con2:id>_ActionId-N3f57fffd.N475e70ac.0.199759941dc.N7fb3</con2:id>
+                                    <con1:expr>
+                                        <con2:xqueryTransform>
+                                            <con2:resource ref="LoanDetails/Resources/LD_Error_Response"/>
+                                            <con2:param name="ResponseCccr">
+                                                <con2:path>$CCCRResponse</con2:path>
+                                            </con2:param>
+                                        </con2:xqueryTransform>
+                                    </con1:expr>
+                                </con1:replace>
+                                <con2:reply xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                    <con2:id>_ActionId-N3f57fffd.N475e70ac.0.199759941dc.N7f80</con2:id>
+                                </con2:reply>
+                            </con1:actions>
+                        </con1:case>
+                        <con1:default/>
+                    </con1:ifThenElse>
+                    <con1:assign varName="LoanCPFCRequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.26a170e8.0.19758689f90.N7dbb</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="LoanDetails/Resources/LD-CPFC_Request"/>
+                                <con2:param name="CpfcRequest">
+                                    <con2:path>$InitialRequest</con2:path>
+                                </con2:param>
+                                <con2:param name="userIdVar">
+                                    <con2:path>$userIdVar</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:nxsdTranslation xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.26a170e8.0.19758689f90.N7dba</con2:id>
+                        <con1:type>XML-To-Native</con1:type>
+                        <con1:sourceExpr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$LoanCPFCRequest</con2:xqueryText>
+                        </con1:sourceExpr>
+                        <con1:nxsd ref="LoanGetAllProducts/Resources/Schema/CPFC"/>
+                        <con1:schemaElement xmlns:cpfc="http://www.mozabanca.org/cpfc">cpfc:CPFCRequest</con1:schemaElement>
+                        <con1:assign-variable>LoanCPFCRequest_Bin</con1:assign-variable>
+                    </con1:nxsdTranslation>
+                    <con1:assign varName="LoanCPFCReq" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.26a170e8.0.19758689f90.N7db9</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn-bea:binary-to-text($LoanCPFCRequest_Bin[@ref],$text)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="LoanCPFCRequest_JSON" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.2d1b78fc.0.197593904fe.N7ff8</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn:replace($LoanCPFCReq,'null','""')</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:javaCallout varName="LoanCPFCRequestEncoded" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.26a170e8.0.19758689f90.N7db8</con2:id>
+                        <con1:archive ref="DebitCardList/Resources/JsonToStringUrl"/>
+                        <con1:className>demo.MainClass</con1:className>
+                        <con1:method>public static java.lang.String encodeJsonToRequestParam(java.lang.String)</con1:method>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$LoanCPFCRequest_JSON</con2:xqueryText>
+                        </con1:expr>
+                        <con1:return-param-as-ref>false</con1:return-param-as-ref>
+                    </con1:javaCallout>
+                    <con1:wsCallout xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.26a170e8.0.19758689f90.N7db7</con2:id>
+                        <con1:service ref="LoanGetAllProducts/CPFC-BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>CPFC</con1:operation>
+                        <con1:request>
+                            <con1:body wrapped="false">CPFC_Request</con1:body>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body wrapped="false">CPFC_Response</con1:body>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con2:report xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57e065.25baaae9.0.1986532e082.N7993</con3:id>
+                                <con2:expr>
+                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat(fn:current-dateTime(),' | UUID :',$UUID,' | ',fn-bea:serialize($body))</con3:xqueryText>
+                                </con2:expr>
+                                <con2:labels>
+                                    <con2:key>MSB - request from CPFC</con2:key>
+                                    <con2:varName>body</con2:varName>
+                                    <con2:value>
+                                        <con3:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">./text()</con3:xpathText>
+                                    </con2:value>
+                                </con2:labels>
+                            </con2:report>
+                            <con1:assign varName="CPFC_Request">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.26a170e8.0.19758689f90.N7db6</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">&lt;CPFCEncodedRequest  xmlns="http://www.mozabanca.org/cpfc">
+  &lt;RequestString>{$LoanCPFCRequestEncoded}&lt;/RequestString>
+&lt;/CPFCEncodedRequest></con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                            <con3:transport-headers xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.26a170e8.0.19758689f90.N7db5</con4:id>
+                                <con2:header-set>outbound-request</con2:header-set>
+                                <con2:header value="expression" name="Authorization">
+                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat('Bearer ',$AccessToken)</con3:xqueryText>
+                                </con2:header>
+                            </con3:transport-headers>
+                        </con1:requestTransform>
+                        <con1:responseTransform>
+                            <con1:insert varName="CPFCObjectsResponse">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.26a170e8.0.19758689f90.N7db4</con2:id>
+                                <con1:location>
+                                    <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+                                </con1:location>
+                                <con1:where>last-child</con1:where>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$CPFC_Response/*:operationData</con2:xqueryText>
+                                </con1:expr>
+                            </con1:insert>
+                            <con2:report xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57e065.25baaae9.0.1986532e082.N7991</con3:id>
+                                <con2:expr>
+                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat(fn:current-dateTime(),' | UUID :',$UUID,' | ',fn-bea:serialize($body))</con3:xqueryText>
+                                </con2:expr>
+                                <con2:labels>
+                                    <con2:key>MSB - response from CPFC</con2:key>
+                                    <con2:varName>body</con2:varName>
+                                    <con2:value>
+                                        <con3:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">./text()</con3:xpathText>
+                                    </con2:value>
+                                </con2:labels>
+                            </con2:report>
+                        </con1:responseTransform>
+                    </con1:wsCallout>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57fff8.26a170e8.0.19758689f90.N7db3" name="Stage2">
+                <con:context/>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.26a170e8.0.19758689f90.N7db2</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="LoanDetails/Resources/LD-CCCR-CPFC_Response"/>
+                                <con2:param name="ResponseCpfc">
+                                    <con2:path>$CPFC_Response</con2:path>
+                                </con2:param>
+                                <con2:param name="ResponseCccr">
+                                    <con2:path>$CCCRResponse</con2:path>
+                                </con2:param>
+                                <con2:param name="loanAccountVar">
+                                    <con2:path>fn:data($InitialRequest/*:loanAccountId)</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57ff98.N7a7414f0.0.1989d77618b.N7e5c" name="Stage3">
+                <con:context>
+                    <con1:userNsDecl prefix="loan" namespace="http://www.mozabank.org/LoanDetails" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/publish/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff98.N7a7414f0.0.1989d77618b.N7e60</con2:id>
+                        <con1:service ref="SessionParams/InsertCachePS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>execute</con1:operation>
+                        <con1:outboundTransform>
+                            <con1:replace varName="body" contents-only="true" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:id>_ActionId-N3f57ff98.N7a7414f0.0.1989d77618b.N7e5f</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText><![CDATA[<quer:InsertCachedRequest xmlns:quer="http://www.mozabank.org/servicebus/querycached">
+    <quer:Session_Id>{$SessionVal}</quer:Session_Id> 
+    <quer:Status>NEW</quer:Status> 
+    <quer:PartyID>{$userIdVar}</quer:PartyID> 
+    <quer:LoanDetails_Response>{fn-bea:serialize($body/loan:LoanDetailsResponse)}</quer:LoanDetails_Response> 
+</quer:InsertCachedRequest>]]></con2:xqueryText>
+                                </con1:expr>
+                            </con1:replace>
+                        </con1:outboundTransform>
+                    </con1:route>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57fff8.N215a19e3.0.197532e34fc.N7ddc">
+            <con:stage id="_StageId-N3f57fff8.N215a19e3.0.197532e34fc.N7ddb" name="Stage1">
+                <con:context/>
+                <con:disabled>true</con:disabled>
+                <con:actions>
+                    <con1:assign varName="CPFCObjectsResponse" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N215a19e3.0.197532e34fc.N7dda</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">&lt;CPFCResponse xmlns="http://www.mozabank.org/CAPD">
+&lt;/CPFCResponse></con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:foreach xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N215a19e3.0.197532e34fc.N7dd9</con2:id>
+                        <con1:variable>CCCRResponse</con1:variable>
+                        <con1:expression>
+                            <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">./*:operationData/*:CCCR_O_0003</con2:xpathText>
+                        </con1:expression>
+                        <con1:value-variable>data</con1:value-variable>
+                        <con1:index-variable>index</con1:index-variable>
+                        <con1:total-variable>count</con1:total-variable>
+                        <con1:actions>
+                            <con1:assign varName="LoanCPFCRequest">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N215a19e3.0.197532e34fc.N7dd8</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                        <con2:resource ref="LoanGetAllProducts/Resources/LoanAccountListCPFCRequest"/>
+                                        <con2:param name="CCCR-CCRD-Response">
+                                            <con2:path>$CCCRResponse</con2:path>
+                                        </con2:param>
+                                        <con2:param name="LoanAccountList">
+                                            <con2:path>$InitialRequest</con2:path>
+                                        </con2:param>
+                                        <con2:param name="ind">
+                                            <con2:path>$index</con2:path>
+                                        </con2:param>
+                                    </con2:xqueryTransform>
+                                </con1:expr>
+                            </con1:assign>
+                            <con1:nxsdTranslation>
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N215a19e3.0.197532e34fc.N7dd7</con2:id>
+                                <con1:type>XML-To-Native</con1:type>
+                                <con1:sourceExpr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$LoanCPFCRequest</con2:xqueryText>
+                                </con1:sourceExpr>
+                                <con1:nxsd ref="LoanGetAllProducts/Resources/Schema/CPFC"/>
+                                <con1:schemaElement xmlns:cpfc="http://www.mozabanca.org/cpfc">cpfc:CPFCRequest</con1:schemaElement>
+                                <con1:assign-variable>LoanCPFCRequest_Bin</con1:assign-variable>
+                            </con1:nxsdTranslation>
+                            <con1:assign varName="LoanCPFCRequest_JSON">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N215a19e3.0.197532e34fc.N7dd6</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn-bea:binary-to-text($LoanCPFCRequest_Bin[@ref],$text)</con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                            <con1:javaCallout varName="LoanCPFCRequestEncoded">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N215a19e3.0.197532e34fc.N7dd5</con2:id>
+                                <con1:archive ref="DebitCardList/Resources/JsonToStringUrl"/>
+                                <con1:className>demo.MainClass</con1:className>
+                                <con1:method>public static java.lang.String encodeJsonToRequestParam(java.lang.String)</con1:method>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$LoanCPFCRequest_JSON</con2:xqueryText>
+                                </con1:expr>
+                                <con1:return-param-as-ref>false</con1:return-param-as-ref>
+                            </con1:javaCallout>
+                            <con1:wsCallout>
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N215a19e3.0.197532e34fc.N7dd4</con2:id>
+                                <con1:service ref="LoanGetAllProducts/CPFC-BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                <con1:operation>CPFC</con1:operation>
+                                <con1:request>
+                                    <con1:body wrapped="false">CPFC_Request</con1:body>
+                                </con1:request>
+                                <con1:response>
+                                    <con1:body wrapped="false">CPFC_Response</con1:body>
+                                </con1:response>
+                                <con1:requestTransform>
+                                    <con1:assign varName="CPFC_Request">
+                                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N215a19e3.0.197532e34fc.N7dd3</con2:id>
+                                        <con1:expr>
+                                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">&lt;CPFCEncodedRequest  xmlns="http://www.mozabanca.org/cpfc">
+  &lt;RequestString>{$LoanCPFCRequestEncoded}&lt;/RequestString>
+&lt;/CPFCEncodedRequest></con2:xqueryText>
+                                        </con1:expr>
+                                    </con1:assign>
+                                    <con3:transport-headers xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                        <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N215a19e3.0.197532e34fc.N7dd2</con4:id>
+                                        <con2:header-set>outbound-request</con2:header-set>
+                                        <con2:header value="expression" name="Authorization">
+                                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat('Bearer ',$AccessToken)</con3:xqueryText>
+                                        </con2:header>
+                                    </con3:transport-headers>
+                                </con1:requestTransform>
+                                <con1:responseTransform>
+                                    <con1:insert varName="CPFCObjectsResponse">
+                                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N215a19e3.0.197532e34fc.N7dd1</con2:id>
+                                        <con1:location>
+                                            <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+                                        </con1:location>
+                                        <con1:where>last-child</con1:where>
+                                        <con1:expr>
+                                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$CPFC_Response/*:operationData</con2:xqueryText>
+                                        </con1:expr>
+                                    </con1:insert>
+                                </con1:responseTransform>
+                            </con1:wsCallout>
+                        </con1:actions>
+                    </con1:foreach>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57fffc.N3d650ef8.0.19962ad2419.N7f8c" name="Stage3">
+                <con:context/>
+                <con:actions>
+                    <con1:ifThenElse xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffc.N3d650ef8.0.19962ad2419.N7f8b</con2:id>
+                        <con1:case id="_BranchId-N3f57fffc.N3d650ef8.0.19962ad2419.N7f8a">
+                            <con1:condition>
+                                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn:data($CCCRResponse/*:errorCode) = '0'</con2:xqueryText>
+                            </con1:condition>
+                            <con1:actions>
+                                <con1:replace varName="body" contents-only="true">
+                                    <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffc.N3d650ef8.0.19962ad2419.N7f89</con2:id>
+                                    <con1:expr>
+                                        <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                            <con2:resource ref="LoanDetails/Resources/LOD-CCRD_Response"/>
+                                            <con2:param name="ResponseLod">
+                                                <con2:path>$body/*</con2:path>
+                                            </con2:param>
+                                            <con2:param name="loanAccountVar">
+                                                <con2:path>fn:data($InitialRequest/*:loanAccountId)</con2:path>
+                                            </con2:param>
+                                        </con2:xqueryTransform>
+                                    </con1:expr>
+                                </con1:replace>
+                            </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                            <con1:replace varName="body" contents-only="true">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffc.N3d650ef8.0.19962ad2419.N7f88</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                        <con2:resource ref="LoanDetails/Resources/LOD-CCRD_Response_Error"/>
+                                        <con2:param name="ResponseLod">
+                                            <con2:path>$body/*</con2:path>
+                                        </con2:param>
+                                    </con2:xqueryTransform>
+                                </con1:expr>
+                            </con1:replace>
+                        </con1:default>
+                    </con1:ifThenElse>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="error-a30598e.69b73a2b.0.197d93ae059.N7120">
+            <con:stage id="_StageId-a30598e.69b73a2b.0.197d93ae059.N711f" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:ifThenElse xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-a30598e.69b73a2b.0.197d93ae059.N6f19</con2:id>
+                        <con1:case id="_BranchId-a30598e.69b73a2b.0.197d93ae059.N6f18">
+                            <con1:condition>
+                                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$inbound/ctx:service/ctx:operation = 'LoanScheduleDetails'</con2:xqueryText>
+                            </con1:condition>
+                            <con1:actions>
+                                <con1:replace varName="body" contents-only="true">
+                                    <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-a30598e.69b73a2b.0.197d93ae059.N6f20</con2:id>
+                                    <con1:expr>
+                                        <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config"><![CDATA[<LoanScheduleDetailsResponse xmlns="http://www.mozabank.org/LoanScheduleDetails" >
+<data>
+		<dictionaryArray/>
+		<referenceNo/>
+		<result>
+			<dictionaryArray/>
+			<externalReferenceId/>
+			<status>FAILURE</status>
+			<errorList>
+				<code>ERR001</code>
+				<message>Invalid backend response</message>
+			</errorList>
+			<warningList/>
+		</result>
+		<hasMore/>
+		<totalRecords/>
+		<startSequence/>
+	</data> 
+    </LoanScheduleDetailsResponse>]]></con2:xqueryText>
+                                    </con1:expr>
+                                </con1:replace>
+                            </con1:actions>
+                        </con1:case>
+                        <con1:case id="_BranchId-a30598e.69b73a2b.0.197d93ae059.N6f16">
+                            <con1:condition>
+                                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$inbound/ctx:service/ctx:operation = 'LoanOutstandingDetails'</con2:xqueryText>
+                            </con1:condition>
+                            <con1:actions>
+                                <con1:replace varName="body" contents-only="true">
+                                    <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-a30598e.69b73a2b.0.197d93ae059.N6edd</con2:id>
+                                    <con1:expr>
+                                        <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config"><![CDATA[<LOAN_OUTSTANDING_DETAILSResponse xmlns="LOAN_OUTSTANDING_DETAILSResponse" >
+<data>
+		<dictionaryArray/>
+		<referenceNo/>
+		<result>
+			<dictionaryArray/>
+			<externalReferenceId/>
+			<status>FAILURE</status>
+			<errorList>
+				<code>ERR001</code>
+				<message>Invalid backend response</message>
+			</errorList>
+			<warningList/>
+		</result>
+		<hasMore/>
+		<totalRecords/>
+		<startSequence/>
+	</data> 
+    </LOAN_OUTSTANDING_DETAILSResponse>]]></con2:xqueryText>
+                                    </con1:expr>
+                                </con1:replace>
+                            </con1:actions>
+                        </con1:case>
+                        <con1:case id="_BranchId-a30598e.69b73a2b.0.197d93ae059.N6f14">
+                            <con1:condition>
+                                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$inbound/ctx:service/ctx:operation = 'LoanAccountFetch'</con2:xqueryText>
+                            </con1:condition>
+                            <con1:actions>
+                                <con1:replace varName="body" contents-only="true">
+                                    <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-a30598e.69b73a2b.0.197d93ae059.N6eaa</con2:id>
+                                    <con1:expr>
+                                        <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config"><![CDATA[<Response xmlns="http://www.mozabank.org/LoanAccountFetch" >
+<data>
+		<dictionaryArray/>
+		<referenceNo/>
+		<result>
+			<dictionaryArray/>
+			<externalReferenceId/>
+			<status>FAILURE</status>
+			<errorList>
+				<code>ERR001</code>
+				<message>Invalid backend response</message>
+			</errorList>
+			<warningList/>
+		</result>
+		<hasMore/>
+		<totalRecords/>
+		<startSequence/>
+	</data> 
+    </Response>]]></con2:xqueryText>
+                                    </con1:expr>
+                                </con1:replace>
+                            </con1:actions>
+                        </con1:case>
+                        <con1:case id="_BranchId-a30598e.69b73a2b.0.197d93ae059.N6f12">
+                            <con1:condition>
+                                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$inbound/ctx:service/ctx:operation = 'LoanDetails'</con2:xqueryText>
+                            </con1:condition>
+                            <con1:actions>
+                                <con1:replace varName="body" contents-only="true">
+                                    <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-a30598e.69b73a2b.0.197d93ae059.N6e77</con2:id>
+                                    <con1:expr>
+                                        <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config"><![CDATA[<LoanDetailsResponse xmlns="http://www.mozabank.org/LoanDetails" >
+<data>
+		<dictionaryArray/>
+		<referenceNo/>
+		<result>
+			<dictionaryArray/>
+			<externalReferenceId/>
+			<status>FAILURE</status>
+			<errorList>
+				<code>ERR001</code>
+				<message>Invalid backend response</message>
+			</errorList>
+			<warningList/>
+		</result>
+		<hasMore/>
+		<totalRecords/>
+		<startSequence/>
+	</data> 
+    </LoanDetailsResponse>]]></con2:xqueryText>
+                                    </con1:expr>
+                                </con1:replace>
+                            </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                            <con2:log xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-a30598e.69b73a2b.0.197d93ae059.N5e84</con3:id>
+                                <con2:logLevel>debug</con2:logLevel>
+                                <con2:expr>
+                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$fault</con3:xqueryText>
+                                </con2:expr>
+                            </con2:log>
+                        </con1:default>
+                    </con1:ifThenElse>
+                    <con1:reply xmlns:con1="http://www.bea.com/wli/sb/stages/config">
+                        <con1:id>_ActionId-a30598e.69b73a2b.0.197d93ae059.N6ddb</con1:id>
+                    </con1:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="request-N3f57fff8.N29c7c34f.0.19753cf9ac0.N7e8c">
+            <con:stage id="_StageId-N3f57fff8.N29c7c34f.0.19753cf9ac0.N7e8b" name="RequestParams3">
+                <con:context/>
+                <con:actions>
+                    <con1:assign varName="userIdVar" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N10dc9f33.0.19753e482a6.N7f9a</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">substring-before(substring-after($inbound/ctx:transport/ctx:request/tp:headers/tp:user-header[@name='X_OBDX_SESSION_PARAM']/@value,'~'),'~')</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="LoanCCCR-CCRDRequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N29c7c34f.0.19753cf9ac0.N7e8a</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="LoanDetails/Resources/LoanFetch/LAC-CCCR_Request"/>
+                                <con2:param name="UserIdVar">
+                                    <con2:path>$userIdVar</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:nxsdTranslation xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N29c7c34f.0.19753cf9ac0.N7e89</con2:id>
+                        <con1:type>XML-To-Native</con1:type>
+                        <con1:sourceExpr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$LoanCCCR-CCRDRequest</con2:xqueryText>
+                        </con1:sourceExpr>
+                        <con1:nxsd ref="LoanGetAllProducts/Resources/Schema/CCCR-CCRD"/>
+                        <con1:schemaElement xmlns:cccr="http://www.mozabank.org/CCCR_CCRD">cccr:CCCRRequest</con1:schemaElement>
+                        <con1:assign-variable>LoanCCCR-CCRDRequestBin</con1:assign-variable>
+                    </con1:nxsdTranslation>
+                    <con1:assign varName="LoanCCCR-CCRDReq" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N29c7c34f.0.19753cf9ac0.N7e88</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn-bea:binary-to-text($LoanCCCR-CCRDRequestBin[@ref],$text)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="LoanCCCR-CCRDReqJSON" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N29c7c34f.0.19753cf9ac0.N7e87</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn:replace($LoanCCCR-CCRDReq,'null','""')</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:javaCallout varName="LoanCCCR-CCRDJSONEncodedRequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N29c7c34f.0.19753cf9ac0.N7e86</con2:id>
+                        <con1:archive ref="DebitCardList/Resources/JsonToStringUrl"/>
+                        <con1:className>demo.MainClass</con1:className>
+                        <con1:method>public static java.lang.String encodeJsonToRequestParam(java.lang.String)</con1:method>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$LoanCCCR-CCRDReqJSON</con2:xqueryText>
+                        </con1:expr>
+                        <con1:return-param-as-ref>false</con1:return-param-as-ref>
+                    </con1:javaCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="request-N3f57fff8.26a170e8.0.19758689f90.N7dc4">
+            <con:stage id="_StageId-N3f57fff8.26a170e8.0.19758689f90.N7dc3" name="RequestParams3">
+                <con:context>
+                    <con1:userNsDecl prefix="loan" namespace="http://www.mozabank.org/LoanAccountFetch" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:assign varName="userIdVar" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.26a170e8.0.19758689f90.N7cd7</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">substring-before(substring-after($inbound/ctx:transport/ctx:request/tp:headers/tp:user-header[@name='X_OBDX_SESSION_PARAM']/@value,'~'),'~')</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="SessionVal" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff98.N7a7414f0.0.1989d77618b.N7dbf</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$inbound/ctx:transport/ctx:request/tp:headers/tp:user-header[@name='X_OBDX_SESSION_PARAM']/@value</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="LoanCCCR-CCRDRequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.26a170e8.0.19758689f90.N7dc2</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="LoanDetails/Resources/LD-CCCR_request"/>
+                                <con2:param name="userIdVar">
+                                    <con2:path>$userIdVar</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:nxsdTranslation xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.26a170e8.0.19758689f90.N7dc1</con2:id>
+                        <con1:type>XML-To-Native</con1:type>
+                        <con1:sourceExpr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$LoanCCCR-CCRDRequest</con2:xqueryText>
+                        </con1:sourceExpr>
+                        <con1:nxsd ref="LoanGetAllProducts/Resources/Schema/CCCR-CCRD"/>
+                        <con1:schemaElement xmlns:cccr="http://www.mozabank.org/CCCR_CCRD">cccr:CCCRRequest</con1:schemaElement>
+                        <con1:assign-variable>LoanCCCR-CCRDRequestBin</con1:assign-variable>
+                    </con1:nxsdTranslation>
+                    <con1:assign varName="LoanCCCR-CCRDReq" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.26a170e8.0.19758689f90.N7dc0</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn-bea:binary-to-text($LoanCCCR-CCRDRequestBin[@ref],$text)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="LoanCCCR-CCRDReqJSON" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.26a170e8.0.19758689f90.N7dbf</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn:replace($LoanCCCR-CCRDReq,'null','""')</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:javaCallout varName="LoanCCCR-CCRDJSONEncodedRequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.26a170e8.0.19758689f90.N7dbe</con2:id>
+                        <con1:archive ref="DebitCardList/Resources/JsonToStringUrl"/>
+                        <con1:className>demo.MainClass</con1:className>
+                        <con1:method>public static java.lang.String encodeJsonToRequestParam(java.lang.String)</con1:method>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$LoanCCCR-CCRDReqJSON</con2:xqueryText>
+                        </con1:expr>
+                        <con1:return-param-as-ref>false</con1:return-param-as-ref>
+                    </con1:javaCallout>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57ff98.N7a7414f0.0.1989d77618b.N7dcb" name="QueryCache">
+                <con:comment/>
+                <con:context>
+                    <con1:varNsDecl prefix="ccdo" namespace="http://www.mozabank.org/ccdo_party_casa_accounts_list" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:wsCallout xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff98.N7a7414f0.0.1989d77618b.N7dca</con2:id>
+                        <con1:service ref="SessionParams/Query_CauchingProxyService" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>Query_CauchingSelect</con1:operation>
+                        <con1:request>
+                            <con1:body wrapped="false">Query_req</con1:body>
+                            <con1:header/>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body wrapped="false">Query_resp</con1:body>
+                            <con1:header/>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con1:assign varName="Query_req">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff98.N7a7414f0.0.1989d77618b.N7dc9</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">&lt;quer:Query_CauchingSelect_SessionIdInputParameters xmlns:quer="http://xmlns.oracle.com/pcbpel/adapter/db/top/Query_Cauching">
+    &lt;quer:SessionId>{$SessionVal}&lt;/quer:SessionId>
+&lt;/quer:Query_CauchingSelect_SessionIdInputParameters></con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:requestTransform>
+                        <con1:responseTransform>
+                            <con1:ifThenElse>
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff98.N7a7414f0.0.1989d77618b.N7dc8</con2:id>
+                                <con1:case id="_BranchId-N3f57ff98.N7a7414f0.0.1989d77618b.N7dc7">
+                                    <con1:condition>
+                                        <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn:data($Query_resp/*:OverviewWidget/*:loanDetailsResponse) != ''</con2:xqueryText>
+                                    </con1:condition>
+                                    <con1:actions>
+                                        <con1:assign varName="query_response">
+                                            <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff98.N7a7414f0.0.1989d77618b.N7dc6</con2:id>
+                                            <con1:expr>
+                                                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$Query_resp/*[local-name()='OverviewWidget']/*[local-name()='loanDetailsResponse']/text()</con2:xqueryText>
+                                            </con1:expr>
+                                        </con1:assign>
+                                        <con1:replace contents-only="true" varName="body">
+                                            <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff98.N7a7414f0.0.1989d77618b.N7dc5</con2:id>
+                                            <con1:expr>
+                                                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$Query_resp/*[local-name()='OverviewWidget']/*[local-name()='loanDetailsResponse']/text()</con2:xqueryText>
+                                            </con1:expr>
+                                        </con1:replace>
+                                        <con1:assign varName="StringXML">
+                                            <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff98.N7a7414f0.0.1989d77618b.N7dc4</con2:id>
+                                            <con1:expr>
+                                                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">replace(
+    replace(string($body/text()), '&amp;lt;', '&lt;'),
+    '&amp;gt;', '>'
+  )</con2:xqueryText>
+                                            </con1:expr>
+                                        </con1:assign>
+                                        <con1:replace varName="body" contents-only="true">
+                                            <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff98.N7a7414f0.0.1989d77618b.N7dc3</con2:id>
+                                            <con1:expr>
+                                                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn-bea:inlinedXML(fn:replace($StringXML, 'ns2:', ''))</con2:xqueryText>
+                                            </con1:expr>
+                                        </con1:replace>
+                                        <con1:ifThenElse>
+                                            <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffa.6c73be7e.0.1998a2f1e53.N7ffa</con2:id>
+                                            <con1:case id="_BranchId-N3f57fffa.6c73be7e.0.1998a2f1e53.N7ff9">
+                                                <con1:condition>
+                                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn:data($InitialRequest/*:loanAccountId) = fn:data($body/*:LoanDetailsResponse/*:data/*:loanAccount/*:accountId)</con2:xqueryText>
+                                                </con1:condition>
+                                                <con1:actions>
+                                                    <con2:reply isError="false" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                                        <con2:id>_ActionId-N3f57ff98.N7a7414f0.0.1989d77618b.N7dc2</con2:id>
+                                                    </con2:reply>
+                                                </con1:actions>
+                                            </con1:case>
+                                            <con1:default/>
+                                        </con1:ifThenElse>
+                                    </con1:actions>
+                                </con1:case>
+                            </con1:ifThenElse>
+                        </con1:responseTransform>
+                    </con1:wsCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="error-a30598e.69b73a2b.0.197d93ae059.N7054">
+            <con:stage id="_StageId-a30598e.69b73a2b.0.197d93ae059.N7053" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:Error xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-a30598e.69b73a2b.0.197d93ae059.N7050</con2:id>
+                        <con1:errCode>OSB004</con1:errCode>
+                    </con1:Error>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="request-N3f57fffa.5fdb129d.0.19743f1f66b.N7fca">
+            <con:stage id="_StageId-N3f57e065.25baaae9.0.1986532e082.N7ad3" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:assign varName="UUID" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57e065.25baaae9.0.1986532e082.N7acf</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn-bea:uuid()</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con2:report xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57e065.25baaae9.0.1986532e082.N7ad2</con3:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat(fn:current-dateTime(),' | UUID :',$UUID,' | ',fn-bea:serialize($body))</con3:xqueryText>
+                        </con2:expr>
+                        <con2:labels>
+                            <con2:key>OBDX - request for LoanDetails</con2:key>
+                            <con2:varName>body</con2:varName>
+                            <con2:value>
+                                <con3:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">./text()</con3:xpathText>
+                            </con2:value>
+                        </con2:labels>
+                    </con2:report>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57fffa.5fdb129d.0.19743f1f66b.N7f88" name="Authentication Stage">
+                <con:context/>
+                <con:actions>
+                    <con1:assign varName="InitialRequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffa.5fdb129d.0.19743f1f66b.N7f87</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body/*</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:wsCallout xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57e23e.N41b26944.0.19782464c19.N7773</con2:id>
+                        <con1:service ref="AuthenticatorService/AuthenticationService" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:request>
+                            <con1:payload wrapped="false">AuthenticatorRequest</con1:payload>
+                        </con1:request>
+                        <con1:response>
+                            <con1:payload wrapped="false">AuthenticatorResponse</con1:payload>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con1:assign varName="AuthenticatorRequest">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57e23e.N41b26944.0.19782464c19.N7772</con2:id>
+                                <con1:expr>
+                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;Request/></con:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:requestTransform>
+                        <con1:responseTransform>
+                            <con1:assign varName="AccessToken">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57e23e.N41b26944.0.19782464c19.N7771</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$AuthenticatorResponse/*:access_token</con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:responseTransform>
+                    </con1:wsCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57fffa.5fdb129d.0.19743f1f66b.N7fc9">
+            <con:stage id="_StageId-N3f57fffa.5fdb129d.0.19743f1f66b.N7fc7" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con2:report xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57e065.25baaae9.0.1986532e082.N7b06</con3:id>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat(fn:current-dateTime(),' | UUID :',$UUID,' | ',fn-bea:serialize($body))</con3:xqueryText>
+                        </con2:expr>
+                        <con2:labels>
+                            <con2:key>OBDX - response from LoanDetails</con2:key>
+                            <con2:varName>body</con2:varName>
+                            <con2:value>
+                                <con3:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">./text()</con3:xpathText>
+                            </con2:value>
+                        </con2:labels>
+                    </con2:report>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="Pipeline Pair Node1">
+                <con:request>request-N3f57fffa.5fdb129d.0.19743f1f66b.N7fca</con:request>
+                <con:response>response-N3f57fffa.5fdb129d.0.19743f1f66b.N7fc9</con:response>
+            </con:pipeline-node>
+            <con:branch-node type="operation" id="_FlowId-N3f57fffa.5fdb129d.0.19743f1f66b.N7f51" name="BranchNode1">
+                <con:context/>
+                <con:branch-table>
+                    <con:branch name="LoanScheduleDetails">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="Pipeline Pair Node2">
+                                <con:request>request-N3f57fff8.N29c7c34f.0.19753cf9ac0.N7e8c</con:request>
+                                <con:response>response-N3f57fff8.N29c7c34f.0.19753cf9ac0.N7e85</con:response>
+                            </con:pipeline-node>
+                            <con:route-node name="RouteNode1" error-handler="error-a30598e.69b73a2b.0.197d93ae059.N5ebb">
+                                <con:context>
+                                    <con1:varNsDecl prefix="loan" namespace="http://www.mozabank.org/LoanAccountFetch" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                                </con:context>
+                                <con:actions>
+                                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N29c7c34f.0.19753cf9ac0.N7dd5</con2:id>
+                                        <con1:service ref="LoanGetAllProducts/CCCR-CCRD-BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>CCCR-CCRD</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con2:report xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57e065.25baaae9.0.1986532e082.N7a67</con3:id>
+                                                <con2:expr>
+                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat(fn:current-dateTime(),' | UUID :',$UUID,' | ',fn-bea:serialize($body))</con3:xqueryText>
+                                                </con2:expr>
+                                                <con2:labels>
+                                                    <con2:key>MSB - request from CCCR-CCRD</con2:key>
+                                                    <con2:varName>body</con2:varName>
+                                                    <con2:value>
+                                                        <con3:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">./text()</con3:xpathText>
+                                                    </con2:value>
+                                                </con2:labels>
+                                            </con2:report>
+                                            <con2:replace varName="body" contents-only="true" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N29c7c34f.0.19753cf9ac0.N7dd4</con3:id>
+                                                <con2:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;CCCREncodedRequest  xmlns="http://www.mozabank.org/CCCR_CCRD">
+  &lt;RequestString>{$LoanCCCR-CCRDJSONEncodedRequest}&lt;/RequestString>
+&lt;/CCCREncodedRequest></con:xqueryText>
+                                                </con2:expr>
+                                            </con2:replace>
+                                            <con2:transport-headers copy-all="false" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N29c7c34f.0.19753cf9ac0.N7dd3</con3:id>
+                                                <con2:header-set>outbound-request</con2:header-set>
+                                                <con2:header value="expression" name="Authorization">
+                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat('Bearer ',$AccessToken)</con3:xqueryText>
+                                                </con2:header>
+                                            </con2:transport-headers>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con2:assign varName="CCCRResponse" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N29c7c34f.0.19753cf9ac0.N7dd2</con3:id>
+                                                <con2:expr>
+                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/*</con3:xqueryText>
+                                                </con2:expr>
+                                            </con2:assign>
+                                            <con2:report xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57e065.25baaae9.0.1986532e082.N7a65</con3:id>
+                                                <con2:expr>
+                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat(fn:current-dateTime(),' | UUID :',$UUID,' | ',fn-bea:serialize($body))</con3:xqueryText>
+                                                </con2:expr>
+                                                <con2:labels>
+                                                    <con2:key>MSB - response from CCCR-CCRD</con2:key>
+                                                    <con2:varName>body</con2:varName>
+                                                    <con2:value>
+                                                        <con3:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">./text()</con3:xpathText>
+                                                    </con2:value>
+                                                </con2:labels>
+                                            </con2:report>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="LoanOutstandingDetails">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="Pipeline Pair Node5">
+                                <con:request>request-N3f57fff8.N215a19e3.0.197532e34fc.N7de3</con:request>
+                                <con:response>response-N3f57fff8.N215a19e3.0.197532e34fc.N7ddc</con:response>
+                            </con:pipeline-node>
+                            <con:route-node name="RouteNode3" error-handler="error-a30598e.69b73a2b.0.197d93ae059.N708b">
+                                <con:context/>
+                                <con:actions>
+                                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N215a19e3.0.197532e34fc.N7d30</con2:id>
+                                        <con1:service ref="LoanGetAllProducts/CCCR-CCRD-BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>CCCR-CCRD</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con2:report xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57e065.25baaae9.0.1986532e082.N7a32</con3:id>
+                                                <con2:expr>
+                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat(fn:current-dateTime(),' | UUID :',$UUID,' | ',fn-bea:serialize($body))</con3:xqueryText>
+                                                </con2:expr>
+                                                <con2:labels>
+                                                    <con2:key>MSB - request from CCCR-CCRD</con2:key>
+                                                    <con2:varName>body</con2:varName>
+                                                    <con2:value>
+                                                        <con3:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">./text()</con3:xpathText>
+                                                    </con2:value>
+                                                </con2:labels>
+                                            </con2:report>
+                                            <con2:replace varName="body" contents-only="true" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N215a19e3.0.197532e34fc.N7d2f</con3:id>
+                                                <con2:expr>
+                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">&lt;CCCREncodedRequest xmlns="http://www.mozabank.org/CCCR_CCRD">
+  &lt;RequestString>{$LoanCCCR-CCRDJSONEncodedRequest}&lt;/RequestString>
+&lt;/CCCREncodedRequest></con3:xqueryText>
+                                                </con2:expr>
+                                            </con2:replace>
+                                            <con2:transport-headers xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N215a19e3.0.197532e34fc.N7d2e</con3:id>
+                                                <con2:header-set>outbound-request</con2:header-set>
+                                                <con2:header value="expression" name="Authorization">
+                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat('Bearer ',$AccessToken)</con3:xqueryText>
+                                                </con2:header>
+                                            </con2:transport-headers>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con2:assign varName="CCCRResponse" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.N215a19e3.0.197532e34fc.N7d2d</con3:id>
+                                                <con2:expr>
+                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/*</con3:xqueryText>
+                                                </con2:expr>
+                                            </con2:assign>
+                                            <con2:report xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57e065.25baaae9.0.1986532e082.N7a30</con3:id>
+                                                <con2:expr>
+                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat(fn:current-dateTime(),' | UUID :',$UUID,' | ',fn-bea:serialize($body))</con3:xqueryText>
+                                                </con2:expr>
+                                                <con2:labels>
+                                                    <con2:key>MSB - response from CCCR-CCRD</con2:key>
+                                                    <con2:varName>body</con2:varName>
+                                                    <con2:value>
+                                                        <con3:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">./text()</con3:xpathText>
+                                                    </con2:value>
+                                                </con2:labels>
+                                            </con2:report>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="LoanAccountFetch">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="Pipeline Pair Node4">
+                                <con:request>request-N3f57fff8.423ad1d1.0.1974e5c8c15.N7f1f</con:request>
+                                <con:response>response-N3f57fff8.423ad1d1.0.1974e5c8c15.N7f18</con:response>
+                            </con:pipeline-node>
+                            <con:route-node name="RouteNode4" error-handler="error-a30598e.69b73a2b.0.197d93ae059.N7054">
+                                <con:context/>
+                                <con:actions>
+                                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.423ad1d1.0.1974e5c8c15.N7e36</con2:id>
+                                        <con1:service ref="LoanGetAllProducts/CCCR-CCRD-BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>CCCR-CCRD</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con2:report xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57e065.25baaae9.0.1986532e082.N79c8</con3:id>
+                                                <con2:expr>
+                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat(fn:current-dateTime(),' | UUID :',$UUID,' | ',fn-bea:serialize($body))</con3:xqueryText>
+                                                </con2:expr>
+                                                <con2:labels>
+                                                    <con2:key>MSB - request from CCCR-CCRD</con2:key>
+                                                    <con2:varName>body</con2:varName>
+                                                    <con2:value>
+                                                        <con3:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">./text()</con3:xpathText>
+                                                    </con2:value>
+                                                </con2:labels>
+                                            </con2:report>
+                                            <con2:replace varName="body" contents-only="true" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.423ad1d1.0.1974e5c8c15.N7e35</con3:id>
+                                                <con2:expr>
+                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">&lt;CCCREncodedRequest  xmlns="http://www.mozabank.org/CCCR_CCRD">
+  &lt;RequestString>{$LoanCCCR-CCRDJSONEncodedRequest}&lt;/RequestString>
+&lt;/CCCREncodedRequest></con3:xqueryText>
+                                                </con2:expr>
+                                            </con2:replace>
+                                            <con2:transport-headers xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.423ad1d1.0.1974e5c8c15.N7e34</con3:id>
+                                                <con2:header-set>outbound-request</con2:header-set>
+                                                <con2:header value="expression" name="Authorization">
+                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat('Bearer ',$AccessToken)</con3:xqueryText>
+                                                </con2:header>
+                                            </con2:transport-headers>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con2:assign varName="CCCRResponse" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.423ad1d1.0.1974e5c8c15.N7e33</con3:id>
+                                                <con2:expr>
+                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/*</con3:xqueryText>
+                                                </con2:expr>
+                                            </con2:assign>
+                                            <con2:report xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57e065.25baaae9.0.1986532e082.N79c6</con3:id>
+                                                <con2:expr>
+                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat(fn:current-dateTime(),' | UUID :',$UUID,' | ',fn-bea:serialize($body))</con3:xqueryText>
+                                                </con2:expr>
+                                                <con2:labels>
+                                                    <con2:key>MSB - response from CCCR-CCRD</con2:key>
+                                                    <con2:varName>body</con2:varName>
+                                                    <con2:value>
+                                                        <con3:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">./text()</con3:xpathText>
+                                                    </con2:value>
+                                                </con2:labels>
+                                            </con2:report>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="LoanDetails">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="Pipeline Pair Node3">
+                                <con:request>request-N3f57fff8.26a170e8.0.19758689f90.N7dc4</con:request>
+                                <con:response>response-N3f57fff8.26a170e8.0.19758689f90.N7dbd</con:response>
+                            </con:pipeline-node>
+                            <con:route-node name="RouteNode5" error-handler="error-a30598e.69b73a2b.0.197d93ae059.N701e">
+                                <con:context/>
+                                <con:actions>
+                                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.26a170e8.0.19758689f90.N7cdd</con2:id>
+                                        <con1:service ref="LoanGetAllProducts/CCCR-CCRD-BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>CCCR-CCRD</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con2:report xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57e065.25baaae9.0.1986532e082.N795c</con3:id>
+                                                <con2:expr>
+                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat(fn:current-dateTime(),' | UUID :',$UUID,' | ',fn-bea:serialize($body))</con3:xqueryText>
+                                                </con2:expr>
+                                                <con2:labels>
+                                                    <con2:key>MSB - request from CCCR-CCRD</con2:key>
+                                                    <con2:varName>body</con2:varName>
+                                                    <con2:value>
+                                                        <con3:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">./text()</con3:xpathText>
+                                                    </con2:value>
+                                                </con2:labels>
+                                            </con2:report>
+                                            <con2:replace varName="body" contents-only="true" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.26a170e8.0.19758689f90.N7cdc</con3:id>
+                                                <con2:expr>
+                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">&lt;CCCREncodedRequest  xmlns="http://www.mozabank.org/CCCR_CCRD">
+  &lt;RequestString>{$LoanCCCR-CCRDJSONEncodedRequest}&lt;/RequestString>
+&lt;/CCCREncodedRequest></con3:xqueryText>
+                                                </con2:expr>
+                                            </con2:replace>
+                                            <con2:transport-headers xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.26a170e8.0.19758689f90.N7cdb</con3:id>
+                                                <con2:header-set>outbound-request</con2:header-set>
+                                                <con2:header value="expression" name="Authorization">
+                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat('Bearer ',$AccessToken)</con3:xqueryText>
+                                                </con2:header>
+                                            </con2:transport-headers>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con2:assign varName="CCCRResponse" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff8.26a170e8.0.19758689f90.N7cda</con3:id>
+                                                <con2:expr>
+                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/*</con3:xqueryText>
+                                                </con2:expr>
+                                            </con2:assign>
+                                            <con2:report xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57e065.25baaae9.0.1986532e082.N798f</con3:id>
+                                                <con2:expr>
+                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat(fn:current-dateTime(),' | UUID :',$UUID,' | ',fn-bea:serialize($body))</con3:xqueryText>
+                                                </con2:expr>
+                                                <con2:labels>
+                                                    <con2:key>MSB - response from CCCR-CCRD</con2:key>
+                                                    <con2:varName>body</con2:varName>
+                                                    <con2:value>
+                                                        <con3:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">./text()</con3:xpathText>
+                                                    </con2:value>
+                                                </con2:labels>
+                                            </con2:report>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:default-branch>
+                        <con:flow>
+                            <con:route-node name="RouteNode2">
+                                <con:context/>
+                                <con:actions/>
+                            </con:route-node>
+                        </con:flow>
+                    </con:default-branch>
+                </con:branch-table>
+            </con:branch-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

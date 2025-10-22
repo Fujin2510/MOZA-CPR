@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+              xmlns:tns="http://www.mozabank.org/PARTY_LOAN_ACCOUNTS_LIST"
+              targetNamespace="http://www.mozabank.org/PARTY_LOAN_ACCOUNTS_LIST" elementFormDefault="qualified"
+              attributeFormDefault="unqualified"  nxsd:version="JSON" nxsd:encoding="UTF-8">
+
+  <!-- Root Element for Request -->
+  <xsd:element name="PARTY_LOAN_ACCOUNTS_LISTRequest" type="tns:PartyLoanAccountsListRequestType"/>
+
+  <!-- Root Element for Response -->
+  <xsd:element name="PARTY_LOAN_ACCOUNTS_LISTResponse" type="tns:PartyLoanAccountsListResponseType"/>
+
+  <!-- Complex Type for PARTY_LOAN_ACCOUNTS_LIST Request -->
+  <xsd:complexType name="PartyLoanAccountsListRequestType">
+    <xsd:sequence>
+      <xsd:element name="referenceNo" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="interfaceId" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="entity" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="hostName" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="partyId" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="accountType" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="accountId" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="relationshipType" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="branchCode" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="userType" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Complex Type for PARTY_LOAN_ACCOUNTS_LIST Response -->
+  <xsd:complexType name="PartyLoanAccountsListResponseType">
+    <xsd:sequence>
+      <xsd:element name="data">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="result" type="tns:ResultType"/>
+            <xsd:element name="accounts" minOccurs="0" maxOccurs="unbounded">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element name="partyId" type="xsd:string"/>
+                  <xsd:element name="branchId" type="xsd:string"/>
+                  <xsd:element name="accountId" type="xsd:string"/>
+                  <xsd:element name="accountType" type="xsd:string"/>
+                  <xsd:element name="accountDisplayName" type="xsd:string"/>
+                  <xsd:element name="currency" type="xsd:string"/>
+                  <xsd:element name="status" type="xsd:string"/>
+                  <xsd:element name="balance" type="tns:BalanceType"/>
+                  <xsd:element name="interestType" type="xsd:string" minOccurs="0"/>
+                  <xsd:element name="interestRate" type="xsd:float" minOccurs="0"/>
+                  <xsd:element name="openingDate" type="xsd:string"/>
+                  <xsd:element name="relationshipType" type="xsd:string" minOccurs="0"/>
+                  <xsd:element name="accountModule" type="xsd:string" minOccurs="0"/>
+                  <xsd:element name="sortCode" type="xsd:string"/>
+                  <xsd:element name="relation" type="xsd:string" minOccurs="0"/>
+                  <xsd:element name="moduleType" type="xsd:string"/>
+                  <xsd:element name="iban" type="xsd:string" minOccurs="0"/>
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Complex Type for Result -->
+  <xsd:complexType name="ResultType">
+    <xsd:sequence>
+      <xsd:element name="status" type="xsd:string"/>
+      <xsd:element name="errorList" nillable="true" minOccurs="0" maxOccurs="unbounded">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="code" type="xsd:string"/>
+            <xsd:element name="message" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="warningList" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Complex Type for Balance -->
+  <xsd:complexType name="BalanceType">
+    <xsd:sequence>
+      <xsd:element name="currency" type="xsd:string"/>
+      <xsd:element name="amount" type="xsd:decimal"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>
