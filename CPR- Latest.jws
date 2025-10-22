@@ -1,0 +1,113 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<jws:workspace xmlns:jws="http://xmlns.oracle.com/ide/project">
+   <value n="appTemplateId" v="sbApplicationTemplate"/>
+   <hash n="component-versions">
+      <value n="oracle.adf.share.dt.migration.jps.JaznCredStoreMigratorHelper" v="11.1.1.1.0"/>
+      <value n="oracle.adf.share.dt.migration.wsm.PolicyAttachmentMigratorHelper" v="12.1.2.0.0"/>
+      <value n="oracle.adfdt.controller.adfc.source.migration.SavePointDataSourceForWLSMigrator" v="11.1.1.1.0"/>
+      <value n="oracle.adfdtinternal.model.ide.security.extension.AdfSecurityMigrator" v="11.1.1.1.0.13"/>
+      <value n="oracle.ide.model.Project" v="11.1.1.1.0;12.2.1.4.0"/>
+      <value n="oracle.jbo.dt.jdevx.deployment.JbdProjectMigrator" v="11.1.2.0.0"/>
+      <value n="oracle.jdeveloper.maven.migrator.POMNodeMigrator" v="12.2.1.0.0"/>
+      <value n="oracle.jdevimpl.appresources.ApplicationSrcDirMigrator" v="11.1.2.0.0"/>
+      <value n="oracle.jdevimpl.deploy.migrators.JeeDeploymentMigrator" v="12.1.2.0.0"/>
+      <value n="oracle.jdevimpl.xml.oc4j.jps.JpsConfigMigratorHelper" v="12.1.4.0.0"/>
+      <value n="oracle.jdevimpl.xml.wl.WeblogicMigratorHelper" v="11.1.1.1.0"/>
+      <value n="oracle.mds.internal.dt.deploy.base.MarMigratorHelper" v="11.1.1.1.0"/>
+      <value n="oracle.mds.internal.dt.ide.migrator.MDSConfigMigratorHelper" v="11.1.1.0.5313"/>
+   </hash>
+   <list n="contentSets">
+      <string v="oracle.mds.internal.dt.ide.appresources.MDSAppResourceCSProvider/MDSAppContentSet"/>
+      <string v="oracle.jdeveloper.model.PathsConfiguration/ApplicationSrcContentSet"/>
+      <string v="oracle.jdeveloper.model.PathsConfiguration/ApplicationBuildToolContentSet"/>
+      <string v="oracle.jdeveloper.model.PathsConfiguration/ADFContentSet"/>
+      <string v="oracle.jdeveloper.model.PathsConfiguration/ResourceBundlesContentSet"/>
+   </list>
+   <list n="listOfChildren">
+      <hash><url n="URL" path="AuthenticatorService/AuthenticatorService.jpr"/></hash>
+      <hash><url n="URL" path="BankAccountDetails/BankAccountDetails.jpr"/></hash>
+      <hash><url n="URL" path="BankDateService/BankDateService.jpr"/></hash>
+      <hash><url n="URL" path="BranchList/BranchList.jpr"/></hash>
+      <hash><url n="URL" path="BulkTransfer/BulkTransfer.jpr"/></hash>
+      <hash><url n="URL" path="Card_Transaction_Consultation/Card_Transaction_Consultation.jpr"/></hash>
+      <hash><url n="URL" path="CardAccountParties/CardAccountParties.jpr"/></hash>
+      <hash><url n="URL" path="CASA/CASA.jpr"/></hash>
+      <hash><url n="URL" path="Cash_Advance_Interface/Cash_Advance_Interface.jpr"/></hash>
+      <hash><url n="URL" path="CGERService/CGERService.jpr"/></hash>
+      <hash><url n="URL" path="ChangePaymentOptions/ChangePaymentOptions.jpr"/></hash>
+      <hash><url n="URL" path="CommonErrorHandlerService/CommonErrorHandlerService.jpr"/></hash>
+      <hash><url n="URL" path="ConsultarService/ConsultarService.jpr"/></hash>
+      <hash><url n="URL" path="CreditCard/CreditCard.jpr"/></hash>
+      <hash><url n="URL" path="CreditCardCancellation/CreditCardCancellation.jpr"/></hash>
+      <hash><url n="URL" path="CreditCardGetAllProducts/CreditCardGetAllProducts.jpr"/></hash>
+      <hash><url n="URL" path="CreditCardPayment/CreditCardPayment.jpr"/></hash>
+      <hash><url n="URL" path="Debit_Card_Cancellation/Debit_Card_Cancellation.jpr"/></hash>
+      <hash><url n="URL" path="DebitCard/DebitCard.jpr"/></hash>
+      <hash><url n="URL" path="DebitCardList/DebitCardList.jpr"/></hash>
+      <hash><url n="URL" path="ExcelBulkPayment/ExcelBulkPayment.jpr"/></hash>
+      <hash><url n="URL" path="ExchangeRate/ExchangeRate.jpr"/></hash>
+      <hash><url n="URL" path="FetchProvidersOperators/FetchProvidersOperators.jpr"/></hash>
+      <hash><url n="URL" path="GenericPaymentDate/GenericPaymentDate.jpr"/></hash>
+      <hash><url n="URL" path="GetAccountStatement/GetAccountStatement.jpr"/></hash>
+      <hash><url n="URL" path="GetAccountStatementService/GetAccountStatementService.jpr"/></hash>
+      <hash><url n="URL" path="GetAllInternalBankTransfer/GetAllInternalBankTransfer.jpr"/></hash>
+      <hash><url n="URL" path="GetAllOtherBankTransfer/GetAllOtherBankTransfer.jpr"/></hash>
+      <hash><url n="URL" path="GetAllProductDebitCardService/GetAllProductDebitCardService.jpr"/></hash>
+      <hash><url n="URL" path="GetAllProducts_TD/GetAllProducts_TD.jpr"/></hash>
+      <hash><url n="URL" path="GetAllProductsCASA/GetAllProductsCASA.jpr"/></hash>
+      <hash><url n="URL" path="GetAllProductsCASAService/GetAllProductsCASAService.jpr"/></hash>
+      <hash><url n="URL" path="GetAllProductsCreditCardService/GetAllProductsCreditCardService.jpr"/></hash>
+      <hash><url n="URL" path="GetCreditCardStatement/GetCreditCardStatement.jpr"/></hash>
+      <hash><url n="URL" path="GetEscrowAccounts/GetEscrowAccounts.jpr"/></hash>
+      <hash><url n="URL" path="Insert_Overview/Insert_Overview.jpr"/></hash>
+      <hash><url n="URL" path="INSS_State_Payment/INSS_State_Payment.jpr"/></hash>
+      <hash><url n="URL" path="IntlTransService/IntlTransService.jpr"/></hash>
+      <hash><url n="URL" path="JueJueWs/JueJueWs.jpr"/></hash>
+      <hash><url n="URL" path="LeasingDetails/LeasingDetails.jpr"/></hash>
+      <hash><url n="URL" path="LeasingFinancialEnquiry/LeasingFinancialEnquiry.jpr"/></hash>
+      <hash><url n="URL" path="LeasingSummary/LeasingSummary.jpr"/></hash>
+      <hash><url n="URL" path="LeasingTransaction/LeasingTransaction.jpr"/></hash>
+      <hash><url n="URL" path="LoanDetails/LoanDetails.jpr"/></hash>
+      <hash><url n="URL" path="LoanGetAllProducts/LoanGetAllProducts.jpr"/></hash>
+      <hash><url n="URL" path="LoanTransactions/LoanTransactions.jpr"/></hash>
+      <hash><url n="URL" path="LoginService/LoginService.jpr"/></hash>
+      <hash><url n="URL" path="MultiCurrencyConversion/MultiCurrencyConversion.jpr"/></hash>
+      <hash><url n="URL" path="OBTransfer/OBTransfer.jpr"/></hash>
+      <hash><url n="URL" path="PaymentStatusInquiery/PaymentStatusInquiery.jpr"/></hash>
+      <hash><url n="URL" path="Pre-generatedAcntStatement-CreditCard/Pre-generatedAcntStatement-CreditCard.jpr"/></hash>
+      <hash><url n="URL" path="PrepaidCardBalance/PrepaidCardBalance.jpr"/></hash>
+      <hash><url n="URL" path="ProofOfPayment/ProofOfPayment.jpr"/></hash>
+      <hash><url n="URL" path="RechargeTopUp/RechargeTopUp.jpr"/></hash>
+      <hash><url n="URL" path="RedeemTermDeposit/RedeemTermDeposit.jpr"/></hash>
+      <hash><url n="URL" path="Retrieve_Beneficiary_Name/Retrieve_Beneficiary_Name.jpr"/></hash>
+      <hash><url n="URL" path="SelfInternalTransferServices/SelfInternalTransferServices.jpr"/></hash>
+      <hash><url n="URL" path="SelfTransferService/SelfTransferService.jpr"/></hash>
+      <hash><url n="URL" path="SessionParams/SessionParams.jpr"/></hash>
+      <hash><url n="URL" path="SMSDispatch/SMSDispatch.jpr"/></hash>
+      <hash><url n="URL" path="StopRepeatTransfer/StopRepeatTransfer.jpr"/></hash>
+      <hash><url n="URL" path="TDTopUp/TDTopUp.jpr"/></hash>
+      <hash><url n="URL" path="TermDeposit/TermDeposit.jpr"/></hash>
+      <hash><url n="URL" path="ThirdPartyServices/ThirdPartyServices.jpr"/></hash>
+      <hash><url n="URL" path="TransfersDigitalWallets/TransfersDigitalWallets.jpr"/></hash>
+      <hash><url n="URL" path="Utility_Payments-PASI/Utility_Payments-PASI.jpr"/></hash>
+   </list>
+   <hash n="oracle.jdeveloper.deploy.dt.DeploymentProfiles">
+      <hash n="profileDefinitions">
+         <hash n="CPR- Latest">
+            <value n="profileClass" v="SbAppDeployProfile"/>
+            <value n="profileName" v="CPR- Latest"/>
+         </hash>
+      </hash>
+      <list n="profileList">
+         <string v="CPR- Latest"/>
+      </list>
+   </hash>
+   <hash n="oracle.jdeveloper.maven.compiler.MavenConfiguration">
+      <hash n="oracle.jdeveloper.maven.compiler.MavenConfiguration">
+         <url n="pomfileURL" path="pom.xml"/>
+      </hash>
+   </hash>
+   <hash n="oracle.sb.tooling.ide.core.internal.application.SbApplication">
+      <value n="configContextSessionName" v="OSB-IDE_build_1761060617309"/>
+   </hash>
+</jws:workspace>

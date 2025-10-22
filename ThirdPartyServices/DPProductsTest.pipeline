@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <con:coreEntry>
+        <con:binding type="Native REST" xsi:type="con:NativeRestBindingType">
+            <con:wadl ref="ThirdPartyServices/Resources/DPProductsTest"/>
+        </con:binding>
+        <oper:operations xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations">
+            <oper:monitoring enabled="true" level="service" aggregationInterval="1440"/>
+        </oper:operations>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:pipeline type="request" name="request-N3f57e23e.3a059221.0.198405d8e43.N7f98">
+            <con:stage id="_StageId-N3f57e23e.3a059221.0.198405d8e43.N7f57" name="AuthenticationStage">
+                <con:context/>
+                <con:actions>
+                    <con1:wsCallout xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57e23e.3a059221.0.198405d8e43.N7f54</con2:id>
+                        <con1:service ref="AuthenticatorService/AuthenticationService" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:request>
+                            <con1:payload wrapped="false">AuthenticatorRequest</con1:payload>
+                        </con1:request>
+                        <con1:response>
+                            <con1:payload wrapped="false">AuthenticatorResponse</con1:payload>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con1:assign varName="AuthenticatorRequest">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57e23e.3a059221.0.198405d8e43.N7f53</con2:id>
+                                <con1:expr>
+                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;Request/></con:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:requestTransform>
+                        <con1:responseTransform>
+                            <con1:assign varName="AccessToken">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57e23e.3a059221.0.198405d8e43.N7f52</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$AuthenticatorResponse/*:access_token</con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:responseTransform>
+                    </con1:wsCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57e23e.3a059221.0.198405d8e43.N7f97">
+            <con:stage id="_StageId-N3f57e23e.3a059221.0.198405d8e43.N7f95" name="Stage1">
+                <con:context/>
+                <con:actions/>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="Pipeline Pair Node1">
+                <con:request>request-N3f57e23e.3a059221.0.198405d8e43.N7f98</con:request>
+                <con:response>response-N3f57e23e.3a059221.0.198405d8e43.N7f97</con:response>
+            </con:pipeline-node>
+            <con:route-node name="RouteNode1" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                <con:context/>
+                <con:actions>
+                    <con1:route>
+                        <con2:id>_ActionId-N3f57e23e.3a059221.0.198405d8e43.N8000</con2:id>
+                        <con1:service ref="ThirdPartyServices/DPProductsTest" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation passThrough="true"/>
+                        <con1:outboundTransform>
+                            <con3:transport-headers copy-all="false" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-N3f57e23e.3a059221.0.198405d8e43.N7eed</con2:id>
+                                <con3:header-set>outbound-request</con3:header-set>
+                                <con3:header value="expression" name="Authorization">
+                                    <con2:xqueryText>concat('Bearer ',$AccessToken)</con2:xqueryText>
+                                </con3:header>
+                            </con3:transport-headers>
+                        </con1:outboundTransform>
+                        <con1:responseTransform/>
+                    </con1:route>
+                </con:actions>
+            </con:route-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

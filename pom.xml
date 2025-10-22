@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>CPR-Latest</groupId>
+    <artifactId>CPR-Latest</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>System</module>
+        <module>LeasingSummary</module>
+        <module>JueJueWs</module>
+        <module>GetAccountStatement</module>
+        <module>Debit_Card_Cancellation</module>
+        <module>GetAllProductDebitCardService</module>
+        <module>GetAllOtherBankTransfer</module>
+        <module>Cash_Advance_Interface</module>
+        <module>CardAccountParties</module>
+        <module>RechargeTopUp</module>
+        <module>SessionParams</module>
+        <module>OBTransfer</module>
+        <module>ChangePaymentOptions</module>
+        <module>GetAllProducts_TD</module>
+        <module>GetEscrowAccounts</module>
+        <module>CreditCardCancellation</module>
+        <module>PaymentStatusInquiery</module>
+        <module>GetAllProductsCASAService</module>
+        <module>DebitCard</module>
+        <module>DebitCardList</module>
+        <module>BankAccountDetails</module>
+        <module>LoginService</module>
+        <module>TermDeposit</module>
+        <module>SelfTransferService</module>
+        <module>FetchProvidersOperators</module>
+        <module>CreditCardPayment</module>
+        <module>BankDateService</module>
+        <module>AuthenticatorService</module>
+        <module>ConsultarService</module>
+        <module>LoanGetAllProducts</module>
+        <module>GetAllInternalBankTransfer</module>
+        <module>CGERService</module>
+        <module>StopRepeatTransfer</module>
+        <module>INSS_State_Payment</module>
+        <module>TDTopUp</module>
+        <module>ExcelBulkPayment</module>
+        <module>Pre-generatedAcntStatement-CreditCard</module>
+        <module>CreditCard</module>
+        <module>LoanTransactions</module>
+        <module>CommonErrorHandlerService</module>
+        <module>ExchangeRate</module>
+        <module>LoanDetails</module>
+        <module>SMSDispatch</module>
+        <module>SelfInternalTransferServices</module>
+        <module>ProofOfPayment</module>
+        <module>CreditCardGetAllProducts</module>
+        <module>Utility_Payments-PASI</module>
+        <module>BranchList</module>
+        <module>TransfersDigitalWallets</module>
+        <module>CASA</module>
+        <module>GetCreditCardStatement</module>
+        <module>Retrieve_Beneficiary_Name</module>
+        <module>LeasingFinancialEnquiry</module>
+        <module>GenericPaymentDate</module>
+        <module>MultiCurrencyConversion</module>
+        <module>RedeemTermDeposit</module>
+        <module>BulkTransfer</module>
+        <module>Insert_Overview</module>
+        <module>IntlTransService</module>
+        <module>Card_Transaction_Consultation</module>
+        <module>LeasingDetails</module>
+        <module>GetAccountStatementService</module>
+        <module>PrepaidCardBalance</module>
+        <module>GetAllProductsCreditCardService</module>
+        <module>LeasingTransaction</module>
+        <module>ThirdPartyServices</module>
+        <module>GetAllProductsCASA</module>
+    </modules>
+
+</project>
