@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://www.mozabanca.org/bulkTranser"
+            xmlns="http://www.mozabanca.org/bulkTranser"
+            elementFormDefault="qualified">
+  
+  
+  <xsd:element name="BulkStatusSyncRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+        <xsd:element name="referenceNo" type="xsd:string" minOccurs="0" nillable="true"/>
+        <xsd:element name="interfaceId" type="xsd:string"/>
+        <xsd:element name="entity" type="xsd:string"/>
+        <xsd:element name="headersMap" type="xsd:anyType" minOccurs="0"/>
+        <xsd:element name="queryMap" type="xsd:string" minOccurs="0" nillable="true"/>
+        <xsd:element name="hostName" type="xsd:string"/>
+        <xsd:element name="externalFileRefId" type="xsd:string"/>
+        <xsd:element name="clientNumber" type="xsd:string"/>
+        <xsd:element name="valueDate" type="DateType"/>
+        <xsd:element name="fileIdentifier" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  
+  
+  <xsd:element name="BulkStatusSyncResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="data">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+              <xsd:element name="referenceNo" type="xsd:string" minOccurs="0" nillable="true"/>
+              <xsd:element name="result">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+                    <xsd:element name="externalReferenceId" type="xsd:string" minOccurs="0" nillable="true"/>
+                     <xsd:element name="status" type="xsd:string"/>
+ <xsd:element name="errorList" nillable="true" minOccurs="0" maxOccurs="unbounded">
+                    <xsd:complexType>
+                      <xsd:sequence>
+                        <xsd:element name="code" type="xsd:string"/>
+                        <xsd:element name="message" type="xsd:string"/>
+                      </xsd:sequence>
+                    </xsd:complexType>
+                  </xsd:element>
+                    <xsd:element name="warningList" type="xsd:string" minOccurs="0" nillable="true"/>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="hasMore" type="xsd:string" minOccurs="0" nillable="true"/>
+              <xsd:element name="totalRecords" type="xsd:string" minOccurs="0" nillable="true"/>
+              <xsd:element name="startSequence" type="xsd:string" minOccurs="0" nillable="true"/>
+              <xsd:element name="fileProcessingDate" type="xsd:dateTime"/>
+              <xsd:element name="fileStatus" type="xsd:string"/>
+              <xsd:element name="totalAmount" type="xsd:decimal"/>
+              <xsd:element name="currency" type="xsd:string"/>
+              <xsd:element name="bankAccountIdentifier" type="xsd:string"/>
+              <xsd:element name="clientNumber" type="xsd:string"/>
+              <xsd:element name="externalFileRefId" type="xsd:string"/>
+              <xsd:element name="operationNumber" type="xsd:string"/>
+
+              <xsd:element name="totalFileRecords" type="xsd:string"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  
+<xsd:complexType name="DateType">
+    <xsd:sequence>
+      <xsd:element name="dateString" type="xsd:string"/>
+      <xsd:element name="monthDate" type="xsd:int"/>
+      <xsd:element name="calendarDayOfWeek" type="xsd:string"/>
+      <xsd:element name="monthDateTime" type="xsd:long"/>
+      <xsd:element name="weekOfYear" type="xsd:int"/>
+      <xsd:element name="lastDayOfMonth" type="xsd:int"/>
+      <xsd:element name="sqltimestamp" type="xsd:long"/>
+      <xsd:element name="month" type="xsd:int"/>
+      <xsd:element name="dayOfWeek" type="xsd:int"/>
+      <xsd:element name="millis" type="xsd:long"/>
+      <xsd:element name="sqlDate" type="xsd:long"/>
+      <xsd:element name="time" type="xsd:long"/>
+      <xsd:element name="timestamp" type="xsd:long"/>
+      <xsd:element name="yearMonth" type="xsd:int"/>
+      <xsd:element name="year" type="xsd:int"/>
+      <xsd:element name="dayOfMonth" type="xsd:int"/>
+      <xsd:element name="yearMonthDate" type="xsd:int"/>
+      <xsd:element name="infinite" type="xsd:boolean"/>
+      <xsd:element name="null" type="xsd:boolean"/>
+      <xsd:element name="leapYear" type="xsd:boolean"/>
+      <xsd:element name="dayOfYear" type="xsd:int"/>
+    </xsd:sequence>
+  </xsd:complexType>  
+  
+</xsd:schema>

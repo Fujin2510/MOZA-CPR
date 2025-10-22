@@ -1,0 +1,676 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:tns="http://msb.mozabanco.co.mz" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="PagamentoFicheirosWs"
+                  targetNamespace="http://msb.mozabanco.co.mz">
+  <wsdl:types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://msb.mozabanco.co.mz"
+               elementFormDefault="unqualified" targetNamespace="http://msb.mozabanco.co.mz" version="1.0">
+      <xs:element name="ActualizarEstadoFicheiro" type="tns:ActualizarEstadoFicheiro"/>
+      <xs:element name="ActualizarEstadoFicheiroResponse" type="tns:ActualizarEstadoFicheiroResponse"/>
+      <xs:element name="CarregarFicheiroFornecedor" type="tns:CarregarFicheiroFornecedor"/>
+      <xs:element name="CarregarFicheiroFornecedorResponse" type="tns:CarregarFicheiroFornecedorResponse"/>
+      <xs:element name="CarregarFicheiroSalario" type="tns:CarregarFicheiroSalario"/>
+      <xs:element name="CarregarFicheiroSalarioResponse" type="tns:CarregarFicheiroSalarioResponse"/>
+      <xs:element name="ConsultarFicheiroFornecedorAceite" type="tns:ConsultarFicheiroFornecedorAceite"/>
+      <xs:element name="ConsultarFicheiroFornecedorAceiteResponse"
+                  type="tns:ConsultarFicheiroFornecedorAceiteResponse"/>
+      <xs:element name="ConsultarFicheiroSalarioAceite" type="tns:ConsultarFicheiroSalarioAceite"/>
+      <xs:element name="ConsultarFicheiroSalarioAceiteResponse" type="tns:ConsultarFicheiroSalarioAceiteResponse"/>
+      <xs:element name="DownloadRespostaFornecedor" type="tns:DownloadRespostaFornecedor"/>
+      <xs:element name="DownloadRespostaFornecedorResponse" type="tns:DownloadRespostaFornecedorResponse"/>
+      <xs:element name="DownloadRespostaSalario" type="tns:DownloadRespostaSalario"/>
+      <xs:element name="DownloadRespostaSalarioResponse" type="tns:DownloadRespostaSalarioResponse"/>
+      <xs:element name="ListarFicheirosFornecedorAceites" type="tns:ListarFicheirosFornecedorAceites"/>
+      <xs:element name="ListarFicheirosFornecedorAceitesResponse" type="tns:ListarFicheirosFornecedorAceitesResponse"/>
+      <xs:element name="ListarFicheirosFornecedoresSubmetidos" type="tns:ListarFicheirosFornecedoresSubmetidos"/>
+      <xs:element name="ListarFicheirosFornecedoresSubmetidosResponse"
+                  type="tns:ListarFicheirosFornecedoresSubmetidosResponse"/>
+      <xs:element name="ListarFicheirosSalarioAceites" type="tns:ListarFicheirosSalarioAceites"/>
+      <xs:element name="ListarFicheirosSalarioAceitesResponse" type="tns:ListarFicheirosSalarioAceitesResponse"/>
+      <xs:element name="ListarFicheirosSalarioSubmetidos" type="tns:ListarFicheirosSalarioSubmetidos"/>
+      <xs:element name="ListarFicheirosSalarioSubmetidosResponse" type="tns:ListarFicheirosSalarioSubmetidosResponse"/>
+      <xs:element name="ValidarFicheiro" type="tns:ValidarFicheiro"/>
+      <xs:element name="ValidarFicheiroResponse" type="tns:ValidarFicheiroResponse"/>
+      <xs:complexType name="ConsultarFicheiroFornecedorAceite">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="input" type="tns:consultaFicheiroInput"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="consultaFicheiroInput">
+        <xs:complexContent>
+          <xs:extension base="tns:serviceInput">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="dataProcessamento" type="xs:string"/>
+              <xs:element minOccurs="0" name="numCliente" type="xs:long"/>
+              <xs:element minOccurs="0" name="numFicheiro" type="xs:long"/>
+              <xs:element minOccurs="0" name="username" type="xs:string"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="serviceInput">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="chaveConfirmacao" type="tns:chaveConfirmacao"/>
+          <xs:element minOccurs="0" name="sessao" type="tns:serviceSession"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="chaveConfirmacao">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="chave" type="xs:string"/>
+          <xs:element minOccurs="0" name="posicoes" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="serviceSession">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:string"/>
+          <xs:element minOccurs="0" name="versao" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ConsultarFicheiroFornecedorAceiteResponse">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="response" type="tns:consultaFicheiroOutput"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="consultaFicheiroOutput">
+        <xs:complexContent>
+          <xs:extension base="tns:serviceOutput">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="ficheiroPagamento" type="tns:ficheiroPagamento"/>
+              <xs:element minOccurs="0" name="username" type="xs:string"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="serviceOutput">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="sessao" type="tns:serviceSession"/>
+          <xs:element minOccurs="0" name="status" type="tns:serviceStatus"/>
+          <xs:element minOccurs="0" name="transactionId" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ficheiroPagamento">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="bibAut" type="xs:string"/>
+          <xs:element minOccurs="0" name="bibInput" type="xs:string"/>
+          <xs:element minOccurs="0" name="bibOriginal" type="xs:string"/>
+          <xs:element minOccurs="0" name="bibOutput" type="xs:string"/>
+          <xs:element minOccurs="0" name="chkSumConvertido" type="xs:string"/>
+          <xs:element minOccurs="0" name="chkSumOriginal" type="xs:string"/>
+          <xs:element minOccurs="0" name="codAgencia" type="xs:long"/>
+          <xs:element minOccurs="0" name="contaPrincipal" type="xs:long"/>
+          <xs:element minOccurs="0" name="dataProcEfectivo" type="xs:string"/>
+          <xs:element minOccurs="0" name="dataProcessamento" type="xs:string"/>
+          <xs:element minOccurs="0" name="dataValorMovimento" type="xs:string"/>
+          <xs:element minOccurs="0" name="descricao" type="xs:string"/>
+          <xs:element minOccurs="0" name="emailOrdenante" type="xs:string"/>
+          <xs:element minOccurs="0" name="estFicheiro" type="xs:string"/>
+          <xs:element minOccurs="0" name="formato" type="xs:string"/>
+          <xs:element minOccurs="0" name="gestor" type="xs:string"/>
+          <xs:element minOccurs="0" name="importancia" type="xs:decimal"/>
+          <xs:element minOccurs="0" name="importanciaTotal" type="xs:decimal"/>
+          <xs:element minOccurs="0" name="indAnulacao" type="xs:string"/>
+          <xs:element minOccurs="0" name="indCancela" type="xs:string"/>
+          <xs:element minOccurs="0" name="indContinua" type="xs:string"/>
+          <xs:element minOccurs="0" name="indEnvioAut" type="xs:string"/>
+          <xs:element minOccurs="0" name="indEnvioFicheiro" type="xs:string"/>
+          <xs:element minOccurs="0" name="mensagem" type="xs:string"/>
+          <xs:element minOccurs="0" name="moeda" type="xs:string"/>
+          <xs:element minOccurs="0" name="montante" type="xs:decimal"/>
+          <xs:element minOccurs="0" name="nib" type="xs:string"/>
+          <xs:element minOccurs="0" name="nomeBeneficiario" type="xs:string"/>
+          <xs:element minOccurs="0" name="nomeCliente" type="xs:string"/>
+          <xs:element minOccurs="0" name="nomeConvertido" type="xs:string"/>
+          <xs:element minOccurs="0" name="nomeConvertidoAut" type="xs:string"/>
+          <xs:element minOccurs="0" name="nomeFicheiro" type="xs:string"/>
+          <xs:element minOccurs="0" name="nomeOriginal" type="xs:string"/>
+          <xs:element minOccurs="0" name="nomeOriginalAut" type="xs:string"/>
+          <xs:element minOccurs="0" name="numCliente" type="xs:long"/>
+          <xs:element minOccurs="0" name="numFicheiro" type="xs:long"/>
+          <xs:element minOccurs="0" name="numOpContabBanka" type="xs:long"/>
+          <xs:element minOccurs="0" name="numRegisto" type="xs:long"/>
+          <xs:element minOccurs="0" name="numTentativa" type="xs:long"/>
+          <xs:element minOccurs="0" name="orgGerencia" type="xs:string"/>
+          <xs:element minOccurs="0" name="pagCliente" type="xs:long"/>
+          <xs:element minOccurs="0" name="pagDataIntegração" type="xs:string"/>
+          <xs:element minOccurs="0" name="pagNumFicheiro" type="xs:long"/>
+          <xs:element minOccurs="0" name="pagNumRegisto" type="xs:long"/>
+          <xs:element minOccurs="0" name="refOrdenante" type="xs:string"/>
+          <xs:element minOccurs="0" name="referencia" type="xs:string"/>
+          <xs:element minOccurs="0" name="registo" type="xs:string"/>
+          <xs:element minOccurs="0" name="sitContaCliente" type="xs:string"/>
+          <xs:element minOccurs="0" name="sitFicheiro" type="xs:string"/>
+          <xs:element minOccurs="0" name="sitRegisto" type="xs:string"/>
+          <xs:element minOccurs="0" name="sitTratamento" type="xs:string"/>
+          <xs:element minOccurs="0" name="strFicheiroB64Aut" type="xs:string"/>
+          <xs:element minOccurs="0" name="strFicheiroB64Orig" type="xs:string"/>
+          <xs:element minOccurs="0" name="tipoOperacao" type="xs:string"/>
+          <xs:element minOccurs="0" name="tipoProcessamento" type="xs:string"/>
+          <xs:element minOccurs="0" name="tipoRegisto" type="xs:int"/>
+          <xs:element minOccurs="0" name="tipoRemuneracao" type="xs:string"/>
+          <xs:element minOccurs="0" name="totalRegCarregados" type="xs:long"/>
+          <xs:element minOccurs="0" name="totalRegistos" type="xs:long"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="serviceStatus">
+        <xs:sequence>
+          <xs:element name="codigo" type="xs:int"/>
+          <xs:element minOccurs="0" name="detalhes" type="tns:serviceStatusDetailList"/>
+          <xs:element minOccurs="0" name="executado" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="mensagens" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="serviceStatusDetailList">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="detalhe" nillable="true"
+                      type="tns:serviceStatusDetail"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="serviceStatusDetail">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="causa" type="xs:string"/>
+          <xs:element minOccurs="0" name="codigo" type="xs:string"/>
+          <xs:element minOccurs="0" name="mensagem" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DownloadRespostaSalario">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="input" type="tns:downloadRespostaInput"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="downloadRespostaInput">
+        <xs:complexContent>
+          <xs:extension base="tns:serviceInput">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="dataProcessamento" type="xs:string"/>
+              <xs:element minOccurs="0" name="numCliente" type="xs:long"/>
+              <xs:element minOccurs="0" name="numFicheiro" type="xs:long"/>
+              <xs:element minOccurs="0" name="username" type="xs:string"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="DownloadRespostaSalarioResponse">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="response" type="tns:downloadRespostaOutput"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="downloadRespostaOutput">
+        <xs:complexContent>
+          <xs:extension base="tns:serviceOutput">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="ficheiroPagamento" type="tns:ficheiroPagamento"/>
+              <xs:element minOccurs="0" name="username" type="xs:string"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="ListarFicheirosFornecedorAceites">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="input" type="tns:listaFicheirosInput"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="listaFicheirosInput">
+        <xs:complexContent>
+          <xs:extension base="tns:serviceInput">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="dataProcessamento" type="xs:string"/>
+              <xs:element minOccurs="0" name="estFicheiro" type="xs:string"/>
+              <xs:element minOccurs="0" name="idLastOccur" type="xs:string"/>
+              <xs:element minOccurs="0" name="numCliente" type="xs:long"/>
+              <xs:element minOccurs="0" name="numFicheiro" type="xs:long"/>
+              <xs:element minOccurs="0" name="username" type="xs:string"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="ListarFicheirosFornecedorAceitesResponse">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="response" type="tns:listaFicheirosOutput"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="listaFicheirosOutput">
+        <xs:complexContent>
+          <xs:extension base="tns:serviceOutput">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="ficheirosSubmetidos" type="tns:ficheirosPagamento"/>
+              <xs:element minOccurs="0" name="proximaPagina" type="tns:proximaPagina"/>
+              <xs:element minOccurs="0" name="username" type="xs:string"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="ficheirosPagamento">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="ficheiroPagamento" nillable="true"
+                      type="tns:ficheiroPagamento"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="proximaPagina">
+        <xs:sequence>
+          <xs:element name="hasMore" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="ultOcorrencia" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ValidarFicheiro">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="input" type="tns:validaFicheiroInput"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="validaFicheiroInput">
+        <xs:complexContent>
+          <xs:extension base="tns:serviceInput">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="dataProcessamento" type="xs:long"/>
+              <xs:element minOccurs="0" name="numCliente" type="xs:long"/>
+              <xs:element minOccurs="0" name="numFicheiro" type="xs:long"/>
+              <xs:element minOccurs="0" name="username" type="xs:string"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="ValidarFicheiroResponse">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="response" type="tns:validaFicheiroOutput"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="validaFicheiroOutput">
+        <xs:complexContent>
+          <xs:extension base="tns:serviceOutput">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="codErro" type="xs:string"/>
+              <xs:element minOccurs="0" name="dataProcessamento" type="xs:long"/>
+              <xs:element minOccurs="0" name="estFicheiro" type="xs:string"/>
+              <xs:element minOccurs="0" name="msgErro" type="xs:string"/>
+              <xs:element minOccurs="0" name="numCliente" type="xs:long"/>
+              <xs:element minOccurs="0" name="numFicheiro" type="xs:long"/>
+              <xs:element minOccurs="0" name="origem" type="xs:string"/>
+              <xs:element minOccurs="0" name="username" type="xs:string"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="ActualizarEstadoFicheiro">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="input" type="tns:actualizaEstadoFicheiroInput"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="actualizaEstadoFicheiroInput">
+        <xs:complexContent>
+          <xs:extension base="tns:serviceInput">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="dataProcessamento" type="xs:long"/>
+              <xs:element minOccurs="0" name="estFicheiro" type="xs:string"/>
+              <xs:element minOccurs="0" name="numCliente" type="xs:long"/>
+              <xs:element minOccurs="0" name="numFicheiro" type="xs:long"/>
+              <xs:element minOccurs="0" name="username" type="xs:string"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="ActualizarEstadoFicheiroResponse">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="response" type="tns:actualizaEstadoFicheiroOutput"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="actualizaEstadoFicheiroOutput">
+        <xs:complexContent>
+          <xs:extension base="tns:serviceOutput">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="codErro" type="xs:string"/>
+              <xs:element minOccurs="0" name="dataProcessamento" type="xs:long"/>
+              <xs:element minOccurs="0" name="estFicheiro" type="xs:string"/>
+              <xs:element minOccurs="0" name="msgErro" type="xs:string"/>
+              <xs:element minOccurs="0" name="numCliente" type="xs:long"/>
+              <xs:element minOccurs="0" name="numFicheiro" type="xs:long"/>
+              <xs:element minOccurs="0" name="origem" type="xs:string"/>
+              <xs:element minOccurs="0" name="username" type="xs:string"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="ListarFicheirosFornecedoresSubmetidos">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="input" type="tns:listaFicheirosInput"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ListarFicheirosFornecedoresSubmetidosResponse">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="response" type="tns:listaFicheirosOutput"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ConsultarFicheiroSalarioAceite">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="input" type="tns:consultaFicheiroInput"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ConsultarFicheiroSalarioAceiteResponse">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="response" type="tns:consultaFicheiroOutput"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ListarFicheirosSalarioSubmetidos">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="input" type="tns:listaFicheirosInput"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ListarFicheirosSalarioSubmetidosResponse">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="response" type="tns:listaFicheirosOutput"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ListarFicheirosSalarioAceites">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="input" type="tns:listaFicheirosInput"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ListarFicheirosSalarioAceitesResponse">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="response" type="tns:listaFicheirosOutput"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DownloadRespostaFornecedor">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="input" type="tns:downloadRespostaInput"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DownloadRespostaFornecedorResponse">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="response" type="tns:downloadRespostaOutput"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CarregarFicheiroSalario">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="input" type="tns:carregaFicheiroInput"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="carregaFicheiroInput">
+        <xs:complexContent>
+          <xs:extension base="tns:serviceInput">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="contaPrincipal" type="xs:long"/>
+              <xs:element minOccurs="0" name="dataProcEfectivo" type="xs:string"/>
+              <xs:element minOccurs="0" name="formato" type="xs:string"/>
+              <xs:element minOccurs="0" name="importanciaTotal" type="xs:decimal"/>
+              <xs:element minOccurs="0" name="indCancela" type="xs:string"/>
+              <xs:element minOccurs="0" name="indContinua" type="xs:string"/>
+              <xs:element minOccurs="0" name="nomeOriginal" type="xs:string"/>
+              <xs:element minOccurs="0" name="nomeOriginalAut" type="xs:string"/>
+              <xs:element minOccurs="0" name="strFicheiroB64Aut" type="xs:string"/>
+              <xs:element minOccurs="0" name="strFicheiroB64Orig" type="xs:string"/>
+              <xs:element minOccurs="0" name="totalRegistos" type="xs:long"/>
+              <xs:element minOccurs="0" name="username" type="xs:string"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="CarregarFicheiroSalarioResponse">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="response" type="tns:carregaFicheiroOutput"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="carregaFicheiroOutput">
+        <xs:complexContent>
+          <xs:extension base="tns:serviceOutput">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="ficheiroCarregado" type="tns:ficheiroPagamento"/>
+              <xs:element minOccurs="0" name="username" type="xs:string"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="CarregarFicheiroFornecedor">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="input" type="tns:carregaFicheiroInput"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="CarregarFicheiroFornecedorResponse">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="response" type="tns:carregaFicheiroOutput"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="ConsultarFicheiroFornecedorAceite">
+    <wsdl:part element="tns:ConsultarFicheiroFornecedorAceite" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DownloadRespostaSalario">
+    <wsdl:part element="tns:DownloadRespostaSalario" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ListarFicheirosSalarioSubmetidosResponse">
+    <wsdl:part element="tns:ListarFicheirosSalarioSubmetidosResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ActualizarEstadoFicheiroResponse">
+    <wsdl:part element="tns:ActualizarEstadoFicheiroResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ListarFicheirosFornecedorAceitesResponse">
+    <wsdl:part element="tns:ListarFicheirosFornecedorAceitesResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ListarFicheirosFornecedorAceites">
+    <wsdl:part element="tns:ListarFicheirosFornecedorAceites" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ConsultarFicheiroSalarioAceiteResponse">
+    <wsdl:part element="tns:ConsultarFicheiroSalarioAceiteResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DownloadRespostaSalarioResponse">
+    <wsdl:part element="tns:DownloadRespostaSalarioResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ValidarFicheiro">
+    <wsdl:part element="tns:ValidarFicheiro" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ListarFicheirosFornecedoresSubmetidosResponse">
+    <wsdl:part element="tns:ListarFicheirosFornecedoresSubmetidosResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CarregarFicheiroFornecedorResponse">
+    <wsdl:part element="tns:CarregarFicheiroFornecedorResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ActualizarEstadoFicheiro">
+    <wsdl:part element="tns:ActualizarEstadoFicheiro" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ListarFicheirosFornecedoresSubmetidos">
+    <wsdl:part element="tns:ListarFicheirosFornecedoresSubmetidos" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ConsultarFicheiroSalarioAceite">
+    <wsdl:part element="tns:ConsultarFicheiroSalarioAceite" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ListarFicheirosSalarioSubmetidos">
+    <wsdl:part element="tns:ListarFicheirosSalarioSubmetidos" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ConsultarFicheiroFornecedorAceiteResponse">
+    <wsdl:part element="tns:ConsultarFicheiroFornecedorAceiteResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ListarFicheirosSalarioAceites">
+    <wsdl:part element="tns:ListarFicheirosSalarioAceites" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DownloadRespostaFornecedorResponse">
+    <wsdl:part element="tns:DownloadRespostaFornecedorResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="DownloadRespostaFornecedor">
+    <wsdl:part element="tns:DownloadRespostaFornecedor" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ValidarFicheiroResponse">
+    <wsdl:part element="tns:ValidarFicheiroResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ListarFicheirosSalarioAceitesResponse">
+    <wsdl:part element="tns:ListarFicheirosSalarioAceitesResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CarregarFicheiroSalario">
+    <wsdl:part element="tns:CarregarFicheiroSalario" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CarregarFicheiroSalarioResponse">
+    <wsdl:part element="tns:CarregarFicheiroSalarioResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CarregarFicheiroFornecedor">
+    <wsdl:part element="tns:CarregarFicheiroFornecedor" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="PagamentoFicheiros">
+    <wsdl:operation name="ConsultarFicheiroFornecedorAceite">
+      <wsdl:input message="tns:ConsultarFicheiroFornecedorAceite" name="ConsultarFicheiroFornecedorAceite"></wsdl:input>
+      <wsdl:output message="tns:ConsultarFicheiroFornecedorAceiteResponse"
+                   name="ConsultarFicheiroFornecedorAceiteResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DownloadRespostaSalario">
+      <wsdl:input message="tns:DownloadRespostaSalario" name="DownloadRespostaSalario"></wsdl:input>
+      <wsdl:output message="tns:DownloadRespostaSalarioResponse" name="DownloadRespostaSalarioResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarFicheirosFornecedorAceites">
+      <wsdl:input message="tns:ListarFicheirosFornecedorAceites" name="ListarFicheirosFornecedorAceites"></wsdl:input>
+      <wsdl:output message="tns:ListarFicheirosFornecedorAceitesResponse"
+                   name="ListarFicheirosFornecedorAceitesResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidarFicheiro">
+      <wsdl:input message="tns:ValidarFicheiro" name="ValidarFicheiro"></wsdl:input>
+      <wsdl:output message="tns:ValidarFicheiroResponse" name="ValidarFicheiroResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarEstadoFicheiro">
+      <wsdl:input message="tns:ActualizarEstadoFicheiro" name="ActualizarEstadoFicheiro"></wsdl:input>
+      <wsdl:output message="tns:ActualizarEstadoFicheiroResponse" name="ActualizarEstadoFicheiroResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarFicheirosFornecedoresSubmetidos">
+      <wsdl:input message="tns:ListarFicheirosFornecedoresSubmetidos" name="ListarFicheirosFornecedoresSubmetidos"></wsdl:input>
+      <wsdl:output message="tns:ListarFicheirosFornecedoresSubmetidosResponse"
+                   name="ListarFicheirosFornecedoresSubmetidosResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarFicheiroSalarioAceite">
+      <wsdl:input message="tns:ConsultarFicheiroSalarioAceite" name="ConsultarFicheiroSalarioAceite"></wsdl:input>
+      <wsdl:output message="tns:ConsultarFicheiroSalarioAceiteResponse" name="ConsultarFicheiroSalarioAceiteResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarFicheirosSalarioSubmetidos">
+      <wsdl:input message="tns:ListarFicheirosSalarioSubmetidos" name="ListarFicheirosSalarioSubmetidos"></wsdl:input>
+      <wsdl:output message="tns:ListarFicheirosSalarioSubmetidosResponse"
+                   name="ListarFicheirosSalarioSubmetidosResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarFicheirosSalarioAceites">
+      <wsdl:input message="tns:ListarFicheirosSalarioAceites" name="ListarFicheirosSalarioAceites"></wsdl:input>
+      <wsdl:output message="tns:ListarFicheirosSalarioAceitesResponse" name="ListarFicheirosSalarioAceitesResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DownloadRespostaFornecedor">
+      <wsdl:input message="tns:DownloadRespostaFornecedor" name="DownloadRespostaFornecedor"></wsdl:input>
+      <wsdl:output message="tns:DownloadRespostaFornecedorResponse" name="DownloadRespostaFornecedorResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CarregarFicheiroSalario">
+      <wsdl:input message="tns:CarregarFicheiroSalario" name="CarregarFicheiroSalario"></wsdl:input>
+      <wsdl:output message="tns:CarregarFicheiroSalarioResponse" name="CarregarFicheiroSalarioResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CarregarFicheiroFornecedor">
+      <wsdl:input message="tns:CarregarFicheiroFornecedor" name="CarregarFicheiroFornecedor"></wsdl:input>
+      <wsdl:output message="tns:CarregarFicheiroFornecedorResponse" name="CarregarFicheiroFornecedorResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PagamentoFicheirosWsSoapBinding" type="tns:PagamentoFicheiros">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="ConsultarFicheiroFornecedorAceite">
+      <soap:operation soapAction="ConsultarFicheiroFornecedorAceite" style="document"/>
+      <wsdl:input name="ConsultarFicheiroFornecedorAceite">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="ConsultarFicheiroFornecedorAceiteResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DownloadRespostaSalario">
+      <soap:operation soapAction="DownloadRespostaSalario" style="document"/>
+      <wsdl:input name="DownloadRespostaSalario">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="DownloadRespostaSalarioResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarFicheirosFornecedorAceites">
+      <soap:operation soapAction="ListarFicheirosFornecedorAceites" style="document"/>
+      <wsdl:input name="ListarFicheirosFornecedorAceites">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="ListarFicheirosFornecedorAceitesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidarFicheiro">
+      <soap:operation soapAction="ValidarFicheiro" style="document"/>
+      <wsdl:input name="ValidarFicheiro">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="ValidarFicheiroResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ActualizarEstadoFicheiro">
+      <soap:operation soapAction="ActualizarEstadoFicheiro" style="document"/>
+      <wsdl:input name="ActualizarEstadoFicheiro">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="ActualizarEstadoFicheiroResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarFicheirosFornecedoresSubmetidos">
+      <soap:operation soapAction="ListarFicheirosFornecedoresSubmetidos" style="document"/>
+      <wsdl:input name="ListarFicheirosFornecedoresSubmetidos">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="ListarFicheirosFornecedoresSubmetidosResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultarFicheiroSalarioAceite">
+      <soap:operation soapAction="ConsultarFicheiroSalarioAceite" style="document"/>
+      <wsdl:input name="ConsultarFicheiroSalarioAceite">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="ConsultarFicheiroSalarioAceiteResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarFicheirosSalarioSubmetidos">
+      <soap:operation soapAction="ListarFicheirosSalarioSubmetidos" style="document"/>
+      <wsdl:input name="ListarFicheirosSalarioSubmetidos">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="ListarFicheirosSalarioSubmetidosResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarFicheirosSalarioAceites">
+      <soap:operation soapAction="ListarFicheirosSalarioAceites" style="document"/>
+      <wsdl:input name="ListarFicheirosSalarioAceites">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="ListarFicheirosSalarioAceitesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DownloadRespostaFornecedor">
+      <soap:operation soapAction="DownloadRespostaFornecedor" style="document"/>
+      <wsdl:input name="DownloadRespostaFornecedor">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="DownloadRespostaFornecedorResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CarregarFicheiroSalario">
+      <soap:operation soapAction="CarregarFicheiroSalario" style="document"/>
+      <wsdl:input name="CarregarFicheiroSalario">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="CarregarFicheiroSalarioResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CarregarFicheiroFornecedor">
+      <soap:operation soapAction="CarregarFicheiroFornecedor" style="document"/>
+      <wsdl:input name="CarregarFicheiroFornecedor">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="CarregarFicheiroFornecedorResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PagamentoFicheirosWs">
+    <wsdl:port binding="tns:PagamentoFicheirosWsSoapBinding" name="PagamentoFicheirosPort">
+      <soap:address location="http://svdcpmwd02:9084//MozaServiceBus/PagamentoFicheiros/PagamentoFicheirosWs"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
