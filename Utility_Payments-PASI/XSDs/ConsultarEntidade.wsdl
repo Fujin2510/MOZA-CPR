@@ -1,0 +1,219 @@
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:tns="http://msb.mozabanco.co.mz"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
+                  name="PagamentoServicosWS"
+                  targetNamespace="http://msb.mozabanco.co.mz">
+
+  <wsdl:types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+               xmlns:tns="http://msb.mozabanco.co.mz"
+               elementFormDefault="unqualified"
+               targetNamespace="http://msb.mozabanco.co.mz"
+               version="1.0">
+
+      <!-- Request & Response Elements -->
+      <xs:element name="ConsultarEntidade" type="tns:ConsultarEntidade"/>
+      <xs:element name="ConsultarEntidadeResponse" type="tns:ConsultarEntidadeResponse"/>
+      <xs:element name="pagarServico" type="tns:pagarServico"/>
+      <xs:element name="pagarServicoResponse" type="tns:pagarServicoResponse"/>
+
+      <!-- Input Types -->
+      <xs:complexType name="ConsultarEntidade">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="input" type="tns:serviceInput"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="serviceInput">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="chaveConfirmacao" type="tns:chaveConfirmacao"/>
+          <xs:element minOccurs="0" name="sessao" type="tns:serviceSession"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="chaveConfirmacao">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="chave" type="xs:string"/>
+          <xs:element minOccurs="0" name="posicoes" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="serviceSession">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:string"/>
+          <xs:element minOccurs="0" name="versao" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <!-- Output Types -->
+      <xs:complexType name="ConsultarEntidadeResponse">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="response" type="tns:entidadePagamentoServicoOutput"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="entidadePagamentoServicoOutput">
+        <xs:complexContent>
+          <xs:extension base="tns:serviceOutput">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="entidades" type="tns:entidades"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+
+      <xs:complexType name="serviceOutput">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="sessao" type="tns:serviceSession"/>
+          <xs:element minOccurs="0" name="status" type="tns:serviceStatus"/>
+          <xs:element minOccurs="0" name="transactionId" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="entidades">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="entidade" nillable="true" type="tns:entidade"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="entidade">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="codEntidade" type="xs:string"/>
+          <xs:element minOccurs="0" name="nomeEntidade" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="serviceStatus">
+        <xs:sequence>
+          <xs:element name="codigo" type="xs:int"/>
+          <xs:element minOccurs="0" name="detalhes" type="tns:serviceStatusDetailList"/>
+          <xs:element minOccurs="0" name="executado" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="mensagens" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="serviceStatusDetailList">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="detalhe" nillable="true" type="tns:serviceStatusDetail"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="serviceStatusDetail">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="causa" type="xs:string"/>
+          <xs:element minOccurs="0" name="codigo" type="xs:string"/>
+          <xs:element minOccurs="0" name="mensagem" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <!-- Payment Operation -->
+      <xs:complexType name="pagarServico">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="input" type="tns:pagamentoServicoInput"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="pagamentoServicoInput">
+        <xs:complexContent>
+          <xs:extension base="tns:serviceInput">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="entidade" type="xs:string"/>
+              <xs:element minOccurs="0" name="moeda" type="xs:string"/>
+              <xs:element minOccurs="0" name="montante" type="xs:decimal"/>
+              <xs:element minOccurs="0" name="numeroConta" type="xs:string"/>
+              <xs:element minOccurs="0" name="referencia" type="xs:string"/>
+              <xs:element minOccurs="0" name="user" type="xs:string"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+
+      <xs:complexType name="pagarServicoResponse">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="response" type="tns:pagamentoServicoOutput"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="pagamentoServicoOutput">
+        <xs:complexContent>
+          <xs:extension base="tns:serviceOutput">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="dataProcessamento" type="xs:string"/>
+              <xs:element minOccurs="0" name="entidade" type="xs:string"/>
+              <xs:element minOccurs="0" name="moeda" type="xs:string"/>
+              <xs:element minOccurs="0" name="montante" type="xs:string"/>
+              <xs:element minOccurs="0" name="msgPagamento" type="xs:string"/>
+              <xs:element minOccurs="0" name="numCliente" type="xs:int"/>
+              <xs:element minOccurs="0" name="numeroConta" type="xs:string"/>
+              <xs:element minOccurs="0" name="numeroOperacao" type="xs:string"/>
+              <xs:element minOccurs="0" name="referencia" type="xs:string"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+
+    </xs:schema>
+  </wsdl:types>
+
+  <!-- Messages -->
+  <wsdl:message name="pagarServico">
+    <wsdl:part name="parameters" element="tns:pagarServico"/>
+  </wsdl:message>
+
+  <wsdl:message name="ConsultarEntidade">
+    <wsdl:part name="parameters" element="tns:ConsultarEntidade"/>
+  </wsdl:message>
+
+  <wsdl:message name="ConsultarEntidadeResponse">
+    <wsdl:part name="parameters" element="tns:ConsultarEntidadeResponse"/>
+  </wsdl:message>
+
+  <wsdl:message name="pagarServicoResponse">
+    <wsdl:part name="parameters" element="tns:pagarServicoResponse"/>
+  </wsdl:message>
+
+  <!-- Port Type -->
+  <wsdl:portType name="PagamentoServicos">
+    <wsdl:operation name="ConsultarEntidade">
+      <wsdl:input name="ConsultarEntidade" message="tns:ConsultarEntidade"/>
+      <wsdl:output name="ConsultarEntidadeResponse" message="tns:ConsultarEntidadeResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="pagarServico">
+      <wsdl:input name="pagarServico" message="tns:pagarServico"/>
+      <wsdl:output name="pagarServicoResponse" message="tns:pagarServicoResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+
+  <!-- Binding -->
+  <wsdl:binding name="PagamentoServicosWSSoapBinding" type="tns:PagamentoServicos">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="ConsultarEntidade">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="ConsultarEntidade">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="ConsultarEntidadeResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="pagarServico">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="pagarServico">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="pagarServicoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+
+  <!-- Service -->
+  <wsdl:service name="PagamentoServicosWS">
+    <wsdl:port name="PagamentoServicosPort" binding="tns:PagamentoServicosWSSoapBinding">
+      <soap:address location="http://svdcpmwd02:9084/MozaServiceBus/PagamentoServicos/PagamentoServicosWS"/>
+    </wsdl:port>
+  </wsdl:service>
+
+</wsdl:definitions>

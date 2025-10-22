@@ -1,0 +1,280 @@
+<wsdl:definitions
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:tns="http://msb.mozabanco.co.mz"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
+    name="BankToWallet"
+    targetNamespace="http://msb.mozabanco.co.mz">
+
+    <wsdl:types>
+        <!-- Embedded XSD schema -->
+        <xs:schema
+            xmlns:xs="http://www.w3.org/2001/XMLSchema"
+            xmlns:tns="http://msb.mozabanco.co.mz"
+            targetNamespace="http://msb.mozabanco.co.mz"
+            elementFormDefault="unqualified"
+            version="1.0">
+
+            <!-- Element Declarations -->
+            <xs:element name="getBeneficiaryName" type="tns:getBeneficiaryName"/>
+            <xs:element name="getBeneficiaryNameResponse" type="tns:getBeneficiaryNameResponse"/>
+            <xs:element name="getTransactionCost" type="tns:getTransactionCost"/>
+            <xs:element name="getTransactionCostResponse" type="tns:getTransactionCostResponse"/>
+            <xs:element name="performSingleTransfer" type="tns:performSingleTransfer"/>
+            <xs:element name="performSingleTransferResponse" type="tns:performSingleTransferResponse"/>
+
+            <!-- Complex Types -->
+            <xs:complexType name="performSingleTransfer">
+                <xs:sequence>
+                    <xs:element name="input" type="tns:bankToWalletInput" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="bankToWalletInput">
+                <xs:complexContent>
+                    <xs:extension base="tns:serviceInput">
+                        <xs:sequence>
+                            <xs:element name="accountNumber" type="xs:long" minOccurs="0"/>
+                            <xs:element name="amount" type="xs:double" minOccurs="0"/>
+                            <xs:element name="cellular" type="xs:string" minOccurs="0"/>
+                            <xs:element name="currency" type="tns:currency" minOccurs="0"/>
+                            <xs:element name="description" type="xs:string" minOccurs="0"/>
+                            <xs:element name="user" type="xs:string" minOccurs="0"/>
+                            <xs:element name="wallet" type="xs:string" minOccurs="0"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+
+            <xs:complexType name="serviceInput">
+                <xs:sequence>
+                    <xs:element name="chaveConfirmacao" type="tns:chaveConfirmacao" minOccurs="0"/>
+                    <xs:element name="sessao" type="tns:serviceSession" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="chaveConfirmacao">
+                <xs:sequence>
+                    <xs:element name="chave" type="xs:string" minOccurs="0"/>
+                    <xs:element name="posicoes" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="serviceSession">
+                <xs:sequence>
+                    <xs:element name="id" type="xs:string" minOccurs="0"/>
+                    <xs:element name="versao" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="performSingleTransferResponse">
+                <xs:sequence>
+                    <xs:element name="response" type="tns:bankToWalletOutput" minOccurs="0" form="qualified"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="bankToWalletOutput">
+                <xs:complexContent>
+                    <xs:extension base="tns:serviceOutput">
+                        <xs:sequence>
+                            <xs:element name="amount" type="xs:double" minOccurs="0"/>
+                            <xs:element name="cellular" type="xs:string" minOccurs="0"/>
+                            <xs:element name="currency" type="tns:currency" minOccurs="0"/>
+                            <xs:element name="date" type="xs:string" minOccurs="0"/>
+                            <xs:element name="description" type="xs:string" minOccurs="0"/>
+                            <xs:element name="responseCode" type="xs:string" minOccurs="0"/>
+                            <xs:element name="responseMsg" type="xs:string" minOccurs="0"/>
+                            <xs:element name="transactionID" type="xs:string" minOccurs="0"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+
+            <xs:complexType name="serviceOutput">
+                <xs:sequence>
+                    <xs:element name="sessao" type="tns:serviceSession" minOccurs="0"/>
+                    <xs:element name="status" type="tns:serviceStatus" minOccurs="0"/>
+                    <xs:element name="transactionId" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="serviceStatus">
+                <xs:sequence>
+                    <xs:element name="codigo" type="xs:int"/>
+                    <xs:element name="detalhes" type="tns:serviceStatusDetailList" minOccurs="0"/>
+                    <xs:element name="executado" type="xs:string" minOccurs="0"/>
+                    <xs:element name="mensagens" type="xs:string" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="serviceStatusDetailList">
+                <xs:sequence>
+                    <xs:element name="detalhe" type="tns:serviceStatusDetail" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="serviceStatusDetail">
+                <xs:sequence>
+                    <xs:element name="causa" type="xs:string" minOccurs="0"/>
+                    <xs:element name="codigo" type="xs:string" minOccurs="0"/>
+                    <xs:element name="mensagem" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="getTransactionCost">
+                <xs:sequence>
+                    <xs:element name="input" type="tns:pricingInput" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="pricingInput">
+                <xs:complexContent>
+                    <xs:extension base="tns:serviceInput">
+                        <xs:sequence>
+                            <xs:element name="amount" type="xs:double" minOccurs="0"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+
+            <xs:complexType name="getTransactionCostResponse">
+                <xs:sequence>
+                    <xs:element name="response" type="tns:pricingOutput" minOccurs="0" form="qualified"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="pricingOutput">
+                <xs:complexContent>
+                    <xs:extension base="tns:serviceOutput">
+                        <xs:sequence>
+                            <xs:element name="amount" type="xs:double" minOccurs="0"/>
+                            <xs:element name="transactionCost" type="xs:double" minOccurs="0"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+
+            <xs:complexType name="getBeneficiaryName">
+                <xs:sequence>
+                    <xs:element name="input" type="tns:getBeneficiaryNameInput" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="getBeneficiaryNameInput">
+                <xs:complexContent>
+                    <xs:extension base="tns:serviceInput">
+                        <xs:sequence>
+                            <xs:element name="cellular" type="xs:string" minOccurs="0"/>
+                            <xs:element name="wallet" type="tns:walletType" minOccurs="0"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+
+            <xs:complexType name="getBeneficiaryNameResponse">
+                <xs:sequence>
+                    <xs:element name="response" type="tns:getBeneficiaryNameOutput" minOccurs="0" form="qualified"/>
+                </xs:sequence>
+            </xs:complexType>
+
+            <xs:complexType name="getBeneficiaryNameOutput">
+                <xs:complexContent>
+                    <xs:extension base="tns:serviceOutput">
+                        <xs:sequence>
+                            <xs:element name="cellular" type="xs:string" minOccurs="0"/>
+                            <xs:element name="conversationID" type="xs:string" minOccurs="0"/>
+                            <xs:element name="costumerName" type="xs:string" minOccurs="0"/>
+                            <xs:element name="output_ResponseCode" type="xs:string" minOccurs="0"/>
+                            <xs:element name="output_ResponseDesc" type="xs:string" minOccurs="0"/>
+                            <xs:element name="reference" type="xs:string" minOccurs="0"/>
+                            <xs:element name="walletID" type="xs:string" minOccurs="0"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+
+            <!-- Simple Types -->
+            <xs:simpleType name="currency">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="MZN"/>
+                    <xs:enumeration value="USD"/>
+                    <xs:enumeration value="EUR"/>
+                    <xs:enumeration value="ZAR"/>
+                </xs:restriction>
+            </xs:simpleType>
+
+            <xs:simpleType name="walletType">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="MT01"/>
+                    <xs:enumeration value="MT02"/>
+                    <xs:enumeration value="MT03"/>
+                </xs:restriction>
+            </xs:simpleType>
+
+        </xs:schema>
+    </wsdl:types>
+
+    <!-- Messages -->
+    <wsdl:message name="getTransactionCost">
+        <wsdl:part name="parameters" element="tns:getTransactionCost"/>
+    </wsdl:message>
+    <wsdl:message name="getTransactionCostResponse">
+        <wsdl:part name="parameters" element="tns:getTransactionCostResponse"/>
+    </wsdl:message>
+    <wsdl:message name="performSingleTransfer">
+        <wsdl:part name="parameters" element="tns:performSingleTransfer"/>
+    </wsdl:message>
+    <wsdl:message name="performSingleTransferResponse">
+        <wsdl:part name="parameters" element="tns:performSingleTransferResponse"/>
+    </wsdl:message>
+    <wsdl:message name="getBeneficiaryName">
+        <wsdl:part name="parameters" element="tns:getBeneficiaryName"/>
+    </wsdl:message>
+    <wsdl:message name="getBeneficiaryNameResponse">
+        <wsdl:part name="parameters" element="tns:getBeneficiaryNameResponse"/>
+    </wsdl:message>
+
+    <!-- Port Type -->
+    <wsdl:portType name="BankToWalletService">
+        <wsdl:operation name="performSingleTransfer">
+            <wsdl:input name="performSingleTransfer" message="tns:performSingleTransfer"/>
+            <wsdl:output name="performSingleTransferResponse" message="tns:performSingleTransferResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getTransactionCost">
+            <wsdl:input name="getTransactionCost" message="tns:getTransactionCost"/>
+            <wsdl:output name="getTransactionCostResponse" message="tns:getTransactionCostResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="getBeneficiaryName">
+            <wsdl:input name="getBeneficiaryName" message="tns:getBeneficiaryName"/>
+            <wsdl:output name="getBeneficiaryNameResponse" message="tns:getBeneficiaryNameResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <!-- Binding -->
+    <wsdl:binding name="BankToWalletSoapBinding" type="tns:BankToWalletService">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="performSingleTransfer">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="performSingleTransfer"><soap:body use="literal"/></wsdl:input>
+            <wsdl:output name="performSingleTransferResponse"><soap:body use="literal"/></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getTransactionCost">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getTransactionCost"><soap:body use="literal"/></wsdl:input>
+            <wsdl:output name="getTransactionCostResponse"><soap:body use="literal"/></wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="getBeneficiaryName">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="getBeneficiaryName"><soap:body use="literal"/></wsdl:input>
+            <wsdl:output name="getBeneficiaryNameResponse"><soap:body use="literal"/></wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <!-- Service -->
+    <wsdl:service name="BankToWallet">
+        <wsdl:port name="BankToWalletServicePort" binding="tns:BankToWalletSoapBinding">
+            <soap:address location="http://svdcpmwd02:9084/MozaServiceBus/BankToWallet/BankToWallet"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

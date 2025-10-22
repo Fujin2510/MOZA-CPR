@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ser:proxyServiceEntry xmlns:ser="http://www.bea.com/wli/sb/services" xmlns:con="http://www.bea.com/wli/sb/services/security/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oper="http://xmlns.oracle.com/servicebus/proxy/operations" xmlns:tran="http://www.bea.com/wli/sb/transports" xmlns:env="http://www.bea.com/wli/config/env">
+    <ser:coreEntry isAutoPublish="false">
+        <ser:description>This service was created by the REST adapter</ser:description>
+        <ser:security>
+            <con:inboundWss processWssHeader="true"/>
+        </ser:security>
+        <ser:binding type="REST" xsi:type="con:RestBindingType" xmlns:con="http://www.bea.com/wli/sb/services/bindings/config">
+            <con:wsdl ref="TransfersDigitalWallets/Resources/Transfer"/>
+            <con:binding>
+                <con:name>Transfer_ptt-binding</con:name>
+                <con:namespace>http://xmlns.oracle.com/GetDebitCardDetails/TransfersDigitalWallets/Transfer</con:namespace>
+            </con:binding>
+            <con:wadl ref="TransfersDigitalWallets/Resources/Transfer"/>
+        </ser:binding>
+        <oper:operations enabled="true">
+            <oper:messageTracing enabled="true">
+                <oper1:detailsLevel xmlns:oper1="http://xmlns.oracle.com/servicebus/operations">terse</oper1:detailsLevel>
+                <oper1:maxSize xmlns:oper1="http://xmlns.oracle.com/servicebus/operations">8192</oper1:maxSize>
+            </oper:messageTracing>
+            <oper:monitoring enabled="true" aggregationInterval="1440"/>
+        </oper:operations>
+        <ser:ws-policy>
+            <ser:binding-mode>no-policies</ser:binding-mode>
+        </ser:ws-policy>
+        <ser:invoke ref="TransfersDigitalWallets/Transfer" xsi:type="con1:PipelineRef" xmlns:con1="http://www.bea.com/wli/sb/pipeline/config"/>
+        <ser:xqConfiguration>
+            <ser:snippetVersion>1.0</ser:snippetVersion>
+        </ser:xqConfiguration>
+    </ser:coreEntry>
+    <ser:endpointConfig>
+        <tran:provider-id>http</tran:provider-id>
+        <tran:inbound>true</tran:inbound>
+        <tran:URI>
+            <env:value>/TransfersDigitalWallets/Transfer</env:value>
+        </tran:URI>
+        <tran:inbound-properties/>
+        <tran:provider-specific xsi:type="http:HttpEndPointConfiguration" xmlns:http="http://www.bea.com/wli/sb/transports/http">
+            <http:inbound-properties/>
+            <http:compression>
+                <http:compression-support>false</http:compression-support>
+            </http:compression>
+        </tran:provider-specific>
+    </ser:endpointConfig>
+</ser:proxyServiceEntry>

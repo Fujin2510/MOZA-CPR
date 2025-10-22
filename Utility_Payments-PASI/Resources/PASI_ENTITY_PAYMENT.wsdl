@@ -1,0 +1,34 @@
+<wsdl:definitions name="PASI_ENTITY_PAYMENT" targetNamespace="http://xmlns.oracle.com/GetDebitCardDetails/Utility_Payments-PASI/PASI_ENTITY_PAYMENT" xmlns:tns="http://xmlns.oracle.com/GetDebitCardDetails/Utility_Payments-PASI/PASI_ENTITY_PAYMENT" xmlns:inp1="http://www.mozabank.org/PASI_ENTITY_PAYMENT" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <plnk:partnerLinkType name="PASI_ENTITY_PAYMENT">
+        <plnk:role name="PASI_ENTITY_PAYMENTProvider" portType="tns:PASI_ENTITY_PAYMENT_ptt"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://www.mozabank.org/PASI_ENTITY_PAYMENT" schemaLocation="../XSDs/PASI_ENTITY_PAYMENT.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="Operation1_inputMessage">
+        <wsdl:part name="request" element="inp1:Request"/>
+    </wsdl:message>
+    <wsdl:message name="Operation1_outputMessage">
+        <wsdl:part name="reply" element="inp1:Response"/>
+    </wsdl:message>
+    <wsdl:portType name="PASI_ENTITY_PAYMENT_ptt">
+        <wsdl:operation name="Operation1">
+            <wsdl:input message="tns:Operation1_inputMessage"/>
+            <wsdl:output message="tns:Operation1_outputMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="PASI_ENTITY_PAYMENT_ptt-binding" type="tns:PASI_ENTITY_PAYMENT_ptt">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="Operation1">
+            <soap:operation soapAction="Operation1"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

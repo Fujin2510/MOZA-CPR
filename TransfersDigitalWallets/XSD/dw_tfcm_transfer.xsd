@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            targetNamespace="http://www.mozabank.org/DW_TFCM_TRANSFER"
+            xmlns="http://www.mozabank.org/DW_TFCM_TRANSFER"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified" 
+            nxsd:version="JSON"
+            nxsd:encoding="UTF-8">
+
+  <!-- Root Elements -->
+  <xsd:element name="Request" type="RequestType"/>
+  <xsd:element name="Response" type="ResponseType"/>
+
+  <!-- Request Type -->
+  <xsd:complexType name="RequestType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="referenceNo" type="xsd:string"/>
+      <xsd:element name="interfaceId" type="xsd:string"/>
+      <xsd:element name="entity" type="xsd:string"/>
+      <xsd:element name="headersMap" type="EmptyObject"/>
+      <xsd:element name="queryMap" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="hostName" type="xsd:string"/>
+      <xsd:element name="transfers" minOccurs="1" maxOccurs="unbounded">
+        <xsd:complexType>
+          <xsd:sequence> 
+      <xsd:element name="accountId" type="xsd:string"/>
+      <xsd:element name="amount" type="xsd:string"/>
+      <xsd:element name="beneMobNumber" type="xsd:string"/>
+      <xsd:element name="currency" type="xsd:string"/>
+      <xsd:element name="description" type="xsd:string"/>
+      <xsd:element name="mobWalletCode" type="xsd:string"/> 
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Transfer Request Item Type -->
+  <xsd:complexType name="TransferRequestItem">
+    <xsd:sequence>
+      <xsd:element name="accountId" type="xsd:string"/>
+      <xsd:element name="amount" type="xsd:string"/>
+      <xsd:element name="beneMobNumber" type="xsd:string"/>
+      <xsd:element name="currency" type="xsd:string"/>
+      <xsd:element name="description" type="xsd:string"/>
+      <xsd:element name="mobWalletCode" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+   <xsd:element name="transfers" type="TransferResponseItem"/>
+  <!-- Response Type -->
+  <xsd:complexType name="ResponseType">
+    <xsd:sequence>
+    <xsd:element name="data">
+   <xsd:complexType>
+   <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="referenceNo" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="result" type="ResultType"/>
+      <xsd:element name="hasMore" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="totalRecords" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="startSequence" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="transfers" minOccurs="0" maxOccurs="unbounded" type="TransferResponseItem"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  </xsd:element>
+  </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Result Type -->
+  <xsd:complexType name="ResultType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="externalReferenceId" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="status" type="xsd:string"/>
+      <xsd:element name="errorList" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="warningList" type="xsd:string" minOccurs="0" nillable="true"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Transfer Response Item Type -->
+  <xsd:complexType name="TransferResponseItem">
+    <xsd:sequence>
+      <xsd:element name="amount" type="xsd:string"/>
+      <xsd:element name="beneMobNumber" type="xsd:string"/>
+      <xsd:element name="currency" type="xsd:string"/>
+      <xsd:element name="date" type="xsd:dateTime"/>
+      <xsd:element name="transactionID" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Empty Object -->
+  <xsd:complexType name="EmptyObject">
+    <xsd:sequence/>
+  </xsd:complexType>
+
+</xsd:schema>
