@@ -1,0 +1,34 @@
+<wsdl:definitions name="CCMB_Request" targetNamespace="http://xmlns.oracle.com/21-05-2025/ExchangeRate/CCMB_Request" xmlns:tns="http://xmlns.oracle.com/21-05-2025/ExchangeRate/CCMB_Request" xmlns:inp1="http://www.mozabanca.org/exchange_rate_msb" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <plnk:partnerLinkType name="CCMB_Request">
+        <plnk:role name="CCMB_RequestProvider" portType="tns:CCMB_Request_ptt"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://www.mozabanca.org/exchange_rate_msb" schemaLocation="../Schemas/MSB.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="Operation1_inputMessage">
+        <wsdl:part name="request" element="inp1:ExchangeRateEncodedRequest"/>
+    </wsdl:message>
+    <wsdl:message name="Operation1_outputMessage">
+        <wsdl:part name="reply" element="inp1:ExchangeRateResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="CCMB_Request_ptt">
+        <wsdl:operation name="Operation1">
+            <wsdl:input message="tns:Operation1_inputMessage"/>
+            <wsdl:output message="tns:Operation1_outputMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="CCMB_Request_ptt-binding" type="tns:CCMB_Request_ptt">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="Operation1">
+            <soap:operation soapAction="Operation1"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

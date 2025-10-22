@@ -1,0 +1,21 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns0="http://www.mozabank.org/PREPAID_CARD_BAL" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="PrepaidBalanceBS">RestReference</doc>
+   <grammars>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/PREPAID_CARD_BAL" schemaLocation="PrepaidCardBalance.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/balance_v1">
+         <method name="GET" soa:wsdlOperation="prepaidCard">
+            <request soa:paramElement="pns:PreEncodedRequest" xmlns:pns="http://www.mozabank.org/PREPAID_CARD_BAL">
+               <param name="cardNumber" style="query" soa:expression="$msg.request/ns0:accountNumber" type="xsd:string"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:Response" xmlns:cns="http://www.mozabank.org/PREPAID_CARD_BAL"/>
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabank.org/PREPAID_CARD_BAL"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

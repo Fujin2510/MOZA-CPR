@@ -1,0 +1,20 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://www.mozabank.org/genericPaymentDate" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="GenPaymntDate">GenPaymntServ</doc>
+   <grammars>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/genericPaymentDate" schemaLocation="../GENERIC_PAYMENT_DATE.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/GenPaymentServ">
+         <method name="POST" soa:wsdlOperation="GenPayserv">
+            <request>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabank.org/genericPaymentDate"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabank.org/genericPaymentDate"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

@@ -1,0 +1,34 @@
+<wsdl:definitions name="PrepaidBalanceBS" targetNamespace="http://xmlns.oracle.com/ServiceBusApplication0JLY/PrepaidCardBalance/PrepaidBalanceBS" xmlns:tns="http://xmlns.oracle.com/ServiceBusApplication0JLY/PrepaidCardBalance/PrepaidBalanceBS" xmlns:inp1="http://www.mozabank.org/PREPAID_CARD_BAL" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <plnk:partnerLinkType name="PrepaidBalanceBS">
+        <plnk:role name="PrepaidBalanceBSProvider" portType="tns:PrepaidBalanceBS_ptt"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://www.mozabank.org/PREPAID_CARD_BAL" schemaLocation="PrepaidCardBalance.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="prepaidCard_inputMessage">
+        <wsdl:part name="request" element="inp1:PreEncodedRequest"/>
+    </wsdl:message>
+    <wsdl:message name="prepaidCard_outputMessage">
+        <wsdl:part name="reply" element="inp1:Response"/>
+    </wsdl:message>
+    <wsdl:portType name="PrepaidBalanceBS_ptt">
+        <wsdl:operation name="prepaidCard">
+            <wsdl:input message="tns:prepaidCard_inputMessage"/>
+            <wsdl:output message="tns:prepaidCard_outputMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="PrepaidBalanceBS_ptt-binding" type="tns:PrepaidBalanceBS_ptt">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="prepaidCard">
+            <soap:operation soapAction="prepaidCard"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            targetNamespace="http://www.mozabanca.org/obdx/exchange_rate_obdx"
+            xmlns="http://www.mozabanca.org/obdx/exchange_rate_obdx" elementFormDefault="qualified"
+            attributeFormDefault="unqualified" nxsd:version="JSON" nxsd:encoding="UTF-8">
+  <!-- Root elements -->
+  <xsd:element name="Request" type="RequestType"/>
+  <xsd:element name="Response" type="ResponseType"/>
+  <!-- Request type -->
+  <xsd:complexType name="RequestType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="referenceNo" type="xsd:string"/>
+      <xsd:element name="interfaceId" type="xsd:string"/>
+      <xsd:element name="entity" type="xsd:string"/>
+      <xsd:element name="headersMap">
+        <xsd:complexType/>
+      </xsd:element>
+      <xsd:element name="queryMap" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="hostName" type="xsd:string"/>
+      <xsd:element name="currency1" type="xsd:string"/>
+      <xsd:element name="currency2" type="xsd:string"/>
+      <xsd:element name="branchId" type="xsd:string"/>
+      <xsd:element name="relationshipType" type="xsd:string" minOccurs="0" nillable="true"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- Response type -->
+  <xsd:complexType name="ResponseType">
+    <xsd:sequence>
+      <xsd:element name="data">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="referenceNo" type="xsd:string"/>
+            <xsd:element name="hasMore" type="xsd:boolean" minOccurs="0" nillable="true"/>
+            <xsd:element name="totalRecords" type="xsd:int" minOccurs="0" nillable="true"/>
+            <xsd:element name="startSequence" type="xsd:int" minOccurs="0" nillable="true"/>
+            <xsd:element name="result">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+                  <xsd:element name="referenceNo" type="xsd:string"/>
+                  <xsd:element name="status" type="xsd:string"/>
+                   <xsd:element name="errorList" nillable="true" minOccurs="0" maxOccurs="unbounded">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element name="code" type="xsd:string"/>
+                          <xsd:element name="message" type="xsd:string"/>
+                        </xsd:sequence>
+                      </xsd:complexType>
+                    </xsd:element>
+                  <xsd:element name="warningList" type="xsd:string" minOccurs="0" nillable="true"/>
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+             <xsd:element name="exchangeRates" minOccurs="0" maxOccurs="unbounded">
+              <xsd:complexType>
+                <xsd:sequence>
+                 <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+                  <xsd:element name="currency2" type="xsd:string"/>
+                  <xsd:element name="currency1" type="xsd:string"/>
+                  <xsd:element name="branchId" type="xsd:string"/>
+                  <xsd:element name="rateType" type="xsd:string"/>
+                  <xsd:element name="midRate" type="xsd:decimal"/>
+                  <xsd:element name="buyRate" type="xsd:decimal"/>
+                  <xsd:element name="sellRate" type="xsd:decimal"/>
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

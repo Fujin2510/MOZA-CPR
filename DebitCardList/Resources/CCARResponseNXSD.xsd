@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd" 
+              targetNamespace="http://www.mozabanca.org/debitservice/ccar" 
+              xmlns="http://www.mozabanca.org/debitservice/ccar" 
+              elementFormDefault="qualified"
+              attributeFormDefault="unqualified" nxsd:version="JSON" nxsd:encoding="US-ASCII"> 
+  <xsd:element name="CCARRESPONSE">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="transactionCode" type="xsd:string"/>
+        <xsd:element name="operationData">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="CCAR_O_0001" type="xsd:integer"/>
+              <xsd:element name="CCAR_O_0002" type="xsd:integer"/>
+              <xsd:element name="CCAR_O_0003" maxOccurs="unbounded" minOccurs="0">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="CCAR_O_0003_0001" type="xsd:integer"/>
+                    <xsd:element name="CCAR_O_0003_0002" type="xsd:string"/>
+                    <xsd:element name="CCAR_O_0003_0003" type="xsd:string"/>
+                    <xsd:element name="CCAR_O_0003_0004" type="xsd:string"/>
+                    <xsd:element name="CCAR_O_0003_0005"/>
+                    <xsd:element name="CCAR_O_0003_0006" type="xsd:integer"/>
+                    <xsd:element name="CCAR_O_0003_0007" type="xsd:integer"/>
+                    <xsd:element name="CCAR_O_0003_0008" type="xsd:integer"/>
+                    <xsd:element name="CCAR_O_0003_0009" type="xsd:integer"/>
+                    <xsd:element name="CCAR_O_0003_0010" type="xsd:integer"/>
+                    <xsd:element name="CCAR_O_0003_00101" type="xsd:string"/>
+                    <xsd:element name="CCAR_O_0003_0011" type="xsd:string"/>
+                    <xsd:element name="CCAR_O_0003_0012" type="xsd:integer"/>
+                    <xsd:element name="CCAR_O_0003_0013" type="xsd:string"/>
+                    <xsd:element name="CCAR_O_0003_0014" type="xsd:integer"/>
+                    <xsd:element name="CCAR_O_0003_0015" type="xsd:integer"/>
+                    <xsd:element name="CCAR_O_0003_00151" type="xsd:string"/>
+                    <xsd:element name="CCAR_O_0003_0016" type="xsd:integer"/>
+                    <xsd:element name="CCAR_O_0003_00161" type="xsd:string"/>
+                    <xsd:element name="CCAR_O_0003_0017" type="xsd:integer"/>
+                    <xsd:element name="CCAR_O_0003_0018" type="xsd:string"/>
+                    <xsd:element name="CCAR_O_0003_0019" type="xsd:string"/>
+                    <xsd:element name="CCAR_O_0003_0020" type="xsd:string"/>
+                    <xsd:element name="CCAR_O_0003_0021" type="xsd:string"/>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="channelOperationLogKey"/>
+        <xsd:element name="coreLogKey" type="xsd:integer"/>
+        <xsd:element name="coreCancelationCode"/>
+        <xsd:element name="errorCode" type="xsd:integer"/>
+        <xsd:element name="errorMessage"/>
+        <xsd:element name="layoutVersion"/>
+        <xsd:element name="user" type="xsd:string"/>
+        <xsd:element name="password"/>
+        <xsd:element name="station"/>
+        <xsd:element name="licenceKey" type="xsd:string"/>
+        <xsd:element name="encryption"/>
+        <xsd:element name="code" type="xsd:integer"/>
+        <xsd:element name="version" type="xsd:string"/>
+        <xsd:element name="sessionId" type="xsd:string"/>
+        <xsd:element name="language"/>
+        <xsd:element name="channelCode" type="xsd:string"/>
+        <xsd:element name="origin" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>
