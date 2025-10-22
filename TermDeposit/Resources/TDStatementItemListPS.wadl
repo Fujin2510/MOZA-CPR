@@ -1,0 +1,22 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://www.mozabank.org/TD_STATEMENT_ITEM_LIST" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="TDStatementItemListPS">RestService</doc>
+   <grammars>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/TD_STATEMENT_ITEM_LIST" schemaLocation="TDStatementItemList.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/td_statement_item_list">
+         <method name="POST" soa:wsdlOperation="TD_Statement_Item_list">
+            <request>
+               <representation mediaType="application/xml" element="cns:TDStatementItemListRequest" xmlns:cns="http://www.mozabank.org/TD_STATEMENT_ITEM_LIST"/>
+               <representation mediaType="application/json" element="cns:TDStatementItemListRequest" xmlns:cns="http://www.mozabank.org/TD_STATEMENT_ITEM_LIST"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:TDStatementItemListResponse" xmlns:cns="http://www.mozabank.org/TD_STATEMENT_ITEM_LIST"/>
+               <representation mediaType="application/json" element="cns:TDStatementItemListResponse" xmlns:cns="http://www.mozabank.org/TD_STATEMENT_ITEM_LIST"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

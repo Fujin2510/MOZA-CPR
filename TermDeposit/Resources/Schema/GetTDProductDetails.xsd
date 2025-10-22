@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            xmlns:tns="http://www.mozabank.org/getTDProductDetails"
+            targetNamespace="http://www.mozabank.org/getTDProductDetails" elementFormDefault="qualified"
+            attributeFormDefault="unqualified" nxsd:version="JSON" nxsd:encoding="UTF-8">
+  <xsd:element name="Request">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="idVal" type="xsd:integer"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="Response" type="tns:ResponseType"/>
+  <xsd:complexType name="ResponseType">
+    <xsd:sequence>
+      <xsd:element name="ID" type="xsd:integer"/>
+      <xsd:element name="PRODUTO" type="xsd:string"/>
+      <xsd:element name="DESCRICAO_PRODUTO" type="xsd:string"/>
+      <xsd:element name="DESCRICAO_OFERTA" type="xsd:string"/>
+      <xsd:element name="OFERTA" type="xsd:string"/>
+      <xsd:element name="PRIORIDADE_OFERTA" type="xsd:integer"/>
+      <xsd:element name="COMPONENTE" type="xsd:string"/>
+      <xsd:element name="DESCRICAO_COMPONENTE" type="xsd:string"/>
+      <xsd:element name="MOEDA" type="xsd:string"/>
+      <xsd:element name="TAXA_JURO" type="xsd:decimal"/>
+      <xsd:element name="PRAZO_MINIMO" type="xsd:integer"/>
+      <xsd:element name="PRAZO_MAXIMO" type="xsd:integer"/>
+      <xsd:element name="VALOR_MINIMO" type="xsd:string"/>
+      <xsd:element name="VALOR_MAXIMO" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="ResponseListType">
+    <xsd:sequence>
+      <xsd:element name="Response" type="tns:ResponseType" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="ResponseList" type="tns:ResponseListType"/>
+</xsd:schema>

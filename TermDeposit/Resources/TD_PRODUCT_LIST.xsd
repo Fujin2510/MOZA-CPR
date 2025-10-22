@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+            xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            targetNamespace="http://www.mozabanca.org/obdx/td_product_list"
+            xmlns="http://www.mozabanca.org/obdx/td_product_list" 
+            elementFormDefault="qualified" 
+            attributeFormDefault="unqualified" 
+            nxsd:version="JSON" 
+            nxsd:encoding="UTF-8">
+ 
+    <!-- Request Root Element -->
+<xsd:element name="Request" type="RequestType"/>
+ 
+    <!-- Response Root Element (optional placeholder if needed) -->
+<xsd:element name="Response" type="ResponseType"/>
+ 
+    <!-- Request Type -->
+<xsd:complexType name="RequestType">
+<xsd:sequence>
+<xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+<xsd:element name="referenceNo" type="xsd:string"/>
+<xsd:element name="interfaceId" type="xsd:string"/>
+<xsd:element name="entity" type="xsd:string"/>
+<xsd:element name="headersMap">
+<xsd:complexType/>
+</xsd:element>
+<xsd:element name="queryMap" type="xsd:string" minOccurs="0" nillable="true"/>
+<xsd:element name="hostName" type="xsd:string"/>
+<xsd:element name="productType" type="xsd:string"/>
+<xsd:element name="branchCode" type="xsd:string"/>
+<xsd:element name="productCurrency" type="xsd:string" minOccurs="0" nillable="true"/>
+<xsd:element name="customerType" type="xsd:string"/>
+<xsd:element name="depositProductModule" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+
+<!-- Response Type -->
+<xsd:complexType name="ResponseType">
+<xsd:sequence>
+<xsd:element name="data">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+<xsd:element name="referenceNo" type="xsd:string" minOccurs="0" nillable="true"/>
+<xsd:element name="result" type="ResultType"/>
+<xsd:element name="hasMore" type="xsd:string" minOccurs="0" nillable="true"/>
+<xsd:element name="totalRecords" type="xsd:string" minOccurs="0" nillable="true"/>
+<xsd:element name="startSequence" type="xsd:string" minOccurs="0" nillable="true"/>
+<xsd:element name="productList" type="ProductListType" minOccurs="0" maxOccurs="unbounded"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+ 
+    <!-- Result Type -->
+<xsd:complexType name="ResultType">
+<xsd:sequence>
+<xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+<xsd:element name="externalReferenceId" type="xsd:string" minOccurs="0" nillable="true"/>
+<xsd:element name="status" type="xsd:string"/>
+<xsd:element name="errorList" type="xsd:string" minOccurs="0" nillable="true"/>
+<xsd:element name="warningList" type="xsd:string" minOccurs="0" nillable="true"/>
+</xsd:sequence>
+</xsd:complexType>
+ 
+    <!-- Product List Type -->
+<xsd:complexType name="ProductListType">
+<xsd:sequence>
+<xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+<xsd:element name="accountType" type="xsd:string"/>
+<xsd:element name="productId" type="xsd:string"/>
+<xsd:element name="productName" type="xsd:string"/>
+<xsd:element name="productType" type="xsd:string"/>
+<xsd:element name="module" type="xsd:string"/>
+<xsd:element name="startDate" type="xsd:string"/>
+<xsd:element name="expiryDate" type="xsd:string"/>
+<xsd:element name="tenure" type="TenureType"/>
+<xsd:element name="amount" type="AmountListType" minOccurs="0" maxOccurs="unbounded"/>
+<xsd:element name="isTopupAllowed" type="xsd:boolean"/>
+<xsd:element name="isPartialRedeemAllowed" type="xsd:boolean"/>
+<xsd:element name="accrualFrequency" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+ 
+   
+ 
+    <!-- Tenure Type -->
+<xsd:complexType name="TenureType">
+<xsd:sequence>
+<xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+<xsd:element name="minTenure" type="TenureDetailType"/>
+<xsd:element name="defaultTenure" type="TenureDetailType"/>
+<xsd:element name="maxTenure" type="TenureDetailType"/>
+</xsd:sequence>
+</xsd:complexType>
+ 
+    <!-- Tenure Detail Type -->
+<xsd:complexType name="TenureDetailType">
+<xsd:sequence>
+<xsd:element name="days" type="xsd:int"/>
+<xsd:element name="months" type="xsd:int"/>
+<xsd:element name="years" type="xsd:int"/>
+</xsd:sequence>
+</xsd:complexType>
+ 
+    <!-- Amount List -->
+<xsd:complexType name="AmountListType">
+<xsd:sequence>
+<xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+<xsd:element name="minAmount" type="CurrencyAmountType"/>
+<xsd:element name="maxAmount" type="CurrencyAmountType"/>
+<xsd:element name="currency" type="xsd:string"/>
+<xsd:element name="incrementStep" type="xsd:string" minOccurs="0" nillable="true"/>
+<xsd:element name="interestRate" type="InterestRateType"/>
+</xsd:sequence>
+</xsd:complexType>
+ 
+    <!-- Currency Amount -->
+<xsd:complexType name="CurrencyAmountType">
+<xsd:sequence>
+<xsd:element name="currency" type="xsd:string"/>
+<xsd:element name="amount" type="xsd:decimal"/>
+</xsd:sequence>
+</xsd:complexType>
+ 
+    <!-- Interest Rate -->
+<xsd:complexType name="InterestRateType">
+<xsd:sequence>
+<xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+<xsd:element name="slabs" type="InterestSlabType" minOccurs="0" maxOccurs="unbounded"/>
+</xsd:sequence>
+</xsd:complexType>
+ 
+    <!-- Interest Slab -->
+<xsd:complexType name="InterestSlabType">
+<xsd:sequence>
+<xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+<xsd:element name="amount" type="CurrencyAmountType"/>
+<xsd:element name="interestSlabRates" type="xsd:string" minOccurs="0" nillable="true"/>
+</xsd:sequence>
+</xsd:complexType>
+ 
+ 
+</xsd:schema>

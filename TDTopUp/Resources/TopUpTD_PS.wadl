@@ -1,0 +1,46 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns0="http://www.mozabanca.org/obdx/td_topup" xmlns:ns2="http://www.mozabanca.org/obdx/td_topup_projection" xmlns:ns1="http://www.mozabanca.org/obdx/td_list_basic_details" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="TopUpTD_PS">RestService</doc>
+   <grammars>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabanca.org/obdx/td_topup" schemaLocation="../XSD/TD_TOPUP.xsd"/>
+        </xsd:schema>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabanca.org/obdx/td_topup_projection" schemaLocation="../XSD/TD_TOPUP_PROJECTION.xsd"/>
+        </xsd:schema>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabanca.org/obdx/td_list_basic_details" schemaLocation="../XSD/TD_LIST_BASIC_DETAILS.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/tdTopUp">
+         <method name="POST" soa:wsdlOperation="TdTopUp">
+            <request>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabanca.org/obdx/td_topup"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabanca.org/obdx/td_topup"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/tdTopUpProjection">
+         <method name="POST" soa:wsdlOperation="TdProjection">
+            <request>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabanca.org/obdx/td_topup_projection"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabanca.org/obdx/td_topup_projection"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/tdTopUpBasicDetails">
+         <method name="POST" soa:wsdlOperation="TdBasicDetails">
+            <request>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabanca.org/obdx/td_list_basic_details"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabanca.org/obdx/td_list_basic_details"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>
