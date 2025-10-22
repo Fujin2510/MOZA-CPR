@@ -1,0 +1,15 @@
+<wsdl:definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/SEPT23/SessionParams/QueryBranchListBS" name="QueryBranchListBS-concrete" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:import location="QueryBranchListBS.wsdl" namespace="http://xmlns.oracle.com/pcbpel/adapter/db/SEPT23/SessionParams/QueryBranchListBS"/>
+    <wsdl:binding name="QueryBranchListBS_ptt-binding" type="quer:QueryBranchListBS_ptt" xmlns:quer="http://xmlns.oracle.com/pcbpel/adapter/db/SEPT23/SessionParams/QueryBranchListBS">
+        <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+        <wsdl:operation name="QueryBranchListBSSelect">
+            <soap:operation soapAction="QueryBranchListBSSelect"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

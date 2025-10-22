@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.mozabank.org/servicebus/querycached"
+            targetNamespace="http://www.mozabank.org/servicebus/querycached" elementFormDefault="qualified">
+  <xsd:element name="InsertCachedRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Session_Id" type="xsd:string"/>
+         <xsd:element name="Status" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="PartyID" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="PartyCasaAccountsList_Response" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="PartyTdAccountsList_Response" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="CasaList_Response" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="PartyLoanAccountsList_Response" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="TDList_Response" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="LoanAccountList_Response" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="PartyCardAccountsList_Response" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="CreditCardRead_Response" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="DebitCardListRead_Response" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="ReadParty_Response" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="CasaAccountParties_Response" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="CasaStatementItemList_Response" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="LoanAccountParties_Response" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="LoanDetails_Response" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="PartyAddressList_Response" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="PartyContactsList_Response" type="xsd:string" minOccurs="0" nillable="true"/>
+         <xsd:element name="ID" type="xsd:string" minOccurs="0" nillable="true"/> 
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

@@ -1,0 +1,12 @@
+<wsdl:definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/SB0608/SessionParams/InsertCachePayloadBS" name="InsertCachePayloadBS-concrete" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:import location="InsertCachePayloadBS.wsdl" namespace="http://xmlns.oracle.com/pcbpel/adapter/db/SB0608/SessionParams/InsertCachePayloadBS"/>
+    <wsdl:binding name="InsertCachePayloadBS_ptt-binding" type="ins:InsertCachePayloadBS_ptt" xmlns:ins="http://xmlns.oracle.com/pcbpel/adapter/db/SB0608/SessionParams/InsertCachePayloadBS">
+        <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+        <wsdl:operation name="merge">
+            <soap:operation soapAction="merge"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

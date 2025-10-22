@@ -1,0 +1,43 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+   <entry key="root_descriptor_alias">SESSION_TXN_USER</entry>
+   <entry key="SESSION_TXN_USER:db_column_8">STATUS</entry>
+   <entry key="SESSION_TXN_USER:db_column_7">TO_DATE</entry>
+   <entry key="SESSION_TXN_USER.ACCOUNT_ID:db_column_type">VARCHAR2</entry>
+   <entry key="SESSION_TXN_USER.CREATION_TIME:db_column_not_null">false</entry>
+   <entry key="SESSION_TXN_USER:db_column_6">FROM_DATE</entry>
+   <entry key="SESSION_TXN_USER:db_column_5">ACCOUNT_ID</entry>
+   <entry key="SESSION_TXN_USER.TO_DATE:db_column_size">20</entry>
+   <entry key="SESSION_TXN_USER:db_column_4">BRANCHCODE</entry>
+   <entry key="SESSION_TXN_USER.CREATION_TIME:db_column_scale">6</entry>
+   <entry key="SESSION_TXN_USER:db_column_3">PARTYNAME</entry>
+   <entry key="SESSION_TXN_USER:db_column_2">CREATION_TIME</entry>
+   <entry key="SESSION_TXN_USER:db_column_1">USER_ID</entry>
+   <entry key="SESSION_TXN_USER:db_column_0">SESSION_ID</entry>
+   <entry key="SESSION_TXN_USER.BRANCHCODE:db_column_size">10</entry>
+   <entry key="SESSION_TXN_USER.ACCOUNT_ID:db_column_size">20</entry>
+   <entry key="SESSION_TXN_USER.CREATION_TIME:db_column_type">TIMESTAMP</entry>
+   <entry key="SESSION_TXN_USER.SESSION_ID:db_column_type">VARCHAR2</entry>
+   <entry key="SESSION_TXN_USER.TO_DATE:db_column_not_null">false</entry>
+   <entry key="SESSION_TXN_USER.STATUS:db_column_type">VARCHAR2</entry>
+   <entry key="SESSION_TXN_USER.ACCOUNT_ID:db_column_not_null">false</entry>
+   <entry key="SESSION_TXN_USER:db_table_type">TABLE</entry>
+   <entry key="SESSION_TXN_USER.SESSION_ID:db_column_size">60</entry>
+   <entry key="SESSION_TXN_USER.STATUS:db_column_size">20</entry>
+   <entry key="SESSION_TXN_USER.FROM_DATE:db_column_type">VARCHAR2</entry>
+   <entry key="SESSION_TXN_USER.BRANCHCODE:db_column_not_null">false</entry>
+   <entry key="SESSION_TXN_USER.PARTYNAME:db_column_not_null">false</entry>
+   <entry key="SESSION_TXN_USER.STATUS:db_column_not_null">false</entry>
+   <entry key="SESSION_TXN_USER.USER_ID:db_column_type">VARCHAR2</entry>
+   <entry key="SESSION_TXN_USER.FROM_DATE:db_column_not_null">false</entry>
+   <entry key="return_single_result_set">false</entry>
+   <entry key="SESSION_TXN_USER.FROM_DATE:db_column_size">20</entry>
+   <entry key="SESSION_TXN_USER.SESSION_ID:db_column_not_null">false</entry>
+   <entry key="SESSION_TXN_USER.USER_ID:db_column_not_null">false</entry>
+   <entry key="SESSION_TXN_USER.USER_ID:db_column_size">50</entry>
+   <entry key="SESSION_TXN_USER.PARTYNAME:db_column_type">VARCHAR2</entry>
+   <entry key="SESSION_TXN_USER.TO_DATE:db_column_type">VARCHAR2</entry>
+   <entry key="SESSION_TXN_USER.PARTYNAME:db_column_size">40</entry>
+   <entry key="SESSION_TXN_USER.BRANCHCODE:db_column_type">VARCHAR2</entry>
+</properties>

@@ -1,0 +1,54 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/QuerySessions" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/top/QuerySessions" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="SessionTxnUserCollection" type="SessionTxnUserCollection"/>
+   <xs:complexType name="SessionTxnUserCollection">
+      <xs:sequence>
+         <xs:element name="SessionTxnUser" type="SessionTxnUser" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="SessionTxnUser">
+      <xs:sequence>
+         <xs:element name="sessionId" type="string60" minOccurs="0" nillable="true"/>
+         <xs:element name="userId" type="string50" nillable="true"/>
+         <xs:element name="creationTime" type="xs:dateTime" minOccurs="0" nillable="true"/>
+         <xs:element name="partyname" type="string40" minOccurs="0" nillable="true"/>
+         <xs:element name="branchcode" type="string10" minOccurs="0" nillable="true"/>
+         <xs:element name="accountId" type="string20" minOccurs="0" nillable="true"/>
+         <xs:element name="fromDate" type="string20" minOccurs="0" nillable="true"/>
+         <xs:element name="toDate" type="string20" minOccurs="0" nillable="true"/>
+         <xs:element name="status" type="string20" minOccurs="0" nillable="true"/>
+         <xs:element name="fullname" type="string40" minOccurs="0" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="QuerySessionsSelect_partyIDInputParameters" type="QuerySessionsSelect_partyID"/>
+   <xs:complexType name="QuerySessionsSelect_partyID">
+      <xs:sequence>
+         <xs:element name="partyID" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:simpleType name="string60">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="60"/>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="string50">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="50"/>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="string40">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="40"/>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="string10">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="10"/>
+      </xs:restriction>
+   </xs:simpleType>
+   <xs:simpleType name="string20">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="20"/>
+      </xs:restriction>
+   </xs:simpleType>
+</xs:schema>

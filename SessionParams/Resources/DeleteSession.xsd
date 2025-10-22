@@ -1,0 +1,9 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/DeleteSession" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/DeleteSession" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="DeleteSessionInput" type="DeleteSessionInput"/>
+   <xs:complexType name="DeleteSessionInput">
+      <xs:sequence>
+         <xs:element name="SESSIONVAL" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

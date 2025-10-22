@@ -1,0 +1,15 @@
+<wsdl:definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/SEPT14/SessionParams/QueryExchangeRates" name="QueryExchangeRates-concrete" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:import location="QueryExchangeRates.wsdl" namespace="http://xmlns.oracle.com/pcbpel/adapter/db/SEPT14/SessionParams/QueryExchangeRates"/>
+    <wsdl:binding name="QueryExchangeRates_ptt-binding" type="quer:QueryExchangeRates_ptt" xmlns:quer="http://xmlns.oracle.com/pcbpel/adapter/db/SEPT14/SessionParams/QueryExchangeRates">
+        <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+        <wsdl:operation name="QueryExchangeRatesSelect">
+            <soap:operation soapAction="QueryExchangeRatesSelect"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

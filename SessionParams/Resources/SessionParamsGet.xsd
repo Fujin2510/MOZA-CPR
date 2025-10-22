@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.mozabank.org/sessionprocess"
+            xmlns:tns="http://www.mozabank.org/sessionprocess" targetNamespace="http://www.mozabank.org/sessionprocess"
+            elementFormDefault="qualified">
+  <xsd:element name="SessionData" type="Data"/>
+  <xsd:complexType name="Data">
+    <xsd:sequence>
+      <xsd:element name="Session" type="xsd:string"/>
+      <xsd:element name="UserId" type="xsd:string"/>
+      <xsd:element name="CreatedDate" type="xsd:string" minOccurs="0" nillable="true" />
+      <xsd:element name="PartyName" type="xsd:string" minOccurs="0" nillable="true" />
+      <xsd:element name="BranchCode" type="xsd:string" minOccurs="0" nillable="true" />
+      <xsd:element name="AccountId" type="xsd:string" minOccurs="0" nillable="true" />
+      <xsd:element name="FromDate" type="xsd:string" minOccurs="0" nillable="true" />
+      <xsd:element name="ToDate" type="xsd:string" minOccurs="0" nillable="true" />
+      <xsd:element name="Status" type="xsd:string" minOccurs="0" nillable="true" />
+       <xsd:element name="FullName" type="xsd:string" minOccurs="0" nillable="true" />
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="Query">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="QueryParam" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>
