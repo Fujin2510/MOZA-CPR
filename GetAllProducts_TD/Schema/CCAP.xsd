@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema 
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+    xmlns:tns="http://www.mozabank.org/ccap_msb"
+    targetNamespace="http://www.mozabank.org/ccap_msb" 
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified"
+              nxsd:version="JSON" nxsd:encoding="UTF-8">
+
+  <!-- Root Elements -->
+  <xsd:element name="Request" type="tns:CCAPRequestType"/>
+  <xsd:element name="Response" type="tns:CCAPResponseType"/>
+
+  <!-- Request Type -->
+  <xsd:complexType name="CCAPRequestType">
+    <xsd:sequence>
+      <xsd:element name="user" type="xsd:string"/>
+      <xsd:element name="password" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="origin" type="xsd:string"/>
+      <xsd:element name="channelCode" type="xsd:string"/>
+      <xsd:element name="version" type="xsd:string"/>
+      <xsd:element name="licenceKey" type="xsd:string"/>
+      <xsd:element name="sessionId" type="xsd:string"/>
+      <xsd:element name="transactionCode" type="xsd:string"/>
+      <xsd:element name="operationData" type="tns:CCAPOperationInputType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- OperationData (Input) -->
+  <xsd:complexType name="CCAPOperationInputType">
+    <xsd:sequence>
+      <xsd:element name="CCAP_I_0001" type="xsd:string"/>
+      <xsd:element name="CCAP_I_0002" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="CCAP_I_0003" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="CCAP_I_0004" type="xsd:string"/>
+      <xsd:element name="CCAP_I_0005" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+   <xsd:element name="CCAPStringRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="RequestString" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <!-- Response Type -->
+  <xsd:complexType name="CCAPResponseType">
+    <xsd:sequence>
+      <xsd:element name="transactionCode" type="xsd:string"/>
+      <xsd:element name="operationData" type="tns:CCAPOperationOutputType"/>
+      <xsd:element name="channelOperationLogKey" type="xsd:string"/>
+      <xsd:element name="coreLogKey" type="xsd:string"/>
+      <xsd:element name="coreCancelationCode" type="xsd:string"/>
+      <xsd:element name="errorCode" type="xsd:string"/>
+      <xsd:element name="errorMessage" type="tns:ErrorMessageType"/>
+      <xsd:element name="layoutVersion" type="xsd:string"/>
+      <xsd:element name="user" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="password" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="station" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="licenceKey" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="encryption" type="xsd:string"/>
+      <xsd:element name="code" type="xsd:string"/>
+      <xsd:element name="version" type="xsd:string"/>
+      <xsd:element name="sessionId" type="xsd:string"/>
+      <xsd:element name="language" type="xsd:string"/>
+      <xsd:element name="channelCode" type="xsd:string"/>
+      <xsd:element name="origin" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- OperationData (Output) -->
+  <xsd:complexType name="CCAPOperationOutputType">
+    <xsd:sequence>
+      <xsd:element name="CCAP_O_0001" type="xsd:string"/>
+      <xsd:element name="CCAP_O_0002" type="xsd:string"/>
+      <xsd:element name="CCAP_O_0003" type="tns:CCAPAccountListType" minOccurs="0" nillable="true"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- CCAP_O_0003 Array -->
+  <xsd:complexType name="CCAPAccountListType">
+    <xsd:sequence>
+      <xsd:element name="CCAP_O_0003_0001" type="xsd:string"/>
+      <xsd:element name="CCAP_O_0003_0002" type="xsd:string"/>
+      <xsd:element name="CCAP_O_0003_0003" type="xsd:string"/>
+      <xsd:element name="CCAP_O_0003_0004" type="xsd:string"/>
+      <xsd:element name="CCAP_O_0003_0005" type="xsd:integer"/>
+      <xsd:element name="CCAP_O_0003_0006" type="xsd:string"/>
+      <xsd:element name="CCAP_O_0003_0007" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- ErrorMessage Type -->
+  <xsd:complexType name="ErrorMessageType">
+    <xsd:sequence>
+      <xsd:element name="messages" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

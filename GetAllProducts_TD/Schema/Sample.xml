@@ -1,0 +1,33 @@
+<CAPDAccountObjectResponse xmlns:obj="http://www.mozabank.org/ccap_tdaccount_partylist_summary/capd/capdreqvarns">
+  <Root/>
+  <operationData xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://www.mozabank.org/CAPD">
+    <CAPD_O_0001>00364384620002</CAPD_O_0001>
+    <CAPD_O_0002>Conta Valor Poupança</CAPD_O_0002>
+    <CAPD_O_0003>0207</CAPD_O_0003>
+    <CAPD_O_0004>Agência 25 Setembro</CAPD_O_0004>
+    <CAPD_O_0005>20250221</CAPD_O_0005>
+    <CAPD_O_0006>20260221</CAPD_O_0006>
+    <CAPD_O_0007>0264</CAPD_O_0007>
+    <CAPD_O_0008>00000000001662873</CAPD_O_0008>
+    <CAPD_O_0009>MZN</CAPD_O_0009>
+    <CAPD_O_0010>01475000</CAPD_O_0010>
+    <CAPD_O_0011>S</CAPD_O_0011>
+    <CAPD_O_0012>N</CAPD_O_0012>
+    <CAPD_O_0013>00000000001662873</CAPD_O_0013>
+  </operationData>
+  <operationData xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://www.mozabank.org/CAPD">
+    <CAPD_O_0001>00364384620006</CAPD_O_0001>
+    <CAPD_O_0002>DP MozaNet - DP Net Poupança</CAPD_O_0002>
+    <CAPD_O_0003>0207</CAPD_O_0003>
+    <CAPD_O_0004>Agência 25 Setembro</CAPD_O_0004>
+    <CAPD_O_0005>20250502</CAPD_O_0005>
+    <CAPD_O_0006>20250830</CAPD_O_0006>
+    <CAPD_O_0007>0089</CAPD_O_0007>
+    <CAPD_O_0008>00000000100000000</CAPD_O_0008>
+    <CAPD_O_0009>MZN</CAPD_O_0009>
+    <CAPD_O_0010>00200000</CAPD_O_0010>
+    <CAPD_O_0011>N</CAPD_O_0011>
+    <CAPD_O_0012>S</CAPD_O_0012>
+    <CAPD_O_0013>00000000100000000</CAPD_O_0013>
+  </operationData>
+</CAPDAccountObjectResponse>

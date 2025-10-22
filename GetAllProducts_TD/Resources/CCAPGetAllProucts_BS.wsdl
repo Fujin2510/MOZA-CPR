@@ -1,0 +1,34 @@
+<wsdl:definitions name="CCAPGetAllProucts_BS" targetNamespace="http://xmlns.oracle.com/MozaApplication/GetAllProducts_TD/CCAPGetAllProucts_BS" xmlns:tns="http://xmlns.oracle.com/MozaApplication/GetAllProducts_TD/CCAPGetAllProucts_BS" xmlns:inp1="http://www.mozabank.org/ccap_msb" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <plnk:partnerLinkType name="CCAPGetAllProucts_BS">
+        <plnk:role name="CCAPGetAllProucts_BSProvider" portType="tns:CCAPGetAllProucts_BS_ptt"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://www.mozabank.org/ccap_msb" schemaLocation="../Schema/CCAP.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="TDLIST_inputMessage">
+        <wsdl:part name="request" element="inp1:CCAPStringRequest"/>
+    </wsdl:message>
+    <wsdl:message name="TDLIST_outputMessage">
+        <wsdl:part name="reply" element="inp1:Response"/>
+    </wsdl:message>
+    <wsdl:portType name="CCAPGetAllProucts_BS_ptt">
+        <wsdl:operation name="TDLIST">
+            <wsdl:input message="tns:TDLIST_inputMessage"/>
+            <wsdl:output message="tns:TDLIST_outputMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="CCAPGetAllProucts_BS_ptt-binding" type="tns:CCAPGetAllProucts_BS_ptt">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="TDLIST">
+            <soap:operation soapAction="TDLIST"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

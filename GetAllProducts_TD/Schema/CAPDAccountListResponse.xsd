@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.mozabank.org/CAPD"
+            targetNamespace="http://www.mozabank.org/CAPD" elementFormDefault="qualified">
+  <xsd:element name="CAPDAccountObjectResponse">
+    <xsd:complexType>
+      <xsd:sequence> 
+        <xsd:element name="operationData" maxOccurs="unbounded">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="CAPD_O_0001" type="xsd:integer"/>
+              <xsd:element name="CAPD_O_0002" type="xsd:string"/>
+              <xsd:element name="CAPD_O_0003" type="xsd:integer"/>
+              <xsd:element name="CAPD_O_0004" type="xsd:string"/>
+              <xsd:element name="CAPD_O_0005" type="xsd:string"/>
+              <xsd:element name="CAPD_O_0006" type="xsd:string"/>
+              <xsd:element name="CAPD_O_0007" type="xsd:integer"/>
+              <xsd:element name="CAPD_O_0008" type="xsd:integer"/>
+              <xsd:element name="CAPD_O_0009" type="xsd:string"/>
+              <xsd:element name="CAPD_O_0010" type="xsd:integer"/>
+              <xsd:element name="CAPD_O_0011" type="xsd:string"/>
+              <xsd:element name="CAPD_O_0012" type="xsd:string"/>
+              <xsd:element name="CAPD_O_0013" type="xsd:integer"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

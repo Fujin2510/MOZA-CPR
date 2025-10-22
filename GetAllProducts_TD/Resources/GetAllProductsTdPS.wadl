@@ -1,0 +1,100 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="http://www.mozabank.org/ccap_tdaccount_partylist_summary" xmlns:tns="http://www.mozabank.org/ccap_tdlist" xmlns:ns0="http://www.mozabank.org/ccap_party_td_accounts_list" xmlns="http://wadl.dev.java.net/2009/02" xmlns:ns2="http://www.mozabank.org/ccap_td_account_parties" xmlns:ns3="http://www.mozabank.org/ccap_td_product_details" xmlns:ns4="http://www.mozabank.org/TD_DETAILS">
+   <doc title="GetAllProductsTdPS">RestService</doc>
+   <grammars>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/ccap_tdlist" schemaLocation="../Schema/TD_LIST.xsd"/>
+        </xsd:schema>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/ccap_party_td_accounts_list" schemaLocation="../Schema/PARTY_TD_ACCOUNTS_LIST.xsd"/>
+        </xsd:schema>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/ccap_tdaccount_partylist_summary" schemaLocation="../Schema/TDACCOUNT_PARTYLIST_SUMMARY.xsd"/>
+        </xsd:schema>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/ccap_td_account_parties" schemaLocation="../Schema/TD_ACCOUNT_PARTIES.xsd"/>
+        </xsd:schema>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/ccap_td_product_details" schemaLocation="../Schema/TD_PRODUCT_DETAILS.xsd"/>
+        </xsd:schema>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/TD_DETAILS" schemaLocation="../Schema/TD_DETAILS%201.xsd"/>
+        </xsd:schema>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/TD_DETAILS" schemaLocation="../Schema/TD_DETAILS%201.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/td-list">
+         <method name="POST" soa:wsdlOperation="TDList">
+            <request>
+               <representation mediaType="application/xml" element="cns:Request" xmlns:cns="http://www.mozabank.org/ccap_tdlist"/>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabank.org/ccap_tdlist"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:Response" xmlns:cns="http://www.mozabank.org/ccap_tdlist"/>
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabank.org/ccap_tdlist"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/party-account-list">
+         <method name="POST" soa:wsdlOperation="PartyAccountList">
+            <request>
+               <representation mediaType="application/xml" element="cns:Request" xmlns:cns="http://www.mozabank.org/ccap_party_td_accounts_list"/>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabank.org/ccap_party_td_accounts_list"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:Response" xmlns:cns="http://www.mozabank.org/ccap_party_td_accounts_list"/>
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabank.org/ccap_party_td_accounts_list"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/tdaccount-partylist-summary">
+         <method name="POST" soa:wsdlOperation="AccountPartySummaryList">
+            <request>
+               <representation mediaType="application/xml" element="cns:Request" xmlns:cns="http://www.mozabank.org/ccap_tdaccount_partylist_summary"/>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabank.org/ccap_tdaccount_partylist_summary"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:Response" xmlns:cns="http://www.mozabank.org/ccap_tdaccount_partylist_summary"/>
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabank.org/ccap_tdaccount_partylist_summary"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/td-account-parties">
+         <method name="POST" soa:wsdlOperation="AccountParties">
+            <request>
+               <representation mediaType="application/xml" element="cns:Request" xmlns:cns="http://www.mozabank.org/ccap_td_account_parties"/>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabank.org/ccap_td_account_parties"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:Response" xmlns:cns="http://www.mozabank.org/ccap_td_account_parties"/>
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabank.org/ccap_td_account_parties"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/product-details">
+         <method name="POST" soa:wsdlOperation="ProductDetails">
+            <request>
+               <representation mediaType="application/xml" element="cns:Request" xmlns:cns="http://www.mozabank.org/ccap_td_product_details"/>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabank.org/ccap_td_product_details"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:Response" xmlns:cns="http://www.mozabank.org/ccap_td_product_details"/>
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabank.org/ccap_td_product_details"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/termdeposit-details">
+         <method name="POST" soa:wsdlOperation="TDDetails">
+            <request>
+               <representation mediaType="application/xml" element="cns:Request" xmlns:cns="http://www.mozabank.org/TD_DETAILS"/>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabank.org/TD_DETAILS"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:Response" xmlns:cns="http://www.mozabank.org/TD_DETAILS"/>
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabank.org/TD_DETAILS"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

@@ -1,0 +1,21 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://www.mozabank.org/ccap_msb" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="CCAPGetAllProucts_BS">RestReference</doc>
+   <grammars>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/ccap_msb" schemaLocation="../Schema/CCAP.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/OP_CALL_ENC">
+         <method name="GET" soa:wsdlOperation="TDLIST">
+            <request soa:paramElement="pns:CCAPStringRequest" xmlns:pns="http://www.mozabank.org/ccap_msb">
+               <param name="request" style="query" soa:expression="$msg.request/tns:RequestString" type="xsd:string"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:Response" xmlns:cns="http://www.mozabank.org/ccap_msb"/>
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabank.org/ccap_msb"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>
