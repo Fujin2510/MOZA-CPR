@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            targetNamespace="http://www.mozabanca.org/debit_card_read"
+            xmlns="http://www.mozabanca.org/debit_card_read"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            nxsd:version="JSON" nxsd:encoding="UTF-8">
+
+  <!-- Root Request Element -->
+  <xsd:element name="DebitCardReadRequest" type="DebitCardReadRequestType"/>
+
+  <!-- Root Response Element -->
+  <xsd:element name="DebitCardReadResponse" type="DebitCardReadResponseType"/>
+
+  <!-- Request Type -->
+  <xsd:complexType name="DebitCardReadRequestType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="referenceNo" type="xsd:string"/>
+      <xsd:element name="interfaceId" type="xsd:string"/>
+      <xsd:element name="entity" type="xsd:string"/>
+      <xsd:element name="headersMap" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="queryMap" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="hostName" type="xsd:string"/>
+      <xsd:element name="cardaccount" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Response Type -->
+  <xsd:complexType name="DebitCardReadResponseType">
+    <xsd:sequence>
+      <xsd:element name="data">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="result">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element name="status" type="xsd:string"/>
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="cardtype" type="xsd:string"/>
+            <xsd:element name="holder" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="cardnumber" type="xsd:string"/>
+            <xsd:element name="status" type="xsd:string"/>
+            <xsd:element name="issuedate" type="xsd:string"/>
+            <xsd:element name="expirationdate" type="xsd:string"/>
+            <xsd:element name="dateofsituation" type="xsd:string"/>
+            <xsd:element name="associatedcurrentAccount" type="xsd:string"/>
+            
+              <xsd:element name="messages">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="keyId" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="status" type="xsd:string"/>
+            <xsd:element name="codes" type="xsd:string" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+            <xsd:element name="requestId" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="httpStatusCode" type="xsd:string"/>
+            <xsd:element name="overrideAuthLevelsReqd" type="xsd:string" minOccurs="0" nillable="true"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+
+    
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

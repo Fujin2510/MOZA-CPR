@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="DebitCardList/Resources/GetAllProductsOBDX"/>
+            <con:binding>
+                <con:name>GetAllProductsOBDX_ptt-binding</con:name>
+                <con:namespace>http://xmlns.oracle.com/OBDX-MOZA/DebitCardList/GetAllProductsOBDX</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:pipeline type="request" name="request-N3f57febc.3d9dd03b.0.196e222767f.N77d5">
+            <con:stage id="_StageId-N3f57febc.3d9dd03b.0.196e222767f.N77d3" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:wsCallout xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57febc.3d9dd03b.0.196e222767f.N7795</con2:id>
+                        <con1:service ref="AuthenticatorService/AuthenticatorBS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>Operation1</con1:operation>
+                        <con1:request>
+                            <con1:body wrapped="false">AuthenticatorRequest</con1:body>
+                            <con1:header/>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body wrapped="false">AuthenticatorResponse</con1:body>
+                            <con1:header/>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con2:log xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57febc.3d9dd03b.0.196e222767f.N7794</con3:id>
+                                <con2:logLevel>debug</con2:logLevel>
+                                <con2:expr>
+                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body</con3:xqueryText>
+                                </con2:expr>
+                                <con2:message>GetAllProducts Request Received >>>>>>>>>>>>>>>>>>>>>>></con2:message>
+                            </con2:log>
+                            <con1:assign varName="AuthenticatorRequest">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57febc.3d9dd03b.0.196e222767f.N7793</con2:id>
+                                <con1:expr>
+                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config"><![CDATA[<moz:Request xmlns:moz="http://www.mozabank.org">
+    <moz:username>channel_obdx_app</moz:username>
+    <moz:password>Moz@Random123#</moz:password>
+</moz:Request>]]></con:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                            <con1:transport-headers copy-all="false">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57febc.3d9dd03b.0.196e222767f.N7792</con2:id>
+                                <con2:disabled xmlns:con2="http://www.bea.com/wli/sb/stages/config">true</con2:disabled>
+                                <con1:header-set>outbound-request</con1:header-set>
+                                <con1:header name="Content-Type" value="expression">
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">'application/json'</con2:xqueryText>
+                                </con1:header>
+                            </con1:transport-headers>
+                        </con1:requestTransform>
+                        <con1:responseTransform>
+                            <con1:assign varName="AccessToken">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57febc.3d9dd03b.0.196e222767f.N7790</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$AuthenticatorResponse/*:access_token</con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:responseTransform>
+                    </con1:wsCallout>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57febc.3d9dd03b.0.196e222767f.N76f9" name="RequestParams">
+                <con:context>
+                    <con1:varNsDecl prefix="ccar" namespace="http://www.mozabanca.org/ccar" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:nxsdTranslation xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57febc.3d9dd03b.0.196e222767f.N7531</con2:id>
+                        <con1:type>Native-To-XML</con1:type>
+                        <con1:sourceExpr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$body/text()</con:xqueryText>
+                        </con1:sourceExpr>
+                        <con1:nxsd ref="DebitCardList/DEBIT_CARD_LIST 1"/>
+                        <con1:schemaElement xmlns:ccar="http://www.mozabanca.org/ccar">ccar:DebitCardListRequest</con1:schemaElement>
+                        <con1:assign-variable>GetAllProductsRequestJSOn</con1:assign-variable>
+                        <con1:enforceSchemaOrder>false</con1:enforceSchemaOrder>
+                    </con1:nxsdTranslation>
+                    <con1:assign varName="GetAllProductsRequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57febc.3d9dd03b.0.196e222767f.N7565</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="DebitCardList/GetAllProductsRequestXfrom"/>
+                                <con2:param name="Request">
+                                    <con2:path>$body/text()</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:javaCallout varName="" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fee5.N4c0f61b8.0.196eb4a7834.N7f9c</con2:id>
+                        <con1:archive ref="DebitCardList/JsonEncode1"/>
+                        <con1:className>demo.MainClass</con1:className>
+                        <con1:method>public static void main([Ljava.lang.String;)</con1:method>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$GetAllProductsRequestJSOn</con2:xqueryText>
+                        </con1:expr>
+                        <con1:return-param-as-ref>false</con1:return-param-as-ref>
+                    </con1:javaCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57febc.3d9dd03b.0.196e222767f.N77d4">
+            <con:stage id="_StageId-N3f57febc.3d9dd03b.0.196e222767f.N77d2" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fee5.N4c0f61b8.0.196eb4a7834.N7f66</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="DebitCardList/Resources/GetAllProductsResponse"/>
+                                <con2:param name="Request">
+                                    <con2:path>$body</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                    <con2:log xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57febc.3d9dd03b.0.196e222767f.N7791</con3:id>
+                        <con2:logLevel>debug</con2:logLevel>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body</con3:xqueryText>
+                        </con2:expr>
+                        <con2:message>GetAllProducts Response Sent >>>>>>>>>>>>>>>>>>>>>>></con2:message>
+                    </con2:log>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="Pipeline Pair Node1">
+                <con:request>request-N3f57febc.3d9dd03b.0.196e222767f.N77d5</con:request>
+                <con:response>response-N3f57febc.3d9dd03b.0.196e222767f.N77d4</con:response>
+            </con:pipeline-node>
+            <con:route-node name="RouteNode1" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                <con:context/>
+                <con:actions>
+                    <con1:route>
+                        <con2:id>_ActionId-N3f57febc.3d9dd03b.0.196e222767f.N783e</con2:id>
+                        <con1:service ref="DebitCardList/CCAR_Request" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>GetAllProducts</con1:operation>
+                        <con1:outboundTransform>
+                            <con3:replace contents-only="true" varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-N3f57febc.3d9dd03b.0.196e222767f.N7437</con2:id>
+                                <con3:expr>
+                                    <con2:xqueryText>&lt;CCAREncodedRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://www.mozabanca.org/ccar CCAR1.xsd" xmlns="http://www.mozabanca.org/ccar">
+  &lt;RequestString>0%7B%22user%22%3A%22aandaruss1%22%2C%22password%22%3A%22%22%2C%22origin%22%3A%22P%22%2C%22channelCode%22%3A%22INT%22%2C%22version%22%3A%22R30%22%2C%22licenceKey%22%3A%22licenseKey%22%2C%22sessionId%22%3A%22d900bbe2%22%2C%22transactionCode%22%3A%22CCAR%22%2C%22operationData%22%3A%7B%22CCAR_I_0001%22%3A%2220%22%2C%22CCAR_I_0003%22%3A%22S%22%2C%22CCAR_I_0004%22%3A%22N%22%2C%22CCAR_I_0005%22%3A%22N%22%7D%7D
+&lt;/RequestString>
+&lt;/CCAREncodedRequest></con2:xqueryText>
+                                </con3:expr>
+                            </con3:replace>
+                            <con3:transport-headers xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-N3f57febc.3d9dd03b.0.196e222767f.N775c</con2:id>
+                                <con3:header-set>outbound-request</con3:header-set>
+                                <con3:header value="expression" name="Authorization">
+                                    <con2:xqueryText>concat('Bearer ',$AccessToken)</con2:xqueryText>
+                                </con3:header>
+                            </con3:transport-headers>
+                        </con1:outboundTransform>
+                        <con1:responseTransform/>
+                    </con1:route>
+                </con:actions>
+            </con:route-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

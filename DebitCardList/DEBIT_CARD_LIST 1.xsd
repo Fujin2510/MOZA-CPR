@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd" 
+              targetNamespace="http://www.mozabanca.org/ccar" 
+              xmlns="http://www.mozabanca.org/ccar" 
+              elementFormDefault="qualified"
+              attributeFormDefault="unqualified" nxsd:version="NXSD" nxsd:encoding="US-ASCII"> 
+
+  <!-- Root Elements -->
+  <xsd:element name="DebitCardListRequest" type="DebitCardListRequestType"/>
+  <xsd:element name="DebitCardListResponse" type="DebitCardListResponseType"/>
+  <xsd:element name="test">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="element1" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <!-- Request Type -->
+  <xsd:complexType name="DebitCardListRequestType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="referenceNo" type="xsd:string"/>
+      <xsd:element name="interfaceId" type="xsd:string"/>
+      <xsd:element name="entity" type="xsd:string"/>
+      <xsd:element name="headersMap" type="HeadersMapType"/>
+      <xsd:element name="queryMap" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="hostName" type="xsd:string"/>
+      <xsd:element name="accountId" type="xsd:string"/>
+      <xsd:element name="branchCode" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- HeadersMapType (empty map) -->
+  <xsd:complexType name="HeadersMapType">
+    <xsd:sequence>
+      <!-- empty map represented as empty sequence -->
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Response Type -->
+  <xsd:complexType name="DebitCardListResponseType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="referenceNo" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="result" type="ResultType"/>
+      <xsd:element name="hasMore" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="totalRecords" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="startSequence" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="debitCardList" type="DebitCardListType" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- ResultType -->
+  <xsd:complexType name="ResultType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="externalReferenceId" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="status" type="xsd:string"/>
+      <xsd:element name="errorList" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="warningList" type="xsd:string" minOccurs="0" nillable="true"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- DebitCardListType: list of debitCard entries -->
+  <xsd:complexType name="DebitCardListType">
+    <xsd:sequence>
+      <xsd:element name="debitCard" type="DebitCardType" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- DebitCardType: details inside each debit card object -->
+  <xsd:complexType name="DebitCardType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="accountId" type="xsd:string"/>
+      <xsd:element name="branchId" type="xsd:string"/>
+      <xsd:element name="partyId" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="branchName" type="xsd:string"/>
+      <xsd:element name="id" type="xsd:string"/>
+      <xsd:element name="displayValue" type="xsd:string"/>
+      <xsd:element name="currencyCode" type="xsd:string"/>
+      <xsd:element name="status" type="xsd:string"/>
+      <xsd:element name="issueDate" type="DateDetailsType"/>
+      <xsd:element name="expiryDate" type="DateDetailsType"/>
+      <xsd:element name="applicationDate" type="DateDetailsType"/>
+      <xsd:element name="cardRenewalDate" type="DateDetailsType"/>
+      <xsd:element name="cardActivationDate" type="DateDetailsType"/>
+      <xsd:element name="dispatchStatus" type="xsd:string"/>
+      <xsd:element name="pinMailStatus" type="xsd:string"/>
+      <xsd:element name="cardHolderName" type="xsd:string"/>
+      <xsd:element name="cardType" type="xsd:string"/>
+      <xsd:element name="isPrimary" type="xsd:boolean"/>
+      <xsd:element name="internationalUsage" type="xsd:boolean"/>
+      <xsd:element name="debitCardLimitDetails" type="DebitCardLimitDetailsListType" minOccurs="0"/>
+      <xsd:element name="debitCardInternationalLimitDetails" type="DebitCardLimitDetailsListType" minOccurs="0"/>
+      <xsd:element name="totalAmountLimit" type="AmountType"/>
+      <xsd:element name="totalAmountMaxLimit" type="AmountType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- DateDetailsType -->
+  <xsd:complexType name="DateDetailsType">
+    <xsd:sequence>
+      <xsd:element name="sqlDate" type="xsd:long"/>
+      <xsd:element name="monthDate" type="xsd:int"/>
+      <xsd:element name="calendarDayOfWeek" type="xsd:string"/>
+      <xsd:element name="monthDateTime" type="xsd:int"/>
+      <xsd:element name="weekOfYear" type="xsd:int"/>
+      <xsd:element name="lastDayOfMonth" type="xsd:int"/>
+      <xsd:element name="sqltimestamp" type="xsd:long"/>
+      <xsd:element name="dateString" type="xsd:string"/>
+      <xsd:element name="month" type="xsd:int"/>
+      <xsd:element name="dayOfWeek" type="xsd:int"/>
+      <xsd:element name="millis" type="xsd:long"/>
+      <xsd:element name="yearMonth" type="xsd:int"/>
+      <xsd:element name="time" type="xsd:int"/>
+      <xsd:element name="timestamp" type="xsd:long"/>
+      <xsd:element name="leapYear" type="xsd:boolean"/>
+      <xsd:element name="dayOfYear" type="xsd:int"/>
+      <xsd:element name="year" type="xsd:int"/>
+      <xsd:element name="dayOfMonth" type="xsd:int"/>
+      <xsd:element name="yearMonthDate" type="xsd:int"/>
+      <xsd:element name="infinite" type="xsd:boolean"/>
+      <xsd:element name="null" type="xsd:boolean"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- DebitCardLimitDetailsListType -->
+  <xsd:complexType name="DebitCardLimitDetailsListType">
+    <xsd:sequence>
+      <xsd:element name="debitCardLimitDetail" type="DebitCardLimitDetailType" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- DebitCardLimitDetailType -->
+  <xsd:complexType name="DebitCardLimitDetailType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="unit" type="xsd:string"/>
+      <xsd:element name="amount" type="AmountType"/>
+      <xsd:element name="count" type="xsd:int"/>
+      <xsd:element name="limitType" type="xsd:string"/>
+      <xsd:element name="limitTypeName" type="xsd:string"/>
+      <xsd:element name="cumulativeCount" type="xsd:int"/>
+      <xsd:element name="cumulativeAmount" type="AmountType"/>
+      <xsd:element name="nextResetDate" type="DateDetailsType" minOccurs="0"/>
+      <xsd:element name="defaultAmount" type="AmountType" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- AmountType -->
+  <xsd:complexType name="AmountType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="currencyCode" type="xsd:string"/>
+      <xsd:element name="amount" type="xsd:decimal"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>
