@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            targetNamespace="http://www.mozabanca.org/APAG"
+            xmlns="http://www.mozabanca.org/APAG" elementFormDefault="qualified"
+            attributeFormDefault="unqualified" nxsd:version="JSON" nxsd:encoding="UTF-8">
+
+
+  <!-- Root Elements -->
+  <xsd:element name="Request" type="ChangePaymentOptionRequest"/>
+  <xsd:element name="ChangePaymentOptionEncodedRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="RequestString" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="Response" type="ChangePaymentOptionResponse"/>
+
+  <!-- Request Type -->
+  <xsd:complexType name="ChangePaymentOptionRequest">
+    <xsd:sequence>
+      <xsd:element name="user" type="xsd:string"/>
+      <xsd:element name="password" type="xsd:string"/>
+      <xsd:element name="origin" type="xsd:string"/>
+      <xsd:element name="channelCode" type="xsd:string"/>
+      <xsd:element name="version" type="xsd:string"/>
+      <xsd:element name="licenceKey" type="xsd:string"/>
+      <xsd:element name="sessionId" type="xsd:string"/>
+      <xsd:element name="transactionCode" type="xsd:string"/>
+      <xsd:element name="operationData" type="OperationDataType"/>
+      <xsd:element name="validation" type="ValidationType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="OperationDataType">
+    <xsd:sequence>
+      <xsd:element name="APAG_I_0001" type="xsd:string"/>
+      <xsd:element name="APAG_I_0002" type="xsd:string"/>
+      <xsd:element name="APAG_I_0003" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ValidationType">
+    <xsd:sequence>
+      <xsd:element name="confirmationKey" type="ConfirmationKeyType" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ConfirmationKeyType">
+    <xsd:sequence>
+      <xsd:element name="digitValues" type="xsd:string"/>
+      <xsd:element name="digitPositions" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Response Type -->
+  <xsd:complexType name="ChangePaymentOptionResponse">
+    <xsd:sequence>
+      <xsd:element name="transactionCode" type="xsd:string"/>
+      <xsd:element name="operationData" type="OperationDataType"/>
+      <xsd:element name="channelOperationLogKey" type="xsd:string"/>
+      <xsd:element name="coreLogKey" type="xsd:string"/>
+      <xsd:element name="coreCancelationCode" type="xsd:string"/>
+      <xsd:element name="errorCode" type="xsd:string"/>
+      <xsd:element name="errorMessage" type="ErrorMessageType"/>
+      <xsd:element name="validation" type="ValidationType"/>
+      <xsd:element name="layoutVersion" type="xsd:string"/>
+      <xsd:element name="user" type="xsd:string"/>
+      <xsd:element name="password" type="xsd:string"/>
+      <xsd:element name="station" type="xsd:string"/>
+      <xsd:element name="licenceKey" type="xsd:string"/>
+      <xsd:element name="encryption" type="xsd:string"/>
+      <xsd:element name="code" type="xsd:string"/>
+      <xsd:element name="version" type="xsd:string"/>
+      <xsd:element name="sessionId" type="xsd:string"/>
+      <xsd:element name="language" type="xsd:string"/>
+      <xsd:element name="channelCode" type="xsd:string"/>
+      <xsd:element name="origin" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ErrorMessageType">
+    <xsd:sequence>
+      <xsd:element name="messages" type="xsd:string" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

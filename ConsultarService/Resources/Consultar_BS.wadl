@@ -1,0 +1,20 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns0="http://www.mozabank.org/nxsd/REST" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="Consultar_BS">RestReference</doc>
+   <grammars>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/nxsd/REST" schemaLocation="../SchemaRest.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/consultar">
+         <method name="GET" soa:wsdlOperation="Operation1">
+            <request soa:paramElement="pns:input" xmlns:pns="http://www.mozabank.org/nxsd/REST">
+               <param name="user" style="query" soa:expression="$msg.request/ns0:user" type="xsd:string"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabank.org/nxsd/REST"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

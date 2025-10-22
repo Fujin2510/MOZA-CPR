@@ -1,0 +1,19 @@
+<Response>
+  <data>
+    <dictionaryArray/>
+    <referenceNo/>
+    <result>
+      <dictionaryArray/>
+      <externalReferenceId/>
+      <status>FAILURE</status>
+      <errorList>
+        <code>ERR001</code>
+        <message>Invalid backend response</message>
+      </errorList>
+      <warningList/>
+    </result>
+    <hasMore/>
+    <totalRecords/>
+    <startSequence/>
+  </data>
+</Response>

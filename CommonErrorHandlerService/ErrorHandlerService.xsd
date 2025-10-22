@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:soap-env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns2="http://www.mozabank.org/selfTransfer"
+           attributeFormDefault="unqualified" elementFormDefault="qualified"
+           targetNamespace="http://www.mozabank.org/osb/errorHandlerService"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Request">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ErrorCode"/>
+        <xs:element name="ErrorType"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="Response">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="data">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="dictionaryArray"/>
+              <xs:element name="referenceNo"/>
+              <xs:element name="result">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="dictionaryArray"/>
+                    <xs:element name="externalReferenceId"/>
+                    <xs:element name="status" type="xs:string"/>
+                    <xs:element name="errorList">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="code" type="xs:string"/>
+                          <xs:element name="message" type="xs:string"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="warningList"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="hasMore"/>
+              <xs:element name="totalRecords"/>
+              <xs:element name="startSequence"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

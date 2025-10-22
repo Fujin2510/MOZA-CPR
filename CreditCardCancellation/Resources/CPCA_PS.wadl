@@ -1,0 +1,20 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns0="http://www.mozabanca.org/obdx/cc_upd_status" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="CPCA_PS">RestService</doc>
+   <grammars>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabanca.org/obdx/cc_upd_status" schemaLocation="../XSD/CC_UPD_STATUS.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/processCardCancellation">
+         <method name="POST" soa:wsdlOperation="Operation1">
+            <request>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabanca.org/obdx/cc_upd_status"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabanca.org/obdx/cc_upd_status"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>
