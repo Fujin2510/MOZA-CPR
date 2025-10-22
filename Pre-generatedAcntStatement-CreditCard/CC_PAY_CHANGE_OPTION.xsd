@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema 
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+    xmlns:tns="http://www.mozabank.org/ccPayChangeOption"
+    targetNamespace="http://www.mozabank.org/ccPayChangeOption"
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified" 
+    nxsd:version="JSON"
+    nxsd:encoding="UTF-8">
+
+  <!-- Root Elements -->
+  <xsd:element name="Request" type="tns:CCPayChangeOptionRequest"/>
+  <xsd:element name="Response" type="tns:CCPayChangeOptionResponse"/>
+
+  <!-- Request Type -->
+  <xsd:complexType name="CCPayChangeOptionRequest">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="referenceNo" type="xsd:string"/>
+      <xsd:element name="interfaceId" type="xsd:string"/>
+      <xsd:element name="entity" type="xsd:string"/>
+      <xsd:element name="headersMap" type="tns:HeadersMapType"/>
+      <xsd:element name="queryMap" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="hostName" type="xsd:string"/>
+      <xsd:element name="id" type="xsd:string"/>
+      <xsd:element name="paymentType" type="xsd:string"/>
+      <xsd:element name="paymentOption" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Empty HeadersMap Type -->
+  <xsd:complexType name="HeadersMapType">
+    <xsd:sequence/>
+  </xsd:complexType>
+
+  <!-- Response Type -->
+  <xsd:complexType name="CCPayChangeOptionResponse">
+    <xsd:sequence>
+               <xsd:element name="data">
+       <xsd:complexType>
+       <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="referenceNo" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="result" type="tns:ResultType"/>
+      <xsd:element name="hasMore" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="totalRecords" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="startSequence" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+       </xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+
+  <!-- ResultType -->
+  <xsd:complexType name="ResultType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="externalReferenceId" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="status" type="xsd:string"/>
+<xsd:element name="errorList" nillable="true" minOccurs="0" maxOccurs="unbounded">
+ <xsd:complexType>
+   <xsd:sequence>
+     <xsd:element name="code" type="xsd:string"/>
+     <xsd:element name="message" type="xsd:string"/>
+   </xsd:sequence>
+  </xsd:complexType>
+</xsd:element>
+      <xsd:element name="warningList" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

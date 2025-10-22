@@ -1,0 +1,232 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:tns="http://msb.mozabanco.co.mz" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+                  xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="ExtractosWs"
+                  targetNamespace="http://msb.mozabanco.co.mz">
+  <wsdl:types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://msb.mozabanco.co.mz"
+               elementFormDefault="unqualified" targetNamespace="http://msb.mozabanco.co.mz" version="1.0">
+      <xs:element name="ConsultarExtractos" type="tns:ConsultarExtractos"/>
+      <xs:element name="ConsultarExtractosResponse" type="tns:ConsultarExtractosResponse"/>
+      <xs:element name="EmitirExtractos" type="tns:EmitirExtractos"/>
+      <xs:element name="EmitirExtractosResponse" type="tns:EmitirExtractosResponse"/>
+      <xs:complexType name="ConsultarExtractos">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="input" type="tns:consultarExtractosInput"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="consultarExtractosInput">
+        <xs:complexContent>
+          <xs:extension base="tns:serviceInput">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="dataExtracto" type="xs:string"/>
+              <xs:element minOccurs="0" name="nomeExtOrigPag" type="xs:string"/>
+              <xs:element minOccurs="0" name="nomeExtOriginal" type="xs:string"/>
+              <xs:element minOccurs="0" name="nomeFichOrigPag" type="xs:string"/>
+              <xs:element minOccurs="0" name="nomeFichOriginal" type="xs:string"/>
+              <xs:element minOccurs="0" name="numCliente" type="xs:string"/>
+              <xs:element minOccurs="0" name="numContaCartao" type="xs:string"/>
+              <xs:element minOccurs="0" name="numExtracto" type="xs:string"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="serviceInput">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="chaveConfirmacao" type="tns:chaveConfirmacao"/>
+          <xs:element minOccurs="0" name="sessao" type="tns:serviceSession"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="chaveConfirmacao">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="chave" type="xs:string"/>
+          <xs:element minOccurs="0" name="posicoes" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="serviceSession">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:string"/>
+          <xs:element minOccurs="0" name="versao" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ConsultarExtractosResponse">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="output" type="tns:consultarExtractosOutput"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="consultarExtractosOutput">
+        <xs:complexContent>
+          <xs:extension base="tns:serviceOutput">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="extractoStatus" type="tns:extractoStatus"/>
+              <xs:element minOccurs="0" name="extractos" type="tns:extractos"/>
+              <xs:element minOccurs="0" name="proximaPagina" type="tns:proximaPaginaExtractos"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="serviceOutput">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="sessao" type="tns:serviceSession"/>
+          <xs:element minOccurs="0" name="status" type="tns:serviceStatus"/>
+          <xs:element minOccurs="0" name="transactionId" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="extractoStatus">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="codError" type="xs:string"/>
+          <xs:element minOccurs="0" name="messageError" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="extractos">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="extracto" nillable="true" type="tns:extracto"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="extracto">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="dataCopia" type="xs:string"/>
+          <xs:element minOccurs="0" name="dataExtracto" type="xs:string"/>
+          <xs:element minOccurs="0" name="dataObtencao" type="xs:string"/>
+          <xs:element minOccurs="0" name="dataSituacao" type="xs:string"/>
+          <xs:element name="formFicheiro" type="xs:unsignedShort"/>
+          <xs:element minOccurs="0" name="nomeExtCentral" type="xs:string"/>
+          <xs:element minOccurs="0" name="nomeExtDestino" type="xs:string"/>
+          <xs:element minOccurs="0" name="nomeExtOriginal" type="xs:string"/>
+          <xs:element minOccurs="0" name="nomeFichOriginal" type="xs:string"/>
+          <xs:element name="numCliente" type="xs:int"/>
+          <xs:element minOccurs="0" name="numConta" type="xs:string"/>
+          <xs:element minOccurs="0" name="numContaCartao" type="xs:string"/>
+          <xs:element name="numExtracto" type="xs:int"/>
+          <xs:element minOccurs="0" name="repoCentral" type="xs:string"/>
+          <xs:element minOccurs="0" name="repoExtDestino" type="xs:string"/>
+          <xs:element minOccurs="0" name="repoExtOriginal" type="xs:string"/>
+          <xs:element name="segViasEmitidas" type="xs:int"/>
+          <xs:element minOccurs="0" name="situacao" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="proximaPaginaExtractos">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="nomeExtOrigPag" type="xs:string"/>
+          <xs:element minOccurs="0" name="nomeFichOrigPag" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="serviceStatus">
+        <xs:sequence>
+          <xs:element name="codigo" type="xs:int"/>
+          <xs:element minOccurs="0" name="detalhes" type="tns:serviceStatusDetailList"/>
+          <xs:element minOccurs="0" name="executado" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="mensagens" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="serviceStatusDetailList">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="detalhe" nillable="true"
+                      type="tns:serviceStatusDetail"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="serviceStatusDetail">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="causa" type="xs:string"/>
+          <xs:element minOccurs="0" name="codigo" type="xs:string"/>
+          <xs:element minOccurs="0" name="mensagem" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="EmitirExtractos">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="input" type="tns:emitirExtractosInput"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="emitirExtractosInput">
+        <xs:complexContent>
+          <xs:extension base="tns:serviceInput">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="nomeExtOriginal" type="xs:string"/>
+              <xs:element minOccurs="0" name="nomeFichOriginal" type="xs:string"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="EmitirExtractosResponse">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="output" type="tns:emitirExtractosOutput"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="emitirExtractosOutput">
+        <xs:complexContent>
+          <xs:extension base="tns:serviceOutput">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="dataCopia" type="xs:string"/>
+              <xs:element minOccurs="0" name="dataExtracto" type="xs:string"/>
+              <xs:element minOccurs="0" name="dataObtencao" type="xs:string"/>
+              <xs:element minOccurs="0" name="dataSituacao" type="xs:string"/>
+              <xs:element minOccurs="0" name="dirExtOriginal" type="xs:string"/>
+              <xs:element minOccurs="0" name="fichBinario" type="xs:string"/>
+              <xs:element name="formFicheiro" type="xs:unsignedShort"/>
+              <xs:element minOccurs="0" name="idSessao" type="xs:string"/>
+              <xs:element minOccurs="0" name="msgErroCCB" type="xs:string"/>
+              <xs:element minOccurs="0" name="nomeCliente" type="xs:string"/>
+              <xs:element minOccurs="0" name="nomeExtOriginal" type="xs:string"/>
+              <xs:element minOccurs="0" name="nomeFichOriginal" type="xs:string"/>
+              <xs:element minOccurs="0" name="numCliente" type="xs:long"/>
+              <xs:element minOccurs="0" name="numConta" type="xs:string"/>
+              <xs:element minOccurs="0" name="numContaCartao" type="xs:string"/>
+              <xs:element minOccurs="0" name="numExtracto" type="xs:int"/>
+              <xs:element minOccurs="0" name="repoExtOriginal" type="xs:string"/>
+              <xs:element minOccurs="0" name="segViasEmitidas" type="xs:string"/>
+              <xs:element name="situacao" type="xs:unsignedShort"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="ConsultarExtractosResponse">
+    <wsdl:part element="tns:ConsultarExtractosResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ConsultarExtractos">
+    <wsdl:part element="tns:ConsultarExtractos" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="EmitirExtractosResponse">
+    <wsdl:part element="tns:EmitirExtractosResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="EmitirExtractos">
+    <wsdl:part element="tns:EmitirExtractos" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="Extractos">
+    <wsdl:operation name="ConsultarExtractos">
+      <wsdl:input message="tns:ConsultarExtractos" name="ConsultarExtractos"></wsdl:input>
+      <wsdl:output message="tns:ConsultarExtractosResponse" name="ConsultarExtractosResponse"></wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EmitirExtractos">
+      <wsdl:input message="tns:EmitirExtractos" name="EmitirExtractos"></wsdl:input>
+      <wsdl:output message="tns:EmitirExtractosResponse" name="EmitirExtractosResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ExtractosWsSoapBinding" type="tns:Extractos">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="ConsultarExtractos">
+      <soap:operation soapAction="ConsultarExtractos" style="document"/>
+      <wsdl:input name="ConsultarExtractos">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="ConsultarExtractosResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EmitirExtractos">
+      <soap:operation soapAction="EmitirExtractos" style="document"/>
+      <wsdl:input name="EmitirExtractos">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="EmitirExtractosResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ExtractosWs">
+    <wsdl:port binding="tns:ExtractosWsSoapBinding" name="ExtractosPort">
+      <soap:address location="http://svdcpmwd02:9084/MozaServiceBus/Extractos/ExtractosWs"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
