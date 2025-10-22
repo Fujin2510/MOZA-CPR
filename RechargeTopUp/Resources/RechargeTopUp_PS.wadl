@@ -1,0 +1,20 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns0="http://www.mozabanca.org/obdx/operator_recharge" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="RechargeTopUp_PS">RestService</doc>
+   <grammars>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabanca.org/obdx/operator_recharge" schemaLocation="../XSD/OPERATOR_RECHARGE.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/rechargeTopUp">
+         <method name="POST" soa:wsdlOperation="Operation1">
+            <request>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabanca.org/obdx/operator_recharge"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabanca.org/obdx/operator_recharge"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

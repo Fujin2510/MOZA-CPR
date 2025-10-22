@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            xmlns:tns="http://www.mozabank.org/td-fetch-penality"
+            targetNamespace="http://www.mozabank.org/td-fetch-penality" elementFormDefault="qualified"
+            attributeFormDefault="unqualified" nxsd:version="JSON" nxsd:encoding="UTF-8">
+  <!-- Root elements -->
+  <xsd:element name="Request" type="tns:RequestType"/>
+  <xsd:element name="Response" type="tns:ResponseType"/>
+  <!-- RequestType -->
+  <xsd:complexType name="RequestType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="referenceNo" type="xsd:string"/>
+      <xsd:element name="interfaceId" type="xsd:string"/>
+      <xsd:element name="entity" type="xsd:string"/>
+      <xsd:element name="headersMap" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="queryMap" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="hostName" type="xsd:string"/>
+      <xsd:element name="accountId" type="xsd:string"/>
+      <xsd:element name="partyId" type="xsd:string"/>
+      <xsd:element name="branchCode" type="xsd:string"/>
+      <xsd:element name="redeemMode" type="xsd:string"/>
+      <xsd:element name="redemptionAmount" type="tns:AmountType" minOccurs="0" nillable="true"/>
+      <xsd:element name="depositNum" type="xsd:decimal"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- AmountType -->
+  <xsd:complexType name="AmountType">
+    <xsd:sequence>
+      <xsd:element name="currency" type="xsd:string"/>
+      <xsd:element name="amount" type="xsd:decimal"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- ResponseType -->
+  <xsd:complexType name="ResponseType">
+    <xsd:sequence>
+      <xsd:element name="data">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="referenceNo" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="result" type="tns:ResponseOperationDataType"/>
+            <xsd:element name="hasMore" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="totalRecords" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="startSequence" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="maturityAmount" type="tns:AmountType"/>
+            <xsd:element name="redemptionAmount" type="xsd:anyType" nillable="true" />
+            <xsd:element name="netCreditAmount" type="tns:AmountType"/>
+            <xsd:element name="charges" type="tns:AmountType"/>
+            <xsd:element name="revisedMaturityAmount" type="tns:AmountType"/>
+            <xsd:element name="revisedPrincipalAmount" type="tns:AmountType"/>
+            <xsd:element name="interestRate" type="xsd:decimal"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- ResponseOperationDataType -->
+  <xsd:complexType name="ResponseOperationDataType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="externalReferenceId" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="status" type="xsd:string"/>
+      <xsd:element name="errorList" nillable="true" minOccurs="0" maxOccurs="unbounded">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="code" type="xsd:string"/>
+            <xsd:element name="message" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="warningList" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

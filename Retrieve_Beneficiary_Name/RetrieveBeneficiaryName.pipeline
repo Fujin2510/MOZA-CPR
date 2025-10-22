@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="Retrieve_Beneficiary_Name/Resources/TFCM_PS"/>
+            <con:binding>
+                <con:name>TFCM_PS_ptt-binding</con:name>
+                <con:namespace>http://xmlns.oracle.com/CreateNewTermDeposit_Interface/Retrieve_Beneficiary_Name/TFCM_PS</con:namespace>
+            </con:binding>
+        </con:binding>
+        <oper:operations xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations">
+            <oper:monitoring enabled="true" level="service" aggregationInterval="1440"/>
+        </oper:operations>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router errorHandler="error-N3f57ff7a.N3b71f3e.0.19874e8020e.N78ec">
+        <con:pipeline type="request" name="request-N3f57ffbc.N37374433.0.197ca8369dd.N7f70">
+            <con:stage id="_StageId-N3f57ffbc.N37374433.0.197ca8369dd.N7f6f" name="Authentication Stage">
+                <con:context/>
+                <con:actions>
+                    <con1:assign varName="ReqUUID" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff7a.N3b71f3e.0.19874e8020e.N7dff</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn-bea:uuid()</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="InitialRequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffbc.N37374433.0.197ca8369dd.N7f6e</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body/*</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:report xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff7a.N3b71f3e.0.19874e8020e.N7e02</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">concat('RequestUUID :',$ReqUUID,' | ',fn-bea:serialize($body))</con2:xqueryText>
+                        </con1:expr>
+                        <con1:labels>
+                            <con1:key>RetrieveBeneficiaryName-Request</con1:key>
+                            <con1:varName>body</con1:varName>
+                            <con1:value>
+                                <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">./text()</con2:xpathText>
+                            </con1:value>
+                        </con1:labels>
+                    </con1:report>
+                    <con1:log xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffbc.N37374433.0.197ca8369dd.N7f6d</con2:id>
+                        <con1:logLevel>debug</con1:logLevel>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body/*</con2:xqueryText>
+                        </con1:expr>
+                        <con1:message>RetrieveBeneficiaryName-RequestLog</con1:message>
+                    </con1:log>
+                    <con1:wsCallout xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffbc.N37374433.0.197ca8369dd.N7f6c</con2:id>
+                        <con1:service ref="AuthenticatorService/AuthenticatorBS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>Operation1</con1:operation>
+                        <con1:request>
+                            <con1:body wrapped="false">AuthenticatorRequest</con1:body>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body wrapped="false">AuthenticatorResponse</con1:body>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con1:assign varName="AuthenticatorRequest">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffbc.N37374433.0.197ca8369dd.N7f6b</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config"><![CDATA[<moz:Request xmlns:moz="http://www.mozabank.org">
+<moz:username>channel_obdx_app</moz:username>
+<moz:password>Moz@Random123#</moz:password>
+</moz:Request>]]></con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:requestTransform>
+                        <con1:responseTransform>
+                            <con1:assign varName="AccessToken">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffbc.N37374433.0.197ca8369dd.N7f6a</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$AuthenticatorResponse/*:access_token</con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:responseTransform>
+                    </con1:wsCallout>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57ffbc.N37374433.0.197ca8369dd.N7f69" name="Stage2">
+                <con:context/>
+                <con:actions>
+                    <con1:replace contents-only="true" varName="body" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffbc.N37374433.0.197ca8369dd.N7f68</con2:id>
+                        <con1:location>
+                            <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+                        </con1:location>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="Retrieve_Beneficiary_Name/Mapping/Request_Mapping"/>
+                                <con2:param name="Request">
+                                    <con2:path>$InitialRequest</con2:path>
+                                </con2:param>
+                                <con2:param name="accessToken">
+                                    <con2:path>fn:data($AccessToken)</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57ffbc.N37374433.0.197ca8369dd.N7f67">
+            <con:stage id="_StageId-N3f57ffbc.N37374433.0.197ca8369dd.N7f66" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:replace contents-only="true" varName="body" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffbc.N37374433.0.197ca8369dd.N7f65</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="Retrieve_Beneficiary_Name/Mapping/Response_Mapping"/>
+                                <con2:param name="Response">
+                                    <con2:path>$body/*</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                    <con1:reply xmlns:con1="http://www.bea.com/wli/sb/stages/config">
+                        <con1:id>_ActionId-N3f57ffbc.N37374433.0.197ca8369dd.N7f63</con1:id>
+                    </con1:reply>
+                    <con1:report xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff7a.N3b71f3e.0.19874e8020e.N7e07</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">concat('ResponseUUID :',$ReqUUID,' | ',fn-bea:serialize($body))</con2:xqueryText>
+                        </con1:expr>
+                        <con1:labels>
+                            <con1:key>RetrieveBeneficiaryName-Response</con1:key>
+                            <con1:varName>body</con1:varName>
+                            <con1:value>
+                                <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">./text()</con2:xpathText>
+                            </con1:value>
+                        </con1:labels>
+                    </con1:report>
+                    <con1:log xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffbc.N37374433.0.197ca8369dd.N7f64</con2:id>
+                        <con1:logLevel>debug</con1:logLevel>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body/*</con2:xqueryText>
+                        </con1:expr>
+                        <con1:message>RetrieveBeneficiaryName-ResponseLog</con1:message>
+                    </con1:log>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="error-N3f57ff7a.N3b71f3e.0.19874e8020e.N78ec">
+            <con:stage id="_StageId-N3f57ff7a.N3b71f3e.0.19874e8020e.N78b3" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:replace contents-only="true" varName="body" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff7a.N3b71f3e.0.19874e8020e.N78b2</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config"><![CDATA[<Response xmlns="http://www.mozabanca.org/obdx/DW_TFCM_BENE_NAME" >
+<data>
+		<dictionaryArray/>
+		<referenceNo/>
+		<result>
+			<dictionaryArray/>
+			<externalReferenceId/>
+			<status>FAILURE</status>
+			<errorList>
+				<code>ERR001</code>
+				<message>Invalid backend response</message>
+			</errorList>
+			<warningList/>
+		</result>
+		<hasMore/>
+		<totalRecords/>
+		<startSequence/>
+	</data> 
+    </Response>]]></con2:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                    <con1:reply xmlns:con1="http://www.bea.com/wli/sb/stages/config">
+                        <con1:id>_ActionId-N3f57ff7a.N3b71f3e.0.19874e8020e.N78b1</con1:id>
+                    </con1:reply>
+                    <con1:report xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff7a.N3b71f3e.0.19874e8020e.N78b0</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$fault</con2:xqueryText>
+                        </con1:expr>
+                        <con1:labels>
+                            <con1:key>RetrieveBeneficiaryName-fault</con1:key>
+                            <con1:varName>body</con1:varName>
+                            <con1:value>
+                                <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+                            </con1:value>
+                        </con1:labels>
+                    </con1:report>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="Pipeline Pair Node2">
+                <con:request>request-N3f57ffbc.N37374433.0.197ca8369dd.N7f70</con:request>
+                <con:response>response-N3f57ffbc.N37374433.0.197ca8369dd.N7f67</con:response>
+            </con:pipeline-node>
+            <con:route-node name="RouteNode1" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                <con:context/>
+                <con:actions>
+                    <con1:route>
+                        <con2:id>_ActionId-N3f57ffbc.N37374433.0.197ca8369dd.N7e9c</con2:id>
+                        <con1:service ref="Retrieve_Beneficiary_Name/TFCM_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>getTransactionCost</con1:operation>
+                        <con1:outboundTransform/>
+                        <con1:responseTransform>
+                            <con3:report xmlns:con3="http://www.bea.com/wli/sb/stages/logging/config">
+                                <con2:id>_ActionId-N3f57ff7a.N3b71f3e.0.19874e8020e.N7dfc</con2:id>
+                                <con3:expr>
+                                    <con2:xqueryText>$body</con2:xqueryText>
+                                </con3:expr>
+                                <con3:labels>
+                                    <con3:key>MSB response for RetrieveBeneficiaryName from TFCM</con3:key>
+                                    <con3:varName>body</con3:varName>
+                                    <con3:value>
+                                        <con2:xpathText>.</con2:xpathText>
+                                    </con3:value>
+                                </con3:labels>
+                            </con3:report>
+                        </con1:responseTransform>
+                    </con1:route>
+                </con:actions>
+            </con:route-node>
+        </con:flow>
+        <con:partner-links/>
+    </con:router>
+</con:pipelineEntry>

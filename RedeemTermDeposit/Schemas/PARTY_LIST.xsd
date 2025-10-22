@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+              xmlns:tns="http://www.mozabank.org/PARTY_LIST"
+              targetNamespace="http://www.mozabank.org/PARTY_LIST" elementFormDefault="qualified"
+              attributeFormDefault="unqualified" nxsd:stream="json"
+              nxsd:format="JSON" nxsd:version="NXSD" nxsd:encoding="US-ASCII">
+
+  <!-- Root elements -->
+  <xsd:element name="Request" type="tns:RequestType"/>
+  <xsd:element name="Response" type="tns:ResponseType"/>
+
+  <!-- RequestType -->
+  <xsd:complexType name="RequestType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="referenceNo" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="interfaceId" type="xsd:string"/>
+      <xsd:element name="entity" type="xsd:string"/>
+      <xsd:element name="headersMap" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="queryMap" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="hostName" type="xsd:string"/>
+      <xsd:element name="partyId" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- ResponseType -->
+  <xsd:complexType name="ResponseType">
+    <xsd:sequence>
+       <xsd:element name="data">
+        <xsd:complexType>
+          <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="referenceNo" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="result" type="tns:ResponseOperationDataType"/>
+      <xsd:element name="hasMore" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="totalRecords" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="startSequence" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="custName" type="xsd:string"/>
+      </xsd:sequence>
+      </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- ResponseOperationDataType -->
+  <xsd:complexType name="ResponseOperationDataType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="externalReferenceId" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="status" type="xsd:string"/>
+      <xsd:element name="errorList" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="warningList" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

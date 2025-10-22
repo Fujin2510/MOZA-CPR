@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema 
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+  xmlns:tns="http://www.mozabank.org/branchCode"
+  targetNamespace="http://www.mozabank.org/branchCode"
+  elementFormDefault="qualified"
+  attributeFormDefault="unqualified" 
+  nxsd:version="JSON"
+  nxsd:encoding="UTF-8">
+
+  <!-- Root Elements -->
+  <xsd:element name="Request" type="tns:BranchCodeRequestType"/>
+  <xsd:element name="Response" type="tns:BranchCodeResponseType"/>
+
+  <!-- Request Type -->
+  <xsd:complexType name="BranchCodeRequestType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="referenceNo" type="xsd:string"/>
+      <xsd:element name="interfaceId" type="xsd:string"/>
+      <xsd:element name="entity" type="xsd:string"/>
+      <xsd:element name="headersMap" type="xsd:string"/>
+      <xsd:element name="queryMap" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="hostName" type="xsd:string"/>
+      <xsd:element name="accountId" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Response Type -->
+  <xsd:complexType name="BranchCodeResponseType">
+    <xsd:sequence>
+     <xsd:element name="data">
+        <xsd:complexType>
+          <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="referenceNo" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="result" type="tns:ResultType"/>
+      <xsd:element name="hasMore" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="totalRecords" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="startSequence" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="account" type="tns:AccountType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+       </xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+  <!-- Result Type -->
+  <xsd:complexType name="ResultType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="externalReferenceId" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="status" type="xsd:string"/>
+      <xsd:element name="errorList" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="warningList" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Account Type -->
+  <xsd:complexType name="AccountType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="partyId" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="branchId" type="xsd:string"/>
+      <xsd:element name="accountId" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="currency" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="status" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="availableBalance" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="averageBalance" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="interestType" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="interestRate" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="openingDate" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="module" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="accountDisplayName" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="currentBalance" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="productId" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="accountType" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="holdingPattern" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="hasSweepOutInstruction" type="xsd:boolean"/>
+      <xsd:element name="averageQuarterlyBalance" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="averageMonthlyBalance" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="lienAmount" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="sweepInAmount" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="unclearFund" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="fundsAdvanceLimit" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="hasChequeBookFacility" type="xsd:boolean"/>
+      <xsd:element name="accountStatusCode" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="minBalance" type="xsd:decimal"/>
+      <xsd:element name="bookBalance" type="xsd:decimal"/>
+      <xsd:element name="customerShortName" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="idCustomer" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="nbrBranch" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="nbrAccount" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="sortCode" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="modeOfOperation" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="balance" type="xsd:decimal"/>
+      <xsd:element name="acctType" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="ccyDesc" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="descAcctType" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="relation" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="overdraftUsageLimit" type="xsd:decimal"/>
+      <xsd:element name="hasSweepOutFacility" type="xsd:boolean"/>
+      <xsd:element name="hasSweepInFacility" type="xsd:boolean"/>
+      <xsd:element name="hasSIFacility" type="xsd:boolean"/>
+      <xsd:element name="hasOverdraftFacility" type="xsd:boolean"/>
+      <xsd:element name="unclearFunds" type="xsd:decimal"/>
+      <xsd:element name="productCode" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="productName" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="holdAmount" type="xsd:decimal"/>
+      <xsd:element name="dailyWithdrawalLimit" type="xsd:decimal"/>
+      <xsd:element name="netBalance" type="xsd:decimal"/>
+      <xsd:element name="accountModule" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="isLMEnabled" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="partyAccountRelationship" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="hostRelationshipCode" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="iban" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="noOfDebitCards" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="atmEnabled" type="xsd:boolean"/>
+      <xsd:element name="lmenabled" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="nomineeRegistered" type="xsd:boolean"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

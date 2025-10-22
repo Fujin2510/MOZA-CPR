@@ -1,0 +1,25 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns0="http://www.mozabank.org/INTERNAL_TRANSFER_SI" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="InternalTransferSIService">RestService</doc>
+   <grammars>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/INTERNAL_TRANSFER_SI" schemaLocation="../Schema/OBDXSchema/INTERNAL_TRANSFER_SI.xsd"/>
+        </xsd:schema>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/INTERNAL_TRANSFER_SI" schemaLocation="../Schema/OBDXSchema/INTERNAL_TRANSFER_SI.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/internaltransfer_si">
+         <method name="POST" soa:wsdlOperation="InternalTransferSI">
+            <request>
+               <representation mediaType="application/xml" element="cns:Request" xmlns:cns="http://www.mozabank.org/INTERNAL_TRANSFER_SI"/>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabank.org/INTERNAL_TRANSFER_SI"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:Response" xmlns:cns="http://www.mozabank.org/INTERNAL_TRANSFER_SI"/>
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabank.org/INTERNAL_TRANSFER_SI"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

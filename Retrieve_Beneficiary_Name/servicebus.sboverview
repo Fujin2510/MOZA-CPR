@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<composite xmlns="http://xmlns.oracle.com/sca/1.0" xmlns:ui="http://xmlns.oracle.com/soa/designer/" name="Retrieve_Beneficiary_Name" label="Retrieve_Beneficiary_Name" ui:displayName="Retrieve_Beneficiary_Name"/>

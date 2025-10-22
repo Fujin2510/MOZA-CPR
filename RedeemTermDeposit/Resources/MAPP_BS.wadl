@@ -1,0 +1,21 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns0="http://www.mozabanca.org/MAPP" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="MAPP_BS">RestReference</doc>
+   <grammars>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabanca.org/MAPP" schemaLocation="../Schemas/MAPP.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/OP_CALL_ENC?request={requestParams}">
+         <method name="GET" soa:wsdlOperation="Operation1">
+            <request soa:paramElement="pns:RequestEncoded" xmlns:pns="http://www.mozabanca.org/MAPP">
+               <param name="requestParams" style="template" soa:expression="$msg.request/ns0:requestString" type="xsd:string"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:Response" xmlns:cns="http://www.mozabanca.org/MAPP"/>
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabanca.org/MAPP"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

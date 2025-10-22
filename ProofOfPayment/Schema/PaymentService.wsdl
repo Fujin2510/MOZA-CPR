@@ -1,0 +1,352 @@
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://msb.mozabanco.co.mz" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="OutputManagerWS" targetNamespace="http://msb.mozabanco.co.mz">
+<wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://msb.mozabanco.co.mz" elementFormDefault="unqualified" targetNamespace="http://msb.mozabanco.co.mz" version="1.0">
+<xs:element name="ProofOfPaymentBASE64" type="tns:ProofOfPaymentBASE64"/>
+<xs:element name="ProofOfPaymentBASE64Response" type="tns:ProofOfPaymentBASE64Response"/>
+<xs:element name="ProofOfPaymentCORO" type="tns:ProofOfPaymentCORO"/>
+<xs:element name="ProofOfPaymentCOROResponse" type="tns:ProofOfPaymentCOROResponse"/>
+<xs:element name="ProofOfPaymentINSS" type="tns:ProofOfPaymentINSS"/>
+<xs:element name="ProofOfPaymentINSSResponse" type="tns:ProofOfPaymentINSSResponse"/>
+<xs:element name="ProofOfPaymentPAGS" type="tns:ProofOfPaymentPAGS"/>
+<xs:element name="ProofOfPaymentPAGSResponse" type="tns:ProofOfPaymentPAGSResponse"/>
+<xs:element name="ProofOfPaymentPTFI" type="tns:ProofOfPaymentPTFI"/>
+<xs:element name="ProofOfPaymentPTFIResponse" type="tns:ProofOfPaymentPTFIResponse"/>
+<xs:element name="ProofOfPaymentPTFZ" type="tns:ProofOfPaymentPTFZ"/>
+<xs:element name="ProofOfPaymentPTFZResponse" type="tns:ProofOfPaymentPTFZResponse"/>
+<xs:element name="ProofOfPaymentTFCM" type="tns:ProofOfPaymentTFCM"/>
+<xs:element name="ProofOfPaymentTFCMResponse" type="tns:ProofOfPaymentTFCMResponse"/>
+<xs:complexType name="ProofOfPaymentINSS">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="input" type="tns:proofOfPayment"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="proofOfPayment">
+<xs:sequence>
+<xs:element minOccurs="0" name="nrOperacao" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ProofOfPaymentINSSResponse">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="output" type="tns:inssOutput"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="inssOutput">
+<xs:sequence>
+<xs:element minOccurs="0" name="datahora" type="xs:string"/>
+<xs:element minOccurs="0" name="estado" type="xs:string"/>
+<xs:element minOccurs="0" name="guiaINSS" type="xs:string"/>
+<xs:element minOccurs="0" name="moeda" type="xs:string"/>
+<xs:element minOccurs="0" name="montante" type="xs:string"/>
+<xs:element minOccurs="0" name="nomeOrdenante" type="xs:string"/>
+<xs:element minOccurs="0" name="nrConta" type="xs:string"/>
+<xs:element minOccurs="0" name="nrDoc" type="xs:string"/>
+<xs:element minOccurs="0" name="nrOp" type="xs:string"/>
+<xs:element minOccurs="0" name="serviceOutput" type="tns:serviceOutput"/>
+<xs:element minOccurs="0" name="tipoOp" type="xs:string"/>
+<xs:element minOccurs="0" name="user" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="serviceOutput">
+<xs:sequence>
+<xs:element minOccurs="0" name="mensagem" type="xs:string"/>
+<xs:element minOccurs="0" name="status" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ProofOfPaymentCORO">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="input" type="tns:proofOfPayment"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ProofOfPaymentCOROResponse">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="output" type="tns:coroOutput"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="coroOutput">
+<xs:sequence>
+<xs:element minOccurs="0" name="serviceOutput" type="tns:serviceOutput"/>
+<xs:element minOccurs="0" name="nrDoc" type="xs:string"/>
+<xs:element minOccurs="0" name="nrOp" type="xs:string"/>
+<xs:element minOccurs="0" name="estado" type="xs:string"/>
+<xs:element minOccurs="0" name="nomeOrdenante" type="xs:string"/>
+<xs:element minOccurs="0" name="tipoMov" type="xs:string"/>
+<xs:element minOccurs="0" name="montante" type="xs:string"/>
+<xs:element minOccurs="0" name="nrTelemovel" type="xs:string"/>
+<xs:element minOccurs="0" name="nrConta" type="xs:string"/>
+<xs:element minOccurs="0" name="moeda" type="xs:string"/>
+<xs:element minOccurs="0" name="detalhes" type="xs:string"/>
+<xs:element minOccurs="0" name="user" type="xs:string"/>
+<xs:element minOccurs="0" name="datahora" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ProofOfPaymentPAGS">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="input" type="tns:proofOfPayment"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ProofOfPaymentPAGSResponse">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="output" type="tns:pagsOutput"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="pagsOutput">
+<xs:sequence>
+<xs:element minOccurs="0" name="serviceOutput" type="tns:serviceOutput"/>
+<xs:element minOccurs="0" name="tipoOp" type="xs:string"/>
+<xs:element minOccurs="0" name="nrDoc" type="xs:string"/>
+<xs:element minOccurs="0" name="nrOp" type="xs:string"/>
+<xs:element minOccurs="0" name="estado" type="xs:string"/>
+<xs:element minOccurs="0" name="nomeOrdenante" type="xs:string"/>
+<xs:element minOccurs="0" name="entidade" type="xs:string"/>
+<xs:element minOccurs="0" name="referencia" type="xs:string"/>
+<xs:element minOccurs="0" name="montante" type="xs:string"/>
+<xs:element minOccurs="0" name="moeda" type="xs:string"/>
+<xs:element minOccurs="0" name="detalhes" type="xs:string"/>
+<xs:element minOccurs="0" name="tipoMov" type="xs:string"/>
+<xs:element minOccurs="0" name="nrConta" type="xs:string"/>
+<xs:element minOccurs="0" name="user" type="xs:string"/>
+<xs:element minOccurs="0" name="datahora" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ProofOfPaymentBASE64">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="input" type="tns:proofOfPayment"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ProofOfPaymentBASE64Response">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="output" type="tns:popBase64Output"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="popBase64Output">
+<xs:sequence>
+<xs:element minOccurs="0" name="base64" type="xs:string"/>
+<xs:element minOccurs="0" name="serviceOutput" type="tns:serviceOutput"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ProofOfPaymentTFCM">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="input" type="tns:proofOfPayment"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ProofOfPaymentTFCMResponse">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="output" type="tns:tfcmOutput"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="tfcmOutput">
+<xs:sequence>
+<xs:element minOccurs="0" name="serviceOutput" type="tns:serviceOutput"/>
+<xs:element minOccurs="0" name="nrConta" type="xs:string"/>
+<xs:element minOccurs="0" name="nrDoc" type="xs:string"/>
+<xs:element minOccurs="0" name="tipoOperacao" type="xs:string"/>
+<xs:element minOccurs="0" name="nrOp" type="xs:string"/>
+<xs:element minOccurs="0" name="nomeOrdenante" type="xs:string"/>
+<xs:element minOccurs="0" name="nrTelemovel" type="xs:string"/>
+<xs:element minOccurs="0" name="montante" type="xs:string"/>
+<xs:element minOccurs="0" name="moeda" type="xs:string"/>
+<xs:element minOccurs="0" name="tTRF" type="xs:string"/>
+<xs:element minOccurs="0" name="detalhe" type="xs:string"/>
+<xs:element minOccurs="0" name="user" type="xs:string"/>
+<xs:element minOccurs="0" name="datahora" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ProofOfPaymentPTFI">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="input" type="tns:proofOfPayment"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ProofOfPaymentPTFIResponse">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="output" type="tns:ptfiOutput"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ptfiOutput">
+<xs:sequence>
+<xs:element minOccurs="0" name="serviceOutput" type="tns:serviceOutput"/>
+<xs:element minOccurs="0" name="nrOp" type="xs:string"/>
+<xs:element minOccurs="0" name="nrConta" type="xs:string"/>
+<xs:element minOccurs="0" name="contaCreditar" type="xs:string"/>
+<xs:element minOccurs="0" name="montante" type="xs:string"/>
+<xs:element minOccurs="0" name="moeda" type="xs:string"/>
+<xs:element minOccurs="0" name="detalhesOrdenante" type="xs:string"/>
+<xs:element minOccurs="0" name="detalhesBeneficiary" type="xs:string"/>
+<xs:element minOccurs="0" name="user" type="xs:string"/>
+<xs:element minOccurs="0" name="tipoOp" type="xs:string"/>
+<xs:element minOccurs="0" name="nomeOrdenante" type="xs:string"/>
+<xs:element minOccurs="0" name="tipoTransf" type="xs:string"/>
+<xs:element minOccurs="0" name="datahora" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ProofOfPaymentPTFZ">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="input" type="tns:proofOfPayment"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ProofOfPaymentPTFZResponse">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="output" type="tns:ptfzOutput"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ptfzOutput">
+<xs:sequence>
+<xs:element minOccurs="0" name="serviceOutput" type="tns:serviceOutput"/>
+<xs:element minOccurs="0" name="nrConta" type="xs:string"/>
+<xs:element minOccurs="0" name="nrOp" type="xs:string"/>
+<xs:element minOccurs="0" name="nomeOrdenante" type="xs:string"/>
+<xs:element minOccurs="0" name="montante" type="xs:string"/>
+<xs:element minOccurs="0" name="moeda" type="xs:string"/>
+<xs:element minOccurs="0" name="detalhesOrd" type="xs:string"/>
+<xs:element minOccurs="0" name="detalhesBen" type="xs:string"/>
+<xs:element minOccurs="0" name="nibDestino" type="xs:string"/>
+<xs:element minOccurs="0" name="user" type="xs:string"/>
+<xs:element minOccurs="0" name="tipoTRF" type="xs:string"/>
+<xs:element minOccurs="0" name="datahora" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
+</wsdl:types>
+<wsdl:message name="ProofOfPaymentPAGSResponse">
+<wsdl:part element="tns:ProofOfPaymentPAGSResponse" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="ProofOfPaymentPTFIResponse">
+<wsdl:part element="tns:ProofOfPaymentPTFIResponse" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="ProofOfPaymentTFCMResponse">
+<wsdl:part element="tns:ProofOfPaymentTFCMResponse" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="ProofOfPaymentPAGS">
+<wsdl:part element="tns:ProofOfPaymentPAGS" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="ProofOfPaymentBASE64">
+<wsdl:part element="tns:ProofOfPaymentBASE64" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="ProofOfPaymentBASE64Response">
+<wsdl:part element="tns:ProofOfPaymentBASE64Response" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="ProofOfPaymentTFCM">
+<wsdl:part element="tns:ProofOfPaymentTFCM" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="ProofOfPaymentPTFZ">
+<wsdl:part element="tns:ProofOfPaymentPTFZ" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="ProofOfPaymentINSS">
+<wsdl:part element="tns:ProofOfPaymentINSS" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="ProofOfPaymentCOROResponse">
+<wsdl:part element="tns:ProofOfPaymentCOROResponse" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="ProofOfPaymentINSSResponse">
+<wsdl:part element="tns:ProofOfPaymentINSSResponse" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="ProofOfPaymentCORO">
+<wsdl:part element="tns:ProofOfPaymentCORO" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="ProofOfPaymentPTFI">
+<wsdl:part element="tns:ProofOfPaymentPTFI" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="ProofOfPaymentPTFZResponse">
+<wsdl:part element="tns:ProofOfPaymentPTFZResponse" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:portType name="OutputManager">
+<wsdl:operation name="ProofOfPaymentINSS">
+<wsdl:input message="tns:ProofOfPaymentINSS" name="ProofOfPaymentINSS"> </wsdl:input>
+<wsdl:output message="tns:ProofOfPaymentINSSResponse" name="ProofOfPaymentINSSResponse"> </wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="ProofOfPaymentCORO">
+<wsdl:input message="tns:ProofOfPaymentCORO" name="ProofOfPaymentCORO"> </wsdl:input>
+<wsdl:output message="tns:ProofOfPaymentCOROResponse" name="ProofOfPaymentCOROResponse"> </wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="ProofOfPaymentPAGS">
+<wsdl:input message="tns:ProofOfPaymentPAGS" name="ProofOfPaymentPAGS"> </wsdl:input>
+<wsdl:output message="tns:ProofOfPaymentPAGSResponse" name="ProofOfPaymentPAGSResponse"> </wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="ProofOfPaymentBASE64">
+<wsdl:input message="tns:ProofOfPaymentBASE64" name="ProofOfPaymentBASE64"> </wsdl:input>
+<wsdl:output message="tns:ProofOfPaymentBASE64Response" name="ProofOfPaymentBASE64Response"> </wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="ProofOfPaymentTFCM">
+<wsdl:input message="tns:ProofOfPaymentTFCM" name="ProofOfPaymentTFCM"> </wsdl:input>
+<wsdl:output message="tns:ProofOfPaymentTFCMResponse" name="ProofOfPaymentTFCMResponse"> </wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="ProofOfPaymentPTFI">
+<wsdl:input message="tns:ProofOfPaymentPTFI" name="ProofOfPaymentPTFI"> </wsdl:input>
+<wsdl:output message="tns:ProofOfPaymentPTFIResponse" name="ProofOfPaymentPTFIResponse"> </wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="ProofOfPaymentPTFZ">
+<wsdl:input message="tns:ProofOfPaymentPTFZ" name="ProofOfPaymentPTFZ"> </wsdl:input>
+<wsdl:output message="tns:ProofOfPaymentPTFZResponse" name="ProofOfPaymentPTFZResponse"> </wsdl:output>
+</wsdl:operation>
+</wsdl:portType>
+<wsdl:binding name="OutputManagerWSSoapBinding" type="tns:OutputManager">
+<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+<wsdl:operation name="ProofOfPaymentINSS">
+<soap:operation soapAction="ProofOfPayment" style="document"/>
+<wsdl:input name="ProofOfPaymentINSS">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="ProofOfPaymentINSSResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="ProofOfPaymentCORO">
+<soap:operation soapAction="ProofOfPayment" style="document"/>
+<wsdl:input name="ProofOfPaymentCORO">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="ProofOfPaymentCOROResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="ProofOfPaymentPAGS">
+<soap:operation soapAction="ProofOfPayment" style="document"/>
+<wsdl:input name="ProofOfPaymentPAGS">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="ProofOfPaymentPAGSResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="ProofOfPaymentBASE64">
+<soap:operation soapAction="ProofOfPaymentBASE64" style="document"/>
+<wsdl:input name="ProofOfPaymentBASE64">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="ProofOfPaymentBASE64Response">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="ProofOfPaymentTFCM">
+<soap:operation soapAction="ProofOfPaymentTFCM" style="document"/>
+<wsdl:input name="ProofOfPaymentTFCM">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="ProofOfPaymentTFCMResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="ProofOfPaymentPTFI">
+<soap:operation soapAction="ProofOfPayment" style="document"/>
+<wsdl:input name="ProofOfPaymentPTFI">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="ProofOfPaymentPTFIResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="ProofOfPaymentPTFZ">
+<soap:operation soapAction="ProofOfPayment" style="document"/>
+<wsdl:input name="ProofOfPaymentPTFZ">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="ProofOfPaymentPTFZResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:service name="OutputManagerWS">
+<wsdl:port binding="tns:OutputManagerWSSoapBinding" name="OutputManagerPort">
+<soap:address location="http://svdcpmwd02:9084/MozaServiceBus/OutputManager/OutputManagerWS"/>
+</wsdl:port>
+</wsdl:service>
+</wsdl:definitions>

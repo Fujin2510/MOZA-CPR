@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema 
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+    xmlns:tns="http://www.mozabank.org/internalTransfer"
+    targetNamespace="http://www.mozabank.org/internalTransfer" 
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified"
+    nxsd:stream="json"
+    nxsd:format="JSON"
+    nxsd:version="NXSD"
+    nxsd:encoding="UTF-8">
+
+  <!-- Root Elements -->
+  <xsd:element name="Request" type="tns:InternalTransferRequestType"/>
+  <xsd:element name="Response" type="tns:InternalTransferResponseType"/>
+
+  <!-- Request Type -->
+  <xsd:complexType name="InternalTransferRequestType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="referenceNo" type="xsd:string"/>
+      <xsd:element name="interfaceId" type="xsd:string"/>
+      <xsd:element name="entity" type="xsd:string"/>
+      <xsd:element name="headersMap" type="tns:HeadersMapType"/>
+      <xsd:element name="queryMap" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="hostName" type="xsd:string"/>
+      <xsd:element name="partyId" type="xsd:string"/>
+      <xsd:element name="debitAccountId" type="xsd:string"/>
+      <xsd:element name="amount" type="tns:CurrencyAmountType"/>
+      <xsd:element name="paymentDate" type="xsd:string"/>
+      <xsd:element name="remarks" type="xsd:string"/>
+      <xsd:element name="purposeId" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="beneficiary" type="tns:BeneficiaryType"/>
+      <xsd:element name="dealId" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="sourceCode" type="xsd:string"/>
+      <xsd:element name="txnBranch" type="xsd:string"/>
+      <xsd:element name="hostCode" type="xsd:string"/>
+      <xsd:element name="paymentMethod" type="xsd:string"/>
+      <xsd:element name="networkCode" type="xsd:string"/>
+      <xsd:element name="transferType" type="xsd:string"/>
+      <xsd:element name="prefundedPayments" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- HeadersMapType -->
+  <xsd:complexType name="HeadersMapType">
+    <xsd:sequence>
+      <xsd:element name="branchID" type="xsd:string"/>
+      <xsd:element name="msgID" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Beneficiary Type -->
+  <xsd:complexType name="BeneficiaryType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="accountName" type="xsd:string"/>
+      <xsd:element name="accountId" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- CurrencyAmountType -->
+  <xsd:complexType name="CurrencyAmountType">
+    <xsd:sequence>
+      <xsd:element name="currency" type="xsd:string"/>
+      <xsd:element name="amount" type="xsd:decimal"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Response Type -->
+  <xsd:complexType name="InternalTransferResponseType">
+    <xsd:sequence>
+               <xsd:element name="data">
+       <xsd:complexType>
+       <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="referenceNo" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="result" type="tns:ResultType"/>
+      <xsd:element name="hasMore" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="totalRecords" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="startSequence" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+       </xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+
+  <!-- ResultType -->
+  <xsd:complexType name="ResultType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="externalReferenceId" type="xsd:string"/>
+      <xsd:element name="status" type="xsd:string"/>
+      <xsd:element name="errorList" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="warningList" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

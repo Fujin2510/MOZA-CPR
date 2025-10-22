@@ -1,0 +1,24 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://www.mozabank.org/ptfi" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="PTFI_MSB_BS">RestReference</doc>
+   <grammars>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/ptfi" schemaLocation="../Schema/MSBSchema/PTFI.xsd"/>
+        </xsd:schema>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/ptfi" schemaLocation="../Schema/MSBSchema/PTFI.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/OP_CALL_ENC">
+         <method name="GET" soa:wsdlOperation="PTFI_BS">
+            <request soa:paramElement="pns:RequestString" xmlns:pns="http://www.mozabank.org/ptfi">
+               <param name="request" style="query" soa:expression="$msg.request/tns:RequestEncoded" type="xsd:string"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:Response" xmlns:cns="http://www.mozabank.org/ptfi"/>
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabank.org/ptfi"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

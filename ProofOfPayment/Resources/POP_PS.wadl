@@ -1,0 +1,20 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns0="http://www.mozabank.org/POP_OBDX" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="POP_PS">RestService</doc>
+   <grammars>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/POP_OBDX" schemaLocation="../Schema/POP.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/POP">
+         <method name="POST" soa:wsdlOperation="POP_PS">
+            <request>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabank.org/POP_OBDX"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabank.org/POP_OBDX"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

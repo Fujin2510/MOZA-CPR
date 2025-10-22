@@ -1,0 +1,52 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="http://www.mozabank.org/PARTY_LIST" xmlns:ns0="http://www.mozabank.org/td-fetch-penality" xmlns:tns="http://www.mozabank.org/td_redeem" xmlns="http://wadl.dev.java.net/2009/02">
+  <doc title="RedeemTermDeposit">RestService</doc>
+  <grammars>
+    <xsd:schema>
+      <xsd:import namespace="http://www.mozabank.org/td_redeem" schemaLocation="../Schemas/TD_REDEEM.xsd"/>
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import namespace="http://www.mozabank.org/td-fetch-penality" schemaLocation="../Schemas/TD_FETCH_PENALTY.xsd"/>
+    </xsd:schema>
+    <xsd:schema>
+      <xsd:import namespace="http://www.mozabank.org/PARTY_LIST" schemaLocation="../Schemas/PARTY_LIST.xsd"/>
+    </xsd:schema>
+  </grammars>
+  <resources>
+    <resource path="/td_redeem">
+      <method name="POST" soa:wsdlOperation="TdRedeem">
+        <request>
+          <representation mediaType="application/xml" element="cns:Request" xmlns:cns="http://www.mozabank.org/td_redeem"/>
+          <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabank.org/td_redeem"/>
+        </request>
+        <response status="200">
+          <representation mediaType="application/xml" element="cns:Response" xmlns:cns="http://www.mozabank.org/td_redeem"/>
+          <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabank.org/td_redeem"/>
+        </response>
+      </method>
+    </resource>
+    <resource path="/td_fetch_penalty">
+      <method name="POST" soa:wsdlOperation="TdFetchPenalty">
+        <request>
+          <representation mediaType="application/xml" element="cns:Request" xmlns:cns="http://www.mozabank.org/td-fetch-penality"/>
+          <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabank.org/td-fetch-penality"/>
+        </request>
+        <response status="200">
+          <representation mediaType="application/xml" element="cns:Response" xmlns:cns="http://www.mozabank.org/td-fetch-penality"/>
+          <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabank.org/td-fetch-penality"/>
+        </response>
+      </method>
+    </resource>
+    <resource path="/party_list">
+      <method name="POST" soa:wsdlOperation="PartyList">
+        <request>
+          <representation mediaType="application/xml" element="cns:Request" xmlns:cns="http://www.mozabank.org/PARTY_LIST"/>
+          <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabank.org/PARTY_LIST"/>
+        </request>
+        <response status="200">
+          <representation mediaType="application/xml" element="cns:Response" xmlns:cns="http://www.mozabank.org/PARTY_LIST"/>
+          <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabank.org/PARTY_LIST"/>
+        </response>
+      </method>
+    </resource>
+  </resources>
+</application>

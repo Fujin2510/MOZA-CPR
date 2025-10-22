@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            targetNamespace="http://www.mozabanca.org/obdx/DW_TFCM_BENE_NAME"
+            xmlns="http://www.mozabanca.org/obdx/DW_TFCM_BENE_NAME"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            nxsd:version="JSON"
+            nxsd:encoding="UTF-8">
+
+  <!-- Root Elements -->
+  <xsd:element name="Request" type="RequestType" nxsd:jsonRootElement="true"/>
+  <xsd:element name="Response" type="ResponseType" nxsd:jsonRootElement="true"/>
+
+  <!-- Request Type -->
+  <xsd:complexType name="RequestType" nxsd:mapOrder="dictionaryArray referenceNo interfaceId entity headersMap queryMap hostName BeneMobNumber mobWalletCode">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="referenceNo" type="xsd:string"/>
+      <xsd:element name="interfaceId" type="xsd:string"/>
+      <xsd:element name="entity" type="xsd:string"/>
+      <xsd:element name="headersMap">
+        <xsd:complexType/>
+      </xsd:element>
+      <xsd:element name="queryMap" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="hostName" type="xsd:string"/>
+      <xsd:element name="phonenumber" type="xsd:string"/>
+      <xsd:element name="mobWalletCode" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Response Type -->
+  <xsd:complexType name="ResponseType" nxsd:mapOrder="dictionaryArray referenceNo result hasMore totalRecords startSequence BeneMobNumber mobWalletCode costumerName">
+    <xsd:sequence>
+           <xsd:element name="data">
+<xsd:complexType>
+<xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="referenceNo" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="result" type="ResultType"/>
+      <xsd:element name="hasMore" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="totalRecords" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="startSequence" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="BeneMobNumber" type="xsd:string"/>
+      <xsd:element name="mobWalletCode" type="xsd:string"/>
+      <xsd:element name="costumerName" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+
+  <!-- Result Type -->
+  <xsd:complexType name="ResultType" nxsd:mapOrder="dictionaryArray externalReferenceId status errorList warningList">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="externalReferenceId" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="status" type="xsd:string"/>
+      <xsd:element name="errorList" nillable="true" minOccurs="0" maxOccurs="unbounded">
+        <xsd:complexType>
+          <xsd:sequence>
+             <xsd:element name="code" type="xsd:string"/>
+              <xsd:element name="message" type="xsd:string"/>
+          </xsd:sequence>
+      </xsd:complexType>
+      </xsd:element>      
+      <xsd:element name="warningList" type="xsd:string" minOccurs="0" nillable="true"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

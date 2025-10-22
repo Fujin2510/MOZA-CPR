@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            xmlns:tns="http://www.mozabank.org/td_redeem" targetNamespace="http://www.mozabank.org/td_redeem"
+            elementFormDefault="qualified" attributeFormDefault="unqualified" nxsd:version="JSON" nxsd:encoding="UTF-8">
+  <!-- Root elements -->
+  <xsd:element name="Request" type="tns:RequestType"/>
+  <xsd:element name="Response" type="tns:ResponseType"/>
+  <!-- RequestType -->
+  <xsd:complexType name="RequestType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string"/>
+      <xsd:element name="referenceNo" type="xsd:string"/>
+      <xsd:element name="interfaceId" type="xsd:string"/>
+      <xsd:element name="entity" type="xsd:string"/>
+      <xsd:element name="headersMap" type="xsd:string"/>
+      <xsd:element name="queryMap" type="xsd:string"/>
+      <xsd:element name="hostName" type="xsd:string"/>
+      <xsd:element name="accountId" type="xsd:string"/>
+      <xsd:element name="partyId" type="xsd:string"/>
+      <xsd:element name="ccy" type="xsd:string"/>
+      <xsd:element name="accountModule" type="xsd:string"/>
+      <xsd:element name="branchCode" type="xsd:string"/>
+      <xsd:element name="depositNum" type="xsd:decimal"/>
+      <xsd:element name="redeemMode" type="xsd:string"/>
+      <xsd:element name="beneficiaryName" type="xsd:string"/>
+      <xsd:element name="tdRedeemPayoutDetails" type="tns:PayoutDetailsType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- PayoutDetailsType -->
+  <xsd:complexType name="PayoutDetailsType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string"/>
+      <xsd:element name="offsetAccountId" type="xsd:string"/>
+      <xsd:element name="offsetBranchCode" type="xsd:string"/>
+      <xsd:element name="type" type="xsd:string"/>
+      <xsd:element name="redemptionAmount" type="tns:AmountType"/>
+      <xsd:element name="payOutType" type="xsd:string"/>
+      <xsd:element name="payOutRedType" type="xsd:string"/>
+      <xsd:element name="bankName" type="xsd:string"/>
+      <xsd:element name="address" type="xsd:string"/>
+      <xsd:element name="correspondenceChargeType" type="xsd:string"/>
+      <xsd:element name="networkType" type="xsd:string"/>
+      <xsd:element name="clearingCode" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- AmountType -->
+  <xsd:complexType name="AmountType">
+    <xsd:sequence>
+      <xsd:element name="currency" type="xsd:string"/>
+      <xsd:element name="amount" type="xsd:double"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- ResponseType -->
+  <xsd:complexType name="ResponseType">
+    <xsd:sequence>
+      <xsd:element name="data">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="dictionaryArray" type="xsd:string"/>
+            <xsd:element name="referenceNo" type="xsd:string"/>
+            <xsd:element name="result" type="tns:ResponseOperationDataType"/>
+            <xsd:element name="hasMore" type="xsd:string"/>
+            <xsd:element name="totalRecords" type="xsd:string"/>
+            <xsd:element name="startSequence" type="xsd:string"/>
+            <xsd:element name="redemptionAmount" type="tns:AmountType"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- ResponseOperationDataType -->
+  <xsd:complexType name="ResponseOperationDataType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string"/>
+      <xsd:element name="externalReferenceId" type="xsd:string"/>
+      <xsd:element name="status" type="xsd:string"/>
+      <xsd:element name="errorList" nillable="true" minOccurs="0" maxOccurs="unbounded">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="code" type="xsd:string"/>
+            <xsd:element name="message" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="warningList" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>
