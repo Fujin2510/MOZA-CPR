@@ -1,0 +1,21 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://www.mozabank.org/CAPD" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="CAPDGetAllProducts_BS">RestReference</doc>
+   <grammars>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/CAPD" schemaLocation="../Schema/CAPD.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/OP_CALL_ENC">
+         <method name="GET" soa:wsdlOperation="TDList">
+            <request soa:paramElement="pns:CAPDStringRequest" xmlns:pns="http://www.mozabank.org/CAPD">
+               <param name="request" style="query" soa:expression="$msg.request/tns:RequestString" type="xsd:string"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:CAPDResponse" xmlns:cns="http://www.mozabank.org/CAPD"/>
+               <representation mediaType="application/json" element="cns:CAPDResponse" xmlns:cns="http://www.mozabank.org/CAPD"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

@@ -1,0 +1,147 @@
+<wsdl:definitions name="GetAllProductsTdPS" targetNamespace="http://xmlns.oracle.com/TestApplication/GetAllProducts_TD/GetAllProductsTdPS" xmlns:tns="http://xmlns.oracle.com/TestApplication/GetAllProducts_TD/GetAllProductsTdPS" xmlns:inp1="http://www.mozabank.org/ccap_tdlist" xmlns:inp2="http://www.mozabank.org/ccap_party_td_accounts_list" xmlns:inp3="http://www.mozabank.org/ccap_tdaccount_partylist_summary" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:inp4="http://www.mozabank.org/ccap_td_account_parties" xmlns:inp5="http://www.mozabank.org/ccap_td_product_details" xmlns:inp6="http://www.mozabank.org/TD_DETAILS" xmlns:inp7="http://www.mozabank.org/TD_DETAILS">
+    <plnk:partnerLinkType name="GetAllProductsTdPS">
+        <plnk:role name="GetAllProductsTdPSProvider" portType="tns:GetAllProductsTdPS_ptt"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://www.mozabank.org/ccap_tdlist" schemaLocation="../Schema/TD_LIST.xsd"/>
+        </xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://www.mozabank.org/ccap_party_td_accounts_list" schemaLocation="../Schema/PARTY_TD_ACCOUNTS_LIST.xsd"/>
+        </xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://www.mozabank.org/ccap_tdaccount_partylist_summary" schemaLocation="../Schema/TDACCOUNT_PARTYLIST_SUMMARY.xsd"/>
+        </xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://www.mozabank.org/ccap_td_account_parties" schemaLocation="../Schema/TD_ACCOUNT_PARTIES.xsd"/>
+        </xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://www.mozabank.org/ccap_td_product_details" schemaLocation="../Schema/TD_PRODUCT_DETAILS.xsd"/>
+        </xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://www.mozabank.org/TD_DETAILS" schemaLocation="../Schema/TD_DETAILS%201.xsd"/>
+        </xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://www.mozabank.org/TD_DETAILS" schemaLocation="../Schema/TD_DETAILS%201.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="Operation1_inputMessage">
+        <wsdl:part name="request" element="inp1:Request"/>
+    </wsdl:message>
+    <wsdl:message name="Operation1_outputMessage">
+        <wsdl:part name="reply" element="inp1:Response"/>
+    </wsdl:message>
+    <wsdl:message name="Operation2_inputMessage">
+        <wsdl:part name="request" element="inp2:Request"/>
+    </wsdl:message>
+    <wsdl:message name="Operation2_outputMessage">
+        <wsdl:part name="reply" element="inp2:Response"/>
+    </wsdl:message>
+    <wsdl:message name="Operation3_inputMessage">
+        <wsdl:part name="request" element="inp3:Request"/>
+    </wsdl:message>
+    <wsdl:message name="Operation3_outputMessage">
+        <wsdl:part name="reply" element="inp3:Response"/>
+    </wsdl:message>
+    <wsdl:message name="AccountParties_inputMessage">
+        <wsdl:part name="request" element="inp4:Request"/>
+    </wsdl:message>
+    <wsdl:message name="AccountParties_outputMessage">
+        <wsdl:part name="reply" element="inp4:Response"/>
+    </wsdl:message>
+    <wsdl:message name="ProductDetails_inputMessage">
+        <wsdl:part name="request" element="inp5:Request"/>
+    </wsdl:message>
+    <wsdl:message name="ProductDetails_outputMessage">
+        <wsdl:part name="reply" element="inp5:Response"/>
+    </wsdl:message>
+    <wsdl:message name="TDDetails_inputMessage">
+        <wsdl:part name="request" element="inp6:Request"/>
+    </wsdl:message>
+    <wsdl:message name="TDDetails_outputMessage">
+        <wsdl:part name="reply" element="inp6:Response"/>
+    </wsdl:message>
+    <wsdl:portType name="GetAllProductsTdPS_ptt">
+        <wsdl:operation name="TDList">
+            <wsdl:input message="tns:Operation1_inputMessage"/>
+            <wsdl:output message="tns:Operation1_outputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="PartyAccountList">
+            <wsdl:input message="tns:Operation2_inputMessage"/>
+            <wsdl:output message="tns:Operation2_outputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="AccountPartySummaryList">
+            <wsdl:input message="tns:Operation3_inputMessage"/>
+            <wsdl:output message="tns:Operation3_outputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="AccountParties">
+            <wsdl:input message="tns:AccountParties_inputMessage"/>
+            <wsdl:output message="tns:AccountParties_outputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="ProductDetails">
+            <wsdl:input message="tns:ProductDetails_inputMessage"/>
+            <wsdl:output message="tns:ProductDetails_outputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="TDDetails">
+            <wsdl:input message="tns:TDDetails_inputMessage"/>
+            <wsdl:output message="tns:TDDetails_outputMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="GetAllProductsTdPS_ptt-binding" type="tns:GetAllProductsTdPS_ptt">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="TDList">
+            <soap:operation soapAction="TDList"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="PartyAccountList">
+            <soap:operation soapAction="PartyAccountList"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AccountPartySummaryList">
+            <soap:operation soapAction="AccountPartySummaryList"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AccountParties">
+            <soap:operation soapAction="AccountParties"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ProductDetails">
+            <soap:operation soapAction="ProductDetails"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="TDDetails">
+            <soap:operation soapAction="TDDetails"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

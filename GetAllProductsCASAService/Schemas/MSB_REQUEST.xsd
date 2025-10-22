@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema 
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+    xmlns:tns="http://www.mozabank.org/exchange_rate_msb"
+    targetNamespace="http://www.mozabank.org/exchange_rate_msb"
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified"
+    nxsd:stream="json"
+    nxsd:format="JSON"
+    nxsd:version="NXSD"
+    nxsd:encoding="US-ASCII">
+
+  <!-- Root Elements -->
+  <xsd:element name="Request" type="tns:RequestType"/>
+  <xsd:element name="Response" type="tns:ResponseType"/>
+
+  <!-- Request Type -->
+  <xsd:complexType name="RequestType">
+    <xsd:sequence>
+      <xsd:element name="user" type="xsd:string"/>
+      <xsd:element name="password" type="xsd:string"/>
+      <xsd:element name="origin" type="xsd:string"/>
+      <xsd:element name="channelCode" type="xsd:string"/>
+      <xsd:element name="version" type="xsd:string"/>
+      <xsd:element name="licenceKey" type="xsd:string"/>
+      <xsd:element name="sessionId" type="xsd:string"/>
+      <xsd:element name="transactionCode" type="xsd:string"/>
+      <xsd:element name="operationData" type="tns:OperationDataRequestType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="OperationDataRequestType">
+    <xsd:sequence>
+      <xsd:element name="CCMB_I_0001" type="xsd:string"/>
+      <xsd:element name="CCMB_I_0002" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Response Type -->
+  <xsd:complexType name="ResponseType">
+    <xsd:sequence>
+      <xsd:element name="transactionCode" type="xsd:string"/>
+      <xsd:element name="operationData" type="tns:OperationDataResponseType"/>
+      <xsd:element name="channelOperationLogKey" type="xsd:string"/>
+      <xsd:element name="coreLogKey" type="xsd:string"/>
+      <xsd:element name="coreCancelationCode" type="xsd:string"/>
+      <xsd:element name="errorCode" type="xsd:string"/>
+      <xsd:element name="errorMessage" type="tns:ErrorMessageType"/>
+      <xsd:element name="layoutVersion" type="xsd:string"/>
+      <xsd:element name="user" type="xsd:string"/>
+      <xsd:element name="password" type="xsd:string"/>
+      <xsd:element name="station" type="xsd:string"/>
+      <xsd:element name="licenceKey" type="xsd:string"/>
+      <xsd:element name="encryption" type="xsd:string"/>
+      <xsd:element name="code" type="xsd:string"/>
+      <xsd:element name="version" type="xsd:string"/>
+      <xsd:element name="sessionId" type="xsd:string"/>
+      <xsd:element name="language" type="xsd:string"/>
+      <xsd:element name="channelCode" type="xsd:string"/>
+      <xsd:element name="origin" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="OperationDataResponseType">
+    <xsd:sequence>
+      <xsd:element name="CCMB_O_0001" type="xsd:string"/>
+      <xsd:element name="CCMB_O_0002" type="xsd:string"/>
+      <xsd:element name="CCMB_O_0003" type="tns:ExchangeRateListType" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ExchangeRateListType">
+    <xsd:sequence>
+      <xsd:element name="CCMB_O_0003_0001" type="xsd:string"/>
+      <xsd:element name="CCMB_O_0003_0002" type="xsd:string"/>
+      <xsd:element name="CCMB_O_0003_0003" type="xsd:string"/>
+      <xsd:element name="CCMB_O_0003_0004" type="xsd:string"/>
+      <xsd:element name="CCMB_O_0003_0005" type="xsd:string"/>
+      <xsd:element name="CCMB_O_0003_0006" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ErrorMessageType">
+    <xsd:sequence>
+      <xsd:element name="messages" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            xmlns:tns="http://www.mozabank.org/ccap_tdlist"
+            targetNamespace="http://www.mozabank.org/ccap_tdlist"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified" 
+            nxsd:version="JSON"
+            nxsd:encoding="UTF-8">
+
+  <!-- Root Elements -->
+  <xsd:element name="Request" type="tns:InputParameters"/>
+  <xsd:element name="Response" type="tns:OutputParameters"/>
+
+  <!-- Request Type -->
+  <xsd:complexType name="InputParameters">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="referenceNo" type="xsd:string"/>
+      <xsd:element name="interfaceId" type="xsd:string"/>
+      <xsd:element name="entity" type="xsd:string"/>
+      <xsd:element name="headersMap" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="queryMap" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="hostName" type="xsd:string"/>
+      <xsd:element name="accountList" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="status" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="modules" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="partyId" type="xsd:string"/>
+      <xsd:element name="branchCode" type="xsd:string"/>
+      <xsd:element name="module" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Response Type -->
+  <xsd:complexType name="OutputParameters">
+    <xsd:sequence>
+      <xsd:element name="data">
+      <xsd:complexType>
+      <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="referenceNo" type="xsd:string" minOccurs="0" nillable="true"/>
+
+      <xsd:element name="result">
+        <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+                  <xsd:element name="externalReferenceId" type="xsd:string" minOccurs="0" nillable="true"/>
+                  <xsd:element name="status" type="xsd:string"/>
+                  <xsd:element name="errorList" nillable="true" minOccurs="0" maxOccurs="unbounded">
+                    <xsd:complexType>
+                      <xsd:sequence>
+                        <xsd:element name="code" type="xsd:string"/>
+                        <xsd:element name="message" type="xsd:string"/>
+                      </xsd:sequence>
+                    </xsd:complexType>
+                  </xsd:element>
+                  <xsd:element name="warningList" type="xsd:string" minOccurs="0" nillable="true"/>
+                </xsd:sequence>
+              </xsd:complexType>
+      </xsd:element>
+
+      <xsd:element name="hasMore" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="totalRecords" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="startSequence" type="xsd:string" minOccurs="0" nillable="true"/>
+
+            <xsd:element name="accounts" minOccurs="0" maxOccurs="unbounded">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+                  <xsd:element name="partyId" type="xsd:string" minOccurs="0"/>
+                  <xsd:element name="accountId" type="xsd:string" minOccurs="0"/>
+                  <xsd:element name="branchId" type="xsd:string" minOccurs="0"/>
+                  <xsd:element name="currency" type="xsd:string" minOccurs="0"/>
+                  <xsd:element name="status" type="xsd:string" minOccurs="0"/>
+                  <xsd:element name="availableBalance" type="tns:CurrencyAmount" minOccurs="0"/>
+                  <xsd:element name="tenure" type="tns:Tenure" minOccurs="0"/>
+                  <xsd:element name="interestRate" type="xsd:decimal" minOccurs="0"/>
+                  <xsd:element name="principalAmount" type="tns:CurrencyAmount" minOccurs="0"/>
+                  <xsd:element name="maturityAmount" type="tns:CurrencyAmount" minOccurs="0"/>
+                  <xsd:element name="holdAmount" type="tns:CurrencyAmount" minOccurs="0"/>
+                  <xsd:element name="rollOverAmount" type="tns:CurrencyAmount" minOccurs="0"/>
+                  <xsd:element name="maturityDate" type="xsd:string" minOccurs="0"/>
+                  <xsd:element name="depositDate" type="xsd:string" minOccurs="0"/>
+                  <xsd:element name="currentPrincipalAmount" type="tns:CurrencyAmount" minOccurs="0"/>
+                  <xsd:element name="openingDate" type="xsd:string" minOccurs="0"/>
+                  <xsd:element name="valueDate" type="xsd:string" minOccurs="0"/>
+                  <xsd:element name="module" type="xsd:string" minOccurs="0"/>
+                  <xsd:element name="accountDisplayName" type="xsd:string" minOccurs="0"/>
+                  <xsd:element name="productId" type="xsd:string" minOccurs="0"/>
+                  <xsd:element name="rolloverType" type="xsd:string" minOccurs="0"/>
+                  <xsd:element name="certificate" type="tns:Certificate" minOccurs="0"/>
+                  <xsd:element name="redeemptionDetails" minOccurs="0" maxOccurs="unbounded" type="tns:RedeemptionDetail"/>
+                  <xsd:element name="accrualDetails" type="xsd:string" minOccurs="0" nillable="true"/>
+                  <xsd:element name="holdingPattern" type="xsd:string" minOccurs="0"/>
+                  <xsd:element name="sweepinProvider" type="xsd:boolean" minOccurs="0"/>
+                  <xsd:element name="sortCode" type="xsd:string" minOccurs="0"/>
+                  <xsd:element name="hostRelationshipCode" type="xsd:string" minOccurs="0" nillable="true"/>
+                  <xsd:element name="nomineeRegistered" type="xsd:boolean" minOccurs="0"/>
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Reusable Complex Types -->
+  <xsd:complexType name="CurrencyAmount">
+    <xsd:sequence>
+      <xsd:element name="currency" type="xsd:string"/>
+      <xsd:element name="amount" type="xsd:decimal"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="Tenure">
+    <xsd:sequence>
+      <xsd:element name="days" type="xsd:int"/>
+      <xsd:element name="months" type="xsd:int"/>
+      <xsd:element name="years" type="xsd:int"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="Certificate">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="certificateNo" type="xsd:string" minOccurs="0" nillable="true"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="RedeemptionDetail">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="accountId" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="redemptionId" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="redemptionType" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="amount" type="tns:CurrencyAmount" minOccurs="0"/>
+      <xsd:element name="date" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="newPrincipalAmount" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="maturityAmount" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="charges" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="payoutInstruction" type="xsd:string" minOccurs="0" nillable="true"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+
+
+</xsd:schema>

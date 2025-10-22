@@ -1,0 +1,20 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:inp1="http://www.mozabank.org/exchange_rate_obdx" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="PS_CCAP001_ConsultarCambio">RestService</doc>
+   <grammars>
+      <xsd:schema xmlns:tns="http://xmlns.oracle.com/19-05-2025/OsbMoedasBr/Obdx" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+            <xsd:import namespace="http://www.mozabank.org/exchange_rate_obdx" schemaLocation="../Schemas/OBDX_REQUEST.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/exchange_rate">
+         <method name="POST" soa:wsdlOperation="execute">
+            <request>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabank.org/exchange_rate_obdx"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabank.org/exchange_rate_obdx"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

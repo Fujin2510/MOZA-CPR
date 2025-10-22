@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="BS_BANKA_ConsultarCambio">RestReference</doc>
+   <resources>
+      <resource path="/consultar">
+         <method name="GET" soa:name="Method1">
+            <request>
+               <param name="user" style="query" type="xsd:string"/>
+            </request>
+            <response>
+               <representation mediaType="application/json"/>
+            </response>
+            <response/>
+         </method>
+      </resource>
+   </resources>
+</application>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema 
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+    xmlns:tns="http://www.mozabank.org/ccap_td_product_details"
+    targetNamespace="http://www.mozabank.org/ccap_td_product_details"
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified"
+            nxsd:version="JSON"
+            nxsd:encoding="UTF-8">
+
+
+  <!-- Root Elements -->
+  <xsd:element name="Request" type="tns:TDProductDetailsRequest"/>
+  <xsd:element name="Response" type="tns:TDProductDetailsResponse"/>
+
+  <!-- Request Type -->
+  <xsd:complexType name="TDProductDetailsRequest">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="referenceNo" type="xsd:string"/>
+      <xsd:element name="interfaceId" type="xsd:string"/>
+      <xsd:element name="entity" type="xsd:string"/>
+      <xsd:element name="headersMap" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="queryMap" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="hostName" type="xsd:string"/>
+      <xsd:element name="productId" type="xsd:string"/>
+      <xsd:element name="branchCode" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Response Type -->
+  <xsd:complexType name="TDProductDetailsResponse">
+    <xsd:sequence>
+      <xsd:element name="data">
+      <xsd:complexType>
+      <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="referenceNo" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="result" type="tns:Result"/>
+      <xsd:element name="hasMore" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="totalRecords" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="startSequence" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="product" type="tns:ProductDetails" minOccurs="0" nillable="true"/>
+      </xsd:sequence>
+      </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Result Type -->
+  <xsd:complexType name="Result">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="externalReferenceId" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="status" type="xsd:string"/>
+      <xsd:element name="errorList" nillable="true" minOccurs="0" maxOccurs="unbounded">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="code" type="xsd:string"/>
+            <xsd:element name="message" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="warningList" type="xsd:string" minOccurs="0" nillable="true"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Product Details -->
+  <xsd:complexType name="ProductDetails">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="accountType" type="xsd:string"/>
+      <xsd:element name="productId" type="xsd:string"/>
+      <xsd:element name="productName" type="xsd:string"/>
+      <xsd:element name="productType" type="xsd:string"/>
+      <xsd:element name="module" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="startDate" type="xsd:string"/>
+      <xsd:element name="expiryDate" type="xsd:string"/>
+      <xsd:element name="tenure" type="tns:Tenure"/>
+      <xsd:element name="amount" type="tns:ProductAmount" maxOccurs="unbounded"/>
+      <xsd:element name="isTopupAllowed" type="xsd:boolean"/>
+      <xsd:element name="isPartialRedeemAllowed" type="xsd:boolean"/>
+      <xsd:element name="accrualFrequency" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Tenure -->
+  <xsd:complexType name="Tenure">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="minTenure" type="tns:TimePeriod"/>
+      <xsd:element name="defaultTenure" type="tns:TimePeriod"/>
+      <xsd:element name="maxTenure" type="tns:TimePeriod"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Time Period -->
+  <xsd:complexType name="TimePeriod">
+    <xsd:sequence>
+      <xsd:element name="days" type="xsd:int"/>
+      <xsd:element name="months" type="xsd:int"/>
+      <xsd:element name="years" type="xsd:int"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Product Amount -->
+  <xsd:complexType name="ProductAmount">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="minAmount" type="tns:CurrencyAmount"/>
+      <xsd:element name="maxAmount" type="tns:CurrencyAmount"/>
+      <xsd:element name="currency" type="xsd:string"/>
+      <xsd:element name="incrementStep" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="interestRate" type="xsd:string" minOccurs="0" nillable="true"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Currency Amount -->
+  <xsd:complexType name="CurrencyAmount">
+    <xsd:sequence>
+      <xsd:element name="currency" type="xsd:string"/>
+      <xsd:element name="amount" type="xsd:decimal"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  
+</xsd:schema>
