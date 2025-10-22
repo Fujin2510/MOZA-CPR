@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            targetNamespace="http://www.mozabanca.org/obdx/INSS_PAYMENT"
+            xmlns="http://www.mozabanca.org/obdx/INSS_PAYMENT"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            nxsd:version="JSON"
+            nxsd:encoding="UTF-8">
+ 
+  <!-- Root Elements -->
+<xsd:element name="Request" type="RequestType" nxsd:jsonRootElement="true"/>
+<xsd:element name="Response" type="ResponseType" nxsd:jsonRootElement="true"/>
+ 
+  <!-- Request Type -->
+<xsd:complexType name="RequestType" nxsd:mapOrder="dictionaryArray referenceNo interfaceId entity headersMap queryMap hostName taxPayerName guideNumber accountNumber">
+<xsd:sequence>
+<xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+<xsd:element name="referenceNo" type="xsd:string"/>
+<xsd:element name="interfaceId" type="xsd:string"/>
+<xsd:element name="entity" type="xsd:string"/>
+<xsd:element name="headersMap">
+<xsd:complexType/>
+</xsd:element>
+<xsd:element name="queryMap" type="xsd:string" minOccurs="0" nillable="true"/>
+<xsd:element name="hostName" type="xsd:string"/>
+<xsd:element name="taxPayerName" type="xsd:string"/>
+<xsd:element name="guideNumber" type="xsd:string"/>
+<xsd:element name="accountNumber" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+ 
+  <!-- Response Type -->
+<xsd:complexType name="ResponseType">
+<xsd:sequence>
+<xsd:element name="data">
+    <xsd:complexType>
+    <xsd:sequence>
+<xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+<xsd:element name="referenceNo" type="xsd:string" minOccurs="0" nillable="true"/>
+<xsd:element name="result" type="ResultType"/>
+<xsd:element name="hasMore" type="xsd:string" minOccurs="0" nillable="true"/>
+<xsd:element name="totalRecords" type="xsd:string" minOccurs="0" nillable="true"/>
+<xsd:element name="startSequence" type="xsd:string" minOccurs="0" nillable="true"/>
+<xsd:element name="guideNumber" type="xsd:string"/>
+<xsd:element name="accountNumber" type="xsd:string"/>
+<xsd:element name="taxPayerName" type="xsd:string"/>
+<xsd:element name="contributionTypeCode" type="xsd:string"/>
+<xsd:element name="contributionType" type="xsd:string"/>
+<xsd:element name="inssNumber" type="xsd:string"/>
+<xsd:element name="nuit" type="xsd:string"/>
+<xsd:element name="referenceMonth" type="xsd:string"/>
+<xsd:element name="paymentDeadline" type="xsd:string"/>
+<xsd:element name="fineAmount" type="AmountType"/>
+<xsd:element name="defaultInterestAmount" type="AmountType"/>
+<xsd:element name="totalAmount" type="AmountType"/>
+<xsd:element name="inssAgencyCode" type="xsd:string"/>
+<xsd:element name="inssCreditCurrentAccount" type="xsd:string"/>
+<xsd:element name="creditName" type="xsd:string"/>
+<xsd:element name="paymentDate" type="xsd:string"/>
+<xsd:element name="paymentLocation" type="xsd:string"/>
+<xsd:element name="inssInstructions" type="xsd:string"/>
+<xsd:element name="inssControlNumber" type="xsd:string"/>
+<xsd:element name="paymentFormat" type="xsd:string"/>
+<xsd:element name="bankIdentificationNumber" type="xsd:string"/>
+<xsd:element name="dateOfReceipt" type="xsd:string"/>
+<xsd:element name="returnProtocol" type="xsd:string"/>
+<xsd:element name="processingDate" type="xsd:string"/>
+<xsd:element name="authenticationCode" type="xsd:string"/>
+<xsd:element name="operationNumber" type="xsd:string"/>
+<xsd:element name="authorizationNumber" type="xsd:string"/>
+<xsd:element name="amountPaid" type="AmountType"/>
+<xsd:element name="movementSequence" type="xsd:string"/>
+<xsd:element name="inssErrorMessage" type="xsd:string" minOccurs="0" nillable="true"/>
+<xsd:element name="fileData" type="xsd:string"/>
+ </xsd:sequence>
+    </xsd:complexType>
+    </xsd:element>
+    </xsd:sequence>
+    </xsd:complexType>
+ 
+  <!-- Result Type -->
+<xsd:complexType name="ResultType">
+<xsd:sequence>
+<xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+<xsd:element name="externalReferenceId" type="xsd:string" minOccurs="0" nillable="true"/>
+<xsd:element name="status" type="xsd:string"/>
+<xsd:element name="errorList" type="xsd:string" minOccurs="0" nillable="true"/>
+<xsd:element name="warningList" type="xsd:string" minOccurs="0" nillable="true"/>
+</xsd:sequence>
+</xsd:complexType>
+ 
+  <!-- Amount Type -->
+<xsd:complexType name="AmountType">
+<xsd:sequence>
+<xsd:element name="currency" type="xsd:string"/>
+<xsd:element name="amount" type="xsd:decimal"/>
+</xsd:sequence>
+</xsd:complexType>
+ 
+  <!-- Date Type -->
+
+ 
+</xsd:schema>

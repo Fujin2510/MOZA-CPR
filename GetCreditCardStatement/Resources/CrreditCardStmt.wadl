@@ -1,0 +1,37 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://www.mozabank.org/cmov_msb" xmlns="http://wadl.dev.java.net/2009/02" xmlns:ns0="http://www.mozabank.org/emitir_extractos">
+   <doc title="CrreditCardStmt">RestService</doc>
+   <grammars>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/cmov_msb" schemaLocation="../Schema/CC_FETCH_BILLED_STMT.xsd"/>
+        </xsd:schema>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/emitir_extractos" schemaLocation="../Schema/CC_FETCH_UNBILLED_STMT.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/fetchbilled">
+         <method name="POST" soa:wsdlOperation="fetchdetails">
+            <request>
+               <representation mediaType="application/xml" element="cns:Request" xmlns:cns="http://www.mozabank.org/cmov_msb"/>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabank.org/cmov_msb"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:Response" xmlns:cns="http://www.mozabank.org/cmov_msb"/>
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabank.org/cmov_msb"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/fetchunbilled">
+         <method name="POST" soa:wsdlOperation="fetchunbilled">
+            <request>
+               <representation mediaType="application/xml" element="cns:Request" xmlns:cns="http://www.mozabank.org/emitir_extractos"/>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabank.org/emitir_extractos"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:Response" xmlns:cns="http://www.mozabank.org/emitir_extractos"/>
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabank.org/emitir_extractos"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>
