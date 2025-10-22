@@ -1,0 +1,22 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://www.mozabank.org/casa_statement_item_list" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="GetAccountStatementCASA">RestService</doc>
+   <grammars>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/casa_statement_item_list" schemaLocation="CASA_STATEMENT_ITEM_LIST.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/getaccountstatement">
+         <method name="POST" soa:wsdlOperation="getAccountStatement">
+            <request>
+               <representation mediaType="application/xml" element="cns:Request" xmlns:cns="http://www.mozabank.org/casa_statement_item_list"/>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabank.org/casa_statement_item_list"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:Response" xmlns:cns="http://www.mozabank.org/casa_statement_item_list"/>
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabank.org/casa_statement_item_list"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

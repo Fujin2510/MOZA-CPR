@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions 
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:tns="http://msb.mozabanco.co.mz"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:ns1="http://schemas.xmlsoap.org/soap/http"
+    name="CompraRecargaOperadora"
+    targetNamespace="http://msb.mozabanco.co.mz">
+
+  <wsdl:types>
+    <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+               xmlns:tns="http://msb.mozabanco.co.mz"
+               elementFormDefault="unqualified"
+               targetNamespace="http://msb.mozabanco.co.mz"
+               version="1.0">
+               
+      <!-- Elements -->
+      <xs:element name="ComprarRecarga" type="tns:ComprarRecarga"/>
+      <xs:element name="ComprarRecargaResponse" type="tns:ComprarRecargaResponse"/>
+      <xs:element name="ConsultaOperadora" type="tns:ConsultaOperadora"/>
+      <xs:element name="ConsultaOperadoraResponse" type="tns:ConsultaOperadoraResponse"/>
+      <xs:element name="recarregar" type="tns:recarregar"/>
+      <xs:element name="recarregarResponse" type="tns:recarregarResponse"/>
+
+      <!-- Complex Types -->
+      <xs:complexType name="recarregar">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="tns:carregamentoInput"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="carregamentoInput">
+        <xs:complexContent>
+          <xs:extension base="tns:serviceInput">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="codigoOperadora" type="xs:string"/>
+              <xs:element minOccurs="0" name="montante" type="xs:string"/>
+              <xs:element minOccurs="0" name="numerOperacao" type="xs:string"/>
+              <xs:element minOccurs="0" name="numeroTelefone" type="xs:string"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+
+      <xs:complexType name="serviceInput">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="chaveConfirmacao" type="tns:chaveConfirmacao"/>
+          <xs:element minOccurs="0" name="sessao" type="tns:serviceSession"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="chaveConfirmacao">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="chave" type="xs:string"/>
+          <xs:element minOccurs="0" name="posicoes" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="serviceSession">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="id" type="xs:string"/>
+          <xs:element minOccurs="0" name="versao" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="recarregarResponse">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="response" type="tns:carregamentoOutput"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="carregamentoOutput">
+        <xs:complexContent>
+          <xs:extension base="tns:serviceOutput">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="codigoOperadora" type="xs:string"/>
+              <xs:element minOccurs="0" name="idRequisicao" type="xs:decimal"/>
+              <xs:element minOccurs="0" name="montante" type="xs:string"/>
+              <xs:element minOccurs="0" name="numeroOperacao" type="xs:string"/>
+              <xs:element minOccurs="0" name="numeroTelefone" type="xs:long"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+
+      <xs:complexType name="serviceOutput">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="sessao" type="tns:serviceSession"/>
+          <xs:element minOccurs="0" name="status" type="tns:serviceStatus"/>
+          <xs:element minOccurs="0" name="transactionId" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="serviceStatus">
+        <xs:sequence>
+          <xs:element name="codigo" type="xs:int"/>
+          <xs:element minOccurs="0" name="detalhes" type="tns:serviceStatusDetailList"/>
+          <xs:element minOccurs="0" name="executado" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="mensagens" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="serviceStatusDetailList">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="detalhe" nillable="true" type="tns:serviceStatusDetail"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="serviceStatusDetail">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="causa" type="xs:string"/>
+          <xs:element minOccurs="0" name="codigo" type="xs:string"/>
+          <xs:element minOccurs="0" name="mensagem" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="ConsultaOperadora">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="tns:serviceInput"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="ConsultaOperadoraResponse">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="response" type="tns:operadorasOutput"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="operadorasOutput">
+        <xs:complexContent>
+          <xs:extension base="tns:serviceOutput">
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" minOccurs="0" name="operadoras" nillable="true" type="tns:operadora"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+
+      <xs:complexType name="operadora">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="codigo" type="xs:string"/>
+          <xs:element minOccurs="0" name="nome" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="ComprarRecarga">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="tns:compraRecargaInput"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="compraRecargaInput">
+        <xs:complexContent>
+          <xs:extension base="tns:serviceInput">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="codigoOperadora" type="xs:string"/>
+              <xs:element minOccurs="0" name="moeda" type="xs:string"/>
+              <xs:element minOccurs="0" name="montante" type="xs:string"/>
+              <xs:element minOccurs="0" name="numeroConta" type="xs:string"/>
+              <xs:element minOccurs="0" name="numeroTelefone" type="xs:string"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+
+      <xs:complexType name="ComprarRecargaResponse">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="response" type="tns:compraRecargaOutput"/>
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="compraRecargaOutput">
+        <xs:complexContent>
+          <xs:extension base="tns:serviceOutput">
+            <xs:sequence>
+              <xs:element minOccurs="0" name="codigoOperadora" type="xs:string"/>
+              <xs:element minOccurs="0" name="moeda" type="xs:string"/>
+              <xs:element minOccurs="0" name="montante" type="xs:string"/>
+              <xs:element minOccurs="0" name="numeroConta" type="xs:long"/>
+              <xs:element minOccurs="0" name="numeroOperacao" type="xs:string"/>
+              <xs:element minOccurs="0" name="numeroTelefone" type="xs:long"/>
+            </xs:sequence>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+
+  <!-- Messages -->
+  <wsdl:message name="recarregar">
+    <wsdl:part name="parameters" element="tns:recarregar"/>
+  </wsdl:message>
+  <wsdl:message name="ConsultaOperadora">
+    <wsdl:part name="parameters" element="tns:ConsultaOperadora"/>
+  </wsdl:message>
+  <wsdl:message name="ConsultaOperadoraResponse">
+    <wsdl:part name="parameters" element="tns:ConsultaOperadoraResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ComprarRecargaResponse">
+    <wsdl:part name="parameters" element="tns:ComprarRecargaResponse"/>
+  </wsdl:message>
+  <wsdl:message name="recarregarResponse">
+    <wsdl:part name="parameters" element="tns:recarregarResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ComprarRecarga">
+    <wsdl:part name="parameters" element="tns:ComprarRecarga"/>
+  </wsdl:message>
+
+  <!-- Port Type -->
+  <wsdl:portType name="CompraRecarga">
+    <wsdl:operation name="recarregar">
+      <wsdl:input name="recarregar" message="tns:recarregar"/>
+      <wsdl:output name="recarregarResponse" message="tns:recarregarResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaOperadora">
+      <wsdl:input name="ConsultaOperadora" message="tns:ConsultaOperadora"/>
+      <wsdl:output name="ConsultaOperadoraResponse" message="tns:ConsultaOperadoraResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="ComprarRecarga">
+      <wsdl:input name="ComprarRecarga" message="tns:ComprarRecarga"/>
+      <wsdl:output name="ComprarRecargaResponse" message="tns:ComprarRecargaResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+
+  <!-- Binding -->
+  <wsdl:binding name="CompraRecargaOperadoraSoapBinding" type="tns:CompraRecarga">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="recarregar">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="recarregar">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="recarregarResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaOperadora">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="ConsultaOperadora">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="ConsultaOperadoraResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ComprarRecarga">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="ComprarRecarga">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="ComprarRecargaResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+
+  <!-- Service -->
+  <wsdl:service name="CompraRecargaOperadora">
+    <wsdl:port name="CompraRecargaPort" binding="tns:CompraRecargaOperadoraSoapBinding">
+      <soap:address location="http://svdcpmwd02:9084/MozaServiceBus/CompraRecargaOperadora/CompraRecargaOperadora"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
