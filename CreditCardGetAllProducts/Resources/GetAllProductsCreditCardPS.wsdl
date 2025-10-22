@@ -1,0 +1,56 @@
+<wsdl:definitions name="GetAllProductsCreditCardPS" targetNamespace="http://xmlns.oracle.com/MozaApplication/CreditCardGetAllProduts/GetAllProductsCreditCardPS" xmlns:tns="http://xmlns.oracle.com/MozaApplication/CreditCardGetAllProduts/GetAllProductsCreditCardPS" xmlns:inp1="http://www.mozabank.org/CREDIT_CARD_READ" xmlns:inp2="http://www.mozabank.org/PartyCardAccountList" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <plnk:partnerLinkType name="GetAllProductsCreditCardPS">
+        <plnk:role name="GetAllProductsCreditCardPSProvider" portType="tns:GetAllProductsCreditCardPS_ptt"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://www.mozabank.org/CREDIT_CARD_READ" schemaLocation="XSD/CREDIT_CARD_READ.xsd"/>
+        </xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://www.mozabank.org/PartyCardAccountList" schemaLocation="XSD/PARTY_CARD_ACCOUNTS_LIST.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="CreditCardRead_inputMessage">
+        <wsdl:part name="request" element="inp1:Request"/>
+    </wsdl:message>
+    <wsdl:message name="CreditCardRead_outputMessage">
+        <wsdl:part name="reply" element="inp1:Response"/>
+    </wsdl:message>
+    <wsdl:message name="PartyCardAccountsList_inputMessage">
+        <wsdl:part name="request" element="inp2:Request"/>
+    </wsdl:message>
+    <wsdl:message name="PartyCardAccountsList_outputMessage">
+        <wsdl:part name="reply" element="inp2:Response"/>
+    </wsdl:message>
+    <wsdl:portType name="GetAllProductsCreditCardPS_ptt">
+        <wsdl:operation name="CreditCardRead">
+            <wsdl:input message="tns:CreditCardRead_inputMessage"/>
+            <wsdl:output message="tns:CreditCardRead_outputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="PartyCardAccountsList">
+            <wsdl:input message="tns:PartyCardAccountsList_inputMessage"/>
+            <wsdl:output message="tns:PartyCardAccountsList_outputMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="GetAllProductsCreditCardPS_ptt-binding" type="tns:GetAllProductsCreditCardPS_ptt">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="CreditCardRead">
+            <soap:operation soapAction="CreditCardRead"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="PartyCardAccountsList">
+            <soap:operation soapAction="PartyCardAccountsList"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

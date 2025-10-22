@@ -1,0 +1,22 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns0="http://www.mozabanca.org/debit_card_read" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="DebitCard">RestService</doc>
+   <grammars>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabanca.org/debit_card_read" schemaLocation="../Schema/DebitCardRead.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/getDetails">
+         <method name="POST" soa:wsdlOperation="Operation1">
+            <request>
+               <representation mediaType="application/xml" element="cns:DebitCardReadRequest" xmlns:cns="http://www.mozabanca.org/debit_card_read"/>
+               <representation mediaType="application/json" element="cns:DebitCardReadRequest" xmlns:cns="http://www.mozabanca.org/debit_card_read"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:DebitCardReadResponse" xmlns:cns="http://www.mozabanca.org/debit_card_read"/>
+               <representation mediaType="application/json" element="cns:DebitCardReadResponse" xmlns:cns="http://www.mozabanca.org/debit_card_read"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

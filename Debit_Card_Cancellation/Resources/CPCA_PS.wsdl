@@ -1,0 +1,34 @@
+<wsdl:definitions name="CPCA_PS" targetNamespace="http://xmlns.oracle.com/CreateNewTermDeposit_Interface/Debit_Card_Cancellation/CPCA_PS" xmlns:tns="http://xmlns.oracle.com/CreateNewTermDeposit_Interface/Debit_Card_Cancellation/CPCA_PS" xmlns:inp1="http://www.mozabanca.org/obdx/DC_UPD_STATUS" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <plnk:partnerLinkType name="CPCA_PS">
+        <plnk:role name="CPCA_PSProvider" portType="tns:CPCA_PS_ptt"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://www.mozabanca.org/obdx/DC_UPD_STATUS" schemaLocation="../XSD/DC_UPD_STATUS.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="Operation1_inputMessage">
+        <wsdl:part name="request" element="inp1:Request"/>
+    </wsdl:message>
+    <wsdl:message name="Operation1_outputMessage">
+        <wsdl:part name="reply" element="inp1:Response"/>
+    </wsdl:message>
+    <wsdl:portType name="CPCA_PS_ptt">
+        <wsdl:operation name="Operation1">
+            <wsdl:input message="tns:Operation1_inputMessage"/>
+            <wsdl:output message="tns:Operation1_outputMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="CPCA_PS_ptt-binding" type="tns:CPCA_PS_ptt">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="Operation1">
+            <soap:operation soapAction="Operation1"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

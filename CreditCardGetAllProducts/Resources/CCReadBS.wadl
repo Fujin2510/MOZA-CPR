@@ -1,0 +1,22 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://www.mozabank.org/CREDIT_CARD_READ" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="CCReadBS">RestService</doc>
+   <grammars>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/CREDIT_CARD_READ" schemaLocation="XSD/CREDIT_CARD_READ.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/creditcardread">
+         <method name="POST" soa:wsdlOperation="CCRead">
+            <request>
+               <representation mediaType="application/xml" element="cns:Request" xmlns:cns="http://www.mozabank.org/CREDIT_CARD_READ"/>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabank.org/CREDIT_CARD_READ"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:Response" xmlns:cns="http://www.mozabank.org/CREDIT_CARD_READ"/>
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabank.org/CREDIT_CARD_READ"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>
