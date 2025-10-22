@@ -1,0 +1,20 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns0="http://www.mozabanca.org/CPFL" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="CPFL_BS">RestReference</doc>
+   <grammars>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabanca.org/CPFL" schemaLocation="../XSDs/CPFL.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/OP_CALL_ENC?request={reqParam}">
+         <method name="GET" soa:wsdlOperation="Operation1">
+            <request soa:paramElement="pns:CPFLEncodedRequest" xmlns:pns="http://www.mozabanca.org/CPFL">
+               <param name="reqParam" style="template" soa:expression="$msg.request/ns0:RequestString" type="xsd:string"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabanca.org/CPFL"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

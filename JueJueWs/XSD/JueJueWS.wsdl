@@ -1,0 +1,262 @@
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://msb.mozabanco.co.mz" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="JueWS" targetNamespace="http://msb.mozabanco.co.mz">
+<wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://msb.mozabanco.co.mz" elementFormDefault="unqualified" targetNamespace="http://msb.mozabanco.co.mz" version="1.0">
+<xs:element name="ConsultarEntidades" type="tns:ConsultarEntidades"/>
+<xs:element name="ConsultarEntidadesResponse" type="tns:ConsultarEntidadesResponse"/>
+<xs:element name="Pagar" type="tns:Pagar"/>
+<xs:element name="PagarResponse" type="tns:PagarResponse"/>
+<xs:element name="ValidarReferencia" type="tns:ValidarReferencia"/>
+<xs:element name="ValidarReferenciaResponse" type="tns:ValidarReferenciaResponse"/>
+<xs:complexType name="ConsultarEntidades">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="input" type="tns:serviceInput"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="serviceInput">
+<xs:sequence>
+<xs:element minOccurs="0" name="chaveConfirmacao" type="tns:chaveConfirmacao"/>
+<xs:element minOccurs="0" name="sessao" type="tns:serviceSession"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="chaveConfirmacao">
+<xs:sequence>
+<xs:element minOccurs="0" name="chave" type="xs:string"/>
+<xs:element minOccurs="0" name="posicoes" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="serviceSession">
+<xs:sequence>
+<xs:element minOccurs="0" name="id" type="xs:string"/>
+<xs:element minOccurs="0" name="versao" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ConsultarEntidadesResponse">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="output" type="tns:listaEntidadesOutput"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="listaEntidadesOutput">
+<xs:complexContent>
+<xs:extension base="tns:serviceOutput">
+<xs:sequence>
+<xs:element minOccurs="0" name="entidades" type="tns:entidades"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="serviceOutput">
+<xs:sequence>
+<xs:element minOccurs="0" name="sessao" type="tns:serviceSession"/>
+<xs:element minOccurs="0" name="status" type="tns:serviceStatus"/>
+<xs:element minOccurs="0" name="transactionId" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="entidades">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="entidade" nillable="true" type="tns:entidade"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="entidade">
+<xs:sequence>
+<xs:element minOccurs="0" name="codEntidade" type="xs:string"/>
+<xs:element minOccurs="0" name="descricao" type="xs:string"/>
+<xs:element minOccurs="0" name="moeda" type="xs:string"/>
+<xs:element minOccurs="0" name="nomeEntidade" type="xs:string"/>
+<xs:element minOccurs="0" name="numConta" type="xs:string"/>
+<xs:element minOccurs="0" name="numEntidade" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="serviceStatus">
+<xs:sequence>
+<xs:element name="codigo" type="xs:int"/>
+<xs:element minOccurs="0" name="detalhes" type="tns:serviceStatusDetailList"/>
+<xs:element minOccurs="0" name="executado" type="xs:string"/>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="mensagens" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="serviceStatusDetailList">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="detalhe" nillable="true" type="tns:serviceStatusDetail"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="serviceStatusDetail">
+<xs:sequence>
+<xs:element minOccurs="0" name="causa" type="xs:string"/>
+<xs:element minOccurs="0" name="codigo" type="xs:string"/>
+<xs:element minOccurs="0" name="mensagem" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ValidarReferencia">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="input" type="tns:validarReferenciaInput"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="validarReferenciaInput">
+<xs:complexContent>
+<xs:extension base="tns:serviceInput">
+<xs:sequence>
+<xs:element minOccurs="0" name="entidadeJue" type="xs:integer"/>
+<xs:element minOccurs="0" name="referenciaJue" type="xs:string"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="ValidarReferenciaResponse">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="output" type="tns:validarReferenciaOutput"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="validarReferenciaOutput">
+<xs:complexContent>
+<xs:extension base="tns:serviceOutput">
+<xs:sequence>
+<xs:element minOccurs="0" name="entReferencia" type="xs:string"/>
+<xs:element minOccurs="0" name="moedaReferencia" type="xs:string"/>
+<xs:element minOccurs="0" name="numDeclaracao" type="xs:string"/>
+<xs:element minOccurs="0" name="statusPagamento" type="xs:string"/>
+<xs:element minOccurs="0" name="tipoPagamento" type="xs:string"/>
+<xs:element minOccurs="0" name="tipoTaxa" type="xs:string"/>
+<xs:element minOccurs="0" name="valorReferencia" type="xs:decimal"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="Pagar">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="input" type="tns:jueInput"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="jueInput">
+<xs:complexContent>
+<xs:extension base="tns:serviceInput">
+<xs:sequence>
+<xs:element minOccurs="0" name="conta" type="xs:integer"/>
+<xs:element minOccurs="0" name="entidade" type="xs:string"/>
+<xs:element minOccurs="0" name="referencia" type="xs:string"/>
+<xs:element minOccurs="0" name="user" type="xs:string"/>
+<xs:element minOccurs="0" name="valor" type="xs:decimal"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="PagarResponse">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="output" type="tns:jueOutput"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="jueOutput">
+<xs:complexContent>
+<xs:extension base="tns:serviceOutput">
+<xs:sequence>
+<xs:element minOccurs="0" name="ficheiroDeConfirmacao" type="xs:string"/>
+<xs:element minOccurs="0" name="jueGoodResponse" type="tns:jueGoodResponse"/>
+<xs:element minOccurs="0" name="numOperacao" type="xs:integer"/>
+<xs:element minOccurs="0" name="transationBadResponse" type="tns:transationBadResponse"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="jueGoodResponse">
+<xs:complexContent>
+<xs:extension base="tns:transationGoodResponse">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType abstract="true" name="transationGoodResponse">
+<xs:complexContent>
+<xs:extension base="tns:transationResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="refAnulacao" type="xs:string"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType abstract="true" name="transationResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="messageGuid" type="xs:string"/>
+<xs:element minOccurs="0" name="status" type="xs:string"/>
+<xs:element name="transationLogNumber" type="xs:int"/>
+<xs:element minOccurs="0" name="transationName" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="transationBadResponse">
+<xs:complexContent>
+<xs:extension base="tns:transationResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="message" type="xs:string"/>
+<xs:element name="messagesNumber" type="xs:int"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+</xs:schema>
+</wsdl:types>
+<wsdl:message name="ConsultarEntidadesResponse">
+<wsdl:part element="tns:ConsultarEntidadesResponse" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="Pagar">
+<wsdl:part element="tns:Pagar" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="ValidarReferenciaResponse">
+<wsdl:part element="tns:ValidarReferenciaResponse" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="ConsultarEntidades">
+<wsdl:part element="tns:ConsultarEntidades" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="PagarResponse">
+<wsdl:part element="tns:PagarResponse" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="ValidarReferencia">
+<wsdl:part element="tns:ValidarReferencia" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:portType name="Jue">
+<wsdl:operation name="ConsultarEntidades">
+<wsdl:input message="tns:ConsultarEntidades" name="ConsultarEntidades"> </wsdl:input>
+<wsdl:output message="tns:ConsultarEntidadesResponse" name="ConsultarEntidadesResponse"> </wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="ValidarReferencia">
+<wsdl:input message="tns:ValidarReferencia" name="ValidarReferencia"> </wsdl:input>
+<wsdl:output message="tns:ValidarReferenciaResponse" name="ValidarReferenciaResponse"> </wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="Pagar">
+<wsdl:input message="tns:Pagar" name="Pagar"> </wsdl:input>
+<wsdl:output message="tns:PagarResponse" name="PagarResponse"> </wsdl:output>
+</wsdl:operation>
+</wsdl:portType>
+<wsdl:binding name="JueWSSoapBinding" type="tns:Jue">
+<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+<wsdl:operation name="ConsultarEntidades">
+<soap:operation soapAction="ConsultarEntidades" style="document"/>
+<wsdl:input name="ConsultarEntidades">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="ConsultarEntidadesResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="ValidarReferencia">
+<soap:operation soapAction="ValidarReferencia" style="document"/>
+<wsdl:input name="ValidarReferencia">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="ValidarReferenciaResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="Pagar">
+<soap:operation soapAction="Pagar" style="document"/>
+<wsdl:input name="Pagar">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="PagarResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:service name="JueWS">
+<wsdl:port binding="tns:JueWSSoapBinding" name="JuePort">
+<soap:address location="http://svdcpmwd02:9084/MozaServiceBus/Jue/JueWS"/>
+</wsdl:port>
+</wsdl:service>
+</wsdl:definitions>

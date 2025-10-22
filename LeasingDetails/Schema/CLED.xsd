@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            targetNamespace="http://www.mozabanca.org/CLED"
+            xmlns="http://www.mozabanca.org/CLED"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            nxsd:version="JSON"
+            nxsd:encoding="UTF-8">
+
+  <!-- Root Elements -->
+  <xsd:element name="Request" type="RequestType"/>
+  
+  <xsd:element name="CLEDEncodedRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="RequestString" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  
+  <xsd:element name="Response" type="ResponseType"/>
+
+  <!-- Request -->
+  <xsd:complexType name="RequestType">
+    <xsd:sequence>
+      <xsd:element name="user" type="xsd:string"/>
+      <xsd:element name="password" type="xsd:string"/>
+      <xsd:element name="origin" type="xsd:string"/>
+      <xsd:element name="channelCode" type="xsd:string"/>
+      <xsd:element name="version" type="xsd:string"/>
+      <xsd:element name="licenceKey" type="xsd:string"/>
+      <xsd:element name="sessionId" type="xsd:string"/>
+      <xsd:element name="transactionCode" type="xsd:string"/>
+      <xsd:element name="operationData" type="RequestOperationData"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="RequestOperationData">
+    <xsd:sequence>
+      <xsd:element name="CLED_I_0001" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Response -->
+  <xsd:complexType name="ResponseType">
+    <xsd:sequence>
+      <xsd:element name="transactionCode" type="xsd:string"/>
+      <xsd:element name="operationData" type="ResponseOperationData"/>
+      <xsd:element name="channelOperationLogKey" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="coreLogKey" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="coreCancelationCode" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="errorCode" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="errorMessage" type="ErrorMessageType" minOccurs="0"/>
+      <xsd:element name="validation" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="layoutVersion" type="xsd:string"/>
+      <xsd:element name="user" type="xsd:string"/>
+      <xsd:element name="password" type="xsd:string"/>
+      <xsd:element name="station" type="xsd:string"/>
+      <xsd:element name="licenceKey" type="xsd:string"/>
+      <xsd:element name="encryption" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="code" type="xsd:string"/>
+      <xsd:element name="version" type="xsd:string"/>
+      <xsd:element name="sessionId" type="xsd:string"/>
+      <xsd:element name="language" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="channelCode" type="xsd:string"/>
+      <xsd:element name="origin" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ErrorMessageType">
+    <xsd:sequence>
+      <xsd:element name="messages" type="xsd:string" minOccurs="0" maxOccurs="unbounded" nxsd:jsonArray="true"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ResponseOperationData">
+    <xsd:sequence>
+      <!-- All fields optional now -->
+      <xsd:element name="CLED_O_0001" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="CLED_O_0002" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="CLED_O_0003" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="CLED_O_0004" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="CLED_O_0005" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="CLED_O_0006" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="CLED_O_0007" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="CLED_O_0008" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="CLED_O_0009" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="CLED_O_0010" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="CLED_O_0011" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="CLED_O_0012" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="CLED_O_0013" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="CLED_O_0014" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="CLED_O_0015" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="CLED_O_0016" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="CLED_O_0017" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="CLED_O_0018" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="CLED_O_0019" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="CLED_O_0020" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="CLED_O_0021" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

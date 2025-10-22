@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            targetNamespace="http://www.mozabanca.org/obdx/JueEntityList"
+            xmlns="http://www.mozabanca.org/obdx/JueEntityList" elementFormDefault="qualified"
+            attributeFormDefault="unqualified" nxsd:version="JSON" nxsd:encoding="UTF-8">
+
+    <!-- Request Root Element -->
+    <xsd:element name="Request" type="RequestType"/>
+
+    <!-- Response Root Element -->
+    <xsd:element name="Response" type="ResponseType"/>
+
+    <!-- Request Type -->
+    <xsd:complexType name="RequestType">
+        <xsd:sequence>
+            <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="referenceNo" type="xsd:string"/>
+            <xsd:element name="interfaceId" type="xsd:string"/>
+            <xsd:element name="entity" type="xsd:string"/>
+            <xsd:element name="headersMap">
+            <xsd:complexType/>
+            </xsd:element>           
+            <xsd:element name="queryMap" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="hostName" type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <!-- Response Type -->
+    <xsd:complexType name="ResponseType">
+        <xsd:sequence>
+              <xsd:element name="data">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="referenceNo" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="result" type="ResultType"/>
+            <xsd:element name="hasMore" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="totalRecords" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="startSequence" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="entityList" type="EntityType" minOccurs="0" maxOccurs="unbounded" nxsd:jsonName="entityList" nxsd:jsonType="array"/>
+            </xsd:sequence>
+          </xsd:complexType>
+          </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <!-- Result Type -->
+    <xsd:complexType name="ResultType">
+        <xsd:sequence>
+            <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="externalReferenceId" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="status" type="xsd:string"/>
+            <xsd:element name="errorList" nillable="true" minOccurs="0" maxOccurs="unbounded">
+              <xsd:complexType>
+                <xsd:sequence>
+                   <xsd:element name="code" type="xsd:string"/>
+                    <xsd:element name="message" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="warningList" type="xsd:string" minOccurs="0" nillable="true"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+
+    <xsd:complexType name="EntityType">
+        <xsd:sequence>
+            <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="entityCode"      type="xsd:string"/>
+            <xsd:element name="entityNumber"    type="xsd:string"/>
+            <xsd:element name="entityDesc"      type="xsd:string"/>
+            <xsd:element name="currencyCode"    type="xsd:string"/>
+            <xsd:element name="accountNumber"   type="xsd:string"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+</xsd:schema>
