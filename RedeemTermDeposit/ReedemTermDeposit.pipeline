@@ -1,0 +1,943 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="RedeemTermDeposit/Resources/RedeemTermDeposit"/>
+            <con:binding>
+                <con:name>RedeemTermDeposit_ptt-binding</con:name>
+                <con:namespace>http://xmlns.oracle.com/21-05-2025/RedeemTermDeposit/RedeemTermDeposit</con:namespace>
+            </con:binding>
+        </con:binding>
+        <oper:operations xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations">
+            <oper:monitoring enabled="true" level="service" aggregationInterval="1440"/>
+        </oper:operations>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router errorHandler="error-N3f57fffb.N77d25ef3.0.197caafbd14.N7b77">
+        <con:pipeline type="response" name="response-N3f57ffe3.N362d6a89.0.19711113009.N7fcd">
+            <con:stage id="_StageId-N3f57ffe3.N362d6a89.0.19711113009.N7fcb" name="ResponseStage">
+                <con:context/>
+                <con:actions>
+                    <con1:log xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffe3.N362d6a89.0.19711113009.N7fc8</con2:id>
+                        <con1:logLevel>debug</con1:logLevel>
+                    </con1:log>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57ffe3.N362d6a89.0.19711113009.N7f53">
+            <con:stage id="_StageId-N3f57ff98.78df8901.0.198740b3923.N78cd" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:report xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff98.78df8901.0.198740b3923.N78cc</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body</con2:xqueryText>
+                        </con1:expr>
+                        <con1:labels>
+                            <con1:key>RedeemTermDepositTdRedeem -ObdxResponse</con1:key>
+                            <con1:varName>body</con1:varName>
+                            <con1:value>
+                                <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+                            </con1:value>
+                        </con1:labels>
+                    </con1:report>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57ffe3.N362d6a89.0.19711113009.N7f51" name="MAPP Resposne Stage">
+                <con:context>
+                    <con1:varNsDecl prefix="par" namespace="http://www.mozabank.org/PARTY_LIST" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                    <con1:varNsDecl prefix="td" namespace="http://www.mozabank.org/td-fetch-penality" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffe3.N362d6a89.0.19711113009.N7ee4</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="RedeemTermDeposit/XQuery Response/td_redeem_response"/>
+                                <con2:param name="Response">
+                                    <con2:path>$body/*</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/publish/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-a6f8a22.N2824d772.f.198e6ab4f45.N8000</con2:id>
+                        <con1:service ref="SessionParams/DeleteSessionProcess" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>execute</con1:operation>
+                        <con1:outboundTransform>
+                            <con2:replace varName="body" contents-only="true" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-a6f8a22.N2824d772.10.198e6adaaac.N8000</con3:id>
+                                <con2:expr>
+                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;ses:Query xmlns:ses="http://www.mozabank.org/sessionprocess">
+    &lt;ses:QueryParam>{$SessionVal}&lt;/ses:QueryParam>
+&lt;/ses:Query></con:xqueryText>
+                                </con2:expr>
+                            </con2:replace>
+                        </con1:outboundTransform>
+                    </con1:route>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="request-N3f57ffe3.N362d6a89.0.19711113009.N7fce">
+            <con:stage id="_StageId-N3f57ffe3.N362d6a89.0.19711113009.N7fcc" name="Authentication Stage">
+                <con:context/>
+                <con:actions>
+                    <con1:report xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff98.78df8901.0.198740b3923.N796f</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body</con2:xqueryText>
+                        </con1:expr>
+                        <con1:labels>
+                            <con1:key>ReedemTermDeposit-OBDXRequest</con1:key>
+                            <con1:varName>body</con1:varName>
+                            <con1:value>
+                                <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+                            </con1:value>
+                        </con1:labels>
+                    </con1:report>
+                    <con1:assign varName="InitialRequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffe3.N362d6a89.0.19711113009.N7fc5</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body/*</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:wsCallout xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffe3.N362d6a89.0.19711113009.N7fc1</con2:id>
+                        <con1:service ref="AuthenticatorService/AuthenticatorBS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>Operation1</con1:operation>
+                        <con1:request>
+                            <con1:body wrapped="false">AuthenticatorRequest</con1:body>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body wrapped="false">AuthenticatorResponse</con1:body>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con2:log xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffe3.N362d6a89.0.19711113009.N7fbe</con3:id>
+                                <con2:logLevel>debug</con2:logLevel>
+                                <con2:expr>
+                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body</con3:xqueryText>
+                                </con2:expr>
+                                <con2:message>redeem  Request Received >>>>>>>>>>>>>>>>>>>>>>></con2:message>
+                            </con2:log>
+                            <con1:assign varName="AuthenticatorRequest">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffe3.N362d6a89.0.19711113009.N7fb8</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config"><![CDATA[<moz:Request xmlns:moz="http://www.mozabank.org">
+<moz:username>channel_obdx_app</moz:username>
+<moz:password>Moz@Random123#</moz:password>
+</moz:Request>]]></con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:requestTransform>
+                        <con1:responseTransform>
+                            <con1:assign varName="AccessToken">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffe3.N362d6a89.0.19711113009.N7fbb</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$AuthenticatorResponse/*:access_token</con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:responseTransform>
+                    </con1:wsCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="request-N3f57ffe3.N362d6a89.0.19711113009.N7f54">
+            <con:stage id="_StageId-N3f57ffe3.N362d6a89.0.19711113009.N7f52" name="Stage1">
+                <con:context>
+                    <con1:varNsDecl prefix="par" namespace="http://www.mozabank.org/PARTY_LIST" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                    <con1:varNsDecl prefix="td" namespace="http://www.mozabank.org/td-fetch-penality" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:report xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff98.78df8901.0.198740b3923.N7794</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body</con2:xqueryText>
+                        </con1:expr>
+                        <con1:labels>
+                            <con1:key>RedeemTermDepositTdRedeem -OBDXRequest</con1:key>
+                            <con1:varName>body</con1:varName>
+                            <con1:value>
+                                <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+                            </con1:value>
+                        </con1:labels>
+                    </con1:report>
+                    <con1:assign varName="SessionVal" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-a6f8a22.N2824d772.11.198e6b00edd.N8000</con2:id>
+                        <con1:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$inbound/ctx:transport/ctx:request/tp:headers/tp:user-header[@name='X_OBDX_SESSION_PARAM']/@value</con:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="TdRedeeemRequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffe3.N362d6a89.0.19711113009.N7ebd</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="RedeemTermDeposit/XQuery Request/td_redeem_request"/>
+                                <con2:param name="Request">
+                                    <con2:path>$body/*</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:nxsdTranslation xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffe3.N362d6a89.0.19711113009.N7eba</con2:id>
+                        <con1:type>XML-To-Native</con1:type>
+                        <con1:sourceExpr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$TdRedeeemRequest</con2:xqueryText>
+                        </con1:sourceExpr>
+                        <con1:nxsd ref="RedeemTermDeposit/Schemas/MAPP"/>
+                        <con1:schemaElement xmlns:mapp="http://www.mozabanca.org/MAPP">mapp:Request</con1:schemaElement>
+                        <con1:assign-variable>TdRedeemBin</con1:assign-variable>
+                        <con1:enforceSchemaOrder>false</con1:enforceSchemaOrder>
+                    </con1:nxsdTranslation>
+                    <con1:assign varName="TdRedeemJSON" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffe3.N362d6a89.0.19711113009.N7eb7</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn-bea:binary-to-text($TdRedeemBin[@ref],$text)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="TdRedeemJSONTest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffe3.N362d6a89.0.19711113009.N7eb4</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">'{
+ "user": "lmachava2",
+ "password": "",
+ "origin": "P",
+ "channelCode": "INT",
+ "version": "R30",
+ "licenceKey": "licenseKey",
+ "sessionId": "81e4c597",
+ "transactionCode": "MAPP",
+ "operationData": {
+ "MAPP_I_0001": "00281624920001",
+ "MAPP_I_0002": "00281624910001",
+ "MAPP_I_0003": "200000",
+ "MAPP_I_0004": "MZN",
+ "MAPP_I_0005": "20241017"
+ },
+ "validation": {
+ "confirmationKey": {
+ "digitValues": "X",
+ "digitPositions": "X"
+ }
+ }
+}'</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:report xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff98.78df8901.0.198740b3923.N796c</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$TdRedeemJSON</con2:xqueryText>
+                        </con1:expr>
+                        <con1:labels>
+                            <con1:key>RedeemTermDepositTdRedeem-MsbRequest</con1:key>
+                            <con1:varName>body</con1:varName>
+                            <con1:value>
+                                <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+                            </con1:value>
+                        </con1:labels>
+                    </con1:report>
+                    <con1:javaCallout varName="TdRedeemEncoded" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffe3.N362d6a89.0.19711113009.N7eb0</con2:id>
+                        <con1:archive ref="DebitCardList/Resources/JsonToStringUrl"/>
+                        <con1:className>demo.MainClass</con1:className>
+                        <con1:method>public static java.lang.String encodeJsonToRequestParam(java.lang.String)</con1:method>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$TdRedeemJSON</con2:xqueryText>
+                        </con1:expr>
+                        <con1:return-param-as-ref>false</con1:return-param-as-ref>
+                    </con1:javaCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="error-N3f57fffb.N77d25ef3.0.197caafbd14.N78b2">
+            <con:stage id="_StageId-N3f57fffb.N77d25ef3.0.197caafbd14.N78b1" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:Error xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N77d25ef3.0.197caafbd14.N787e</con2:id>
+                        <con1:errCode>TDFTCH001</con1:errCode>
+                    </con1:Error>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="error-N3f57fffb.N77d25ef3.0.197caafbd14.N7c13">
+            <con:stage id="_StageId-N3f57fffb.N77d25ef3.0.197caafbd14.N7c12" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:Error xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N77d25ef3.0.197caafbd14.N7aa5</con2:id>
+                        <con1:errCode>RDMTM001</con1:errCode>
+                    </con1:Error>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="request-N3f57ffe3.N362d6a89.0.19711113009.N7eea">
+            <con:stage id="_StageId-N3f57ffe3.N362d6a89.0.19711113009.N7ee8" name="Stage1">
+                <con:context>
+                    <con1:userNsDecl prefix="par" namespace="http://www.mozabank.org/PARTY_LIST" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:report xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff98.78df8901.0.198740b3923.N782d</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body</con2:xqueryText>
+                        </con1:expr>
+                        <con1:labels>
+                            <con1:key>RedeemTermDepositPartyList -OBDXRequest</con1:key>
+                            <con1:varName>body</con1:varName>
+                            <con1:value>
+                                <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+                            </con1:value>
+                        </con1:labels>
+                    </con1:report>
+                    <con1:assign varName="PartyListRequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N77d25ef3.0.197caafbd14.N7dd2</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="RedeemTermDeposit/XQuery Request/td_redeem_request"/>
+                                <con2:param name="Request">
+                                    <con2:path>$body/*</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:nxsdTranslation xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffe3.N362d6a89.0.19711113009.N7e9b</con2:id>
+                        <con2:disabled xmlns:con2="http://www.bea.com/wli/sb/stages/config">true</con2:disabled>
+                        <con1:type>XML-To-Native</con1:type>
+                        <con1:sourceExpr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$PartyListRequest</con2:xqueryText>
+                        </con1:sourceExpr>
+                        <con1:nxsd ref="RedeemTermDeposit/Schemas/MAPP"/>
+                        <con1:schemaElement xmlns:mapp="http://www.mozabanca.org/MAPP">mapp:Request</con1:schemaElement>
+                        <con1:assign-variable>PartyListBin</con1:assign-variable>
+                        <con1:enforceSchemaOrder>false</con1:enforceSchemaOrder>
+                    </con1:nxsdTranslation>
+                    <con1:assign varName="PartyListJSONTest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffe3.N362d6a89.0.19711113009.N7e98</con2:id>
+                        <con2:disabled xmlns:con2="http://www.bea.com/wli/sb/stages/config">true</con2:disabled>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn-bea:binary-to-text($PartyListBin[@ref],$text)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="PartyListJSON" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffe3.N362d6a89.0.19711113009.N7e95</con2:id>
+                        <con2:disabled xmlns:con2="http://www.bea.com/wli/sb/stages/config">true</con2:disabled>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">'{
+ "user": "lmachava2",
+ "password": "",
+ "origin": "P",
+ "channelCode": "INT",
+ "version": "R30",
+ "licenceKey": "licenseKey",
+ "sessionId": "81e4c597",
+ "transactionCode": "MAPP",
+ "operationData": {
+ "MAPP_I_0001": "00281624920001",
+ "MAPP_I_0002": "00281624910001",
+ "MAPP_I_0003": "200000",
+ "MAPP_I_0004": "MZN",
+ "MAPP_I_0005": "20241017"
+ },
+ "validation": {
+ "confirmationKey": {
+ "digitValues": "X",
+ "digitPositions": "X"
+ }
+ }
+}'</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:javaCallout varName="PartyListEncoded" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffe3.N362d6a89.0.19711113009.N7e92</con2:id>
+                        <con2:disabled xmlns:con2="http://www.bea.com/wli/sb/stages/config">true</con2:disabled>
+                        <con1:archive ref="DebitCardList/Resources/JsonToStringUrl"/>
+                        <con1:className>demo.MainClass</con1:className>
+                        <con1:method>public static java.lang.String encodeJsonToRequestParam(java.lang.String)</con1:method>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$PartyListJSON</con2:xqueryText>
+                        </con1:expr>
+                        <con1:return-param-as-ref>false</con1:return-param-as-ref>
+                    </con1:javaCallout>
+                    <con1:wsCallout xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff9.N3ac4bdec.0.197d3e9bafc.N7dd9</con2:id>
+                        <con1:service ref="SessionParams/QuerySessionParams" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>execute</con1:operation>
+                        <con1:request>
+                            <con1:body wrapped="false">QueryRequest</con1:body>
+                            <con1:header/>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body wrapped="false">QueryResponse</con1:body>
+                            <con1:header/>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con1:assign varName="QueryRequest">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff9.N3ac4bdec.0.197d3e9bafc.N7d71</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">&lt;ses:Query xmlns:ses="http://www.mozabank.org/sessionprocess">
+    &lt;ses:QueryParam>{fn:data($body/par:Request/par:partyId)}&lt;/ses:QueryParam>
+&lt;/ses:Query></con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:requestTransform>
+                        <con1:responseTransform/>
+                    </con1:wsCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="request-N3f57ffe3.N362d6a89.0.19711113009.N7f1f">
+            <con:stage id="_StageId-N3f57fffb.N77d25ef3.0.197caafbd14.N7d4f" name="Stage1" errorHandler="error-N3f57fffb.N77d25ef3.0.197caafbd14.N78b2">
+                <con:context>
+                    <con1:userNsDecl prefix="td" namespace="http://www.mozabank.org/td-fetch-penality" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                    <con1:varNsDecl prefix="par" namespace="http://www.mozabank.org/PARTY_LIST" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:report xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff98.78df8901.0.198740b3923.N77c8</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body</con2:xqueryText>
+                        </con1:expr>
+                        <con1:labels>
+                            <con1:key>RedeemTermDepositTdFetchPenalty -OBDXRequest</con1:key>
+                            <con1:varName>body</con1:varName>
+                            <con1:value>
+                                <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+                            </con1:value>
+                        </con1:labels>
+                    </con1:report>
+                    <con1:ifThenElse xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-a6f8a22.N2824d772.3.198cc7764d9.N8000</con2:id>
+                        <con1:case>
+                            <con1:condition>
+                                <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">fn:data($InitialRequest/*:redemptionAmount/*:amount)</con:xqueryText>
+                            </con1:condition>
+                            <con1:actions>
+                                <con1:assign varName="redemtionFlag">
+                                    <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-a6f8a22.N2824d772.3.198cc7764d9.N7fff</con2:id>
+                                    <con1:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">'SET'</con:xqueryText>
+                                    </con1:expr>
+                                </con1:assign>
+                            </con1:actions>
+                        </con1:case>
+                        <con1:default>
+                            <con1:assign varName="redemtionFlag">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-a6f8a22.N2824d772.4.198cc78061e.N8000</con2:id>
+                                <con1:expr>
+                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">'Null'</con:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:default>
+                    </con1:ifThenElse>
+                    <con1:assign varName="CAPD_Request" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N77d25ef3.0.197caafbd14.N7d4d</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="RedeemTermDeposit/XQuery Request/CAPDRequest"/>
+                                <con2:param name="FetchPenaltyRequest">
+                                    <con2:path>$InitialRequest</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:nxsdTranslation xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N77d25ef3.0.197caafbd14.N7d4c</con2:id>
+                        <con1:type>XML-To-Native</con1:type>
+                        <con1:sourceExpr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$CAPD_Request</con2:xqueryText>
+                        </con1:sourceExpr>
+                        <con1:nxsd ref="GetAllProducts_TD/Schema/CAPD"/>
+                        <con1:schemaElement xmlns:capd="http://www.mozabank.org/CAPD">capd:CAPDRequest</con1:schemaElement>
+                        <con1:assign-variable>CAPD_Request_Bin</con1:assign-variable>
+                        <con1:enforceSchemaOrder>false</con1:enforceSchemaOrder>
+                    </con1:nxsdTranslation>
+                    <con1:assign varName="CAPD_Request_Req" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N77d25ef3.0.197caafbd14.N7d4b</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn-bea:binary-to-text($CAPD_Request_Bin[@ref],$text)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="CAPD_Request_JSON" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N77d25ef3.0.197caafbd14.N7d4a</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn:replace($CAPD_Request_Req,'null','""')</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:report xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff98.78df8901.0.198740b3923.N7935</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$CAPD_Request_Req</con2:xqueryText>
+                        </con1:expr>
+                        <con1:labels>
+                            <con1:key>RedeemTermDepositTdFetchPenalty-MsbRequest</con1:key>
+                            <con1:varName>body</con1:varName>
+                            <con1:value>
+                                <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+                            </con1:value>
+                        </con1:labels>
+                    </con1:report>
+                    <con1:javaCallout varName="CAPD_Request_EncodedString" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N77d25ef3.0.197caafbd14.N7d49</con2:id>
+                        <con1:archive ref="DebitCardList/Resources/JsonToStringUrl"/>
+                        <con1:className>demo.MainClass</con1:className>
+                        <con1:method>public static java.lang.String encodeJsonToRequestParam(java.lang.String)</con1:method>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$CAPD_Request_JSON</con2:xqueryText>
+                        </con1:expr>
+                        <con1:return-param-as-ref>false</con1:return-param-as-ref>
+                    </con1:javaCallout>
+                    <con1:wsCallout xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N77d25ef3.0.197caafbd14.N7d48</con2:id>
+                        <con1:service ref="GetAllProducts_TD/CAPDGetAllProducts_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>TDList</con1:operation>
+                        <con1:request>
+                            <con1:body wrapped="false">CAPD_Request</con1:body>
+                            <con1:header/>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body wrapped="false">CAPD_Response</con1:body>
+                            <con1:header/>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con1:assign varName="CAPD_Request">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N77d25ef3.0.197caafbd14.N7d47</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">&lt;capd:CAPDStringRequest 	xmlns:capd="http://www.mozabank.org/CAPD">
+&lt;capd:RequestString>{$CAPD_Request_EncodedString}&lt;/capd:RequestString>
+&lt;/capd:CAPDStringRequest></con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                            <con3:transport-headers copy-all="false" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N77d25ef3.0.197caafbd14.N7d46</con4:id>
+                                <con2:header-set>outbound-request</con2:header-set>
+                                <con2:header value="expression" name="Authorization">
+                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat('Bearer ',$AccessToken)</con3:xqueryText>
+                                </con2:header>
+                            </con3:transport-headers>
+                        </con1:requestTransform>
+                        <con1:responseTransform>
+                            <con3:report xmlns:con3="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:id>_ActionId-N3f57ff98.78df8901.0.198740b3923.N7901</con2:id>
+                                <con3:expr>
+                                    <con2:xqueryText>$CAPD_Response</con2:xqueryText>
+                                </con3:expr>
+                                <con3:labels>
+                                    <con3:key>RedeemTermDepositTdFetchPenaly -MSB Response</con3:key>
+                                    <con3:varName>body</con3:varName>
+                                    <con3:value>
+                                        <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                    </con3:value>
+                                </con3:labels>
+                            </con3:report>
+                        </con1:responseTransform>
+                    </con1:wsCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57ffe3.N362d6a89.0.19711113009.N7f1e">
+            <con:stage id="_StageId-N3f57ff98.78df8901.0.198740b3923.N7898" name="Stage1">
+                <con:context>
+                    <con1:varNsDecl prefix="par" namespace="http://www.mozabank.org/PARTY_LIST" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                    <con1:varNsDecl prefix="td" namespace="http://www.mozabank.org/td-fetch-penality" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:report xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff98.78df8901.0.198740b3923.N7897</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body</con2:xqueryText>
+                        </con1:expr>
+                        <con1:labels>
+                            <con1:key>RedeemTermDepositTdFetchPenalty -ObdxResponse</con1:key>
+                            <con1:varName>body</con1:varName>
+                            <con1:value>
+                                <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+                            </con1:value>
+                        </con1:labels>
+                    </con1:report>
+                    <con1:ifThenElse xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff9.N2dd3d3eb.0.198d7bb4cde.N7e96</con2:id>
+                        <con1:case id="_BranchId-N3f57fff9.N2dd3d3eb.0.198d7bb4cde.N7e95">
+                            <con1:condition>
+                                <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">fn:data($CAPD_Response/*:errorCode) = '0'</con:xqueryText>
+                            </con1:condition>
+                            <con1:actions/>
+                        </con1:case>
+                        <con1:default>
+                            <con1:replace varName="body" contents-only="true">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fff9.N2dd3d3eb.0.198d7bb4cde.N7e94</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                        <con2:resource ref="RedeemTermDeposit/XQuery Response/FetchPenaltyErrorResponse"/>
+                                        <con2:param name="CAPDResponse">
+                                            <con2:path>$CAPD_Response</con2:path>
+                                        </con2:param>
+                                    </con2:xqueryTransform>
+                                </con1:expr>
+                            </con1:replace>
+                            <con2:reply isError="false" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:id>_ActionId-N3f57fff9.N2dd3d3eb.0.198d7bb4cde.N7e61</con2:id>
+                            </con2:reply>
+                        </con1:default>
+                    </con1:ifThenElse>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57ffe3.N362d6a89.0.19711113009.N7f1c" name="MAPP Resposne Stage">
+                <con:context>
+                    <con1:varNsDecl prefix="par" namespace="http://www.mozabank.org/PARTY_LIST" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                    <con1:varNsDecl prefix="td" namespace="http://www.mozabank.org/td-fetch-penality" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:wsCallout xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffa.N57a2f3aa.0.198c5f6c2b0.N7f31</con2:id>
+                        <con1:service ref="TermDeposit/MaturityAmount" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>MaturityAmount</con1:operation>
+                        <con1:request>
+                            <con1:body wrapped="false">MaturityAmountRequest</con1:body>
+                            <con1:header/>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body wrapped="false">MaturityAmountResponse</con1:body>
+                            <con1:header/>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con3:transport-headers copy-all="false" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con4:id xmlns:con4="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffa.N57a2f3aa.0.198c5f6c2b0.N7f30</con4:id>
+                                <con2:header-set>outbound-request</con2:header-set>
+                                <con2:header value="expression" name="Authorization">
+                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat('Bearer ',$AccessToken)</con3:xqueryText>
+                                </con2:header>
+                            </con3:transport-headers>
+                            <con1:assign varName="MaturityAmountRequest">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffa.N57a2f3aa.0.198c5f6c2b0.N7f2f</con2:id>
+                                <con1:expr>
+                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config"><![CDATA[<mat:MaturityRequest 	xmlns:mat="http://www.mozabank.org/maturityAmount">
+<mat:user>{fn:data($InitialRequest/*:partyId)}</mat:user>
+<mat:capital>{fn-bea:format-number((fn:data($CAPD_Response/*:operationData/*:CAPD_O_0008) div 100), '0.00')} </mat:capital>
+<mat:interestRate>{fn:data($CAPD_Response/*:operationData/*:CAPD_O_0010) div 100000}</mat:interestRate>
+<mat:days>{
+let $capd05 := fn:data($CAPD_Response/*:operationData/*:CAPD_O_0005)
+let $capd06 := fn:data($CAPD_Response/*:operationData/*:CAPD_O_0006)
+let $date05 := xs:date(concat(substring($capd05, 1, 4), "-",substring($capd05, 5, 2), "-",substring($capd05, 7, 2)))
+let $date06 := xs:date(concat(substring($capd06, 1, 4), "-",substring($capd06, 5, 2), "-",substring($capd06, 7, 2)))
+return days-from-duration($date06 - $date05)}</mat:days>
+</mat:MaturityRequest>]]></con:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:requestTransform>
+                        <con1:responseTransform>
+                            <con1:assign varName="MaturityAmount">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffa.N57a2f3aa.0.198c5f6c2b0.N7f2e</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn:data($MaturityAmountResponse/*:maturityAmount)</con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:responseTransform>
+                    </con1:wsCallout>
+                    <con1:replace varName="body" contents-only="true" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffe3.N362d6a89.0.19711113009.N7ee0</con2:id>
+                        <con1:expr>
+                            <con:xqueryTransform xmlns:con="http://www.bea.com/wli/sb/stages/config">
+                                <con:resource ref="RedeemTermDeposit/XQuery Response/FetchPenaltyResponse"/>
+                                <con:param name="CAPDResponse">
+                                    <con:path>$CAPD_Response</con:path>
+                                </con:param>
+                                <con:param name="RedeemFlag">
+                                    <con:path>$redemtionFlag</con:path>
+                                </con:param>
+                                <con:param name="FetchPenaltyRequest">
+                                    <con:path>$InitialRequest</con:path>
+                                </con:param>
+                            </con:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="error-N3f57fffb.N77d25ef3.0.197caafbd14.N7b77">
+            <con:stage id="_StageId-N3f57fffb.N77d25ef3.0.197caafbd14.N7b76" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:ifThenElse xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N77d25ef3.0.197caafbd14.N7b41</con2:id>
+                        <con1:case id="_BranchId-N3f57fffb.N77d25ef3.0.197caafbd14.N7b40">
+                            <con1:condition>
+                                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$inbound/ctx:service/ctx:operation = 'TdRedeem'</con2:xqueryText>
+                            </con1:condition>
+                            <con1:actions>
+                                <con1:report xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                                    <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff98.78df8901.0.198740b3923.N7760</con2:id>
+                                    <con1:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$fault</con:xqueryText>
+                                    </con1:expr>
+                                    <con1:labels>
+                                        <con1:key>RedeemTermDepositTdRedeem -Fault.</con1:key>
+                                        <con1:varName>fault</con1:varName>
+                                        <con1:value>
+                                            <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+                                        </con1:value>
+                                    </con1:labels>
+                                </con1:report>
+                                <con1:replace varName="body" contents-only="true">
+                                    <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N77d25ef3.0.197caafbd14.N7b0c</con2:id>
+                                    <con1:expr>
+                                        <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config"><![CDATA[<Response xmlns="http://www.mozabank.org/td_redeem">
+<data>
+		<dictionaryArray/>
+		<referenceNo/>
+		<result>
+			<dictionaryArray/>
+			<externalReferenceId/>
+			<status>FAILURE</status>
+			<errorList>
+				<code>ERR001</code>
+				<message>Invalid backend response</message>
+			</errorList>
+			<warningList/>
+		</result>
+		<hasMore/>
+		<totalRecords/>
+		<startSequence/>
+	</data> 
+        </Response>]]></con2:xqueryText>
+                                    </con1:expr>
+                                </con1:replace>
+                                <con2:reply xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                    <con2:id>_ActionId-N3f57fffb.N77d25ef3.0.197caafbd14.N7ad9</con2:id>
+                                </con2:reply>
+                            </con1:actions>
+                        </con1:case>
+                        <con1:case id="_BranchId-N3f57fffb.N77d25ef3.0.197caafbd14.N787c">
+                            <con1:condition>
+                                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$inbound/ctx:service/ctx:operation = 'TdFetchPenalty'</con2:xqueryText>
+                            </con1:condition>
+                            <con1:actions>
+                                <con1:report xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                                    <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff98.78df8901.0.198740b3923.N772c</con2:id>
+                                    <con1:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$fault</con:xqueryText>
+                                    </con1:expr>
+                                    <con1:labels>
+                                        <con1:key>RedeemTermDepositTdFetchPenalty -Fault.</con1:key>
+                                        <con1:varName>fault</con1:varName>
+                                        <con1:value>
+                                            <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+                                        </con1:value>
+                                    </con1:labels>
+                                </con1:report>
+                                <con1:replace varName="body" contents-only="true">
+                                    <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N77d25ef3.0.197caafbd14.N7843</con2:id>
+                                    <con1:expr>
+                                        <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config"><![CDATA[<Response xmlns="http://www.mozabank.org/td-fetch-penality">
+<data>
+		<dictionaryArray/>
+		<referenceNo/>
+		<result>
+			<dictionaryArray/>
+			<externalReferenceId/>
+			<status>FAILURE</status>
+			<errorList>
+				<code>ERR001</code>
+				<message>Invalid backend response</message>
+			</errorList>
+			<warningList/>
+		</result>
+		<hasMore/>
+		<totalRecords/>
+		<startSequence/>
+	</data> 
+        </Response>]]></con2:xqueryText>
+                                    </con1:expr>
+                                </con1:replace>
+                                <con2:reply xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                    <con2:id>_ActionId-N3f57fffb.N77d25ef3.0.197caafbd14.N7840</con2:id>
+                                </con2:reply>
+                            </con1:actions>
+                        </con1:case>
+                        <con1:case id="_BranchId-N3f57fffb.N77d25ef3.0.197caafbd14.N787a">
+                            <con1:condition>
+                                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$inbound/ctx:service/ctx:operation = 'PartyList'</con2:xqueryText>
+                            </con1:condition>
+                            <con1:actions>
+                                <con1:report xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                                    <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff98.78df8901.0.198740b3923.N76f8</con2:id>
+                                    <con1:expr>
+                                        <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$fault</con:xqueryText>
+                                    </con1:expr>
+                                    <con1:labels>
+                                        <con1:key>RedeemTermDepositTdFetchPenalty -Fault.</con1:key>
+                                        <con1:varName>fault</con1:varName>
+                                        <con1:value>
+                                            <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+                                        </con1:value>
+                                    </con1:labels>
+                                </con1:report>
+                                <con1:replace varName="body" contents-only="true">
+                                    <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N77d25ef3.0.197caafbd14.N780c</con2:id>
+                                    <con1:expr>
+                                        <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config"><![CDATA[<Response xmlns="http://www.mozabank.org/PARTY_LIST">
+<data>
+		<dictionaryArray/>
+		<referenceNo/>
+		<result>
+			<dictionaryArray/>
+			<externalReferenceId/>
+			<status>FAILURE</status>
+			<errorList>
+				<code>ERR001</code>
+				<message>Invalid backend response</message>
+			</errorList>
+			<warningList/>
+		</result>
+		<hasMore/>
+		<totalRecords/>
+		<startSequence/>
+	</data> 
+        </Response>]]></con2:xqueryText>
+                                    </con1:expr>
+                                </con1:replace>
+                                <con2:reply xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                    <con2:id>_ActionId-N3f57fffb.N77d25ef3.0.197caafbd14.N7809</con2:id>
+                                </con2:reply>
+                            </con1:actions>
+                        </con1:case>
+                        <con1:default/>
+                    </con1:ifThenElse>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57ffe3.N362d6a89.0.19711113009.N7ee9">
+            <con:stage id="_StageId-N3f57ff98.78df8901.0.198740b3923.N7863" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:report xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff98.78df8901.0.198740b3923.N7862</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body</con2:xqueryText>
+                        </con1:expr>
+                        <con1:labels>
+                            <con1:key>RedeemTermDepositPartyList -ObdxResponse</con1:key>
+                            <con1:varName>body</con1:varName>
+                            <con1:value>
+                                <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+                            </con1:value>
+                        </con1:labels>
+                    </con1:report>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57ffe3.N362d6a89.0.19711113009.N7ee7" name="MAPP Resposne Stage">
+                <con:context>
+                    <con1:varNsDecl prefix="par" namespace="http://www.mozabank.org/PARTY_LIST" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                    <con1:varNsDecl prefix="td" namespace="http://www.mozabank.org/td-fetch-penality" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:replace contents-only="true" varName="body" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffe3.N362d6a89.0.19711113009.N7edd</con2:id>
+                        <con1:expr>
+                            <con:xqueryTransform xmlns:con="http://www.bea.com/wli/sb/stages/config">
+                                <con:resource ref="RedeemTermDeposit/XQuery Response/party_list_response"/>
+                                <con:param name="customerName">
+                                    <con:path>fn:data($QueryResponse/*:PartyName)</con:path>
+                                </con:param>
+                            </con:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="Pipeline Pair Node1">
+                <con:request>request-N3f57ffe3.N362d6a89.0.19711113009.N7fce</con:request>
+                <con:response>response-N3f57ffe3.N362d6a89.0.19711113009.N7fcd</con:response>
+            </con:pipeline-node>
+            <con:branch-node type="operation" id="_FlowId-N3f57ffe3.N362d6a89.0.19711113009.N7f86" name="BranchNode1">
+                <con:context/>
+                <con:branch-table>
+                    <con:branch name="TdRedeem">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="Pipeline Pair Node2">
+                                <con:request>request-N3f57ffe3.N362d6a89.0.19711113009.N7f54</con:request>
+                                <con:response>response-N3f57ffe3.N362d6a89.0.19711113009.N7f53</con:response>
+                            </con:pipeline-node>
+                            <con:route-node name="RouteNode1" error-handler="error-N3f57fffb.N77d25ef3.0.197caafbd14.N7c13">
+                                <con:context>
+                                    <con1:varNsDecl prefix="par" namespace="http://www.mozabank.org/PARTY_LIST" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                                    <con1:varNsDecl prefix="td" namespace="http://www.mozabank.org/td-fetch-penality" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                                </con:context>
+                                <con:actions>
+                                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffe3.N362d6a89.0.19711113009.N7eda</con2:id>
+                                        <con1:service ref="RedeemTermDeposit/MAPP_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>Operation1</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con2:replace varName="body" contents-only="true" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffe3.N362d6a89.0.19711113009.N7ed0</con3:id>
+                                                <con2:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;mapp:RequestEncoded xmlns:mapp="http://www.mozabanca.org/MAPP">
+    &lt;mapp:requestString>{$TdRedeemEncoded}&lt;/mapp:requestString>
+&lt;/mapp:RequestEncoded></con:xqueryText>
+                                                </con2:expr>
+                                            </con2:replace>
+                                            <con2:transport-headers copy-all="false" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffe3.N362d6a89.0.19711113009.N7ecd</con3:id>
+                                                <con2:header-set>outbound-request</con2:header-set>
+                                                <con2:header value="expression" name="Authorization">
+                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat('Bearer ',$AccessToken)</con3:xqueryText>
+                                                </con2:header>
+                                            </con2:transport-headers>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con3:report xmlns:con3="http://www.bea.com/wli/sb/stages/logging/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                                <con2:id>_ActionId-N3f57ff98.78df8901.0.198740b3923.N7938</con2:id>
+                                                <con3:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$body</con:xqueryText>
+                                                </con3:expr>
+                                                <con3:labels>
+                                                    <con3:key>RedeemTermDepositTdRedeem -MSB Response</con3:key>
+                                                    <con3:varName>body</con3:varName>
+                                                    <con3:value>
+                                                        <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">.</con:xpathText>
+                                                    </con3:value>
+                                                </con3:labels>
+                                            </con3:report>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="TdFetchPenalty">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="Pipeline Pair Node3">
+                                <con:request>request-N3f57ffe3.N362d6a89.0.19711113009.N7f1f</con:request>
+                                <con:response>response-N3f57ffe3.N362d6a89.0.19711113009.N7f1e</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="PartyList">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="Pipeline Pair Node4">
+                                <con:request>request-N3f57ffe3.N362d6a89.0.19711113009.N7eea</con:request>
+                                <con:response>response-N3f57ffe3.N362d6a89.0.19711113009.N7ee9</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:default-branch>
+                        <con:flow/>
+                    </con:default-branch>
+                </con:branch-table>
+            </con:branch-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

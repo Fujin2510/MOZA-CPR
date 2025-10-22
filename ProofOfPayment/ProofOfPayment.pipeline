@@ -1,0 +1,974 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="ProofOfPayment/Resources/POP_PS"/>
+            <con:binding>
+                <con:name>POP_PS_ptt-binding</con:name>
+                <con:namespace>http://xmlns.oracle.com/AllProjects/ProofOfPayment/POP_PS</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router errorHandler="error-N3f57ff7a.N79f4069f.0.19933ec77a4.N8000">
+        <con:pipeline type="request" name="request-N3f57ff79.4c8aaf16.0.198f1056d04.N7fc2">
+            <con:stage id="_StageId-N3f57ff79.4c8aaf16.0.198f1056d04.N7fc0" name="Stage1">
+                <con:context/>
+                <con:disabled>true</con:disabled>
+                <con:actions>
+                    <con1:assign varName="InitialRequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff79.4c8aaf16.0.198f1056d04.N7fb6</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body/*</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="userId" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff79.4c8aaf16.0.198f1056d04.N7f80</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">substring-before(substring-after($inbound/ctx:transport/ctx:request/tp:headers/tp:user-header[@name='X_OBDX_SESSION_PARAM']/@value,'~'),'~')</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57ff79.4c8aaf16.0.198f1056d04.N7fb4" name="Stage2">
+                <con:context/>
+                <con:actions>
+                    <con1:replace contents-only="true" varName="body" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff79.4c8aaf16.0.198f1056d04.N7fb9</con2:id>
+                        <con2:disabled xmlns:con2="http://www.bea.com/wli/sb/stages/config">true</con2:disabled>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="ProofOfPayment/Mapping/RequestMapping"/>
+                                <con2:param name="Request">
+                                    <con2:path>$body/*</con2:path>
+                                </con2:param>
+                                <con2:param name="userIdVar">
+                                    <con2:path>$userId</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57ff79.4c8aaf16.0.198f1056d04.N7fc1">
+            <con:stage id="_StageId-N3f57ff79.4c8aaf16.0.198f1056d04.N7fbf" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:replace contents-only="true" varName="body" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff79.4c8aaf16.0.198f1056d04.N7fbc</con2:id>
+                        <con2:disabled xmlns:con2="http://www.bea.com/wli/sb/stages/config">true</con2:disabled>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="ProofOfPayment/Mapping/ResponseMapping"/>
+                                <con2:param name="Response">
+                                    <con2:path>$body/*</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="error-N3f57ff7a.N79f4069f.0.19933ec77a4.N8000">
+            <con:stage id="_StageId-N3f57ff7a.N79f4069f.0.19933ec77a4.N7fff" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:replace contents-only="true" varName="body" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff7a.N79f4069f.0.19933ec77a4.N7f97</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config"><![CDATA[<Response xmlns="http://www.mozabank.org/POP_OBDX" >
+<data>
+		<dictionaryArray/>
+		<referenceNo/>
+		<result>
+			<dictionaryArray/>
+			<externalReferenceId/>
+			<status>FAILURE</status>
+			<errorList>
+				<code>POPE001</code>
+				<message>O comprovativo para este tipo de transação não está disponível.</message>
+			</errorList>
+			<warningList/>
+		</result>
+		<hasMore/>
+		<totalRecords/>
+		<startSequence/>
+	</data> 
+    </Response>]]></con2:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                    <con1:reply xmlns:con1="http://www.bea.com/wli/sb/stages/config">
+                        <con1:id>_ActionId-N3f57ff7a.N79f4069f.0.19933ec77a4.N7f94</con1:id>
+                    </con1:reply>
+                    <con1:report xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff7a.N79f4069f.0.19933ec77a4.N7f8f</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$fault</con2:xqueryText>
+                        </con1:expr>
+                        <con1:labels>
+                            <con1:key>ProofOfPayment</con1:key>
+                            <con1:varName>body</con1:varName>
+                            <con1:value>
+                                <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+                            </con1:value>
+                        </con1:labels>
+                    </con1:report>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="request-N3f57ff76.N605af98c.0.1997bd10db4.N7d81">
+            <con:stage id="_StageId-N3f57ff76.N605af98c.0.1997bd10db4.N7d80" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:assign varName="InitialRequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff76.N605af98c.0.1997bd10db4.N7d7f</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body/*</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="userId" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff76.N605af98c.0.1997bd10db4.N7d7e</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">substring-before(substring-after($inbound/ctx:transport/ctx:request/tp:headers/tp:user-header[@name='X_OBDX_SESSION_PARAM']/@value,'~'),'~')</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57ff76.N605af98c.0.1997bd10db4.N7d7d" name="Stage2">
+                <con:context/>
+                <con:actions>
+                    <con1:replace contents-only="true" varName="body" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff76.N605af98c.0.1997bd10db4.N7d7c</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="ProofOfPayment/Mapping/RequestMapping"/>
+                                <con2:param name="Request">
+                                    <con2:path>$body/*</con2:path>
+                                </con2:param>
+                                <con2:param name="userIdVar">
+                                    <con2:path>$userId</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57ff76.N605af98c.0.1997bd10db4.N7d7b">
+            <con:stage id="_StageId-N3f57ff76.N605af98c.0.1997bd10db4.N7d7a" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:replace contents-only="true" varName="body" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff76.N605af98c.0.1997bd10db4.N7d79</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="ProofOfPayment/Mapping/ResponseMapping"/>
+                                <con2:param name="Response">
+                                    <con2:path>$body/*</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="request-N3f57ff76.N605af98c.0.1997bd10db4.N7cd2">
+            <con:stage id="_StageId-N3f57ff76.N605af98c.0.1997bd10db4.N7cd1" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:assign varName="InitialRequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff76.N605af98c.0.1997bd10db4.N7cd0</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body/*</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="userId" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff76.N605af98c.0.1997bd10db4.N7ccf</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">substring-before(substring-after($inbound/ctx:transport/ctx:request/tp:headers/tp:user-header[@name='X_OBDX_SESSION_PARAM']/@value,'~'),'~')</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57ff76.N605af98c.0.1997bd10db4.N7cce" name="Stage2">
+                <con:context/>
+                <con:actions>
+                    <con1:replace contents-only="true" varName="body" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff76.N605af98c.0.1997bd10db4.N7ccd</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="ProofOfPayment/Mapping/AllRequest_Mapping"/>
+                                <con2:param name="Request">
+                                    <con2:path>$body/*</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57ff76.N605af98c.0.1997bd10db4.N7ccc">
+            <con:stage id="_StageId-N3f57ff76.N605af98c.0.1997bd10db4.N7ccb" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:replace contents-only="true" varName="body" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff76.N605af98c.0.1997bd10db4.N7cca</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="ProofOfPayment/Mapping/AllResponse_Mapping"/>
+                                <con2:param name="Response">
+                                    <con2:path>$body/*</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="request-N3f57ff76.N605af98c.0.1997bd10db4.N7b98">
+            <con:stage id="_StageId-N3f57ff76.N605af98c.0.1997bd10db4.N7b97" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:assign varName="InitialRequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff76.N605af98c.0.1997bd10db4.N7b96</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body/*</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="userId" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff76.N605af98c.0.1997bd10db4.N7b95</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">substring-before(substring-after($inbound/ctx:transport/ctx:request/tp:headers/tp:user-header[@name='X_OBDX_SESSION_PARAM']/@value,'~'),'~')</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57ff76.N605af98c.0.1997bd10db4.N7b94" name="Stage2">
+                <con:context/>
+                <con:actions>
+                    <con1:replace contents-only="true" varName="body" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff76.N605af98c.0.1997bd10db4.N7b93</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="ProofOfPayment/Mapping/RequestMapping"/>
+                                <con2:param name="Request">
+                                    <con2:path>$body/*</con2:path>
+                                </con2:param>
+                                <con2:param name="userIdVar">
+                                    <con2:path>$userId</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57ff76.N605af98c.0.1997bd10db4.N7b92">
+            <con:stage id="_StageId-N3f57ff76.N605af98c.0.1997bd10db4.N7b91" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:replace contents-only="true" varName="body" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff76.N605af98c.0.1997bd10db4.N7b90</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="ProofOfPayment/Mapping/ResponseMapping"/>
+                                <con2:param name="Response">
+                                    <con2:path>$body/*</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="request-N3f57ff76.N605af98c.0.1997bd10db4.N7b1a">
+            <con:stage id="_StageId-N3f57ff76.N605af98c.0.1997bd10db4.N7b19" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:assign varName="InitialRequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff76.N605af98c.0.1997bd10db4.N7b18</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body/*</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="userId" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff76.N605af98c.0.1997bd10db4.N7b17</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">substring-before(substring-after($inbound/ctx:transport/ctx:request/tp:headers/tp:user-header[@name='X_OBDX_SESSION_PARAM']/@value,'~'),'~')</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57ff76.N605af98c.0.1997bd10db4.N7b16" name="Stage2">
+                <con:context/>
+                <con:actions>
+                    <con1:replace contents-only="true" varName="body" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff76.N605af98c.0.1997bd10db4.N7b15</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="ProofOfPayment/Mapping/RequestMapping"/>
+                                <con2:param name="Request">
+                                    <con2:path>$body/*</con2:path>
+                                </con2:param>
+                                <con2:param name="userIdVar">
+                                    <con2:path>$userId</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57ff76.N605af98c.0.1997bd10db4.N7b14">
+            <con:stage id="_StageId-N3f57ff76.N605af98c.0.1997bd10db4.N7b13" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:replace contents-only="true" varName="body" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff76.N605af98c.0.1997bd10db4.N7b12</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="ProofOfPayment/Mapping/ResponseMapping"/>
+                                <con2:param name="Response">
+                                    <con2:path>$body/*</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="request-N3f57ff76.N605af98c.0.1997bd10db4.N7a9c">
+            <con:stage id="_StageId-N3f57ff76.N605af98c.0.1997bd10db4.N7a9b" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:assign varName="InitialRequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff76.N605af98c.0.1997bd10db4.N7a9a</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body/*</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="userId" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff76.N605af98c.0.1997bd10db4.N7a99</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">substring-before(substring-after($inbound/ctx:transport/ctx:request/tp:headers/tp:user-header[@name='X_OBDX_SESSION_PARAM']/@value,'~'),'~')</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57ff76.N605af98c.0.1997bd10db4.N7a98" name="Stage2">
+                <con:context/>
+                <con:actions>
+                    <con1:replace contents-only="true" varName="body" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff76.N605af98c.0.1997bd10db4.N7a97</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="ProofOfPayment/Mapping/RequestMapping"/>
+                                <con2:param name="Request">
+                                    <con2:path>$body/*</con2:path>
+                                </con2:param>
+                                <con2:param name="userIdVar">
+                                    <con2:path>$userId</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57ff76.N605af98c.0.1997bd10db4.N7a96">
+            <con:stage id="_StageId-N3f57ff76.N605af98c.0.1997bd10db4.N7a95" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:replace contents-only="true" varName="body" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff76.N605af98c.0.1997bd10db4.N7a94</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="ProofOfPayment/Mapping/ResponseMapping"/>
+                                <con2:param name="Response">
+                                    <con2:path>$body/*</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="request-N3f57ff76.N605af98c.0.1997bd10db4.N79ed">
+            <con:stage id="_StageId-N3f57ff76.N605af98c.0.1997bd10db4.N79ec" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:assign varName="InitialRequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff76.N605af98c.0.1997bd10db4.N79eb</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body/*</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="userId" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff76.N605af98c.0.1997bd10db4.N79ea</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">substring-before(substring-after($inbound/ctx:transport/ctx:request/tp:headers/tp:user-header[@name='X_OBDX_SESSION_PARAM']/@value,'~'),'~')</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57ff76.N605af98c.0.1997bd10db4.N79e9" name="Stage2">
+                <con:context/>
+                <con:actions>
+                    <con1:replace contents-only="true" varName="body" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff76.N605af98c.0.1997bd10db4.N79e8</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="ProofOfPayment/Mapping/RequestMapping"/>
+                                <con2:param name="Request">
+                                    <con2:path>$body/*</con2:path>
+                                </con2:param>
+                                <con2:param name="userIdVar">
+                                    <con2:path>$userId</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57ff76.N605af98c.0.1997bd10db4.N79e7">
+            <con:stage id="_StageId-N3f57ff76.N605af98c.0.1997bd10db4.N79e6" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:replace contents-only="true" varName="body" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff76.N605af98c.0.1997bd10db4.N79e5</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="ProofOfPayment/Mapping/ResponseMapping"/>
+                                <con2:param name="Response">
+                                    <con2:path>$body/*</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="request-N3f57ff76.N605af98c.0.1997bd10db4.N793e">
+            <con:stage id="_StageId-N3f57ff76.N605af98c.0.1997bd10db4.N793d" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:assign varName="InitialRequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff76.N605af98c.0.1997bd10db4.N793c</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body/*</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="userId" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff76.N605af98c.0.1997bd10db4.N793b</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">substring-before(substring-after($inbound/ctx:transport/ctx:request/tp:headers/tp:user-header[@name='X_OBDX_SESSION_PARAM']/@value,'~'),'~')</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57ff76.N605af98c.0.1997bd10db4.N793a" name="Stage2">
+                <con:context/>
+                <con:actions>
+                    <con1:replace contents-only="true" varName="body" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff76.N605af98c.0.1997bd10db4.N7939</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="ProofOfPayment/Mapping/RequestMapping"/>
+                                <con2:param name="Request">
+                                    <con2:path>$body/*</con2:path>
+                                </con2:param>
+                                <con2:param name="userIdVar">
+                                    <con2:path>$userId</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57ff76.N605af98c.0.1997bd10db4.N7938">
+            <con:stage id="_StageId-N3f57ff76.N605af98c.0.1997bd10db4.N7937" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:replace contents-only="true" varName="body" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff76.N605af98c.0.1997bd10db4.N7936</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="ProofOfPayment/Mapping/ResponseMapping"/>
+                                <con2:param name="Response">
+                                    <con2:path>$body/*</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="request-N3f57ff76.N605af98c.0.1997bd10db4.N78c0">
+            <con:stage id="_StageId-N3f57ff76.N605af98c.0.1997bd10db4.N78bf" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:assign varName="InitialRequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff76.N605af98c.0.1997bd10db4.N78be</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body/*</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="userId" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff76.N605af98c.0.1997bd10db4.N78bd</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">substring-before(substring-after($inbound/ctx:transport/ctx:request/tp:headers/tp:user-header[@name='X_OBDX_SESSION_PARAM']/@value,'~'),'~')</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57ff76.N605af98c.0.1997bd10db4.N78bc" name="Stage2">
+                <con:context/>
+                <con:actions>
+                    <con1:replace contents-only="true" varName="body" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff76.N605af98c.0.1997bd10db4.N78bb</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="ProofOfPayment/Mapping/RequestMapping"/>
+                                <con2:param name="Request">
+                                    <con2:path>$body/*</con2:path>
+                                </con2:param>
+                                <con2:param name="userIdVar">
+                                    <con2:path>$userId</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57ff76.N605af98c.0.1997bd10db4.N78ba">
+            <con:stage id="_StageId-N3f57ff76.N605af98c.0.1997bd10db4.N78b9" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:replace contents-only="true" varName="body" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff76.N605af98c.0.1997bd10db4.N78b8</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="ProofOfPayment/Mapping/ResponseMapping"/>
+                                <con2:param name="Response">
+                                    <con2:path>$body/*</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="Pipeline Pair Node1">
+                <con:request>request-N3f57ff79.4c8aaf16.0.198f1056d04.N7fc2</con:request>
+                <con:response>response-N3f57ff79.4c8aaf16.0.198f1056d04.N7fc1</con:response>
+            </con:pipeline-node>
+            <con:branch-node type="condition" id="_FlowId-N3f57ff76.306dae61.0.1997700540f.N7d1d" name="BranchNode1">
+                <con:context>
+                    <con1:userNsDecl prefix="pop" namespace="http://www.mozabank.org/POP_OBDX" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:branch-table variable="body">
+                    <con:xpath>
+                        <con1:xpathText xmlns:con1="http://www.bea.com/wli/sb/stages/config">./pop:Request/pop:type</con1:xpathText>
+                    </con:xpath>
+                    <con:branch name="PTFI">
+                        <con:operator>equals</con:operator>
+                        <con:value>'PTFI'</con:value>
+                        <con:flow>
+                            <con:pipeline-node name="Pipeline Pair Node2">
+                                <con:request>request-N3f57ff76.N605af98c.0.1997bd10db4.N7d81</con:request>
+                                <con:response>response-N3f57ff76.N605af98c.0.1997bd10db4.N7d7b</con:response>
+                            </con:pipeline-node>
+                            <con:route-node name="PTFI">
+                                <con:context/>
+                                <con:actions>
+                                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                        <con2:id>_ActionId-N3f57ff76.306dae61.0.1997700540f.N7cb7</con2:id>
+                                        <con1:service ref="ProofOfPayment/POP_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>runReport</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con3:assign varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con2:id>_ActionId-N3f57ff76.306dae61.0.1997700540f.N7cb4</con2:id>
+                                                <con2:disabled>true</con2:disabled>
+                                                <con3:expr>
+                                                    <con2:xqueryTransform>
+                                                        <con2:resource ref="ProofOfPayment/Mapping/AllRequest_Mapping"/>
+                                                        <con2:param name="Request">
+                                                            <con2:path>$body/*</con2:path>
+                                                        </con2:param>
+                                                    </con2:xqueryTransform>
+                                                </con3:expr>
+                                            </con3:assign>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con3:assign varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con2:id>_ActionId-N3f57ff76.306dae61.0.1997700540f.N7cb1</con2:id>
+                                                <con2:disabled>true</con2:disabled>
+                                                <con3:expr>
+                                                    <con2:xqueryTransform>
+                                                        <con2:resource ref="ProofOfPayment/Mapping/AllResponse_Mapping"/>
+                                                        <con2:param name="Response">
+                                                            <con2:path>$body/*</con2:path>
+                                                        </con2:param>
+                                                    </con2:xqueryTransform>
+                                                </con3:expr>
+                                            </con3:assign>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="PTFZ">
+                        <con:operator>equals</con:operator>
+                        <con:value>'PTFZ'</con:value>
+                        <con:flow>
+                            <con:pipeline-node name="Pipeline Pair Node5">
+                                <con:request>request-N3f57ff76.N605af98c.0.1997bd10db4.N7b98</con:request>
+                                <con:response>response-N3f57ff76.N605af98c.0.1997bd10db4.N7b92</con:response>
+                            </con:pipeline-node>
+                            <con:route-node name="PTFZ">
+                                <con:context/>
+                                <con:actions>
+                                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                        <con2:id>_ActionId-N3f57ff6b.N5df55f8b.0.199864a260e.N7e02</con2:id>
+                                        <con1:service ref="ProofOfPayment/POP_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>runReport</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con3:assign varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con2:id>_ActionId-N3f57ff6b.N5df55f8b.0.199864a260e.N7e01</con2:id>
+                                                <con2:disabled>true</con2:disabled>
+                                                <con3:expr>
+                                                    <con2:xqueryTransform>
+                                                        <con2:resource ref="ProofOfPayment/Mapping/AllRequest_Mapping"/>
+                                                        <con2:param name="Request">
+                                                            <con2:path>$body/*</con2:path>
+                                                        </con2:param>
+                                                    </con2:xqueryTransform>
+                                                </con3:expr>
+                                            </con3:assign>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con3:assign varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con2:id>_ActionId-N3f57ff6b.N5df55f8b.0.199864a260e.N7e00</con2:id>
+                                                <con2:disabled>true</con2:disabled>
+                                                <con3:expr>
+                                                    <con2:xqueryTransform>
+                                                        <con2:resource ref="ProofOfPayment/Mapping/AllResponse_Mapping"/>
+                                                        <con2:param name="Response">
+                                                            <con2:path>$body/*</con2:path>
+                                                        </con2:param>
+                                                    </con2:xqueryTransform>
+                                                </con3:expr>
+                                            </con3:assign>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="TFCM">
+                        <con:operator>equals</con:operator>
+                        <con:value>'TFCM'</con:value>
+                        <con:flow>
+                            <con:pipeline-node name="Pipeline Pair Node6">
+                                <con:request>request-N3f57ff76.N605af98c.0.1997bd10db4.N7b1a</con:request>
+                                <con:response>response-N3f57ff76.N605af98c.0.1997bd10db4.N7b14</con:response>
+                            </con:pipeline-node>
+                            <con:route-node name="TFCM">
+                                <con:context/>
+                                <con:actions>
+                                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                        <con2:id>_ActionId-N3f57ff6b.N5df55f8b.0.199864a260e.N7dc9</con2:id>
+                                        <con1:service ref="ProofOfPayment/POP_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>runReport</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con3:assign varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con2:id>_ActionId-N3f57ff6b.N5df55f8b.0.199864a260e.N7dc8</con2:id>
+                                                <con2:disabled>true</con2:disabled>
+                                                <con3:expr>
+                                                    <con2:xqueryTransform>
+                                                        <con2:resource ref="ProofOfPayment/Mapping/AllRequest_Mapping"/>
+                                                        <con2:param name="Request">
+                                                            <con2:path>$body/*</con2:path>
+                                                        </con2:param>
+                                                    </con2:xqueryTransform>
+                                                </con3:expr>
+                                            </con3:assign>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con3:assign varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con2:id>_ActionId-N3f57ff6b.N5df55f8b.0.199864a260e.N7dc7</con2:id>
+                                                <con2:disabled>true</con2:disabled>
+                                                <con3:expr>
+                                                    <con2:xqueryTransform>
+                                                        <con2:resource ref="ProofOfPayment/Mapping/AllResponse_Mapping"/>
+                                                        <con2:param name="Response">
+                                                            <con2:path>$body/*</con2:path>
+                                                        </con2:param>
+                                                    </con2:xqueryTransform>
+                                                </con3:expr>
+                                            </con3:assign>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="PASI">
+                        <con:operator>equals</con:operator>
+                        <con:value>'PASI'</con:value>
+                        <con:flow>
+                            <con:pipeline-node name="Pipeline Pair Node7">
+                                <con:request>request-N3f57ff76.N605af98c.0.1997bd10db4.N7a9c</con:request>
+                                <con:response>response-N3f57ff76.N605af98c.0.1997bd10db4.N7a96</con:response>
+                            </con:pipeline-node>
+                            <con:route-node name="PASI">
+                                <con:context/>
+                                <con:actions>
+                                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                        <con2:id>_ActionId-N3f57ff6b.N5df55f8b.0.199864a260e.N7d90</con2:id>
+                                        <con1:service ref="ProofOfPayment/POP_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>runReport</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con3:assign varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con2:id>_ActionId-N3f57ff6b.N5df55f8b.0.199864a260e.N7d8f</con2:id>
+                                                <con2:disabled>true</con2:disabled>
+                                                <con3:expr>
+                                                    <con2:xqueryTransform>
+                                                        <con2:resource ref="ProofOfPayment/Mapping/AllRequest_Mapping"/>
+                                                        <con2:param name="Request">
+                                                            <con2:path>$body/*</con2:path>
+                                                        </con2:param>
+                                                    </con2:xqueryTransform>
+                                                </con3:expr>
+                                            </con3:assign>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con3:assign varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con2:id>_ActionId-N3f57ff6b.N5df55f8b.0.199864a260e.N7d8e</con2:id>
+                                                <con2:disabled>true</con2:disabled>
+                                                <con3:expr>
+                                                    <con2:xqueryTransform>
+                                                        <con2:resource ref="ProofOfPayment/Mapping/AllResponse_Mapping"/>
+                                                        <con2:param name="Response">
+                                                            <con2:path>$body/*</con2:path>
+                                                        </con2:param>
+                                                    </con2:xqueryTransform>
+                                                </con3:expr>
+                                            </con3:assign>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="PAGS">
+                        <con:operator>equals</con:operator>
+                        <con:value>'PAGS'</con:value>
+                        <con:flow>
+                            <con:pipeline-node name="Pipeline Pair Node8">
+                                <con:request>request-N3f57ff76.N605af98c.0.1997bd10db4.N79ed</con:request>
+                                <con:response>response-N3f57ff76.N605af98c.0.1997bd10db4.N79e7</con:response>
+                            </con:pipeline-node>
+                            <con:route-node name="PAGS">
+                                <con:context/>
+                                <con:actions>
+                                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                        <con2:id>_ActionId-N3f57ff6b.N5df55f8b.0.199864a260e.N7d57</con2:id>
+                                        <con1:service ref="ProofOfPayment/POP_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>runReport</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con3:assign varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con2:id>_ActionId-N3f57ff6b.N5df55f8b.0.199864a260e.N7d56</con2:id>
+                                                <con2:disabled>true</con2:disabled>
+                                                <con3:expr>
+                                                    <con2:xqueryTransform>
+                                                        <con2:resource ref="ProofOfPayment/Mapping/AllRequest_Mapping"/>
+                                                        <con2:param name="Request">
+                                                            <con2:path>$body/*</con2:path>
+                                                        </con2:param>
+                                                    </con2:xqueryTransform>
+                                                </con3:expr>
+                                            </con3:assign>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con3:assign varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con2:id>_ActionId-N3f57ff6b.N5df55f8b.0.199864a260e.N7d55</con2:id>
+                                                <con2:disabled>true</con2:disabled>
+                                                <con3:expr>
+                                                    <con2:xqueryTransform>
+                                                        <con2:resource ref="ProofOfPayment/Mapping/AllResponse_Mapping"/>
+                                                        <con2:param name="Response">
+                                                            <con2:path>$body/*</con2:path>
+                                                        </con2:param>
+                                                    </con2:xqueryTransform>
+                                                </con3:expr>
+                                            </con3:assign>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="CORO">
+                        <con:operator>equals</con:operator>
+                        <con:value>'CORO'</con:value>
+                        <con:flow>
+                            <con:pipeline-node name="Pipeline Pair Node9">
+                                <con:request>request-N3f57ff76.N605af98c.0.1997bd10db4.N793e</con:request>
+                                <con:response>response-N3f57ff76.N605af98c.0.1997bd10db4.N7938</con:response>
+                            </con:pipeline-node>
+                            <con:route-node name="CORO">
+                                <con:context/>
+                                <con:actions>
+                                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                        <con2:id>_ActionId-N3f57ff6b.N5df55f8b.0.199864a260e.N7d1e</con2:id>
+                                        <con1:service ref="ProofOfPayment/POP_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>runReport</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con3:assign varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con2:id>_ActionId-N3f57ff6b.N5df55f8b.0.199864a260e.N7d1d</con2:id>
+                                                <con2:disabled>true</con2:disabled>
+                                                <con3:expr>
+                                                    <con2:xqueryTransform>
+                                                        <con2:resource ref="ProofOfPayment/Mapping/AllRequest_Mapping"/>
+                                                        <con2:param name="Request">
+                                                            <con2:path>$body/*</con2:path>
+                                                        </con2:param>
+                                                    </con2:xqueryTransform>
+                                                </con3:expr>
+                                            </con3:assign>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con3:assign varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con2:id>_ActionId-N3f57ff6b.N5df55f8b.0.199864a260e.N7d1c</con2:id>
+                                                <con2:disabled>true</con2:disabled>
+                                                <con3:expr>
+                                                    <con2:xqueryTransform>
+                                                        <con2:resource ref="ProofOfPayment/Mapping/AllResponse_Mapping"/>
+                                                        <con2:param name="Response">
+                                                            <con2:path>$body/*</con2:path>
+                                                        </con2:param>
+                                                    </con2:xqueryTransform>
+                                                </con3:expr>
+                                            </con3:assign>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="INSS">
+                        <con:operator>equals</con:operator>
+                        <con:value>'INSS'</con:value>
+                        <con:flow>
+                            <con:pipeline-node name="Pipeline Pair Node10">
+                                <con:request>request-N3f57ff76.N605af98c.0.1997bd10db4.N78c0</con:request>
+                                <con:response>response-N3f57ff76.N605af98c.0.1997bd10db4.N78ba</con:response>
+                            </con:pipeline-node>
+                            <con:route-node name="INSS">
+                                <con:context/>
+                                <con:actions>
+                                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                        <con2:id>_ActionId-N3f57ff6b.N5df55f8b.0.199864a260e.N7ce5</con2:id>
+                                        <con1:service ref="ProofOfPayment/POP_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>runReport</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con3:assign varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con2:id>_ActionId-N3f57ff6b.N5df55f8b.0.199864a260e.N7ce4</con2:id>
+                                                <con2:disabled>true</con2:disabled>
+                                                <con3:expr>
+                                                    <con2:xqueryTransform>
+                                                        <con2:resource ref="ProofOfPayment/Mapping/AllRequest_Mapping"/>
+                                                        <con2:param name="Request">
+                                                            <con2:path>$body/*</con2:path>
+                                                        </con2:param>
+                                                    </con2:xqueryTransform>
+                                                </con3:expr>
+                                            </con3:assign>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con3:assign varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con2:id>_ActionId-N3f57ff6b.N5df55f8b.0.199864a260e.N7ce3</con2:id>
+                                                <con2:disabled>true</con2:disabled>
+                                                <con3:expr>
+                                                    <con2:xqueryTransform>
+                                                        <con2:resource ref="ProofOfPayment/Mapping/AllResponse_Mapping"/>
+                                                        <con2:param name="Response">
+                                                            <con2:path>$body/*</con2:path>
+                                                        </con2:param>
+                                                    </con2:xqueryTransform>
+                                                </con3:expr>
+                                            </con3:assign>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:default-branch>
+                        <con:flow>
+                            <con:pipeline-node name="Pipeline Pair Node3">
+                                <con:request>request-N3f57ff76.N605af98c.0.1997bd10db4.N7cd2</con:request>
+                                <con:response>response-N3f57ff76.N605af98c.0.1997bd10db4.N7ccc</con:response>
+                            </con:pipeline-node>
+                            <con:route-node name="Single" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con:context/>
+                                <con:actions>
+                                    <con1:route>
+                                        <con2:id>_ActionId-N3f57ff79.4c8aaf16.0.198f1056d04.N8000</con2:id>
+                                        <con1:service ref="ProofOfPayment/All_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>ProofOfPaymentBASE64</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con3:assign varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con2:id>_ActionId-N3f57ff76.306dae61.0.1997700540f.N7c7d</con2:id>
+                                                <con2:disabled>true</con2:disabled>
+                                                <con3:expr>
+                                                    <con2:xqueryTransform>
+                                                        <con2:resource ref="ProofOfPayment/Mapping/RequestMapping"/>
+                                                        <con2:param name="Request">
+                                                            <con2:path>$body/*</con2:path>
+                                                        </con2:param>
+                                                        <con2:param name="userIdVar">
+                                                            <con2:path>$userId</con2:path>
+                                                        </con2:param>
+                                                    </con2:xqueryTransform>
+                                                </con3:expr>
+                                            </con3:assign>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con3:assign varName="body" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con2:id>_ActionId-N3f57ff76.306dae61.0.1997700540f.N7c7a</con2:id>
+                                                <con2:disabled>true</con2:disabled>
+                                                <con3:expr>
+                                                    <con2:xqueryTransform>
+                                                        <con2:resource ref="ProofOfPayment/Mapping/ResponseMapping"/>
+                                                        <con2:param name="Response">
+                                                            <con2:path>$body/*</con2:path>
+                                                        </con2:param>
+                                                    </con2:xqueryTransform>
+                                                </con3:expr>
+                                            </con3:assign>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:default-branch>
+                </con:branch-table>
+            </con:branch-node>
+        </con:flow>
+        <con:partner-links>
+            <con:partner-link>
+                <con:service ref="ProofOfPayment/BusinessService" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+            </con:partner-link>
+        </con:partner-links>
+    </con:router>
+</con:pipelineEntry>

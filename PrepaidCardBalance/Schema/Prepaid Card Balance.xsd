@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            targetNamespace="http://www.mozabank.org/PREPAID_CARD_BAL"
+            xmlns="http://www.mozabank.org/PREPAID_CARD_BAL"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            nxsd:stream="json"
+            nxsd:format="JSON"
+            nxsd:version="NXSD"
+            nxsd:encoding="UTF-8">
+
+  <!-- Root Elements -->
+  <xsd:element name="Request" type="RequestType"/>
+  
+    <xsd:element name="PreEncodedRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="RequestString" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  
+  <xsd:element name="Response" type="ResponseType"/>
+
+  <!-- Request Type -->
+  <xsd:complexType name="RequestType">
+    <xsd:sequence>
+      <xsd:element name="user" type="xsd:string"/>
+      <xsd:element name="password" type="xsd:string"/>
+      <xsd:element name="origin" type="xsd:string"/>
+      <xsd:element name="channelCode" type="xsd:string"/>
+      <xsd:element name="version" type="xsd:string"/>
+      <xsd:element name="licenceKey" type="xsd:string"/>
+      <xsd:element name="sessionId" type="xsd:string"/>
+      <xsd:element name="transactionCode" type="xsd:string"/>
+      <xsd:element name="operationData" type="OperationDataType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Operation Data (Request) -->
+  <xsd:complexType name="OperationDataType">
+    <xsd:sequence>
+      <xsd:element name="accountNumber" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Response Type -->
+  <xsd:complexType name="ResponseType">
+    <xsd:sequence>
+      <xsd:element name="status" type="xsd:string"/>
+      <xsd:element name="message" type="xsd:string"/>
+      <xsd:element name="data" type="CardBalanceDataType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Data Object in Response -->
+  <xsd:complexType name="CardBalanceDataType">
+    <xsd:sequence>
+      <xsd:element name="OBS" type="xsd:string"/>
+      <xsd:element name="ACCOUNT" type="xsd:string"/>
+      <xsd:element name="STATUS" type="xsd:string"/>
+      <xsd:element name="LASTMOV" type="xsd:string"/>
+      <xsd:element name="NIB" type="xsd:string"/>
+      <xsd:element name="BALANCE" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>
