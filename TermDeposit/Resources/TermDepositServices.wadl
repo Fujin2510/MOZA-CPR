@@ -1,0 +1,22 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://www.mozabank.org/CAPP" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="TermDepositServices">RestService</doc>
+   <grammars>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/CAPP" schemaLocation="CAPP.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/td-open">
+         <method name="POST" soa:wsdlOperation="TDOpen">
+            <request>
+               <representation mediaType="application/xml" element="cns:CAPPRequest" xmlns:cns="http://www.mozabank.org/CAPP"/>
+               <representation mediaType="application/json" element="cns:CAPPRequest" xmlns:cns="http://www.mozabank.org/CAPP"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:CAPPResponse" xmlns:cns="http://www.mozabank.org/CAPP"/>
+               <representation mediaType="application/json" element="cns:CAPPResponse" xmlns:cns="http://www.mozabank.org/CAPP"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

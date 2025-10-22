@@ -1,0 +1,20 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns0="http://www.mozabank.org/maturityAmount" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="MaturityAmount">RestReference</doc>
+   <grammars>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/maturityAmount" schemaLocation="MaturityAmount.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/maturityAmount">
+         <method name="POST" soa:wsdlOperation="MaturityAmount">
+            <request>
+               <representation mediaType="application/json" element="cns:MaturityRequest" xmlns:cns="http://www.mozabank.org/maturityAmount"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:MaturityResponse" xmlns:cns="http://www.mozabank.org/maturityAmount"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

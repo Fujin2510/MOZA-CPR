@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+              xmlns:tns="http://www.mozabank.org/TDMaturityAmountCalculation"
+              targetNamespace="http://www.mozabank.org/TDMaturityAmountCalculation" elementFormDefault="qualified"
+              attributeFormDefault="unqualified" nxsd:version="JSON" nxsd:encoding="UTF-8">
+
+  <!-- Root Elements -->
+  <xsd:element name="Request" type="tns:RequestType"/>
+  <xsd:element name="Response" type="tns:ResponseType"/>
+
+  <!-- RequestType Definition (extended) -->
+  <xsd:complexType name="RequestType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="referenceNo" type="xsd:string"/>
+      <xsd:element name="interfaceId" type="xsd:string"/>
+      <xsd:element name="entity" type="xsd:string"/>
+      <xsd:element name="headersMap" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="queryMap" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="hostName" type="xsd:string"/>
+      <xsd:element name="partyId" type="xsd:string"/>
+      <!-- Added fields from JSON -->
+      <xsd:element name="principalAmount" type="tns:PrincipalAmountType"/>
+      <xsd:element name="tenure" type="tns:TenureType"/>
+      <xsd:element name="productId" type="xsd:string"/>
+      <xsd:element name="branchCode" type="xsd:string"/>
+      <xsd:element name="partyName" type="xsd:string"/> 
+      <xsd:element name="maturityDate" type="xsd:string"/> 
+      <xsd:element name="startDate" minOccurs="0" maxOccurs="unbounded" nillable="true"> 
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="dateString" type="xsd:string" nillable="true"/>
+            <xsd:element name="monthDate" type="xsd:int" nillable="true"/>
+            <xsd:element name="calendarDayOfWeek" type="xsd:string" nillable="true"/>
+            <xsd:element name="monthDateTime" type="xsd:long" nillable="true"/>
+            <xsd:element name="weekOfYear" type="xsd:int" nillable="true"/>
+            <xsd:element name="lastDayOfMonth" type="xsd:int" nillable="true"/>
+            <xsd:element name="sqltimestamp" type="xsd:long" nillable="true"/>
+            <xsd:element name="sqlDate" type="xsd:long" nillable="true"/>
+            <xsd:element name="yearMonthDate" type="xsd:int" nillable="true"/>
+            <xsd:element name="yearMonth" type="xsd:int" nillable="true"/>
+            <xsd:element name="year" type="xsd:int" nillable="true"/>
+            <xsd:element name="dayOfMonth" type="xsd:int" nillable="true"/>
+            <xsd:element name="leapYear" type="xsd:boolean" nillable="true"/>
+            <xsd:element name="dayOfYear" type="xsd:int" nillable="true"/>
+            <xsd:element name="infinite" type="xsd:boolean" nillable="true"/>
+            <xsd:element name="null" type="xsd:boolean" nillable="true"/>
+            <xsd:element name="time" type="xsd:long" nillable="true"/>
+            <xsd:element name="timestamp" type="xsd:long" nillable="true"/>
+            <xsd:element name="month" type="xsd:int" nillable="true"/>
+            <xsd:element name="dayOfWeek" type="xsd:int" nillable="true"/>
+            <xsd:element name="millis" type="xsd:long" nillable="true"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- ResponseType Definition (extended) -->
+  <xsd:complexType name="ResponseType">
+    <xsd:sequence>
+    <xsd:element name="data">
+        <xsd:complexType>
+          <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="referenceNo" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="result" type="tns:ResultType"/>
+      <xsd:element name="hasMore" type="xsd:boolean" minOccurs="0" nillable="true"/>
+      <xsd:element name="totalRecords" type="xsd:int" minOccurs="0" nillable="true"/>
+      <xsd:element name="startSequence" type="xsd:int" minOccurs="0" nillable="true"/>
+      <!-- Added fields from JSON response -->
+      <xsd:element name="principalAmount" type="tns:PrincipalAmountType" minOccurs="0"/>
+      <xsd:element name="maturityAmount" type="tns:PrincipalAmountType" minOccurs="0"/>
+      <xsd:element name="maturityDate" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="tenure" type="tns:TenureType" minOccurs="0"/>
+      <xsd:element name="interestRate" type="xsd:decimal" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+      </xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+
+  <!-- PrincipalAmountType for currency and amount -->
+  <xsd:complexType name="PrincipalAmountType">
+    <xsd:sequence>
+      <xsd:element name="currency" type="xsd:string"/>
+      <xsd:element name="amount" type="xsd:decimal"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- TenureType for years, months, days -->
+  <xsd:complexType name="TenureType">
+    <xsd:sequence>
+      <xsd:element name="days" type="xsd:int"/>
+      <xsd:element name="months" type="xsd:int"/>
+      <xsd:element name="years" type="xsd:int"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- ResultType reused as provided -->
+  <xsd:complexType name="ResultType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="externalReferenceId" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="status" type="xsd:string"/>
+        <xsd:element name="errorList" nillable="true" minOccurs="0" maxOccurs="unbounded">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="code" type="xsd:string"/>
+            <xsd:element name="message" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="warningList" type="xsd:string" minOccurs="0" nillable="true"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

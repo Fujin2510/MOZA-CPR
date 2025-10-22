@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="TermDeposit/Resources/TDStatementItemListPS"/>
+            <con:binding>
+                <con:name>TDStatementItemListPS_ptt-binding</con:name>
+                <con:namespace>http://xmlns.oracle.com/Aug13/TermDeposit/TDStatementItemListPS</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router errorHandler="error-N3f57fffb.N67b79d3.0.198bda1d95a.N7c8a">
+        <con:pipeline type="request" name="request-N3f57fffb.N67b79d3.0.198bda1d95a.N7f67">
+            <con:stage id="_StageId-N3f57fffb.N67b79d3.0.198bda1d95a.N7f22" name="InitialStage">
+                <con:context>
+                    <con1:varNsDecl prefix="td" namespace="http://www.mozabank.org/TD_STATEMENT_ITEM_LIST" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:report xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N67b79d3.0.198bda1d95a.N7dd2</con2:id>
+                        <con2:disabled xmlns:con2="http://www.bea.com/wli/sb/stages/config">true</con2:disabled>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body</con2:xqueryText>
+                        </con1:expr>
+                        <con1:labels>
+                            <con1:key>TDStatementItemListRequest</con1:key>
+                            <con1:varName>body</con1:varName>
+                            <con1:value>
+                                <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+                            </con1:value>
+                        </con1:labels>
+                    </con1:report>
+                    <con1:assign varName="InitialRequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N67b79d3.0.198bda1d95a.N7f21</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body/*</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="SessionVal" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N67b79d3.0.198bda1d95a.N7dd5</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$inbound/ctx:transport/ctx:request/tp:headers/tp:user-header[@name='X_OBDX_SESSION_PARAM']/@value</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="userIdVar" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-a6f8a22.N2824d772.15.198f572dd2f.N8000</con2:id>
+                        <con1:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">substring-before(substring-after($inbound/ctx:transport/ctx:request/tp:headers/tp:user-header[@name='X_OBDX_SESSION_PARAM']/@value,'~'),'~')</con:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57fffb.N67b79d3.0.198bda1d95a.N7e29" name="QueryCache">
+                <con:comment/>
+                <con:context>
+                    <con1:varNsDecl prefix="ccdo" namespace="http://www.mozabank.org/ccdo_party_casa_accounts_list" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                    <con1:varNsDecl prefix="td" namespace="http://www.mozabank.org/TD_DETAILS" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                    <con1:varNsDecl prefix="ccap" namespace="http://www.mozabank.org/ccap_party_td_accounts_list" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:disabled>true</con:disabled>
+                <con:actions>
+                    <con1:wsCallout xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N67b79d3.0.198bda1d95a.N7e28</con2:id>
+                        <con1:service ref="SessionParams/Query_CauchingProxyService" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>Query_CauchingSelect</con1:operation>
+                        <con1:request>
+                            <con1:body wrapped="false">Query_req</con1:body>
+                            <con1:header/>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body wrapped="false">Query_resp</con1:body>
+                            <con1:header/>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con1:assign varName="Query_req">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N67b79d3.0.198bda1d95a.N7e27</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">&lt;quer:Query_CauchingSelect_SessionIdInputParameters xmlns:quer="http://xmlns.oracle.com/pcbpel/adapter/db/top/Query_Cauching">
+    &lt;quer:SessionId>{$SessionVal}&lt;/quer:SessionId>
+&lt;/quer:Query_CauchingSelect_SessionIdInputParameters></con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:requestTransform>
+                        <con1:responseTransform>
+                            <con1:ifThenElse>
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N67b79d3.0.198bda1d95a.N7e26</con2:id>
+                                <con1:case id="_BranchId-N3f57fffb.N67b79d3.0.198bda1d95a.N7e25">
+                                    <con1:condition>
+                                        <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn:data($Query_resp/*:OverviewWidget/*:tdStatementItemListResponse) != ''</con2:xqueryText>
+                                    </con1:condition>
+                                    <con1:actions>
+                                        <con1:assign varName="query_response">
+                                            <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N67b79d3.0.198bda1d95a.N7e24</con2:id>
+                                            <con1:expr>
+                                                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$Query_resp/*[local-name()='OverviewWidget']/*[local-name()='tdStatementItemListResponse']/text()</con2:xqueryText>
+                                            </con1:expr>
+                                        </con1:assign>
+                                        <con1:replace contents-only="true" varName="body">
+                                            <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N67b79d3.0.198bda1d95a.N7e23</con2:id>
+                                            <con1:expr>
+                                                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$Query_resp/*[local-name()='OverviewWidget']/*[local-name()='tdStatementItemListResponse']/text()</con2:xqueryText>
+                                            </con1:expr>
+                                        </con1:replace>
+                                        <con1:assign varName="StringXML">
+                                            <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N67b79d3.0.198bda1d95a.N7e22</con2:id>
+                                            <con1:expr>
+                                                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">replace(
+    replace(string($body/text()), '&amp;lt;', '&lt;'),
+    '&amp;gt;', '>'
+  )</con2:xqueryText>
+                                            </con1:expr>
+                                        </con1:assign>
+                                        <con2:reply isError="false" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                            <con2:id>_ActionId-N3f57fffb.N67b79d3.0.198bda1d95a.N7e20</con2:id>
+                                        </con2:reply>
+                                    </con1:actions>
+                                </con1:case>
+                            </con1:ifThenElse>
+                        </con1:responseTransform>
+                    </con1:wsCallout>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57fffb.N67b79d3.0.198bda1d95a.N7de8" name="AuthenticationStage">
+                <con:context/>
+                <con:actions>
+                    <con1:wsCallout xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N67b79d3.0.198bda1d95a.N7f20</con2:id>
+                        <con1:service ref="AuthenticatorService/AuthenticatorBS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>Operation1</con1:operation>
+                        <con1:request>
+                            <con1:body wrapped="false">AuthenticatorRequest</con1:body>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body wrapped="false">AuthenticatorResponse</con1:body>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con2:log xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N67b79d3.0.198bda1d95a.N7f1f</con3:id>
+                                <con2:logLevel>debug</con2:logLevel>
+                                <con2:expr>
+                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body</con3:xqueryText>
+                                </con2:expr>
+                                <con2:message>Get Debit Card Details Request Received >>>>>>>>>>>>>>></con2:message>
+                            </con2:log>
+                            <con1:assign varName="AuthenticatorRequest">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N67b79d3.0.198bda1d95a.N7f1e</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config"><![CDATA[<moz:Request xmlns:moz="http://www.mozabank.org">
+<moz:username>channel_obdx_app</moz:username>
+<moz:password>Moz@Random123#</moz:password>
+</moz:Request>]]></con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                            <con1:transport-headers>
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N67b79d3.0.198bda1d95a.N7f1d</con2:id>
+                                <con2:disabled xmlns:con2="http://www.bea.com/wli/sb/stages/config">true</con2:disabled>
+                                <con1:header-set>outbound-request</con1:header-set>
+                                <con1:header value="expression" name="Content-Type">
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">'application/json'</con2:xqueryText>
+                                </con1:header>
+                            </con1:transport-headers>
+                        </con1:requestTransform>
+                        <con1:responseTransform>
+                            <con1:assign varName="AccessToken">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N67b79d3.0.198bda1d95a.N7f1c</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$AuthenticatorResponse/*:access_token</con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:responseTransform>
+                    </con1:wsCallout>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57fffb.N67b79d3.0.198bda1d95a.N7cf9" name="CMOVRequestStage">
+                <con:context/>
+                <con:actions>
+                    <con1:assign varName="CCFetchBilledRequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N67b79d3.0.198bda1d95a.N7cf8</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="TermDeposit/Resources/TDStatementListRequest"/>
+                                <con2:param name="TDStatementListRequest">
+                                    <con2:path>$InitialRequest</con2:path>
+                                </con2:param>
+                                <con2:param name="userIdVar">
+                                    <con2:path>$userIdVar</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:nxsdTranslation xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N67b79d3.0.198bda1d95a.N7cf7</con2:id>
+                        <con1:type>XML-To-Native</con1:type>
+                        <con1:sourceExpr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$CCFetchBilledRequest</con2:xqueryText>
+                        </con1:sourceExpr>
+                        <con1:nxsd ref="GetCreditCardStatement/Schema/CMOV"/>
+                        <con1:schemaElement xmlns:cmov="http://www.mozabank.org/CMOV">cmov:CMOVRequest</con1:schemaElement>
+                        <con1:assign-variable>CCFetchBilledBin</con1:assign-variable>
+                        <con1:enforceSchemaOrder>false</con1:enforceSchemaOrder>
+                    </con1:nxsdTranslation>
+                    <con1:assign varName="CCFetchBilledReq" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N67b79d3.0.198bda1d95a.N7cf6</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn-bea:binary-to-text($CCFetchBilledBin[@ref],$text)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="CCFetchBilledRequestJSON" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N67b79d3.0.198bda1d95a.N7cf5</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn:replace($CCFetchBilledReq,'null','""')</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="CCFetchBilledRequestJSONTest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N67b79d3.0.198bda1d95a.N7cf4</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">'{
+"user" : "damasio23",
+"password" : "",
+"origin" : "P",
+"channelCode" : "INT",
+"version" : "R30",
+"licenceKey" : "licenseKey",
+"sessionId" : "00000000",
+"transactionCode" : "CMOV",
+"operationData" : {
+"CMOV_I_0001" : "00364384610001",
+"CMOV_I_0002" : "20",
+"CMOV_I_0003" : "-",
+"CMOV_I_0004" : "DEB",
+"CMOV_I_0005" : "20240701",
+"CMOV_I_0006" : "",
+"CMOV_I_0007" : "20240731",
+"CMOV_I_9998" : "",
+"CMOV_I_9999" : ""
+}
+}'</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:javaCallout varName="CCFetchBilledEncoded" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N67b79d3.0.198bda1d95a.N7cf3</con2:id>
+                        <con1:archive ref="DebitCardList/Resources/JsonToStringUrl"/>
+                        <con1:className>demo.MainClass</con1:className>
+                        <con1:method>public static java.lang.String encodeJsonToRequestParam(java.lang.String)</con1:method>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$CCFetchBilledRequestJSON</con2:xqueryText>
+                        </con1:expr>
+                        <con1:return-param-as-ref>false</con1:return-param-as-ref>
+                    </con1:javaCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="error-N3f57fffb.N67b79d3.0.198bda1d95a.N7c8a">
+            <con:stage id="_StageId-N3f57fffa.N57a2f3aa.0.198c5f6c2b0.N7d8c" name="Stage1">
+                <con:context>
+                    <con1:varNsDecl prefix="ccdo" namespace="http://www.mozabank.org/ccdo_party_casa_accounts_list" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:report xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffa.N57a2f3aa.0.198c5f6c2b0.N7d8b</con2:id>
+                        <con1:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$fault</con:xqueryText>
+                        </con1:expr>
+                        <con1:labels>
+                            <con1:key>CASAPartyAccountListFault</con1:key>
+                            <con1:varName>fault</con1:varName>
+                            <con1:value>
+                                <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+                            </con1:value>
+                        </con1:labels>
+                    </con1:report>
+                    <con1:replace varName="body" contents-only="true" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffa.N57a2f3aa.0.198c5f6c2b0.N7d8a</con2:id>
+                        <con1:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config"><![CDATA[<CasaPartyAccountListResponse xmlns="http://www.mozabank.org/ccdo_party_casa_accounts_list" >
+<data>
+		<dictionaryArray/>
+		<referenceNo/>
+		<result>
+			<dictionaryArray/>
+			<externalReferenceId/>
+			<status>FAILURE</status>
+			<errorList>
+				<code>ERR001</code>
+				<message>Invalid backend response</message>
+			</errorList>
+			<warningList/>
+		</result>
+		<hasMore>false</hasMore>
+		<totalRecords>0</totalRecords>
+		<startSequence>0</startSequence>
+	</data> 
+    </CasaPartyAccountListResponse>]]></con:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                    <con1:reply isError="false" xmlns:con1="http://www.bea.com/wli/sb/stages/config">
+                        <con1:id>_ActionId-N3f57fffa.N57a2f3aa.0.198c5f6c2b0.N7d89</con1:id>
+                    </con1:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57fffb.N67b79d3.0.198bda1d95a.N7f66">
+            <con:stage id="_StageId-N3f57fffa.N57a2f3aa.0.198c5f6c2b0.N7ec5" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:replace varName="bodyMock" contents-only="true" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffa.N57a2f3aa.0.198c5f6c2b0.N7cc1</con2:id>
+                        <con2:disabled xmlns:con2="http://www.bea.com/wli/sb/stages/config">true</con2:disabled>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config"><![CDATA[<CMOVResponse xmlns="http://www.mozabank.org/CMOV">
+	<transactionCode>CMOV</transactionCode>
+	<operationData>
+		<CMOV_O_0001>01337755510001</CMOV_O_0001>
+		<CMOV_O_0002>00000087592792776</CMOV_O_0002>
+		<CMOV_O_0003>+</CMOV_O_0003>
+		<CMOV_O_0004>00000087592712676</CMOV_O_0004>
+		<CMOV_O_0005>+</CMOV_O_0005>
+		<CMOV_O_00051>00000087592597676</CMOV_O_00051>
+		<CMOV_O_00052>+</CMOV_O_00052>
+		<CMOV_O_0006/>
+		<CMOV_O_0007/>
+		<CMOV_O_00071/>
+		<CMOV_O_00072/>
+		<CMOV_O_0008>MZN</CMOV_O_0008>
+		<CMOV_O_00081/>
+		<CMOV_O_00082/>
+		<CMOV_O_00083/>
+		<CMOV_O_00084/>
+		<CMOV_O_00085/>
+		<CMOV_O_00086/>
+		<CMOV_O_00087/>
+		<CMOV_O_0009>3</CMOV_O_0009>
+		<CMOV_O_0010>1053</CMOV_O_0010>
+		<CMOV_O_0011>
+			<CMOV_O_0011_0001>20250618</CMOV_O_0011_0001>
+			<CMOV_O_0011_00011/>
+			<CMOV_O_0011_0002>985739</CMOV_O_0011_0002>
+			<CMOV_O_0011_0003>693317660</CMOV_O_0011_0003>
+			<CMOV_O_0011_0004>604</CMOV_O_0011_0004>
+			<CMOV_O_0011_0005>Incremento D/P</CMOV_O_0011_0005>
+			<CMOV_O_0011_0006>000000000010000</CMOV_O_0011_0006>
+			<CMOV_O_0011_0007>-</CMOV_O_0011_0007>
+			<CMOV_O_0011_0008>MZN</CMOV_O_0011_0008>
+			<CMOV_O_0011_0009>000000000010000</CMOV_O_0011_0009>
+			<CMOV_O_0011_0010>-</CMOV_O_0011_0010>
+			<CMOV_O_0011_0011>MZN</CMOV_O_0011_0011>
+			<CMOV_O_0011_0012>00000087592782776</CMOV_O_0011_0012>
+			<CMOV_O_0011_0013>+</CMOV_O_0011_0013>
+			<CMOV_O_0011_0014>20250618</CMOV_O_0011_0014>
+			<CMOV_O_0011_0015>00000000</CMOV_O_0011_0015>
+			<CMOV_O_0011_0016>N</CMOV_O_0011_0016>
+			<CMOV_O_0011_0017>N</CMOV_O_0011_0017>
+			<CMOV_O_0011_0018>736943090</CMOV_O_0011_0018>
+			<CMOV_O_0011_0019/>
+		</CMOV_O_0011>
+		<CMOV_O_0011>
+			<CMOV_O_0011_0001>20250618</CMOV_O_0011_0001>
+			<CMOV_O_0011_00011/>
+			<CMOV_O_0011_0002>985738Q</CMOV_O_0011_0002>
+			<CMOV_O_0011_0003>693317662</CMOV_O_0011_0003>
+			<CMOV_O_0011_0004>518</CMOV_O_0011_0004>
+			<CMOV_O_0011_0005>Despesa de Incremento em Conta 10,00000%</CMOV_O_0011_0005>
+			<CMOV_O_0011_0006>000000000001000</CMOV_O_0011_0006>
+			<CMOV_O_0011_0007>-</CMOV_O_0011_0007>
+			<CMOV_O_0011_0008>MZN</CMOV_O_0011_0008>
+			<CMOV_O_0011_0009>000000000001000</CMOV_O_0011_0009>
+			<CMOV_O_0011_0010>-</CMOV_O_0011_0010>
+			<CMOV_O_0011_0011>MZN</CMOV_O_0011_0011>
+			<CMOV_O_0011_0012>00000087592781776</CMOV_O_0011_0012>
+			<CMOV_O_0011_0013>+</CMOV_O_0011_0013>
+			<CMOV_O_0011_0014>20250618</CMOV_O_0011_0014>
+			<CMOV_O_0011_0015>00000000</CMOV_O_0011_0015>
+			<CMOV_O_0011_0016>N</CMOV_O_0011_0016>
+			<CMOV_O_0011_0017>N</CMOV_O_0011_0017>
+			<CMOV_O_0011_0018>902310531</CMOV_O_0011_0018>
+			<CMOV_O_0011_0019/>
+		</CMOV_O_0011>
+		<CMOV_O_0011>
+			<CMOV_O_0011_0001>20250618</CMOV_O_0011_0001>
+			<CMOV_O_0011_00011/>
+			<CMOV_O_0011_0002>985738O</CMOV_O_0011_0002>
+			<CMOV_O_0011_0003>693317664</CMOV_O_0011_0003>
+			<CMOV_O_0011_0004>726</CMOV_O_0011_0004>
+			<CMOV_O_0011_0005>Imposto de Selo sobre Despesa 2,00000%</CMOV_O_0011_0005>
+			<CMOV_O_0011_0006>000000000000020</CMOV_O_0011_0006>
+			<CMOV_O_0011_0007>-</CMOV_O_0011_0007>
+			<CMOV_O_0011_0008>MZN</CMOV_O_0011_0008>
+			<CMOV_O_0011_0009>000000000000020</CMOV_O_0011_0009>
+			<CMOV_O_0011_0010>-</CMOV_O_0011_0010>
+			<CMOV_O_0011_0011>MZN</CMOV_O_0011_0011>
+			<CMOV_O_0011_0012>00000087592781756</CMOV_O_0011_0012>
+			<CMOV_O_0011_0013>+</CMOV_O_0011_0013>
+			<CMOV_O_0011_0014>20250618</CMOV_O_0011_0014>
+			<CMOV_O_0011_0015>00000000</CMOV_O_0011_0015>
+			<CMOV_O_0011_0016>N</CMOV_O_0011_0016>
+			<CMOV_O_0011_0017>N</CMOV_O_0011_0017>
+			<CMOV_O_0011_0018>902310531</CMOV_O_0011_0018>
+			<CMOV_O_0011_0019/>
+		</CMOV_O_0011>
+		<CMOV_O_0011>
+			<CMOV_O_0011_0001>20250618</CMOV_O_0011_0001>
+			<CMOV_O_0011_00011/>
+			<CMOV_O_0011_0002>985738M</CMOV_O_0011_0002>
+			<CMOV_O_0011_0003>693317665</CMOV_O_0011_0003>
+			<CMOV_O_0011_0004>726</CMOV_O_0011_0004>
+			<CMOV_O_0011_0005>Despesa adicional Incremento 0,02000%</CMOV_O_0011_0005>
+			<CMOV_O_0011_0006>000000000005000</CMOV_O_0011_0006>
+			<CMOV_O_0011_0007>-</CMOV_O_0011_0007>
+			<CMOV_O_0011_0008>MZN</CMOV_O_0011_0008>
+			<CMOV_O_0011_0009>000000000005000</CMOV_O_0011_0009>
+			<CMOV_O_0011_0010>-</CMOV_O_0011_0010>
+			<CMOV_O_0011_0011>MZN</CMOV_O_0011_0011>
+			<CMOV_O_0011_0012>00000087592776756</CMOV_O_0011_0012>
+			<CMOV_O_0011_0013>+</CMOV_O_0011_0013>
+			<CMOV_O_0011_0014>20250618</CMOV_O_0011_0014>
+			<CMOV_O_0011_0015>00000000</CMOV_O_0011_0015>
+			<CMOV_O_0011_0016>N</CMOV_O_0011_0016>
+			<CMOV_O_0011_0017>N</CMOV_O_0011_0017>
+			<CMOV_O_0011_0018>902310531</CMOV_O_0011_0018>
+			<CMOV_O_0011_0019/>
+		</CMOV_O_0011>
+		<CMOV_O_0011>
+			<CMOV_O_0011_0001>20250618</CMOV_O_0011_0001>
+			<CMOV_O_0011_00011/>
+			<CMOV_O_0011_0002>985738K</CMOV_O_0011_0002>
+			<CMOV_O_0011_0003>693317667</CMOV_O_0011_0003>
+			<CMOV_O_0011_0004>604</CMOV_O_0011_0004>
+			<CMOV_O_0011_0005>Incremento D/P</CMOV_O_0011_0005>
+			<CMOV_O_0011_0006>000000000010000</CMOV_O_0011_0006>
+			<CMOV_O_0011_0007>-</CMOV_O_0011_0007>
+			<CMOV_O_0011_0008>MZN</CMOV_O_0011_0008>
+			<CMOV_O_0011_0009>000000000010000</CMOV_O_0011_0009>
+			<CMOV_O_0011_0010>-</CMOV_O_0011_0010>
+			<CMOV_O_0011_0011>MZN</CMOV_O_0011_0011>
+			<CMOV_O_0011_0012>00000087592766756</CMOV_O_0011_0012>
+			<CMOV_O_0011_0013>+</CMOV_O_0011_0013>
+			<CMOV_O_0011_0014>20250618</CMOV_O_0011_0014>
+			<CMOV_O_0011_0015>00000000</CMOV_O_0011_0015>
+			<CMOV_O_0011_0016>N</CMOV_O_0011_0016>
+			<CMOV_O_0011_0017>N</CMOV_O_0011_0017>
+			<CMOV_O_0011_0018>736943091</CMOV_O_0011_0018>
+			<CMOV_O_0011_0019/>
+		</CMOV_O_0011>
+		<CMOV_O_0011>
+			<CMOV_O_0011_0001>20250618</CMOV_O_0011_0001>
+			<CMOV_O_0011_00011/>
+			<CMOV_O_0011_0002>985738</CMOV_O_0011_0002>
+			<CMOV_O_0011_0003>693317669</CMOV_O_0011_0003>
+			<CMOV_O_0011_0004>518</CMOV_O_0011_0004>
+			<CMOV_O_0011_0005>Despesa de Incremento em Conta 10,00000%</CMOV_O_0011_0005>
+			<CMOV_O_0011_0006>000000000001000</CMOV_O_0011_0006>
+			<CMOV_O_0011_0007>-</CMOV_O_0011_0007>
+			<CMOV_O_0011_0008>MZN</CMOV_O_0011_0008>
+			<CMOV_O_0011_0009>000000000001000</CMOV_O_0011_0009>
+			<CMOV_O_0011_0010>-</CMOV_O_0011_0010>
+			<CMOV_O_0011_0011>MZN</CMOV_O_0011_0011>
+			<CMOV_O_0011_0012>00000087592765756</CMOV_O_0011_0012>
+			<CMOV_O_0011_0013>+</CMOV_O_0011_0013>
+			<CMOV_O_0011_0014>20250618</CMOV_O_0011_0014>
+			<CMOV_O_0011_0015>00000000</CMOV_O_0011_0015>
+			<CMOV_O_0011_0016>N</CMOV_O_0011_0016>
+			<CMOV_O_0011_0017>N</CMOV_O_0011_0017>
+			<CMOV_O_0011_0018>902310532</CMOV_O_0011_0018>
+			<CMOV_O_0011_0019/>
+		</CMOV_O_0011>
+	</operationData>
+	<channelOperationLogKey/>
+	<coreLogKey>037909138</coreLogKey>
+	<coreCancelationCode/>
+	<errorCode>0</errorCode>
+	<errorMessage/>
+	<layoutVersion/>
+	<user>damasio23</user>
+	<password/>
+	<station/>
+	<licenceKey>licenseKey</licenceKey>
+	<encryption/>
+	<code/>
+	<version>R30</version>
+	<sessionId/>
+	<language/>
+	<channelCode>INT</channelCode>
+	<origin>P</origin>
+</CMOVResponse>]]></con2:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                    <con1:replace varName="body" contents-only="true" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffa.N57a2f3aa.0.198c5f6c2b0.N7ec4</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="TermDeposit/Resources/TDStatementListResponse"/>
+                                <con2:param name="CMOVResponse">
+                                    <con2:path>$body/*</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/publish/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffa.N57a2f3aa.0.198c5f6c2b0.N7e5b</con2:id>
+                        <con2:disabled xmlns:con2="http://www.bea.com/wli/sb/stages/config">true</con2:disabled>
+                        <con1:service ref="SessionParams/InsertCachePS" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>execute</con1:operation>
+                        <con1:outboundTransform>
+                            <con1:replace varName="body" contents-only="true" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:id>_ActionId-N3f57fffa.N57a2f3aa.0.198c5f6c2b0.N7e5a</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText><![CDATA[<quer:InsertCachedRequest xmlns:quer="http://www.mozabank.org/servicebus/querycached">
+    <quer:Session_Id>{$SessionVal}</quer:Session_Id> 
+    <quer:Status>NEW</quer:Status> 
+    <quer:PartyID>{fn:data($InitialRequest/*:partyId)}</quer:PartyID> 
+    <quer:TDStatementItemListResponse_Response>{fn-bea:serialize($body/*:TDStatementItemListResponse)}</quer:TDStatementItemListResponse_Response> 
+</quer:InsertCachedRequest>]]></con2:xqueryText>
+                                </con1:expr>
+                            </con1:replace>
+                        </con1:outboundTransform>
+                    </con1:route>
+                    <con1:reply isError="false" xmlns:con1="http://www.bea.com/wli/sb/stages/config">
+                        <con1:id>_ActionId-N3f57fffa.N57a2f3aa.0.198c5f6c2b0.N7ec3</con1:id>
+                    </con1:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="Pipeline Pair Node1">
+                <con:request>request-N3f57fffb.N67b79d3.0.198bda1d95a.N7f67</con:request>
+                <con:response>response-N3f57fffb.N67b79d3.0.198bda1d95a.N7f66</con:response>
+            </con:pipeline-node>
+            <con:route-node name="RouteNode1" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                <con:context/>
+                <con:actions>
+                    <con1:route>
+                        <con2:id>_ActionId-N3f57fffb.N67b79d3.0.198bda1d95a.N7d6e</con2:id>
+                        <con1:service ref="GetCreditCardStatement/CMOV_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>CMOVBS</con1:operation>
+                        <con1:outboundTransform>
+                            <con2:replace varName="body" contents-only="true" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N67b79d3.0.198bda1d95a.N7cbf</con3:id>
+                                <con2:expr>
+                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">&lt;cmov:RequestEncoded xmlns:cmov="http://www.mozabank.org/CMOV">
+    &lt;cmov:request>{$CCFetchBilledEncoded}&lt;/cmov:request>
+&lt;/cmov:RequestEncoded></con3:xqueryText>
+                                </con2:expr>
+                            </con2:replace>
+                            <con2:transport-headers copy-all="false" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffb.N67b79d3.0.198bda1d95a.N7cbc</con3:id>
+                                <con2:header-set>outbound-request</con2:header-set>
+                                <con2:header value="expression" name="Authorization">
+                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat('Bearer ',$AccessToken)</con3:xqueryText>
+                                </con2:header>
+                            </con2:transport-headers>
+                        </con1:outboundTransform>
+                        <con1:responseTransform/>
+                    </con1:route>
+                </con:actions>
+            </con:route-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

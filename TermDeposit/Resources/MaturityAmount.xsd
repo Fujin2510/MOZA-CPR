@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.mozabank.org/maturityAmount"
+           xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            targetNamespace="http://www.mozabank.org/maturityAmount" elementFormDefault="qualified"
+      nxsd:version="JSON" nxsd:encoding="UTF-8">
+  <xsd:element name="MaturityRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="user" type="xsd:string"/>
+        <xsd:element name="capital" type="xsd:decimal"/>
+        <xsd:element name="interestRate" type="xsd:decimal"/>
+        <xsd:element name="days" type="xsd:integer"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="MaturityResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="maturityAmount" type="xsd:decimal"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

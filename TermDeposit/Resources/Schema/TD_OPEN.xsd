@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+              xmlns:tns="http://www.mozabank.org/TDOpen"
+              targetNamespace="http://www.mozabank.org/TDOpen" elementFormDefault="qualified"
+              attributeFormDefault="unqualified" nxsd:stream="json"
+              nxsd:format="JSON" nxsd:version="NXSD" nxsd:encoding="US-ASCII">
+
+  <!-- Root elements -->
+  <xsd:element name="Request" type="tns:RequestType"/>
+  <xsd:element name="Response" type="tns:ResponseType"/>
+
+  <!-- RequestType -->
+  <xsd:complexType name="RequestType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="referenceNo" type="xsd:string"/>
+      <xsd:element name="interfaceId" type="xsd:string"/>
+      <xsd:element name="entity" type="xsd:string"/>
+      <xsd:element name="headersMap" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="queryMap" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="hostName" type="xsd:string"/>
+      <xsd:element name="partyId" type="xsd:string"/>
+      <xsd:element name="accountId" type="xsd:string"/>
+      <xsd:element name="payoutInstruction" maxOccurs="unbounded">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="accountId" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="payoutType" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="payoutComponentType" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="branchId" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="clearingCode" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="beneficiaryName" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="percentage" type="xsd:string" minOccurs="0" nillable="true"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="maturityDate" type="tns:DateType"/>
+      <xsd:element name="principalAmount" type="tns:AmountType"/>
+      <xsd:element name="maturityAmount" type="tns:AmountType"/>
+      <xsd:element name="valueDate" type="tns:DateType"/>
+      <xsd:element name="module" type="xsd:string"/>
+      <xsd:element name="productId" type="xsd:string"/>
+      <xsd:element name="rolloverType" type="xsd:string"/>
+      <xsd:element name="type" type="xsd:string"/>
+      <xsd:element name="rollOverAmount" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="tenure" type="tns:TenureType"/>
+      <xsd:element name="branchCode" type="xsd:string"/>
+      <xsd:element name="poolValue" type="xsd:string"/>
+      <xsd:element name="payinPercent" type="xsd:decimal"/>
+      <xsd:element name="partyName" type="xsd:string"/>
+      <xsd:element name="customerRel" type="xsd:string"/>
+      <xsd:element name="accType" type="xsd:string"/>
+      <xsd:element name="jointHolders" type="xsd:string" minOccurs="0" nillable="true"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  
+  <!-- Date Type -->
+ <xsd:complexType name="DateType">
+      <xsd:sequence>
+        <xsd:element name="sqlDate" type="xsd:long"/>
+        <xsd:element name="dateString" type="xsd:string"/>
+        <xsd:element name="monthDate" type="xsd:int"/>
+        <xsd:element name="calendarDayOfWeek" type="xsd:string"/>
+        <xsd:element name="monthDateTime" type="xsd:long"/>
+        <xsd:element name="weekOfYear" type="xsd:int"/>
+        <xsd:element name="lastDayOfMonth" type="xsd:int"/>
+        <xsd:element name="sqltimestamp" type="xsd:long"/>
+        <xsd:element name="yearMonthDate" type="xsd:int"/>
+        <xsd:element name="time" type="xsd:int"/>
+        <xsd:element name="timestamp" type="xsd:long"/>
+        <xsd:element name="year" type="xsd:int"/>
+        <xsd:element name="dayOfMonth" type="xsd:int"/>
+        <xsd:element name="yearMonth" type="xsd:int"/>
+        <xsd:element name="month" type="xsd:int"/>
+        <xsd:element name="dayOfWeek" type="xsd:int"/>
+        <xsd:element name="millis" type="xsd:long"/>
+        <xsd:element name="leapYear" type="xsd:boolean"/>
+        <xsd:element name="dayOfYear" type="xsd:int"/>
+        <xsd:element name="infinite" type="xsd:boolean"/>
+        <xsd:element name="null" type="xsd:boolean"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  
+
+  <!-- ResponseType -->
+  <xsd:complexType name="ResponseType">
+    <xsd:sequence>
+    <xsd:element name="data">
+        <xsd:complexType>
+          <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="referenceNo" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="result" type="tns:ResultType"/>
+      <xsd:element name="hasMore" type="xsd:boolean" minOccurs="0" nillable="true"/>
+      <xsd:element name="totalRecords" type="xsd:int" minOccurs="0" nillable="true"/>
+      <xsd:element name="startSequence" type="xsd:int" minOccurs="0" nillable="true"/>
+      <xsd:element name="accountId" type="xsd:string"/>
+      <xsd:element name="branchId" type="xsd:string"/>
+      <xsd:element name="fcrAccount" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+      </xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+
+  <!-- ResultType -->
+  <xsd:complexType name="ResultType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="externalReferenceId" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="status" type="xsd:string"/>
+      <xsd:element name="errorList" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="warningList" type="xsd:string" minOccurs="0" nillable="true"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- AmountType -->
+  <xsd:complexType name="AmountType">
+    <xsd:sequence>
+      <xsd:element name="currency" type="xsd:string"/>
+      <xsd:element name="amount" type="xsd:decimal"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- TenureType -->
+  <xsd:complexType name="TenureType">
+    <xsd:sequence>
+      <xsd:element name="days" type="xsd:int"/>
+      <xsd:element name="months" type="xsd:int"/>
+      <xsd:element name="years" type="xsd:int"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

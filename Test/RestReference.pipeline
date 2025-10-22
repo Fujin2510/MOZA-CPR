@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="Test/Resources/RestReference"/>
+            <con:binding>
+                <con:name>RestReference_ptt-binding</con:name>
+                <con:namespace>http://xmlns.oracle.com/ServiceBusApplication/Test/RestReference</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:flow>
+            <con:route-node name="RestReference" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                <con:context>
+                    <con2:userNsDecl prefix="moz" namespace="http://www.mozabank.org"/>
+                </con:context>
+                <con:actions>
+                    <con1:route>
+                        <con2:id>actionid-routeaction</con2:id>
+                        <con1:service ref="Test/RestReference" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation passThrough="true"/>
+                        <con1:outboundTransform>
+                            <con3:assign varName="request" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-N3f57ff98.71aa112a.0.198a3b18ad8.N7fce</con2:id>
+                                <con3:expr>
+                                    <con2:xqueryText>$body/moz:Request</con2:xqueryText>
+                                </con3:expr>
+                            </con3:assign>
+                            <con3:javaCallout varName="Test" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-N3f57ff98.N7a7414f0.0.1989d77618b.N7ec8</con2:id>
+                                <con3:archive ref="Test/SCA-INF/lib/SSLBypass10"/>
+                                <con3:className>com.example.osb.SSLBypass</con3:className>
+                                <con3:method>public static java.lang.String invoke(java.lang.Object, java.lang.String)</con3:method>
+                                <con3:expr>
+                                    <con2:xqueryText>$body/moz:Request</con2:xqueryText>
+                                </con3:expr>
+                                <con3:expr>
+                                    <con2:xqueryText>'https://10.24.30.15:7520/MOZABANK/RenAuth/V2.0.1.0/AuthenticateUser'</con2:xqueryText>
+                                </con3:expr>
+                                <con3:return-param-as-ref>false</con3:return-param-as-ref>
+                            </con3:javaCallout>
+                        </con1:outboundTransform>
+                        <con1:responseTransform/>
+                    </con1:route>
+                </con:actions>
+            </con:route-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

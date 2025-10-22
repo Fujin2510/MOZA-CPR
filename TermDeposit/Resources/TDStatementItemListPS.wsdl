@@ -1,0 +1,34 @@
+<wsdl:definitions name="TDStatementItemListPS" targetNamespace="http://xmlns.oracle.com/Aug13/TermDeposit/TDStatementItemListPS" xmlns:tns="http://xmlns.oracle.com/Aug13/TermDeposit/TDStatementItemListPS" xmlns:inp1="http://www.mozabank.org/TD_STATEMENT_ITEM_LIST" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <plnk:partnerLinkType name="TDStatementItemListPS">
+        <plnk:role name="TDStatementItemListPSProvider" portType="tns:TDStatementItemListPS_ptt"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://www.mozabank.org/TD_STATEMENT_ITEM_LIST" schemaLocation="TDStatementItemList.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="TD_Statement_Item_list_inputMessage">
+        <wsdl:part name="request" element="inp1:TDStatementItemListRequest"/>
+    </wsdl:message>
+    <wsdl:message name="TD_Statement_Item_list_outputMessage">
+        <wsdl:part name="reply" element="inp1:TDStatementItemListResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="TDStatementItemListPS_ptt">
+        <wsdl:operation name="TD_Statement_Item_list">
+            <wsdl:input message="tns:TD_Statement_Item_list_inputMessage"/>
+            <wsdl:output message="tns:TD_Statement_Item_list_outputMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="TDStatementItemListPS_ptt-binding" type="tns:TDStatementItemListPS_ptt">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="TD_Statement_Item_list">
+            <soap:operation soapAction="TD_Statement_Item_list"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

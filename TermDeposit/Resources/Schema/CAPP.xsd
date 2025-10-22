@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            xmlns:tns="http://www.mozabank.org/CAPP" targetNamespace="http://www.mozabank.org/CAPP"
+            elementFormDefault="qualified" attributeFormDefault="unqualified" nxsd:stream="json" nxsd:format="JSON"
+            nxsd:version="JSON" nxsd:encoding="UTF-8">
+  <!-- Root element for request -->
+  <xsd:element name="CAPPRequest" type="tns:CAPPRequestType"/>
+  <!-- Root element for response -->
+  <xsd:element name="CAPPResponse" type="tns:CAPPResponseType"/>
+  <xsd:element name="CAPPRequestString">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="RequestString" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <!-- Request Complex Type -->
+  <xsd:complexType name="CAPPRequestType">
+    <xsd:sequence>
+      <xsd:element name="user" type="xsd:string"/>
+      <xsd:element name="debitAccount" type="xsd:string"/>
+      <xsd:element name="creditAccount" type="xsd:string"/>
+      <xsd:element name="valueDate" type="xsd:integer"/>
+      <xsd:element name="productId" type="xsd:integer"/>
+      <xsd:element name="amount" type="xsd:integer"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- Response Complex Type -->
+  <xsd:complexType name="CAPPResponseType">
+    <xsd:sequence>
+      <xsd:element name="transactionCode" type="xsd:string"/>
+      <xsd:element name="operationData" type="tns:CAPPResponseOperationDataType"/>
+      <xsd:element name="channelOperationLogKey" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="coreLogKey" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="coreCancelationCode" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="errorCode" type="xsd:string"/>
+      <xsd:element name="errorMessage" type="tns:ErrorMessageType"/>
+      <xsd:element name="validation" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="layoutVersion" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="user" type="xsd:string"/>
+      <xsd:element name="password" type="xsd:string"/>
+      <xsd:element name="station" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="licenceKey" type="xsd:string"/>
+      <xsd:element name="encryption" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="code" type="xsd:string"/>
+      <xsd:element name="version" type="xsd:string"/>
+      <xsd:element name="sessionId" type="xsd:string"/>
+      <xsd:element name="language" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="channelCode" type="xsd:string"/>
+      <xsd:element name="origin" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- Response Operation Data -->
+  <xsd:complexType name="CAPPResponseOperationDataType">
+    <xsd:sequence>
+      <xsd:element name="CAPP_O_0001" type="xsd:string"/>
+      <xsd:element name="CAPP_O_0002" type="xsd:string"/>
+      <xsd:element name="CAPP_O_0003" type="xsd:string"/>
+      <xsd:element name="CAPP_O_0004" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- Error Message Type -->
+  <xsd:complexType name="ErrorMessageType">
+    <xsd:sequence>
+      <xsd:element name="messages" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

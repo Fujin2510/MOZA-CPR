@@ -1,0 +1,21 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://www.mozabank.org/CAPP" xmlns="http://wadl.dev.java.net/2009/02">
+  <doc title="CAPPServices">RestReference</doc>
+  <grammars>
+    <xsd:schema>
+      <xsd:import namespace="http://www.mozabank.org/CAPP" schemaLocation="Schema/CAPP.xsd"/>
+    </xsd:schema>            
+  </grammars>
+  <resources>
+    <resource path="/OP_CALL_ENC">
+      <method name="GET" soa:wsdlOperation="CAPPServices">
+        <request soa:paramElement="pns:CAPPRequestString" xmlns:pns="http://www.mozabank.org/CAPP">
+          <param name="request" style="query" soa:expression="$msg.request/tns:RequestString" type="xsd:string"/>
+        </request>
+        <response status="200">
+          <representation mediaType="application/xml" element="cns:CAPPResponse" xmlns:cns="http://www.mozabank.org/CAPP"/>
+          <representation mediaType="application/json" element="cns:CAPPResponse" xmlns:cns="http://www.mozabank.org/CAPP"/>
+        </response>
+      </method>
+    </resource>
+  </resources>
+</application>
