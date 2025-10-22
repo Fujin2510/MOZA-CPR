@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            xmlns:tns="http://www.mozabank.org/ccdo_branch_list"
+            targetNamespace="http://www.mozabank.org/ccdo_branch_list"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified" 
+            nxsd:version="JSON"
+            nxsd:encoding="UTF-8">
+
+  <!-- Root Elements -->
+  <xsd:element name="Request" type="tns:RequestType"/>
+  <xsd:element name="Response">
+   <xsd:complexType>
+    <xsd:sequence>
+      <xsd:element name="data">
+   <xsd:complexType>
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="referenceNo" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="result" type="tns:ResultType"/>
+      <xsd:element name="hasMore" type="xsd:boolean" minOccurs="0" nillable="true"/>
+      <xsd:element name="totalRecords" type="xsd:int" minOccurs="0" nillable="true"/>
+      <xsd:element name="startSequence" type="xsd:int" minOccurs="0" nillable="true"/>
+      <xsd:element name="branchList" type="tns:BranchListType" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+ </xsd:element>
+ </xsd:sequence>
+  </xsd:complexType>
+ </xsd:element>
+  <!-- Request Type -->
+  <xsd:complexType name="RequestType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="referenceNo" type="xsd:string"/>
+      <xsd:element name="interfaceId" type="xsd:string"/>
+      <xsd:element name="entity" type="xsd:string"/>
+      <xsd:element name="headersMap" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="queryMap" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="hostName" type="xsd:string"/>
+      <xsd:element name="branchId" type="xsd:string"/>
+      <xsd:element name="locality" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="district" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="city" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="state" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="countryRegion" type="xsd:string" minOccurs="0" nillable="true"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Response Type -->
+ 
+
+  <!-- Result Type -->
+  <xsd:complexType name="ResultType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="externalReferenceId" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="status" type="xsd:string"/>
+      <xsd:element name="errorList" nillable="true" minOccurs="0" maxOccurs="unbounded">
+ <xsd:complexType>
+<xsd:sequence>
+<xsd:element name="code" type="xsd:string"/>
+<xsd:element name="message" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+      <xsd:element name="warningList" type="xsd:string" minOccurs="0" nillable="true"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Branch List Type -->
+  <xsd:complexType name="BranchListType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="branchId" type="xsd:string"/>
+      <xsd:element name="branchName" type="xsd:string"/>
+      <xsd:element name="bankId" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="localCurrency" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="address" type="tns:AddressType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Address Type -->
+  <xsd:complexType name="AddressType">
+    <xsd:sequence>
+      <xsd:element name="line1" type="xsd:string"/>
+      <xsd:element name="line2" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="line3" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="line4" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="line5" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="line6" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="line7" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="line8" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="line9" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="line10" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="line11" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="line12" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="city" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="addressTypeDescription" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="state" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="country" type="xsd:string"/>
+      <xsd:element name="zipCode" type="xsd:string" minOccurs="0" nillable="true"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

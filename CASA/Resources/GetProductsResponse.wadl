@@ -1,0 +1,22 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns0="http://www.mozabank.org/getPrducts" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="GetProductsResponse">RestReference</doc>
+   <grammars>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/getPrducts" schemaLocation="GetProductsREST.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/getProduct">
+         <method name="GET" soa:wsdlOperation="Operation1">
+            <request soa:paramElement="pns:GetProductsRequest" xmlns:pns="http://www.mozabank.org/getPrducts">
+               <param name="code" style="query" soa:expression="$msg.request/ns0:ProductCode" type="xsd:string"/>
+               <param name="type" style="query" soa:expression="$msg.request/ns0:ProductType" type="xsd:string"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:GetProductsResponse" xmlns:cns="http://www.mozabank.org/getPrducts"/>
+               <representation mediaType="application/json" element="cns:GetProductsResponse" xmlns:cns="http://www.mozabank.org/getPrducts"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

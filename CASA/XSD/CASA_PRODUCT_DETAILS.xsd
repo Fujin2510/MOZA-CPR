@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            xmlns:tns="http://www.mozabank.org/ccdo_casa_product_details"
+            targetNamespace="http://www.mozabank.org/ccdo_casa_product_details" elementFormDefault="qualified"
+            attributeFormDefault="unqualified" nxsd:version="JSON" nxsd:encoding="US-ASCII">
+  <!-- Root Elements -->
+  <xsd:element name="ProductInquiryRequest" type="tns:ProductInquiryRequestType"/>
+  <xsd:element name="ProductInquiryResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="data">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+              <xsd:element name="referenceNo" type="xsd:string" minOccurs="0" nillable="true"/>
+              <xsd:element name="result" type="tns:ResultType"/>
+              <xsd:element name="hasMore" type="xsd:boolean" minOccurs="0" nillable="true"/>
+              <xsd:element name="totalRecords" type="xsd:int" minOccurs="0" nillable="true"/>
+              <xsd:element name="startSequence" type="xsd:int" minOccurs="0" nillable="true"/>
+              <xsd:element name="products" type="tns:ProductType" minOccurs="0" maxOccurs="unbounded"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <!-- Request Type -->
+  <xsd:complexType name="ProductInquiryRequestType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="referenceNo" type="xsd:string"/>
+      <xsd:element name="interfaceId" type="xsd:string"/>
+      <xsd:element name="entity" type="xsd:string"/>
+      <xsd:element name="headersMap" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="queryMap" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="hostName" type="xsd:string"/>
+      <xsd:element name="productId" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- Response Type -->
+  <!-- Result Block -->
+  <xsd:complexType name="ResultType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="externalReferenceId" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="status" type="xsd:string"/>
+      <xsd:element name="errorList" nillable="true" minOccurs="0" maxOccurs="unbounded">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="code" type="xsd:string"/>
+            <xsd:element name="message" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="warningList" type="xsd:string" minOccurs="0" nillable="true"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- Product Record -->
+  <xsd:complexType name="ProductType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="accountType" type="xsd:string"/>
+      <xsd:element name="productId" type="xsd:string"/>
+      <xsd:element name="productName" type="xsd:string"/>
+      <xsd:element name="productType" type="xsd:string"/>
+      <xsd:element name="module" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="amount" type="tns:AmountType"/>
+      <xsd:element name="hasChequeBookFacility" type="xsd:boolean"/>
+      <xsd:element name="hasATMFacility" type="xsd:boolean"/>
+      <xsd:element name="hasOverdraftFacility" type="xsd:boolean"/>
+      <xsd:element name="hasPassBookFacility" type="xsd:boolean"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- Amount Block -->
+  <xsd:complexType name="AmountType">
+    <xsd:sequence>
+      <xsd:element name="currency" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="amount" type="xsd:decimal"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            xmlns="http://www.mozabank.org/getPrducts"
+            targetNamespace="http://www.mozabank.org/getPrducts" elementFormDefault="qualified" 
+            nxsd:version="JSON"
+            nxsd:encoding="UTF-8">
+  <xsd:element name="GetProductsRequest">
+    <xsd:annotation>
+      <xsd:documentation>A sample element</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="ProductCode" type="xsd:string"/>
+        <xsd:element name="ProductType" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+    <xsd:element name="GetProductsResponse">
+    <xsd:annotation>
+      <xsd:documentation>A sample element</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="code" type="xsd:string"/>
+        <xsd:element name="description" type="xsd:string"/>
+        <xsd:element name="errorCode" type="xsd:string"/>
+        <xsd:element name="type" type="xsd:string"/>
+        <xsd:element name="message" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

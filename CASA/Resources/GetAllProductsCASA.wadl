@@ -1,0 +1,111 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://www.mozabank.org/ccdo_party_casa_accounts_list" xmlns="http://wadl.dev.java.net/2009/02" xmlns:ns0="http://www.mozabank.org/ccdo_casa_product_details" xmlns:ns1="http://www.mozabank.org/ccdo_casalist" xmlns:ns2="http://www.mozabank.org/ccdo_casaaccount_partylist_summary" xmlns:ns3="http://www.mozabank.org/ccdo_casa_account_parties" xmlns:ns4="http://www.mozabank.org/ccdo_branch_list" xmlns:ns5="http://www.mozabank.org/CASARead">
+   <doc title="PatyCasaAccountList">RestService</doc>
+   <grammars>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/ccdo_party_casa_accounts_list" schemaLocation="../XSD/PARTY_CASA_ACCOUNTS_LIST.xsd"/>
+        </xsd:schema>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/ccdo_casa_product_details" schemaLocation="../XSD/CASA_PRODUCT_DETAILS.xsd"/>
+        </xsd:schema>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/ccdo_casalist" schemaLocation="../XSD/CASALIST.xsd"/>
+        </xsd:schema>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/ccdo_casa_account_parties" schemaLocation="../XSD/CASA_ACCOUNT_PARTIES.xsd"/>
+        </xsd:schema>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/ccdo_branch_list" schemaLocation="../XSD/BRANCH_LIST.xsd"/>
+        </xsd:schema>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/CASARead" schemaLocation="../XSD/CASA_READ.xsd"/>
+        </xsd:schema>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/ccdo_casaaccount_partylist_summary" schemaLocation="../XSD/CASAACCOUNT_PARTYLIST_SUMMARY.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/product-details">
+         <method name="POST" soa:wsdlOperation="ProductDetails">
+            <request>
+               <representation mediaType="application/xml" element="cns:ProductInquiryRequest" xmlns:cns="http://www.mozabank.org/ccdo_casa_product_details"/>
+               <representation mediaType="application/json" element="cns:ProductInquiryRequest" xmlns:cns="http://www.mozabank.org/ccdo_casa_product_details"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:ProductInquiryResponse" xmlns:cns="http://www.mozabank.org/ccdo_casa_product_details"/>
+               <representation mediaType="application/json" element="cns:ProductInquiryResponse" xmlns:cns="http://www.mozabank.org/ccdo_casa_product_details"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/casa-account-list">
+         <method name="POST" soa:wsdlOperation="CASAAccountList">
+            <request>
+               <representation mediaType="application/xml" element="cns:CasaPartyAccountListRequest" xmlns:cns="http://www.mozabank.org/ccdo_party_casa_accounts_list"/>
+               <representation mediaType="application/json" element="cns:CasaPartyAccountListRequest" xmlns:cns="http://www.mozabank.org/ccdo_party_casa_accounts_list"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:CasaPartyAccountListResponse" xmlns:cns="http://www.mozabank.org/ccdo_party_casa_accounts_list"/>
+               <representation mediaType="application/xml" element="cns:CasaPartyAccountListResponse" xmlns:cns="http://www.mozabank.org/ccdo_party_casa_accounts_list"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/account-parties">
+         <method name="POST" soa:wsdlOperation="AcccountParties">
+            <request>
+               <representation mediaType="application/xml" element="cns:CasaAccountPartiesRequest" xmlns:cns="http://www.mozabank.org/ccdo_casa_account_parties"/>
+               <representation mediaType="application/json" element="cns:CasaAccountPartiesRequest" xmlns:cns="http://www.mozabank.org/ccdo_casa_account_parties"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:CasaAccountPartiesResponse" xmlns:cns="http://www.mozabank.org/ccdo_casa_account_parties"/>
+               <representation mediaType="application/json" element="cns:CasaAccountPartiesResponse" xmlns:cns="http://www.mozabank.org/ccdo_casa_account_parties"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/branch-list">
+         <method name="POST" soa:wsdlOperation="BranchList">
+            <request>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabank.org/ccdo_branch_list"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:Response" xmlns:cns="http://www.mozabank.org/ccdo_branch_list"/>
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabank.org/ccdo_branch_list"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/casa-read">
+         <method name="POST" soa:wsdlOperation="CASARead">
+            <request>
+               <representation mediaType="application/xml" element="cns:Request" xmlns:cns="http://www.mozabank.org/CASARead"/>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabank.org/CASARead"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:Response" xmlns:cns="http://www.mozabank.org/CASARead"/>
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabank.org/CASARead"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/casa-list">
+         <method name="POST" soa:wsdlOperation="CASAList">
+            <request>
+               <representation mediaType="application/xml" element="cns:Request" xmlns:cns="http://www.mozabank.org/ccdo_casalist"/>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabank.org/ccdo_casalist"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:Response" xmlns:cns="http://www.mozabank.org/ccdo_casalist"/>
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabank.org/ccdo_casalist"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/account-partylist-summary">
+         <method name="POST" soa:wsdlOperation="AccountPartyListSummary">
+            <request>
+               <representation mediaType="application/xml" element="cns:Request" xmlns:cns="http://www.mozabank.org/ccdo_casaaccount_partylist_summary"/>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabank.org/ccdo_casaaccount_partylist_summary"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:Response" xmlns:cns="http://www.mozabank.org/ccdo_casaaccount_partylist_summary"/>
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabank.org/ccdo_casaaccount_partylist_summary"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

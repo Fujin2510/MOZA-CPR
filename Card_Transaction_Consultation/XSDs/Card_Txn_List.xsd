@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            targetNamespace="http://www.mozabank.org/CTCD_TRANSACTION_LIST"
+            xmlns="http://www.mozabank.org/CTCD_TRANSACTION_LIST"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            nxsd:format="JSON"
+            nxsd:stream="json"
+            nxsd:version="NXSD"
+            nxsd:encoding="UTF-8">
+
+  <!-- Root Elements -->
+  <xsd:element name="Request" type="RequestType"/>
+  <xsd:element name="Response" type="ResponseType"/>
+
+  <!-- Request Date Type -->
+  <xsd:complexType name="RequestDateType">
+    <xsd:sequence>
+      <xsd:element name="dateString" type="xsd:string"/>
+      <xsd:element name="sqlDate" type="xsd:long"/>
+      <xsd:element name="monthDate" type="xsd:int"/>
+      <xsd:element name="calendarDayOfWeek" type="xsd:string"/>
+      <xsd:element name="monthDateTime" type="xsd:long"/>
+      <xsd:element name="weekOfYear" type="xsd:int"/>
+      <xsd:element name="lastDayOfMonth" type="xsd:int"/>
+      <xsd:element name="sqltimestamp" type="xsd:long"/>
+      <xsd:element name="year" type="xsd:int"/>
+      <xsd:element name="dayOfMonth" type="xsd:int"/>
+      <xsd:element name="time" type="xsd:int"/>
+      <xsd:element name="timestamp" type="xsd:long"/>
+      <xsd:element name="month" type="xsd:int"/>
+      <xsd:element name="dayOfWeek" type="xsd:int"/>
+      <xsd:element name="millis" type="xsd:long"/>
+      <xsd:element name="leapYear" type="xsd:boolean"/>
+      <xsd:element name="dayOfYear" type="xsd:int"/>
+      <xsd:element name="yearMonthDate" type="xsd:int"/>
+      <xsd:element name="yearMonth" type="xsd:int"/>
+      <xsd:element name="infinite" type="xsd:boolean"/>
+      <xsd:element name="null" type="xsd:boolean"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Request Type -->
+  <xsd:complexType name="RequestType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="referenceNo" type="xsd:string"/>
+      <xsd:element name="interfaceId" type="xsd:string"/>
+      <xsd:element name="entity" type="xsd:string"/>
+      <xsd:element name="headersMap" type="EmptyObject"/>
+      <xsd:element name="queryMap" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="hostName" type="xsd:string"/>
+      <xsd:element name="cardNumber" type="xsd:string"/>
+      <xsd:element name="startDate" type="RequestDateType"/>
+      <xsd:element name="endDate" type="RequestDateType"/>
+
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Empty Object -->
+  <xsd:complexType name="EmptyObject">
+    <xsd:sequence/>
+  </xsd:complexType>
+
+  <!-- Response Type -->
+  <xsd:complexType name="ResponseType">
+    <xsd:sequence>
+      <xsd:element name="data" type="DataType"/>
+      <xsd:element name="messages" type="MessagesType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- DataType -->
+  <xsd:complexType name="DataType">
+    <xsd:sequence>
+      <xsd:element name="result" type="ResultType"/>
+      <xsd:element name="transactionList" type="TransactionType" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- ResultType -->
+  <xsd:complexType name="ResultType">
+    <xsd:sequence>
+      <xsd:element name="status" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- TransactionListType -->
+
+
+  <!-- TransactionType -->
+  <xsd:complexType name="TransactionType">
+    <xsd:sequence>
+      <xsd:element name="transactionRegistrationDate" type="xsd:dateTime"/>
+      <xsd:element name="orderNumber" type="xsd:string"/>
+      <xsd:element name="requestDate" type="xsd:dateTime"/>
+      <xsd:element name="requestTime" type="xsd:string"/>
+      <xsd:element name="transactionValue" type="xsd:string"/>
+      <xsd:element name="transactionCurrency" type="xsd:string"/>
+      <xsd:element name="transactionType" type="xsd:string"/>
+      <xsd:element name="terminalType" type="xsd:string"/>
+      <xsd:element name="terminalSupportBench" type="xsd:string"/>
+      <xsd:element name="terminalLocation" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- MessagesType -->
+  <xsd:complexType name="MessagesType">
+    <xsd:sequence>
+      <xsd:element name="keyId" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="status" type="xsd:string"/>
+      <xsd:element name="codes" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="requestId" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="httpStatusCode" type="xsd:string"/>
+      <xsd:element name="overrideAuthLevelsReqd" type="xsd:string" minOccurs="0" nillable="true"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>
