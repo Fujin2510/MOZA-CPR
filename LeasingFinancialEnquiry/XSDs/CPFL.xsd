@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            targetNamespace="http://www.mozabanca.org/CPFL"
+            xmlns="http://www.mozabanca.org/CPFL" elementFormDefault="qualified"
+            attributeFormDefault="unqualified" nxsd:version="JSON" nxsd:encoding="UTF-8">
+
+  
+      <xsd:element name="Request" type="CPFLRequest"/>
+      <xsd:element name="CPFLEncodedRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="RequestString" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+      <xsd:element name="Response" type="CPFLResponse"/>
+  
+  
+  <!-- Request definition -->
+  <xsd:complexType name="CPFLRequest">
+    <xsd:sequence>
+      <xsd:element name="user" type="xsd:string"/>
+      <xsd:element name="password" type="xsd:string"/>
+      <xsd:element name="origin" type="xsd:string"/>
+      <xsd:element name="channelCode" type="xsd:string"/>
+      <xsd:element name="version" type="xsd:string"/>
+      <xsd:element name="licenceKey" type="xsd:string"/>
+      <xsd:element name="sessionId" type="xsd:string"/>
+      <xsd:element name="transactionCode" type="xsd:string"/>
+      <xsd:element name="operationData" type="CPFLOperationData"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="CPFLOperationData">
+    <xsd:sequence>
+      <xsd:element name="CPFL_I_0001" type="xsd:string"/>
+      <xsd:element name="CPFL_I_0002" type="xsd:string"/>
+      <xsd:element name="CPFL_I_0003" type="xsd:string"/>
+      <xsd:element name="CPFL_I_0004" type="xsd:string"/>
+      <xsd:element name="CPFL_I_0005" type="xsd:string"/>
+
+
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Response definition -->
+  <xsd:complexType name="CPFLResponse">
+    <xsd:sequence>
+      <xsd:element name="transactionCode" type="xsd:string"/>
+      <xsd:element name="operationData" type="CPFLOperationOutput"/>
+      <xsd:element name="channelOperationLogKey" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="coreLogKey" type="xsd:string"/>
+      <xsd:element name="coreCancelationCode" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="errorCode" type="xsd:string"/>
+      <xsd:element name="errorMessage" type="ErrorMessage"/>
+      <xsd:element name="layoutVersion" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="user" type="xsd:string"/>
+      <xsd:element name="password" type="xsd:string"/>
+      <xsd:element name="station" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="licenceKey" type="xsd:string"/>
+      <xsd:element name="encryption" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="code" type="xsd:string"/>
+      <xsd:element name="version" type="xsd:string"/>
+      <xsd:element name="sessionId" type="xsd:string"/>
+      <xsd:element name="language" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="channelCode" type="xsd:string"/>
+      <xsd:element name="origin" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="CPFLOperationOutput">
+    <xsd:sequence>
+      <xsd:element name="CPFL_O_0001" type="xsd:string"/>
+      <xsd:element name="CPFL_O_0002" type="xsd:string"/>
+      <xsd:element name="CPFL_O_0003" type="CPFLInstallment"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="CPFLInstallmentList">
+    <xsd:sequence>
+      <xsd:element name="Installment" type="CPFLInstallment" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="CPFLInstallment">
+    <xsd:sequence>
+      <xsd:element name="CPFL_O_0003_0001" type="xsd:string"/> <!-- Type: A/R/U -->
+      <xsd:element name="CPFL_O_0003_0002" type="xsd:string"/> <!-- Installment number -->
+      <xsd:element name="CPFL_O_0003_0003" type="xsd:string"/> <!-- Amount -->
+      <xsd:element name="CPFL_O_0003_0004" type="xsd:string"/> <!-- Interest -->
+      <xsd:element name="CPFL_O_0003_0005" type="xsd:string"/> <!-- Remaining balance -->
+      <xsd:element name="CPFL_O_0003_0006" type="xsd:string"/> <!-- Due date -->
+      <xsd:element name="CPFL_O_0003_0007" type="xsd:string"/> <!-- Status -->
+      <xsd:element name="CPFL_O_0003_0008" type="xsd:string"/> <!-- Paid date -->
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ErrorMessage">
+    <xsd:sequence>
+      <xsd:element name="messages" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

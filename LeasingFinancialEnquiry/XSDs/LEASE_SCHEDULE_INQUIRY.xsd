@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://www.mozabanca.org/LSI"
+            xmlns="http://www.mozabanca.org/LSI"
+            elementFormDefault="qualified">
+
+  <xsd:element name="Request" type="LEASE_SCHEDULE_INQUIRYRequest"/>
+  <xsd:element name="Response" type="LEASE_SCHEDULE_INQUIRYResponse"/>
+
+  <!-- Request Structure (unchanged) -->
+  <xsd:complexType name="LEASE_SCHEDULE_INQUIRYRequest">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="referenceNo" type="xsd:string"/>
+      <xsd:element name="interfaceId" type="xsd:string"/>
+      <xsd:element name="entity" type="xsd:string"/>
+      <xsd:element name="headersMap" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="queryMap" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="hostName" type="xsd:string"/>
+      <xsd:element name="account" type="xsd:string"/>
+      <xsd:element name="fromDate" type="xsd:string"/>
+      <xsd:element name="toDate" type="xsd:string"/>
+      <xsd:element name="type" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Response Structure -->
+  <xsd:complexType name="LEASE_SCHEDULE_INQUIRYResponse">
+    <xsd:sequence>
+      <xsd:element name="data" type="LeaseDataType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Data container -->
+
+ 
+  <xsd:complexType name="LeaseDataType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="referenceNo" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="result" type="ResultType"/>
+      <xsd:element name="hasMore" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="totalRecords" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="startSequence" type="xsd:string" minOccurs="0" nillable="true"/>
+
+      <!-- Container for multiple statementItem -->
+      <xsd:element name="statementItemList" type="StatementItemType"  maxOccurs="unbounded" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ResultType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="externalReferenceId" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="status" type="xsd:string"/>
+            <xsd:element name="errorList" nillable="true" minOccurs="0" maxOccurs="unbounded">
+              <xsd:complexType>
+                <xsd:sequence>
+                   <xsd:element name="code" type="xsd:string"/>
+                    <xsd:element name="message" type="xsd:string"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            </xsd:element>
+      <xsd:element name="warningList" type="xsd:string" minOccurs="0" nillable="true"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- This type wraps multiple statementItem elements -->
+  
+
+  <xsd:complexType name="StatementItemType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="externalReferenceId" type="xsd:string" />
+      <xsd:element name="subSequenceNumber" type="xsd:string" />
+      <xsd:element name="installmentDueDate" type="xsd:dateTime" />
+      <xsd:element name="statusDate" type="xsd:dateTime" />
+      <xsd:element name="typeOfTransaction" type="xsd:string" />
+      <xsd:element name="installmentNumber" type="xsd:string" />
+      
+      <xsd:element name="installmentAmount" type="CurrencyAmountType"/>
+      <xsd:element name="amountInDebt" type="CurrencyAmountType" />
+      
+      <xsd:element name="interest" type="xsd:string" />
+      <xsd:element name="status" type="xsd:string" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="CurrencyAmountType">
+    <xsd:sequence>
+      <xsd:element name="currency" type="xsd:string" />
+      <xsd:element name="amount" type="xsd:string" />
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

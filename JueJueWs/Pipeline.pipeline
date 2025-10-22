@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="JueJueWs/Resources/JueWS_PS"/>
+            <con:binding>
+                <con:name>JueWS_PS_ptt-binding</con:name>
+                <con:namespace>http://xmlns.oracle.com/LOT2/JueJueWs/JueWS_PS</con:namespace>
+            </con:binding>
+        </con:binding>
+        <oper:operations xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations">
+            <oper:monitoring enabled="true" level="service" aggregationInterval="1440"/>
+        </oper:operations>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router errorHandler="error-N3f57ff9b.N6f82545.0.19837f654a0.N7f62">
+        <con:pipeline type="response" name="response-N3f57ffdd.N3ea86359.0.197b0d0a0bc.N7fcd">
+            <con:stage id="_StageId-N3f57ff4a.N7ff574c2.0.199aab680d5.N7718" name="Stage1">
+                <con:context>
+                    <con1:varNsDecl prefix="jue" namespace="http://www.mozabanca.org/obdx/JueEntityList" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/publish/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff4a.N7ff574c2.0.199aab680d5.N7717</con2:id>
+                        <con1:service ref="SessionParams/DeleteSessionProcess" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>execute</con1:operation>
+                        <con1:outboundTransform>
+                            <con2:replace varName="body" contents-only="true" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff4a.N7ff574c2.0.199aab680d5.N7716</con3:id>
+                                <con2:expr>
+                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;ses:Query xmlns:ses="http://www.mozabank.org/sessionprocess">
+    &lt;ses:QueryParam>{$SessionVal}&lt;/ses:QueryParam>
+&lt;/ses:Query></con:xqueryText>
+                                </con2:expr>
+                            </con2:replace>
+                        </con1:outboundTransform>
+                    </con1:route>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57ff4a.N7ff574c2.0.199aab680d5.N77b3" name="Stage2">
+                <con:context>
+                    <con1:varNsDecl prefix="jue" namespace="http://www.mozabanca.org/obdx/JueEntityList" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:assign varName="TEST" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff4a.N7ff574c2.0.199aab680d5.N77e7</con2:id>
+                        <con1:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$SessionVal</con:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="request-N3f57ffdd.N3ea86359.0.197b0d0a0bc.N7fce">
+            <con:stage id="_StageId-N3f57ffdd.N3ea86359.0.197b0d0a0bc.N7fcc" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:assign varName="SessionVal" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff4a.N7ff574c2.0.199aab680d5.N7bdd</con2:id>
+                        <con2:disabled xmlns:con2="http://www.bea.com/wli/sb/stages/config">true</con2:disabled>
+                        <con1:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$inbound/ctx:transport/ctx:request/tp:headers/tp:user-header[@name='X_OBDX_SESSION_PARAM']/@value</con:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="SessionVal" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff4a.N7ff574c2.0.199aab680d5.N7713</con2:id>
+                        <con1:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$inbound/ctx:transport/ctx:request/tp:headers/tp:user-header[@name='X_OBDX_SESSION_PARAM']/@value</con:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="InitialRequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffdd.N3ea86359.0.197b0d0a0bc.N7fc8</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body/*</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:wsCallout xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffdd.N3ea86359.0.197b0d0a0bc.N7fc5</con2:id>
+                        <con1:service ref="AuthenticatorService/AuthenticatorBS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>Operation1</con1:operation>
+                        <con1:request>
+                            <con1:body wrapped="false">AuthenticatorRequest</con1:body>
+                            <con1:header/>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body wrapped="false">AuthenticatorResponse</con1:body>
+                            <con1:header/>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con1:assign varName="AuthenticatorRequest">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffdd.N3ea86359.0.197b0d0a0bc.N7fc1</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config"><![CDATA[<moz:Request xmlns:moz="http://www.mozabank.org">
+<moz:username>channel_obdx_app</moz:username>
+<moz:password>Moz@Random123#</moz:password>
+</moz:Request>]]></con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:requestTransform>
+                        <con1:responseTransform>
+                            <con1:assign varName="AccessToken">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffdd.N3ea86359.0.197b0d0a0bc.N7fbe</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$AuthenticatorResponse/*:access_token</con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:responseTransform>
+                    </con1:wsCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="request-N3f57ffdd.N3ea86359.0.197b0d0a0bc.N7ef6">
+            <con:stage id="_StageId-N3f57ffdd.N3ea86359.0.197b0d0a0bc.N7ef4" name="Stage1">
+                <con:context>
+                    <con1:varNsDecl prefix="jue" namespace="http://www.mozabanca.org/obdx/JueEntityList" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:assign varName="ReqUUID" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.5881413f.0.198753bf085.N7f7f</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn-bea:uuid()</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:report xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.5881413f.0.198753bf085.N7f7c</con2:id>
+                        <con1:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">concat('RequestUUID :', $ReqUUID, ' | ', fn:current-dateTime(), ' | ', fn-bea:serialize($body))</con:xqueryText>
+                        </con1:expr>
+                        <con1:labels>
+                            <con1:key>JueJueConsultarService - Request</con1:key>
+                            <con1:varName>body</con1:varName>
+                            <con1:value>
+                                <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">./text()</con2:xpathText>
+                            </con1:value>
+                        </con1:labels>
+                    </con1:report>
+                    <con1:log xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.5881413f.0.198753bf085.N7f79</con2:id>
+                        <con1:logLevel>debug</con1:logLevel>
+                        <con1:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">concat('RequestUUID :', $ReqUUID, ' | ', fn:current-dateTime(), ' | ', fn-bea:serialize($body))</con:xqueryText>
+                        </con1:expr>
+                        <con1:message>JueJueConsultarService - Request</con1:message>
+                    </con1:log>
+                    <con1:replace varName="body" contents-only="true" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffdd.N3ea86359.0.197b0d0a0bc.N7ebb</con2:id>
+                        <con1:expr>
+                            <con:xqueryTransform xmlns:con="http://www.bea.com/wli/sb/stages/config">
+                                <con:resource ref="JueJueWs/Mapping/ConsultarRequest"/>
+                                <con:param name="accessToken">
+                                    <con:path>fn:data($AccessToken)</con:path>
+                                </con:param>
+                            </con:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57ffdd.N3ea86359.0.197b0d0a0bc.N7ef5">
+            <con:stage id="_StageId-N3f57ffdd.N3ea86359.0.197b0d0a0bc.N7ef3" name="Stage1">
+                <con:context>
+                    <con1:varNsDecl prefix="jue" namespace="http://www.mozabanca.org/obdx/JueEntityList" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffdd.N3ea86359.0.197b0d0a0bc.N7eb5</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="JueJueWs/Mapping/ConsultarResponse"/>
+                                <con2:param name="Response">
+                                    <con2:path>$body/*</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                    <con1:report xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.5881413f.0.198753bf085.N7f76</con2:id>
+                        <con1:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">concat('ResponseUUID :', $ReqUUID, ' | ', fn:current-dateTime(), ' | ', fn-bea:serialize($body))</con:xqueryText>
+                        </con1:expr>
+                        <con1:labels>
+                            <con1:key>JueJueConsultarService - Response</con1:key>
+                            <con1:varName>body</con1:varName>
+                            <con1:value>
+                                <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">./text()</con2:xpathText>
+                            </con1:value>
+                        </con1:labels>
+                    </con1:report>
+                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/publish/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff4a.N7ff574c2.0.199aab680d5.N78b0</con2:id>
+                        <con1:service ref="SessionParams/DeleteSessionProcess" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>execute</con1:operation>
+                        <con1:outboundTransform>
+                            <con2:replace varName="body" contents-only="true" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff4a.N7ff574c2.0.199aab680d5.N78af</con3:id>
+                                <con2:expr>
+                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;del:DeleteSessionInput xmlns:del="http://xmlns.oracle.com/pcbpel/adapter/db/DeleteSession">
+    &lt;del:SESSIONVAL>{$SessionVal}&lt;/del:SESSIONVAL>
+&lt;/del:DeleteSessionInput></con:xqueryText>
+                                </con2:expr>
+                            </con2:replace>
+                        </con1:outboundTransform>
+                    </con1:route>
+                    <con1:log xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.5881413f.0.198753bf085.N7f73</con2:id>
+                        <con1:logLevel>debug</con1:logLevel>
+                        <con1:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">concat('ResponseUUID :', $ReqUUID, ' | ', fn:current-dateTime(), ' | ', fn-bea:serialize($body))</con:xqueryText>
+                        </con1:expr>
+                        <con1:message>JueJueConsultarService - Response</con1:message>
+                    </con1:log>
+                    <con1:reply isError="false" xmlns:con1="http://www.bea.com/wli/sb/stages/config">
+                        <con1:id>_ActionId-N3f57ffdd.N3ea86359.0.197b0d0a0bc.N7eac</con1:id>
+                        <con1:disabled>true</con1:disabled>
+                    </con1:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="request-N3f57ffdd.N3ea86359.0.197b0d0a0bc.N7ec1">
+            <con:stage id="_StageId-N3f57ffdd.N3ea86359.0.197b0d0a0bc.N7ebf" name="Stage1">
+                <con:context>
+                    <con1:varNsDecl prefix="jue" namespace="http://www.mozabanca.org/obdx/JueEntityList" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:assign varName="ReqUUID" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.5881413f.0.198753bf085.N7f57</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn-bea:uuid()</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="SessionVal" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-a6f8a22.N2824d772.1c.19903e9a42b.N8000</con2:id>
+                        <con1:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$inbound/ctx:transport/ctx:request/tp:headers/tp:user-header[@name='X_OBDX_SESSION_PARAM']/@value</con:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:report xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.5881413f.0.198753bf085.N7f5d</con2:id>
+                        <con1:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">concat('RequestUUID :', $ReqUUID, ' | ', fn:current-dateTime(), ' | ', fn-bea:serialize($body))</con:xqueryText>
+                        </con1:expr>
+                        <con1:labels>
+                            <con1:key>JueJuePagarService - Request</con1:key>
+                            <con1:varName>body</con1:varName>
+                            <con1:value>
+                                <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">./text()</con2:xpathText>
+                            </con1:value>
+                        </con1:labels>
+                    </con1:report>
+                    <con1:log xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.5881413f.0.198753bf085.N7f5a</con2:id>
+                        <con1:logLevel>debug</con1:logLevel>
+                        <con1:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">concat('RequestUUID :', $ReqUUID, ' | ', fn:current-dateTime(), ' | ', fn-bea:serialize($body))</con:xqueryText>
+                        </con1:expr>
+                        <con1:message>JueJuePagarService - Request</con1:message>
+                    </con1:log>
+                    <con1:assign varName="userId" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffcb.N282451d4.0.197ef39d20c.N7f7f</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">substring-before(substring-after($inbound/ctx:transport/ctx:request/tp:headers/tp:user-header[@name='X_OBDX_SESSION_PARAM']/@value,'~'),'~')</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:replace varName="body" contents-only="true" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffdd.N3ea86359.0.197b0d0a0bc.N7eb8</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="JueJueWs/Mapping/PagarRequest"/>
+                                <con2:param name="Request">
+                                    <con2:path>$InitialRequest</con2:path>
+                                </con2:param>
+                                <con2:param name="accessToken">
+                                    <con2:path>fn:data($AccessToken)</con2:path>
+                                </con2:param>
+                                <con2:param name="user">
+                                    <con2:path>$userId</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57ffdd.N3ea86359.0.197b0d0a0bc.N7ec0">
+            <con:stage id="_StageId-N3f57ffdd.N3ea86359.0.197b0d0a0bc.N7ebe" name="Stage1">
+                <con:context>
+                    <con1:varNsDecl prefix="jue" namespace="http://www.mozabanca.org/obdx/JueEntityList" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffdd.N3ea86359.0.197b0d0a0bc.N7eb2</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="JueJueWs/Mapping/PagarResponse"/>
+                                <con2:param name="Response">
+                                    <con2:path>$body/*</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                    <con1:report xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.5881413f.0.198753bf085.N7f63</con2:id>
+                        <con1:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">concat('ResponseUUID :', $ReqUUID, ' | ', fn:current-dateTime(), ' | ', fn-bea:serialize($body))</con:xqueryText>
+                        </con1:expr>
+                        <con1:labels>
+                            <con1:key>JueJuePagarService - Response</con1:key>
+                            <con1:varName>body</con1:varName>
+                            <con1:value>
+                                <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">./text()</con2:xpathText>
+                            </con1:value>
+                        </con1:labels>
+                    </con1:report>
+                    <con1:log xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.5881413f.0.198753bf085.N7f60</con2:id>
+                        <con1:logLevel>debug</con1:logLevel>
+                        <con1:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">concat('ResponseUUID :', $ReqUUID, ' | ', fn:current-dateTime(), ' | ', fn-bea:serialize($body))</con:xqueryText>
+                        </con1:expr>
+                        <con1:message>JueJuePagarService - Response</con1:message>
+                    </con1:log>
+                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/publish/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-a6f8a22.N2824d772.1b.19903e88c37.N8000</con2:id>
+                        <con2:disabled xmlns:con2="http://www.bea.com/wli/sb/stages/config">true</con2:disabled>
+                        <con1:service ref="SessionParams/DeleteSessionProcess" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:outboundTransform>
+                            <con2:replace varName="body" contents-only="true" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-a6f8a22.N2824d772.1b.19903e88c37.N7fff</con3:id>
+                                <con2:expr>
+                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;ses:Query xmlns:ses="http://www.mozabank.org/sessionprocess">
+&lt;ses:QueryParam>{$SessionVal}&lt;/ses:QueryParam>
+&lt;/ses:Query></con:xqueryText>
+                                </con2:expr>
+                            </con2:replace>
+                        </con1:outboundTransform>
+                    </con1:route>
+                    <con1:reply isError="false" xmlns:con1="http://www.bea.com/wli/sb/stages/config">
+                        <con1:id>_ActionId-N3f57ffdd.N3ea86359.0.197b0d0a0bc.N7eaf</con1:id>
+                    </con1:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="error-N3f57ff9b.N6f82545.0.19837f654a0.N7f62">
+            <con:stage id="_StageId-N3f57ff9b.N6f82545.0.19837f654a0.N7f61" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff9b.N6f82545.0.19837f654a0.N7f5e</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config"><![CDATA[<Response xmlns="http://www.mozabank.org/JueEntityPayment" >
+            <data>
+            <dictionaryArray/>
+            <referenceNo/>
+            <result>
+                  <dictionaryArray/>
+                  <externalReferenceId/>
+                  <status>FAILURE</status>
+                  <errorList>
+                        <code>ERR001</code>
+                        <message>Invalid backend response</message>
+                  </errorList>
+                  <warningList/>
+            </result>
+            <hasMore/>
+            <totalRecords/>
+            <startSequence/>
+      </data>
+    </Response>]]></con2:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                    <con1:report xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.5881413f.0.198753bf085.N7f54</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$fault</con2:xqueryText>
+                        </con1:expr>
+                        <con1:labels>
+                            <con1:key>JueJueService - Error</con1:key>
+                            <con1:varName>fault</con1:varName>
+                            <con1:value>
+                                <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">./text()</con2:xpathText>
+                            </con1:value>
+                        </con1:labels>
+                    </con1:report>
+                    <con1:log xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.5881413f.0.198753bf085.N7f51</con2:id>
+                        <con1:logLevel>debug</con1:logLevel>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$fault</con2:xqueryText>
+                        </con1:expr>
+                        <con1:message>JueJueService - Error</con1:message>
+                    </con1:log>
+                    <con1:reply xmlns:con1="http://www.bea.com/wli/sb/stages/config">
+                        <con1:id>_ActionId-N3f57ff9b.N6f82545.0.19837f654a0.N7f5b</con1:id>
+                    </con1:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="Pipeline Pair Node1">
+                <con:request>request-N3f57ffdd.N3ea86359.0.197b0d0a0bc.N7fce</con:request>
+                <con:response>response-N3f57ffdd.N3ea86359.0.197b0d0a0bc.N7fcd</con:response>
+            </con:pipeline-node>
+            <con:branch-node type="operation" id="_FlowId-N3f57ffdd.N3ea86359.0.197b0d0a0bc.N7f28" name="BranchNode1">
+                <con:context/>
+                <con:branch-table>
+                    <con:branch name="Operation1">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="Pipeline Pair Node2">
+                                <con:request>request-N3f57ffdd.N3ea86359.0.197b0d0a0bc.N7ef6</con:request>
+                                <con:response>response-N3f57ffdd.N3ea86359.0.197b0d0a0bc.N7ef5</con:response>
+                            </con:pipeline-node>
+                            <con:route-node name="RouteNode1">
+                                <con:context>
+                                    <con1:varNsDecl prefix="jue" namespace="http://www.mozabanca.org/obdx/JueEntityList" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                                </con:context>
+                                <con:actions>
+                                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffdd.N3ea86359.0.197b0d0a0bc.N7ea8</con2:id>
+                                        <con1:service ref="JueJueWs/JueWS_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>ConsultarEntidades</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con2:report xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-a6f8a22.50650fae.7.199bed0d32b.N8000</con3:id>
+                                                <con2:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">concat('RequestUUID :', $ReqUUID, ' | ', fn:current-dateTime(), ' | ', fn-bea:serialize($body))</con:xqueryText>
+                                                </con2:expr>
+                                                <con2:labels>
+                                                    <con2:key>JueJueConsultarService - MSBRequest</con2:key>
+                                                    <con2:varName>body</con2:varName>
+                                                    <con2:value>
+                                                        <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">./text()</con:xpathText>
+                                                    </con2:value>
+                                                </con2:labels>
+                                            </con2:report>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con2:report xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.5881413f.0.198753bf085.N7f6f</con3:id>
+                                                <con2:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">concat('ResponseUUID :', $ReqUUID, ' | ', fn:current-dateTime(), ' | ', fn-bea:serialize($body))</con:xqueryText>
+                                                </con2:expr>
+                                                <con2:labels>
+                                                    <con2:key>JueJueConsultarService - MSBResponse</con2:key>
+                                                    <con2:varName>body</con2:varName>
+                                                    <con2:value>
+                                                        <con3:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">./text()</con3:xpathText>
+                                                    </con2:value>
+                                                </con2:labels>
+                                            </con2:report>
+                                            <con2:log xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.5881413f.0.198753bf085.N7f6c</con3:id>
+                                                <con2:logLevel>debug</con2:logLevel>
+                                                <con2:expr>
+                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body</con3:xqueryText>
+                                                </con2:expr>
+                                                <con2:message>JuejueConsultarService - MSBResponse</con2:message>
+                                            </con2:log>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:default-branch>
+                        <con:flow>
+                            <con:pipeline-node name="Pipeline Pair Node3">
+                                <con:request>request-N3f57ffdd.N3ea86359.0.197b0d0a0bc.N7ec1</con:request>
+                                <con:response>response-N3f57ffdd.N3ea86359.0.197b0d0a0bc.N7ec0</con:response>
+                            </con:pipeline-node>
+                            <con:route-node name="RouteNode2">
+                                <con:context>
+                                    <con1:varNsDecl prefix="jue" namespace="http://www.mozabanca.org/obdx/JueEntityList" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                                </con:context>
+                                <con:actions>
+                                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffdd.N3ea86359.0.197b0d0a0bc.N7ea4</con2:id>
+                                        <con1:service ref="JueJueWs/JueWS_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>Pagar</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con2:report xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-a6f8a22.50650fae.7.199bed0d32b.N7fff</con3:id>
+                                                <con2:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">concat('RequestUUID :', $ReqUUID, ' | ', fn:current-dateTime(), ' | ', fn-bea:serialize($body))</con:xqueryText>
+                                                </con2:expr>
+                                                <con2:labels>
+                                                    <con2:key>JueJuePagarService - MSBRequest</con2:key>
+                                                    <con2:varName>body</con2:varName>
+                                                    <con2:value>
+                                                        <con:xpathText xmlns:con="http://www.bea.com/wli/sb/stages/config">./text()</con:xpathText>
+                                                    </con2:value>
+                                                </con2:labels>
+                                            </con2:report>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform>
+                                            <con2:report xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.5881413f.0.198753bf085.N7f69</con3:id>
+                                                <con2:expr>
+                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">concat('ResponseUUID :', $ReqUUID, ' | ', fn:current-dateTime(), ' | ', fn-bea:serialize($body))</con:xqueryText>
+                                                </con2:expr>
+                                                <con2:labels>
+                                                    <con2:key>JueJuePagarService - MSBResponse</con2:key>
+                                                    <con2:varName>body</con2:varName>
+                                                    <con2:value>
+                                                        <con3:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">./text()</con3:xpathText>
+                                                    </con2:value>
+                                                </con2:labels>
+                                            </con2:report>
+                                            <con2:log xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.5881413f.0.198753bf085.N7f66</con3:id>
+                                                <con2:logLevel>debug</con2:logLevel>
+                                                <con2:expr>
+                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body</con3:xqueryText>
+                                                </con2:expr>
+                                                <con2:message>JueJuePagarService - MSBResponse</con2:message>
+                                            </con2:log>
+                                        </con1:responseTransform>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:default-branch>
+                </con:branch-table>
+            </con:branch-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>
