@@ -1,0 +1,82 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://www.mozabank.org/LOAN_ACCOUNT_LIST" xmlns="http://wadl.dev.java.net/2009/02" xmlns:ns0="http://www.mozabank.org/PARTY_LOAN_ACCOUNTS_LIST" xmlns:ns1="http://www.mozabank.org/LOAN_PRODUCT_DETAILS" xmlns:ns2="http://www.mozabank.org/LOAN_ACCOUNT_PARTIES" xmlns:ns3="http://www.mozabank.org/LOANACCOUNT_PARTYLIST_SUMMARY">
+   <doc title="LoanServicesPS">RestService</doc>
+   <grammars>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/LOAN_ACCOUNT_LIST" schemaLocation="Schema/LOAN_ACCOUNT_LIST.xsd"/>
+        </xsd:schema>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/PARTY_LOAN_ACCOUNTS_LIST" schemaLocation="Schema/PARTY_LOAN_ACCOUNTS_LIST.xsd"/>
+        </xsd:schema>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/LOAN_PRODUCT_DETAILS" schemaLocation="Schema/LOAN_PRODUCT_DETAILS.xsd"/>
+        </xsd:schema>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/LOAN_ACCOUNT_PARTIES" schemaLocation="Schema/LOAN_ACCOUNT_PARTIES.xsd"/>
+        </xsd:schema>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/LOANACCOUNT_PARTYLIST_SUMMARY" schemaLocation="Schema/LOANACCOUNT_PARTYLIST_SUMMARY.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/loan-account-list">
+         <method name="POST" soa:wsdlOperation="LoanAccountList">
+            <request>
+               <representation mediaType="application/xml" element="cns:LOAN_ACCOUNT_LISTRequest" xmlns:cns="http://www.mozabank.org/LOAN_ACCOUNT_LIST"/>
+               <representation mediaType="application/json" element="cns:LOAN_ACCOUNT_LISTRequest" xmlns:cns="http://www.mozabank.org/LOAN_ACCOUNT_LIST"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:LOAN_ACCOUNT_LISTResponse" xmlns:cns="http://www.mozabank.org/LOAN_ACCOUNT_LIST"/>
+               <representation mediaType="application/json" element="cns:LOAN_ACCOUNT_LISTResponse" xmlns:cns="http://www.mozabank.org/LOAN_ACCOUNT_LIST"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/party-loan-accountslist">
+         <method name="POST" soa:wsdlOperation="PartyLoanAccountsList">
+            <request>
+               <representation mediaType="application/xml" element="cns:PARTY_LOAN_ACCOUNTS_LISTRequest" xmlns:cns="http://www.mozabank.org/PARTY_LOAN_ACCOUNTS_LIST"/>
+               <representation mediaType="application/json" element="cns:PARTY_LOAN_ACCOUNTS_LISTRequest" xmlns:cns="http://www.mozabank.org/PARTY_LOAN_ACCOUNTS_LIST"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:PARTY_LOAN_ACCOUNTS_LISTResponse" xmlns:cns="http://www.mozabank.org/PARTY_LOAN_ACCOUNTS_LIST"/>
+               <representation mediaType="application/json" element="cns:PARTY_LOAN_ACCOUNTS_LISTResponse" xmlns:cns="http://www.mozabank.org/PARTY_LOAN_ACCOUNTS_LIST"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/loan-product-details">
+         <method name="POST" soa:wsdlOperation="LoanProductDetails">
+            <request>
+               <representation mediaType="application/xml" element="cns:Request" xmlns:cns="http://www.mozabank.org/LOAN_PRODUCT_DETAILS"/>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabank.org/LOAN_PRODUCT_DETAILS"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:Response" xmlns:cns="http://www.mozabank.org/LOAN_PRODUCT_DETAILS"/>
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabank.org/LOAN_PRODUCT_DETAILS"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/loan-account-parties">
+         <method name="POST" soa:wsdlOperation="LoanAccountParties">
+            <request>
+               <representation mediaType="application/xml" element="cns:LOAN_ACCOUNT_PARTIESRequest" xmlns:cns="http://www.mozabank.org/LOAN_ACCOUNT_PARTIES"/>
+               <representation mediaType="application/json" element="cns:LOAN_ACCOUNT_PARTIESRequest" xmlns:cns="http://www.mozabank.org/LOAN_ACCOUNT_PARTIES"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:LOAN_ACCOUNT_PARTIESResponse" xmlns:cns="http://www.mozabank.org/LOAN_ACCOUNT_PARTIES"/>
+               <representation mediaType="application/json" element="cns:LOAN_ACCOUNT_PARTIESResponse" xmlns:cns="http://www.mozabank.org/LOAN_ACCOUNT_PARTIES"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/loan-account-partylist-summary">
+         <method name="POST" soa:wsdlOperation="LoanAccountPartylistSummary">
+            <request>
+               <representation mediaType="application/xml" element="cns:Request" xmlns:cns="http://www.mozabank.org/LOANACCOUNT_PARTYLIST_SUMMARY"/>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabank.org/LOANACCOUNT_PARTYLIST_SUMMARY"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:Response" xmlns:cns="http://www.mozabank.org/LOANACCOUNT_PARTYLIST_SUMMARY"/>
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabank.org/LOANACCOUNT_PARTYLIST_SUMMARY"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

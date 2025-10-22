@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+              xmlns:tns="http://www.mozabank.org/LOANACCOUNT_PARTYLIST_SUMMARY"
+              targetNamespace="http://www.mozabank.org/LOANACCOUNT_PARTYLIST_SUMMARY" elementFormDefault="qualified"
+              attributeFormDefault="unqualified"  nxsd:version="JSON" nxsd:encoding="UTF-8">
+
+  <!-- Root Element -->
+
+        <xsd:element name="Request" type="tns:RequestType"/>
+        <xsd:element name="Response" type="tns:ResponseType"/>
+
+  <!-- Request -->
+  <xsd:complexType name="RequestType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="referenceNo" type="xsd:string"/>
+      <xsd:element name="interfaceId" type="xsd:string"/>
+      <xsd:element name="entity" type="xsd:string"/>
+      <xsd:element name="headersMap" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="queryMap" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="hostName" type="xsd:string"/>
+      <xsd:element name="partyId" type="xsd:string"/>
+      <xsd:element name="accountType" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="accountId" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="relationshipType" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="branchCode" type="xsd:string"/>
+      <xsd:element name="currency" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="status" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="limit" type="xsd:int"/>
+      <xsd:element name="offset" type="xsd:int"/>
+      <xsd:element name="userType" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Response -->
+  <xsd:complexType name="ResponseType">
+    <xsd:sequence>
+      <xsd:element name="data">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="referenceNo" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="result" type="tns:ResultType"/>
+            <xsd:element name="hasMore" type="xsd:boolean" minOccurs="0"/>
+            <xsd:element name="totalRecords" type="xsd:int" minOccurs="0"/>
+            <xsd:element name="startSequence" type="xsd:int" minOccurs="0"/>
+            <xsd:element name="accounts" type="tns:AccountsList" minOccurs="0"  maxOccurs="unbounded"/>
+            <xsd:element name="count" type="xsd:int" minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Result -->
+  <xsd:complexType name="ResultType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="externalReferenceId" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="status" type="xsd:string"/>
+      <xsd:element name="errorList" nillable="true" minOccurs="0" maxOccurs="unbounded">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="code" type="xsd:string"/>
+            <xsd:element name="message" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="warningList" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Accounts List -->
+  <xsd:complexType name="AccountsList">
+    <xsd:sequence>
+      <xsd:element name="account" type="tns:AccountType" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Account -->
+  <xsd:complexType name="AccountType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="partyId" type="xsd:string"/>
+      <xsd:element name="branchId" type="xsd:string"/>
+      <xsd:element name="accountId" type="xsd:string"/>
+      <xsd:element name="accountType" type="xsd:string"/>
+      <xsd:element name="accountDisplayName" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="currency" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="status" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="balance" type="tns:BalanceType" minOccurs="0"/>
+      <xsd:element name="interestType" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="interestRate" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="openingDate" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="relationshipType" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="accountModule" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="sortCode" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="relation" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="moduleType" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="iban" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Balance -->
+  <xsd:complexType name="BalanceType">
+    <xsd:sequence>
+      <xsd:element name="currency" type="xsd:string"/>
+      <xsd:element name="amount" type="xsd:decimal"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+
+
+</xsd:schema>

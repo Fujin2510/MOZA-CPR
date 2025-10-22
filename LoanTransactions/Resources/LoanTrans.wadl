@@ -1,0 +1,20 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns0="http://www.mozabanca.org/obdx/LoanTrans" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="LoanTrans">RestService</doc>
+   <grammars>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabanca.org/obdx/LoanTrans" schemaLocation="../LoanTransOBDX.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/LoanTransaction">
+         <method name="POST" soa:wsdlOperation="LoanStatmnt">
+            <request>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabanca.org/obdx/LoanTrans"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabanca.org/obdx/LoanTrans"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+              xmlns:tns="http://www.mozabank.org/LoanScheduleDetails"
+              targetNamespace="http://www.mozabank.org/LoanScheduleDetails" elementFormDefault="qualified"
+              attributeFormDefault="unqualified" nxsd:version="JSON" nxsd:encoding="UTF-8">
+
+  <!-- Root Elements -->
+  <xsd:element name="LoanScheduleDetailsRequest" type="tns:LoanScheduleDetailsRequestType"/>
+  <xsd:element name="LoanScheduleDetailsResponse" type="tns:LoanScheduleDetailsResponseType"/>
+
+  <!-- Request Structure -->
+  <xsd:complexType name="LoanScheduleDetailsRequestType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="referenceNo" type="xsd:string"/>
+      <xsd:element name="interfaceId" type="xsd:string"/>
+      <xsd:element name="entity" type="xsd:string"/>
+      <xsd:element name="headersMap" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="OBCL_OBRH_USER_ID" type="xsd:string"/>
+            <xsd:element name="OBCL_OBRH_BRANCH" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>      
+      <xsd:element name="queryMap" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="hostName" type="xsd:string"/>
+      <xsd:element name="loanAccountId" type="xsd:string"/>
+      <xsd:element name="branchCode" type="xsd:string"/>
+      <xsd:element name="accountModule" type="xsd:string"/>
+      <xsd:element name="userType" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="fromDate" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="toDate" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Response Structure -->
+  <xsd:complexType name="LoanScheduleDetailsResponseType">
+    <xsd:sequence>
+      <xsd:element name="data">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="referenceNo" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="result" type="tns:ResultType"/>
+            <xsd:element name="hasMore" type="xsd:boolean" minOccurs="0"/>
+            <xsd:element name="totalRecords" type="xsd:int" minOccurs="0"/>
+            <xsd:element name="startSequence" type="xsd:int" minOccurs="0"/>
+            <xsd:element name="loanScheduleDetails" type="tns:LoanScheduleDetailType"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Result Structure -->
+  <xsd:complexType name="ResultType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="externalReferenceId" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="status" type="xsd:string"/>
+      <xsd:element name="errorList" nillable="true" minOccurs="0" maxOccurs="unbounded">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="code" type="xsd:string"/>
+            <xsd:element name="message" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="warningList" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Loan Schedule Details Structure -->
+  <xsd:complexType name="LoanScheduleDetailType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="amountDue" type="tns:AmountType"/>
+      <xsd:element name="amountPaid" type="tns:AmountType"/>
+      <xsd:element name="installementDueCount" type="xsd:int"/>
+      <xsd:element name="installementPaidCount" type="xsd:int"/>
+      <xsd:element name="nextInstallmentAmount" type="tns:AmountType"/>
+      <xsd:element name="nextDueDate" type="xsd:string"/>
+      <xsd:element name="interestRepaymentFrequency" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="principalRepaymentFrequency" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="numberOfInstallment" type="xsd:int"/>
+      <xsd:element name="loanScheduleItemDetails" maxOccurs="unbounded" minOccurs="0" type="tns:LoanScheduleItemDetailType"/>
+      <xsd:element name="partyId" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Amount Structure -->
+  <xsd:complexType name="AmountType">
+    <xsd:sequence>
+      <xsd:element name="currency" type="xsd:string"/>
+      <xsd:element name="amount" type="xsd:decimal"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  
+  <!-- Loan Schedule Item Detail Structure -->
+  <xsd:complexType name="LoanScheduleItemDetailType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="principalAmount" type="tns:AmountType"/>
+      <xsd:element name="interestAmount" type="tns:AmountType"/>
+      <xsd:element name="balanceAmount" type="tns:AmountType"/>
+      <xsd:element name="currency" type="xsd:string"/>
+      <xsd:element name="installmentAmount" type="tns:AmountType"/>
+      <xsd:element name="installmentDueDate" type="xsd:string"/>
+      <xsd:element name="paymentStatus" type="xsd:string"/>
+      <xsd:element name="chargeAmount" type="tns:AmountType"/>
+      <xsd:element name="interestRate" type="xsd:decimal"/>
+      <xsd:element name="unpaidInstallmentAmount" type="tns:AmountType"/>
+      <xsd:element name="nextInstallmentAmount" type="tns:AmountType"/>
+      <xsd:element name="interestAmtPaid" type="tns:AmountType"/>
+      <xsd:element name="principalAmtPaid" type="tns:AmountType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

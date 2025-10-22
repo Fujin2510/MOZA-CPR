@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.mozabank.org/CCCR_CCRD/accountobject"
+            targetNamespace="http://www.mozabank.org/CCCR_CCRD/accountobject" elementFormDefault="qualified">
+  <xsd:element name="AccountObjectResposne">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="CCCR_O_0003" minOccurs="0" maxOccurs="unbounded">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="CCCR_O_0003_0001" type="xsd:string"/>
+              <xsd:element name="CCCR_O_0003_0002" type="xsd:string"/>
+              <xsd:element name="CCCR_O_0003_0003" type="xsd:string"/>
+              <xsd:element name="CCCR_O_0003_0004" type="xsd:string"/>
+              <xsd:element name="CCCR_O_0003_0005" type="xsd:string"/>
+              <xsd:element name="CCCR_O_0003_0006" type="xsd:string"/>
+              <xsd:element name="CCCR_O_0003_0007" type="xsd:string"/>
+              <xsd:element name="CCRD">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="CCRD_O_0001" type="xsd:string"/>
+                    <xsd:element name="CCRD_O_0002" type="xsd:string"/>
+                    <xsd:element name="CCRD_O_0003" type="xsd:string"/>
+                    <xsd:element name="CCRD_O_0004" type="xsd:string"/>
+                    <xsd:element name="CCRD_O_0005" type="xsd:string"/>
+                    <xsd:element name="CCRD_O_0006" type="xsd:string"/>
+                    <xsd:element name="CCRD_O_00061" type="xsd:string"/>
+                    <xsd:element name="CCRD_O_00062" type="xsd:string"/>
+                    <xsd:element name="CCRD_O_00063" type="xsd:string"/>
+                    <xsd:element name="CCRD_O_00064" type="xsd:string"/>
+                    <xsd:element name="CCRD_O_0007" type="xsd:string"/>
+                    <xsd:element name="CCRD_O_0008" type="xsd:string"/>
+                    <xsd:element name="CCRD_O_0009" type="xsd:string"/>
+                    <xsd:element name="CCRD_O_0010" type="xsd:string"/>
+                    <xsd:element name="CCRD_O_0011" type="xsd:string"/>
+                    <xsd:element name="CCRD_O_0012" type="xsd:string"/>
+                    <xsd:element name="CCRD_O_0013" type="xsd:string"/>
+                    <xsd:element name="CCRD_O_0014" type="xsd:string"/>
+                    <xsd:element name="CCRD_O_0015" type="xsd:string"/>
+                    <xsd:element name="CCRD_O_0016" type="xsd:string"/>
+                    <xsd:element name="CCRD_O_0017" type="xsd:string"/>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

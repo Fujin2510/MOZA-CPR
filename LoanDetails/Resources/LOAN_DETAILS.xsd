@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+              xmlns:tns="http://www.mozabank.org/LoanDetails"
+              targetNamespace="http://www.mozabank.org/LoanDetails" elementFormDefault="qualified"
+              attributeFormDefault="unqualified" nxsd:version="JSON" nxsd:encoding="UTF-8">
+              
+  <!-- Root Element -->
+  <xsd:element name="LoanDetailsRequest" type="tns:LoanDetailsRequestType"/>
+  <xsd:element name="LoanDetailsResponse" type="tns:LoanDetailsResponseType"/>
+
+  <!-- Request Structure -->
+  <xsd:complexType name="LoanDetailsRequestType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="referenceNo" type="xsd:string"/>
+      <xsd:element name="interfaceId" type="xsd:string"/>
+      <xsd:element name="entity" type="xsd:string"/>
+      <xsd:element name="headersMap" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="queryMap" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="hostName" type="xsd:string"/>
+      <xsd:element name="loanAccountId" type="xsd:string"/>
+      <xsd:element name="branchCode" type="xsd:string"/>
+      <xsd:element name="accountModule" type="xsd:string"/>
+      <xsd:element name="userType" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Response Structure -->
+  <xsd:complexType name="LoanDetailsResponseType">
+    <xsd:sequence>
+      <xsd:element name="data">
+        <xsd:complexType>
+          <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="referenceNo" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="result" type="tns:ResultType"/>
+      <xsd:element name="hasMore" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="totalRecords" type="xsd:int" minOccurs="0"/>
+      <xsd:element name="startSequence" type="xsd:int" minOccurs="0"/>
+      <xsd:element name="loanAccount" type="tns:LoanAccountType"  minOccurs="0"/>
+      <xsd:element name="loanScheduleDetails" type="tns:LoanScheduleDetailsType"  minOccurs="0"/>
+  </xsd:sequence>
+  </xsd:complexType>
+</xsd:element>    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Supporting Types -->
+  <xsd:complexType name="ResultType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="externalReferenceId" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="status" type="xsd:string"/>
+      <xsd:element name="errorList" nillable="true" minOccurs="0" maxOccurs="unbounded">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="code" type="xsd:string"/>
+            <xsd:element name="message" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="warningList" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="LoanAccountType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="partyId" type="xsd:string"/>
+      <xsd:element name="accountId" type="xsd:string"/>
+      <xsd:element name="branchId" type="xsd:string"/>
+      <xsd:element name="productId" type="xsd:string"/>
+      <xsd:element name="status" type="xsd:string"/>
+      <xsd:element name="accountOpeningDate" type="xsd:string"/>
+      <xsd:element name="term" type="tns:TermType"/>
+      <xsd:element name="sanctionedAmount" type="tns:AmountType"/>
+      <xsd:element name="disbursedAmount" type="tns:AmountType"/>
+      <xsd:element name="currency" type="xsd:string"/>
+      <xsd:element name="closureDate" type="xsd:string"/>
+      <xsd:element name="penaltyRate" type="xsd:decimal"/>
+      <xsd:element name="prepaymentPenaltyRate" type="xsd:decimal"/>
+      <xsd:element name="noOfLinkage" type="xsd:string"/>
+      <xsd:element name="firstDisbursementDate" type="xsd:string"/>
+      <xsd:element name="lastDisbursementDate" type="xsd:string"/>
+      <xsd:element name="interestRate" type="xsd:decimal"/>
+      <xsd:element name="maturityDate" type="xsd:string"/>
+      <xsd:element name="noOfInstallments" type="xsd:int"/>
+      <xsd:element name="outstandingAmount" type="tns:AmountType"/>
+      <xsd:element name="totalAmountRepaid" type="tns:AmountType"/>
+      <xsd:element name="module" type="xsd:string"/>
+      <xsd:element name="description" type="xsd:string"/>
+      <xsd:element name="partyName" type="xsd:string"/>
+      <xsd:element name="paymentType" type="xsd:string"/>
+      <xsd:element name="tenure" type="xsd:int"/>
+      <xsd:element name="linkages" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="outstandingLoanDetailsDTO" type="tns:OutstandingLoanDetailsType"/>
+      <xsd:element name="principalOutstandingAmountLcy" type="tns:AmountType"/>
+      <xsd:element name="interestOutstandingAmountLcy" type="tns:AmountType"/>
+      <xsd:element name="totalOutstandingAmountLcy" type="tns:AmountType"/>
+      <xsd:element name="currencyCodeLcy" type="xsd:string"/>
+      <xsd:element name="interestOutstandingAmount" type="tns:AmountType"/>
+      <xsd:element name="totalOutstandingAmount" type="tns:AmountType"/>
+      <xsd:element name="interestOSBalMaturity" type="tns:AmountType"/>
+      <xsd:element name="totalOSBalMaturity" type="tns:AmountType"/>
+      <xsd:element name="sortCode" type="xsd:string"/>
+      <xsd:element name="hostRelationshipCode" type="xsd:string"/>
+      <xsd:element name="relationshipType" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="LoanScheduleDetailsType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="amountDue" type="tns:AmountType"/>
+      <xsd:element name="amountPaid" type="tns:AmountType"/>
+      <xsd:element name="installementDueCount" type="xsd:int" nillable="true"/>
+      <xsd:element name="installementPaidCount" type="xsd:int"/>
+      <xsd:element name="nextInstallmentAmount" type="tns:AmountType"/>
+      <xsd:element name="nextDueDate" type="xsd:string"/>
+      <xsd:element name="interestRepaymentFrequency" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="principalRepaymentFrequency" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="numberOfInstallment" type="xsd:string"/>
+      <xsd:element name="loanScheduleItemDetails" maxOccurs="unbounded">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="principalAmount" type="tns:AmountType"/>
+            <xsd:element name="interestAmount" type="tns:AmountType"/>
+            <xsd:element name="balanceAmount" type="tns:AmountType"/>
+            <xsd:element name="currency" type="xsd:string"/>
+            <xsd:element name="installmentAmount" type="tns:AmountType"/>
+            <xsd:element name="installmentDueDate" type="xsd:string"/>
+            <xsd:element name="paymentStatus" type="xsd:string"/>
+            <xsd:element name="chargeAmount" type="tns:AmountType"/>
+            <xsd:element name="interestRate" type="xsd:string"/>
+            <xsd:element name="unpaidInstallmentAmount" type="tns:AmountType"/>
+            <xsd:element name="nextInstallmentAmount" type="tns:AmountType"/>
+            <xsd:element name="interestAmtPaid" type="tns:AmountType"/>
+            <xsd:element name="principalAmtPaid" type="tns:AmountType"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="partyId" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="AmountType">
+    <xsd:sequence>
+      <xsd:element name="currency" type="xsd:string"/>
+      <xsd:element name="amount" type="xsd:decimal"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+ 
+  <xsd:complexType name="TermType">
+    <xsd:sequence>
+      <xsd:element name="days" type="xsd:int"/>
+      <xsd:element name="months" type="xsd:int"/>
+      <xsd:element name="years" type="xsd:int"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+    <xsd:complexType name="OutstandingLoanDetailsType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string"/>
+      <xsd:element name="refLinks" type="xsd:string"/>
+      <xsd:element name="accountId">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="displayValue" type="xsd:string"/>
+            <xsd:element name="value" type="xsd:decimal"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="principalBalance" type="tns:AmountType"/>
+      <xsd:element name="interestAmount" type="tns:AmountType"/>
+      <xsd:element name="penaltyInterestAmount" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="prepaymentAmount" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="outstandingAmount" type="tns:AmountType"/>
+      <xsd:element name="serviceCharges" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="installmentArrear" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="prepaymentPenaltyAmount" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="penaltyAmount" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="lateRepaymentCharges" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="repaymentAmount" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="component" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="componentName" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="amountPaid" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="recomputationBasis" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="interestArrears" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="principalArrears" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

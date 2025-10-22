@@ -1,0 +1,122 @@
+<wsdl:definitions name="LoanServicesPS" targetNamespace="http://xmlns.oracle.com/MozaApplication/LoanGetAllProducts/LoanServicesPS" xmlns:tns="http://xmlns.oracle.com/MozaApplication/LoanGetAllProducts/LoanServicesPS" xmlns:inp1="http://www.mozabank.org/LOAN_ACCOUNT_LIST" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:inp2="http://www.mozabank.org/PARTY_LOAN_ACCOUNTS_LIST" xmlns:inp3="http://www.mozabank.org/LOAN_PRODUCT_DETAILS" xmlns:inp4="http://www.mozabank.org/LOAN_ACCOUNT_PARTIES" xmlns:inp5="http://www.mozabank.org/LOANACCOUNT_PARTYLIST_SUMMARY">
+    <plnk:partnerLinkType name="LoanServicesPS">
+        <plnk:role name="LoanServicesPSProvider" portType="tns:LoanServicesPS_ptt"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://www.mozabank.org/LOAN_ACCOUNT_LIST" schemaLocation="Schema/LOAN_ACCOUNT_LIST.xsd"/>
+        </xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://www.mozabank.org/PARTY_LOAN_ACCOUNTS_LIST" schemaLocation="Schema/PARTY_LOAN_ACCOUNTS_LIST.xsd"/>
+        </xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://www.mozabank.org/LOAN_PRODUCT_DETAILS" schemaLocation="Schema/LOAN_PRODUCT_DETAILS.xsd"/>
+        </xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://www.mozabank.org/LOAN_ACCOUNT_PARTIES" schemaLocation="Schema/LOAN_ACCOUNT_PARTIES.xsd"/>
+        </xsd:schema>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://www.mozabank.org/LOANACCOUNT_PARTYLIST_SUMMARY" schemaLocation="Schema/LOANACCOUNT_PARTYLIST_SUMMARY.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="LoanAccountList_inputMessage">
+        <wsdl:part name="request" element="inp1:LOAN_ACCOUNT_LISTRequest"/>
+    </wsdl:message>
+    <wsdl:message name="LoanAccountList_outputMessage">
+        <wsdl:part name="reply" element="inp1:LOAN_ACCOUNT_LISTResponse"/>
+    </wsdl:message>
+    <wsdl:message name="PartyLoanAccountsList_inputMessage">
+        <wsdl:part name="request" element="inp2:PARTY_LOAN_ACCOUNTS_LISTRequest"/>
+    </wsdl:message>
+    <wsdl:message name="PartyLoanAccountsList_outputMessage">
+        <wsdl:part name="reply" element="inp2:PARTY_LOAN_ACCOUNTS_LISTResponse"/>
+    </wsdl:message>
+    <wsdl:message name="LoanProductDetails_inputMessage">
+        <wsdl:part name="request" element="inp3:Request"/>
+    </wsdl:message>
+    <wsdl:message name="LoanProductDetails_outputMessage">
+        <wsdl:part name="reply" element="inp3:Response"/>
+    </wsdl:message>
+    <wsdl:message name="LoanAccountParties_inputMessage">
+        <wsdl:part name="request" element="inp4:LOAN_ACCOUNT_PARTIESRequest"/>
+    </wsdl:message>
+    <wsdl:message name="LoanAccountParties_outputMessage">
+        <wsdl:part name="reply" element="inp4:LOAN_ACCOUNT_PARTIESResponse"/>
+    </wsdl:message>
+    <wsdl:message name="LoanAccountPartylistSummary_inputMessage">
+        <wsdl:part name="request" element="inp5:Request"/>
+    </wsdl:message>
+    <wsdl:message name="LoanAccountPartylistSummary_outputMessage">
+        <wsdl:part name="reply" element="inp5:Response"/>
+    </wsdl:message>
+    <wsdl:portType name="LoanServicesPS_ptt">
+        <wsdl:operation name="LoanAccountList">
+            <wsdl:input message="tns:LoanAccountList_inputMessage"/>
+            <wsdl:output message="tns:LoanAccountList_outputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="PartyLoanAccountsList">
+            <wsdl:input message="tns:PartyLoanAccountsList_inputMessage"/>
+            <wsdl:output message="tns:PartyLoanAccountsList_outputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="LoanProductDetails">
+            <wsdl:input message="tns:LoanProductDetails_inputMessage"/>
+            <wsdl:output message="tns:LoanProductDetails_outputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="LoanAccountParties">
+            <wsdl:input message="tns:LoanAccountParties_inputMessage"/>
+            <wsdl:output message="tns:LoanAccountParties_outputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="LoanAccountPartylistSummary">
+            <wsdl:input message="tns:LoanAccountPartylistSummary_inputMessage"/>
+            <wsdl:output message="tns:LoanAccountPartylistSummary_outputMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="LoanServicesPS_ptt-binding" type="tns:LoanServicesPS_ptt">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="LoanAccountList">
+            <soap:operation soapAction="LoanAccountList"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="PartyLoanAccountsList">
+            <soap:operation soapAction="PartyLoanAccountsList"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="LoanProductDetails">
+            <soap:operation soapAction="LoanProductDetails"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="LoanAccountParties">
+            <soap:operation soapAction="LoanAccountParties"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="LoanAccountPartylistSummary">
+            <soap:operation soapAction="LoanAccountPartylistSummary"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

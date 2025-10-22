@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+              xmlns:tns="http://www.mozabank.org/CCCR_CCRD"
+              targetNamespace="http://www.mozabank.org/CCCR_CCRD" elementFormDefault="qualified"
+              attributeFormDefault="unqualified" nxsd:version="JSON" nxsd:encoding="UTF-8">
+
+  <!-- Root Elements -->
+  <xsd:element name="CCCRRequest" type="tns:CCCRRequestType"/>
+  <xsd:element name="CCCRResponse" type="tns:CCCRResponseType"/>
+  <xsd:element name="CCCREncodedRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="RequestString" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    <xsd:element name="CCCR_ITEM" type="tns:CCCR_O_0003Type"/> 
+  <!-- Request -->
+  <xsd:complexType name="CCCRRequestType">
+    <xsd:sequence>
+      <xsd:element name="user" type="xsd:string"/>
+      <xsd:element name="password" type="xsd:string"/>
+      <xsd:element name="origin" type="xsd:string"/>
+      <xsd:element name="channelCode" type="xsd:string"/>
+      <xsd:element name="version" type="xsd:string"/>
+      <xsd:element name="licenseKey" type="xsd:string"/>
+      <xsd:element name="sessionId" type="xsd:string"/>
+      <xsd:element name="transactionCode" type="xsd:string"/>
+      <xsd:element name="operationData">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="CCCR_I_0001" type="xsd:string"/>
+            <xsd:element name="CCCR_I_0004" type="xsd:string"/>
+            <xsd:element name="CCCR_I_0005" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Response -->
+  <xsd:complexType name="CCCRResponseType">
+    <xsd:sequence>
+      <xsd:element name="transactionCode" type="xsd:string"/>
+      <xsd:element name="operationData">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="CCCR_O_0001" type="xsd:string"/>
+            <xsd:element name="CCCR_O_0002" type="xsd:string"/>
+            <xsd:element name="CCCR_O_0003"  type="tns:CCCR_O_0003Type" minOccurs="0" maxOccurs="unbounded" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="channelOperationLogKey" type="xsd:string"/>
+      <xsd:element name="coreLogKey" type="xsd:string"/>
+      <xsd:element name="coreCancelationCode" type="xsd:string"/>
+      <xsd:element name="errorCode" type="xsd:string"/>
+      <xsd:element name="errorMessage">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="messages" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="validation">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="confirmationKey" type="xsd:string" minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="layoutVersion" type="xsd:string"/>
+      <xsd:element name="user" type="xsd:string"/>
+      <xsd:element name="password" type="xsd:string"/>
+      <xsd:element name="station" type="xsd:string"/>
+      <xsd:element name="licenseKey" type="xsd:string"/>
+      <xsd:element name="encryption" type="xsd:string"/>
+      <xsd:element name="code" type="xsd:string"/>
+      <xsd:element name="version" type="xsd:string"/>
+      <xsd:element name="sessionId" type="xsd:string"/>
+      <xsd:element name="language" type="xsd:string"/>
+      <xsd:element name="channelCode" type="xsd:string"/>
+      <xsd:element name="origin" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+<xsd:complexType name="CCCR_O_0003Type">
+    <xsd:sequence>
+      <xsd:element name="CCCR_O_0003_0001" type="xsd:string"/>
+      <xsd:element name="CCCR_O_0003_0002" type="xsd:string"/>
+      <xsd:element name="CCCR_O_0003_0003" type="xsd:string"/>
+      <xsd:element name="CCCR_O_0003_0004" type="xsd:string"/>
+      <xsd:element name="CCCR_O_0003_0005" type="xsd:integer"/>
+      <xsd:element name="CCCR_O_0003_0006" type="xsd:string"/>
+      <xsd:element name="CCCR_O_0003_0007" type="xsd:string"/>
+      <xsd:element name="CCRD">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="CCRD_O_0001" type="xsd:string"/>
+            <xsd:element name="CCRD_O_0002" type="xsd:string"/>
+            <xsd:element name="CCRD_O_0003" type="xsd:string"/>
+            <xsd:element name="CCRD_O_0004" type="xsd:string"/>
+            <xsd:element name="CCRD_O_0005" type="xsd:string"/>
+            <xsd:element name="CCRD_O_0006" type="xsd:string"/>
+            <xsd:element name="CCRD_O_00061" type="xsd:string"/>
+            <xsd:element name="CCRD_O_00062" type="xsd:string"/>
+            <xsd:element name="CCRD_O_00063" type="xsd:string"/>
+            <xsd:element name="CCRD_O_00064" type="xsd:string"/>
+            <xsd:element name="CCRD_O_0007" type="xsd:string"/>
+            <xsd:element name="CCRD_O_0008" type="xsd:string"/>
+            <xsd:element name="CCRD_O_0009" type="xsd:string"/>
+            <xsd:element name="CCRD_O_0010" type="xsd:string"/>
+            <xsd:element name="CCRD_O_0011" type="xsd:string"/>
+            <xsd:element name="CCRD_O_0012" type="xsd:integer"/>
+            <xsd:element name="CCRD_O_0013" type="xsd:integer"/>
+            <xsd:element name="CCRD_O_0014" type="xsd:string"/>
+            <xsd:element name="CCRD_O_0015" type="xsd:string"/>
+            <xsd:element name="CCRD_O_0016" type="xsd:integer"/>
+            <xsd:element name="CCRD_O_0017" type="xsd:integer"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+              xmlns:tns="http://www.mozabank.org/LoanOutstandingDetails"
+              targetNamespace="http://www.mozabank.org/LoanOutstandingDetails" elementFormDefault="qualified"
+              attributeFormDefault="unqualified" nxsd:version="JSON" nxsd:encoding="UTF-8">
+              
+  <!-- Root Element for Request -->
+  <xsd:element name="LOAN_OUTSTANDING_DETAILSRequest" type="tns:LoanOutstandingDetailsRequestType"/>
+
+  <!-- Root Element for Response -->
+  <xsd:element name="LOAN_OUTSTANDING_DETAILSResponse" type="tns:LoanOutstandingDetailsResponseType"/>
+
+  <!-- Complex Type for Request -->
+  <xsd:complexType name="LoanOutstandingDetailsRequestType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="referenceNo" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="interfaceId" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="entity" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="headersMap" minOccurs="0">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="OBCL_OBRH_USER_ID" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="OBCL_OBRH_BRANCH" type="xsd:string" minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="hostName" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="loanAccountId" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="branchCode" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="userType" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="partyId" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="accountModule" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Complex Type for CurrencyAmount -->
+  <xsd:complexType name="CurrencyAmountType">
+    <xsd:sequence>
+      <xsd:element name="currency" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="amount" type="xsd:decimal" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Complex Type for Result -->
+  <xsd:complexType name="ResultType">
+    <xsd:sequence>
+      <xsd:element name="externalReferenceId" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="status" type="xsd:string"/>
+      <xsd:element name="errorList" nillable="true" minOccurs="0" maxOccurs="unbounded">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="code" type="xsd:string"/>
+            <xsd:element name="message" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="warningList" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Complex Type for Response -->
+  <xsd:complexType name="LoanOutstandingDetailsResponseType">
+    <xsd:sequence>
+      <xsd:element name="data">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="referenceNo" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="result" type="tns:ResultType"/>
+            <xsd:element name="hasMore" type="xsd:boolean" minOccurs="0"/>
+            <xsd:element name="totalRecords" type="xsd:int" minOccurs="0"/>
+            <xsd:element name="startSequence" type="xsd:int" minOccurs="0"/>
+            <xsd:element name="accountId" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="branchId" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="principalBalance" type="tns:CurrencyAmountType" minOccurs="0"/>
+            <xsd:element name="penaltyInterestAmount" type="tns:CurrencyAmountType" minOccurs="0"/>
+            <xsd:element name="prepaymentAmount" type="tns:CurrencyAmountType" minOccurs="0"/>
+            <xsd:element name="outstandingAmount" type="tns:CurrencyAmountType" minOccurs="0"/>
+            <xsd:element name="serviceCharges" type="tns:CurrencyAmountType" minOccurs="0"/>
+            <xsd:element name="installmentArrear" type="tns:CurrencyAmountType" minOccurs="0"/>
+            <xsd:element name="prepaymentPenaltyAmount" type="tns:CurrencyAmountType" minOccurs="0"/>
+            <xsd:element name="lateRepaymentCharges" type="tns:CurrencyAmountType" minOccurs="0"/>
+            <xsd:element name="interestArrears" type="tns:CurrencyAmountType" minOccurs="0"/>
+            <xsd:element name="principalArrears" type="tns:CurrencyAmountType" minOccurs="0"/>
+            <xsd:element name="penaltyAmount" type="tns:CurrencyAmountType" minOccurs="0"/>
+            <xsd:element name="interestAmount" type="tns:CurrencyAmountType" minOccurs="0"/>
+            <xsd:element name="repaymentAmount" type="tns:CurrencyAmountType" minOccurs="0"/>
+            <xsd:element name="recomputationBasis" type="xsd:string" minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

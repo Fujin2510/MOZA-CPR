@@ -1,0 +1,67 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://www.mozabank.org/LoanScheduleDetails" xmlns="http://wadl.dev.java.net/2009/02" xmlns:ns0="http://www.mozabank.org/LoanOutstandingDetails" xmlns:ns1="http://www.mozabank.org/LoanAccountFetch" xmlns:ns2="http://www.mozabank.org/LoanDetails">
+   <doc title="LoanScheduleDetails">RestService</doc>
+   <grammars>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/LoanScheduleDetails" schemaLocation="LOAN_SCHEDULE_DETAILS.xsd"/>
+        </xsd:schema>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/LoanOutstandingDetails" schemaLocation="LOAN_OUTSTANDING_DETAILS.xsd"/>
+        </xsd:schema>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/LoanAccountFetch" schemaLocation="LoanFetch/Schema/LOAN_ACCOUNTS_FETCH.xsd"/>
+        </xsd:schema>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/LoanDetails" schemaLocation="LOAN_DETAILS.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/loan-schedule-details">
+         <method name="POST" soa:wsdlOperation="LoanScheduleDetails">
+            <request>
+               <representation mediaType="application/xml" element="cns:LoanScheduleDetailsRequest" xmlns:cns="http://www.mozabank.org/LoanScheduleDetails"/>
+               <representation mediaType="application/json" element="cns:LoanScheduleDetailsRequest" xmlns:cns="http://www.mozabank.org/LoanScheduleDetails"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:LoanScheduleDetailsResponse" xmlns:cns="http://www.mozabank.org/LoanScheduleDetails"/>
+               <representation mediaType="application/json" element="cns:LoanScheduleDetailsResponse" xmlns:cns="http://www.mozabank.org/LoanScheduleDetails"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/loan-outstanding-details">
+         <method name="POST" soa:wsdlOperation="LoanOutstandingDetails">
+            <request>
+               <representation mediaType="application/xml" element="cns:LOAN_OUTSTANDING_DETAILSRequest" xmlns:cns="http://www.mozabank.org/LoanOutstandingDetails"/>
+               <representation mediaType="application/json" element="cns:LOAN_OUTSTANDING_DETAILSRequest" xmlns:cns="http://www.mozabank.org/LoanOutstandingDetails"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:LOAN_OUTSTANDING_DETAILSResponse" xmlns:cns="http://www.mozabank.org/LoanOutstandingDetails"/>
+               <representation mediaType="application/json" element="cns:LOAN_OUTSTANDING_DETAILSResponse" xmlns:cns="http://www.mozabank.org/LoanOutstandingDetails"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/loan-account-fetch">
+         <method name="POST" soa:wsdlOperation="LoanAccountFetch">
+            <request>
+               <representation mediaType="application/xml" element="cns:Request" xmlns:cns="http://www.mozabank.org/LoanAccountFetch"/>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabank.org/LoanAccountFetch"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:Response" xmlns:cns="http://www.mozabank.org/LoanAccountFetch"/>
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabank.org/LoanAccountFetch"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/loan-details">
+         <method name="POST" soa:wsdlOperation="LoanDetails">
+            <request>
+               <representation mediaType="application/xml" element="cns:LoanDetailsRequest" xmlns:cns="http://www.mozabank.org/LoanDetails"/>
+               <representation mediaType="application/json" element="cns:LoanDetailsRequest" xmlns:cns="http://www.mozabank.org/LoanDetails"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:LoanDetailsResponse" xmlns:cns="http://www.mozabank.org/LoanDetails"/>
+               <representation mediaType="application/json" element="cns:LoanDetailsResponse" xmlns:cns="http://www.mozabank.org/LoanDetails"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>
