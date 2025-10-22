@@ -1,0 +1,27 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/QueryBranchListBS" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/top/QueryBranchListBS" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="BranchListCachedResultCollection" type="BranchListCachedResultCollection"/>
+   <xs:complexType name="BranchListCachedResultCollection">
+      <xs:sequence>
+         <xs:element name="BranchListCachedResult" type="BranchListCachedResult" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="BranchListCachedResult">
+      <xs:sequence>
+         <xs:element name="eventtimestamp" type="xs:dateTime" minOccurs="0" nillable="true"/>
+         <xs:element name="branchId" type="string50" nillable="true"/>
+         <xs:element name="branchListResponse" type="xs:string" minOccurs="0" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="QueryBranchListBSSelect_branchIdInputParameters" type="QueryBranchListBSSelect_branchId"/>
+   <xs:complexType name="QueryBranchListBSSelect_branchId">
+      <xs:sequence>
+         <xs:element name="branchId" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:simpleType name="string50">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="50"/>
+      </xs:restriction>
+   </xs:simpleType>
+</xs:schema>

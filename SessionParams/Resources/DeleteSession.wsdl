@@ -1,0 +1,52 @@
+<wsdl:definitions name="DeleteSession" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/Aug13/SessionParams/DeleteSession" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/Aug13/SessionParams/DeleteSession" xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/DeleteSession" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <plt:partnerLinkType name="DeleteSession_plt">
+    <plt:role name="DeleteSession_role">
+      <plt:portType name="tns:DeleteSession_ptt"/>
+    </plt:role>
+  </plt:partnerLinkType>
+  <plt:partnerLinkType name="DeleteSession_plt">
+    <plt:role name="DeleteSession_role">
+      <plt:portType name="tns:DeleteSession_ptt"/>
+    </plt:role>
+  </plt:partnerLinkType>
+  <plt:partnerLinkType name="DeleteSession_plt">
+    <plt:role name="DeleteSession_role">
+      <plt:portType name="tns:DeleteSession_ptt"/>
+    </plt:role>
+  </plt:partnerLinkType>
+  <plt:partnerLinkType name="DeleteSession_plt">
+    <plt:role name="DeleteSession_role">
+      <plt:portType name="tns:DeleteSession_ptt"/>
+    </plt:role>
+  </plt:partnerLinkType>
+  <plt:partnerLinkType name="DeleteSession_plt">
+    <plt:role name="DeleteSession_role">
+      <plt:portType name="tns:DeleteSession_ptt"/>
+    </plt:role>
+  </plt:partnerLinkType>
+    <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+        <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/DeleteSession" schemaLocation="DeleteSession.xsd"/>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+        <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/DeleteSession" schemaLocation="DeleteSession.xsd"/>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+        <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/DeleteSession" schemaLocation="DeleteSession.xsd"/>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+        <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/DeleteSession" schemaLocation="DeleteSession.xsd"/>
+      </schema>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+        <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/DeleteSession" schemaLocation="DeleteSession.xsd"/>
+      </schema>
+    </wsdl:types>
+    <wsdl:message name="DeleteSessionInput_msg">
+        <wsdl:part name="DeleteSessionInput_msg" element="db:DeleteSessionInput"/>
+    </wsdl:message>
+    <wsdl:portType name="DeleteSession_ptt">
+        <wsdl:operation name="DeleteSession">
+            <wsdl:input message="tns:DeleteSessionInput_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

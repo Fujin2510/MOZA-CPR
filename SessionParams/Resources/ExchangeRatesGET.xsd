@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="windows-1252"?>  
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://www.mozabank.org/ExchangeRates"
+            xmlns="http://www.mozabank.org/ExchangeRates"
+            elementFormDefault="qualified">
+
+  <xsd:element name="QueryEXchangeRates" type="Data"/>
+
+  <xsd:complexType name="Data">
+    <xsd:sequence>
+      <xsd:element name="currency1" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="currency2" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="TimeStamp" type="xsd:string" minOccurs="0" nillable="true"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:element name="QueryResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="Response" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+</xsd:schema>

@@ -1,0 +1,30 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/QueryCachedResponse" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/top/QueryCachedResponse" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="OverviewWidgetCollection" type="OverviewWidgetCollection"/>
+   <xs:complexType name="OverviewWidgetCollection">
+      <xs:sequence>
+         <xs:element name="OverviewWidget" type="OverviewWidget" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="OverviewWidget">
+      <xs:sequence>
+         <xs:element name="sessionid" type="string50"/>
+         <xs:element name="status" type="string50" minOccurs="0" nillable="true"/>
+         <xs:element name="eventtimestamp" type="xs:dateTime" minOccurs="0" nillable="true"/>
+         <xs:element name="partyid" type="string50" minOccurs="0" nillable="true"/>
+         <xs:element name="partyCasaAccountsListResponse" type="xs:string" minOccurs="0" nillable="true"/>
+         <xs:element name="partyTdAccountsListResponse" type="xs:string" minOccurs="0" nillable="true"/>
+         <xs:element name="casaListResponse" type="xs:string" minOccurs="0" nillable="true"/>
+         <xs:element name="partyLoanAccountsListResponse" type="xs:string" minOccurs="0" nillable="true"/>
+         <xs:element name="tdListResponse" type="xs:string" minOccurs="0" nillable="true"/>
+         <xs:element name="loanAccountListResponse" type="xs:string" minOccurs="0" nillable="true"/>
+         <xs:element name="partyCardAccountsListResponse" type="xs:string" minOccurs="0" nillable="true"/>
+         <xs:element name="creditCardReadResponse" type="xs:string" minOccurs="0" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:simpleType name="string50">
+      <xs:restriction base="xs:string">
+         <xs:maxLength value="50"/>
+      </xs:restriction>
+   </xs:simpleType>
+</xs:schema>

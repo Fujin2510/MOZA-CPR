@@ -1,0 +1,20 @@
+<wsdl:definitions name="InsertSessionParams" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ServiceBusApplication31/SessionParams/InsertSessionParams" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/ServiceBusApplication31/SessionParams/InsertSessionParams" xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:top="http://xmlns.oracle.com/pcbpel/adapter/db/top/InsertSessionParams" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <plt:partnerLinkType name="InsertSessionParams_plt">
+    <plt:role name="InsertSessionParams_role">
+      <plt:portType name="tns:InsertSessionParams_ptt"/>
+    </plt:role>
+  </plt:partnerLinkType>
+    <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+        <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/InsertSessionParams" schemaLocation="InsertSessionParams_table.xsd"/>
+      </schema>
+    </wsdl:types>
+    <wsdl:message name="SessionTxnUserCollection_msg">
+        <wsdl:part name="SessionTxnUserCollection" element="top:SessionTxnUserCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="InsertSessionParams_ptt">
+        <wsdl:operation name="merge">
+            <wsdl:input message="tns:SessionTxnUserCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

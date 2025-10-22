@@ -1,0 +1,12 @@
+<wsdl:definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/Aug13/SessionParams/DeleteSession" name="DeleteSession-concrete" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:import location="DeleteSession.wsdl" namespace="http://xmlns.oracle.com/pcbpel/adapter/db/Aug13/SessionParams/DeleteSession"/>
+    <wsdl:binding name="DeleteSession_ptt-binding" type="del:DeleteSession_ptt" xmlns:del="http://xmlns.oracle.com/pcbpel/adapter/db/Aug13/SessionParams/DeleteSession">
+        <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+        <wsdl:operation name="DeleteSession">
+            <soap:operation soapAction="DeleteSession"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

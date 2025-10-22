@@ -1,0 +1,24 @@
+<wsdl:definitions name="Query_Cauching" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ServiceBusApplication/SessionParams/Query_Cauching" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/ServiceBusApplication/SessionParams/Query_Cauching" xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:top="http://xmlns.oracle.com/pcbpel/adapter/db/top/Query_Cauching" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <plt:partnerLinkType name="Query_Cauching_plt">
+    <plt:role name="Query_Cauching_role">
+      <plt:portType name="tns:Query_Cauching_ptt"/>
+    </plt:role>
+  </plt:partnerLinkType>
+    <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+        <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/Query_Cauching" schemaLocation="Query_Cauching_table.xsd"/>
+      </schema>
+    </wsdl:types>
+    <wsdl:message name="Query_CauchingSelect_inputParameters">
+        <wsdl:part name="Query_CauchingSelect_inputParameters" element="top:Query_CauchingSelect_SessionIdInputParameters"/>
+    </wsdl:message>
+    <wsdl:message name="OverviewWidgetCollection_msg">
+        <wsdl:part name="OverviewWidgetCollection" element="top:OverviewWidgetCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="Query_Cauching_ptt">
+        <wsdl:operation name="Query_CauchingSelect">
+            <wsdl:input message="tns:Query_CauchingSelect_inputParameters"/>
+            <wsdl:output message="tns:OverviewWidgetCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

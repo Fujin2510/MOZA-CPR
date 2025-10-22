@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.example.org"
+            targetNamespace="http://www.example.org" elementFormDefault="qualified">
+  <xsd:element name="Request">
+    <xsd:annotation>
+      <xsd:documentation>A sample element</xsd:documentation>
+    </xsd:annotation>
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="BranchId"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="Response">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="BranchIdResponse"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-persistence xmlns="http://www.eclipse.org/eclipselink/xsds/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:eclipselink="http://www.eclipse.org/eclipselink/xsds/persistence" version="Eclipse Persistence Services - 2.6.7.v20190604-418f1a1c56">
+   <name>InsertCachePayloadBS-OR</name>
+   <class-mapping-descriptors>
+      <class-mapping-descriptor xsi:type="object-relational-class-mapping-descriptor">
+         <class>InsertCachePayloadBS.OverviewWidget</class>
+         <alias>OVERVIEW_WIDGET</alias>
+         <primary-key>
+            <field table="OVERVIEW_WIDGET" name="SESSIONID" xsi:type="column"/>
+         </primary-key>
+         <events/>
+         <querying>
+            <queries>
+               <query name="InsertCachePayloadBSSelect" xsi:type="read-all-query">
+                  <reference-class>InsertCachePayloadBS.OverviewWidget</reference-class>
+                  <container xsi:type="list-container-policy">
+                     <collection-type>java.util.Vector</collection-type>
+                  </container>
+               </query>
+            </queries>
+         </querying>
+         <attribute-mappings>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>sessionid</attribute-name>
+               <field table="OVERVIEW_WIDGET" name="SESSIONID" xsi:type="column"/>
+               <attribute-classification>java.lang.String</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>status</attribute-name>
+               <field table="OVERVIEW_WIDGET" name="STATUS" xsi:type="column"/>
+               <attribute-classification>java.lang.String</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>eventtimestamp</attribute-name>
+               <field table="OVERVIEW_WIDGET" name="EVENTTIMESTAMP" xsi:type="column"/>
+               <attribute-classification>java.sql.Timestamp</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>partyid</attribute-name>
+               <field table="OVERVIEW_WIDGET" name="PARTYID" xsi:type="column"/>
+               <attribute-classification>java.lang.String</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>partyCasaAccountsListResponse</attribute-name>
+               <field table="OVERVIEW_WIDGET" name="PARTY_CASA_ACCOUNTS_LIST_RESPONSE" xsi:type="column"/>
+               <attribute-classification>[C</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>partyTdAccountsListResponse</attribute-name>
+               <field table="OVERVIEW_WIDGET" name="PARTY_TD_ACCOUNTS_LIST_RESPONSE" xsi:type="column"/>
+               <attribute-classification>[C</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>casaListResponse</attribute-name>
+               <field table="OVERVIEW_WIDGET" name="CASA_LIST_RESPONSE" xsi:type="column"/>
+               <attribute-classification>[C</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>partyLoanAccountsListResponse</attribute-name>
+               <field table="OVERVIEW_WIDGET" name="PARTY_LOAN_ACCOUNTS_LIST_RESPONSE" xsi:type="column"/>
+               <attribute-classification>[C</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>tdListResponse</attribute-name>
+               <field table="OVERVIEW_WIDGET" name="TD_LIST_RESPONSE" xsi:type="column"/>
+               <attribute-classification>[C</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>loanAccountListResponse</attribute-name>
+               <field table="OVERVIEW_WIDGET" name="LOAN_ACCOUNT_LIST_RESPONSE" xsi:type="column"/>
+               <attribute-classification>[C</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>partyCardAccountsListResponse</attribute-name>
+               <field table="OVERVIEW_WIDGET" name="PARTY_CARD_ACCOUNTS_LIST_RESPONSE" xsi:type="column"/>
+               <attribute-classification>[C</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>creditCardReadResponse</attribute-name>
+               <field table="OVERVIEW_WIDGET" name="CREDIT_CARD_READ_RESPONSE" xsi:type="column"/>
+               <attribute-classification>[C</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>debitCardListResponse</attribute-name>
+               <field table="OVERVIEW_WIDGET" name="DEBIT_CARD_LIST_RESPONSE" xsi:type="column"/>
+               <attribute-classification>[C</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>readPartyResponse</attribute-name>
+               <field table="OVERVIEW_WIDGET" name="READ_PARTY_RESPONSE" xsi:type="column"/>
+               <attribute-classification>[C</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>casaAccountPartiesResponse</attribute-name>
+               <field table="OVERVIEW_WIDGET" name="CASA_ACCOUNT_PARTIES_RESPONSE" xsi:type="column"/>
+               <attribute-classification>[C</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>casaStatementItemListResponse</attribute-name>
+               <field table="OVERVIEW_WIDGET" name="CASA_STATEMENT_ITEM_LIST_RESPONSE" xsi:type="column"/>
+               <attribute-classification>[C</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>loanAccountPartiesResponse</attribute-name>
+               <field table="OVERVIEW_WIDGET" name="LOAN_ACCOUNT_PARTIES_RESPONSE" xsi:type="column"/>
+               <attribute-classification>[C</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>loanDetailsResponse</attribute-name>
+               <field table="OVERVIEW_WIDGET" name="LOAN_DETAILS_RESPONSE" xsi:type="column"/>
+               <attribute-classification>[C</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>id</attribute-name>
+               <field table="OVERVIEW_WIDGET" name="ID" xsi:type="column"/>
+               <attribute-classification>java.lang.String</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>partyAddressListResponse</attribute-name>
+               <field table="OVERVIEW_WIDGET" name="PARTY_ADDRESS_LIST_RESPONSE" xsi:type="column"/>
+               <attribute-classification>[C</attribute-classification>
+            </attribute-mapping>
+            <attribute-mapping xsi:type="direct-mapping">
+               <attribute-name>partyContactsListResponse</attribute-name>
+               <field table="OVERVIEW_WIDGET" name="PARTY_CONTACTS_LIST_RESPONSE" xsi:type="column"/>
+               <attribute-classification>[C</attribute-classification>
+            </attribute-mapping>
+         </attribute-mappings>
+         <descriptor-type>independent</descriptor-type>
+         <caching>
+            <cache-type>weak-reference</cache-type>
+            <cache-size>-1</cache-size>
+            <always-refresh>true</always-refresh>
+         </caching>
+         <remote-caching>
+            <cache-type>weak-reference</cache-type>
+            <cache-size>-1</cache-size>
+         </remote-caching>
+         <instantiation/>
+         <copying xsi:type="instantiation-copy-policy"/>
+         <tables>
+            <table name="OVERVIEW_WIDGET"/>
+         </tables>
+         <structure>structureName</structure>
+      </class-mapping-descriptor>
+   </class-mapping-descriptors>
+   <login xsi:type="database-login">
+      <platform-class>org.eclipse.persistence.platform.database.oracle.Oracle9Platform</platform-class>
+      <connection-url></connection-url>
+   </login>
+</object-persistence>

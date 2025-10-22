@@ -1,0 +1,15 @@
+<wsdl:definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ServiceBusApplication/SessionParams/Query_Cauching" name="Query_Cauching-concrete" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:import location="Query_Cauching.wsdl" namespace="http://xmlns.oracle.com/pcbpel/adapter/db/ServiceBusApplication/SessionParams/Query_Cauching"/>
+    <wsdl:binding name="Query_Cauching_ptt-binding" type="quer:Query_Cauching_ptt" xmlns:quer="http://xmlns.oracle.com/pcbpel/adapter/db/ServiceBusApplication/SessionParams/Query_Cauching">
+        <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+        <wsdl:operation name="Query_CauchingSelect">
+            <soap:operation soapAction="Query_CauchingSelect"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>
