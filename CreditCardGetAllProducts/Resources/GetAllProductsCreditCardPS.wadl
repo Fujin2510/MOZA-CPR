@@ -1,0 +1,37 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tns="http://www.mozabank.org/CREDIT_CARD_READ" xmlns:ns0="http://www.mozabank.org/PartyCardAccountList" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="GetAllProductsCreditCardPS">RestService</doc>
+   <grammars>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/CREDIT_CARD_READ" schemaLocation="XSD/CREDIT_CARD_READ.xsd"/>
+        </xsd:schema>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/PartyCardAccountList" schemaLocation="XSD/PARTY_CARD_ACCOUNTS_LIST.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/credit-card-read">
+         <method name="POST" soa:wsdlOperation="CreditCardRead">
+            <request>
+               <representation mediaType="application/xml" element="cns:Request" xmlns:cns="http://www.mozabank.org/CREDIT_CARD_READ"/>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabank.org/CREDIT_CARD_READ"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:Response" xmlns:cns="http://www.mozabank.org/CREDIT_CARD_READ"/>
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabank.org/CREDIT_CARD_READ"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/party-card-accounts-list">
+         <method name="POST" soa:wsdlOperation="PartyCardAccountsList">
+            <request>
+               <representation mediaType="application/xml" element="cns:Request" xmlns:cns="http://www.mozabank.org/PartyCardAccountList"/>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabank.org/PartyCardAccountList"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/xml" element="cns:Response" xmlns:cns="http://www.mozabank.org/PartyCardAccountList"/>
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabank.org/PartyCardAccountList"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            xmlns:tns="http://www.mozabank.org/CREDIT_CARD_READ"
+            targetNamespace="http://www.mozabank.org/CREDIT_CARD_READ" elementFormDefault="qualified"
+            attributeFormDefault="unqualified" nxsd:version="JSON" nxsd:encoding="UTF-8">
+  <!-- Root Elements -->
+  <xsd:element name="Request" type="tns:RequestType"/>
+  <xsd:element name="Response">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="data">
+          <xsd:complexType>
+            <xsd:sequence> 
+<xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+              <xsd:element name="referenceNo" type="xsd:string" minOccurs="0"/>
+              <xsd:element name="result" type="tns:ResultType"/>
+              <xsd:element name="hasMore" type="xsd:boolean" minOccurs="0"/>
+              <xsd:element name="totalRecords" type="xsd:int" minOccurs="0"/>
+              <xsd:element name="startSequence" type="xsd:int" minOccurs="0"/>
+              <xsd:element name="creditCard">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    
+   <xsd:element name="dictionaryArray" maxOccurs="unbounded">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="nameValuePairArray" maxOccurs="unbounded">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element name="name" type="xsd:string"/>
+                          <xsd:element name="value" type="xsd:string"/>
+                          <xsd:element name="genericName" type="xsd:string"/>
+                          <xsd:element name="datatype" type="xsd:string"/>
+                        </xsd:sequence>
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+                    <xsd:element name="ownerName" type="xsd:string"/>
+                    <xsd:element name="issuer" type="xsd:string"/>
+                    <xsd:element name="validity" type="tns:ValidityType"/>
+                    <xsd:element name="creditCard" type="xsd:string"/>
+                    <xsd:element name="displayValue" type="xsd:string"/>
+                    <xsd:element name="cardStatus" type="xsd:string"/>
+                    <xsd:element name="cardProductDetails" type="tns:CardProductDetailsType"/>
+                    <xsd:element name="cardRelationShipDetails" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="cardNickname" type="xsd:string"/>
+                    <xsd:element name="currentAuthorizationAmount" type="tns:CurrencyAmountType"/>
+                    <xsd:element name="billingCycleDay" type="xsd:int"/>
+                    <xsd:element name="rewardPoints" type="xsd:int"/>
+                    <xsd:element name="due" type="tns:DueType"/>
+                    <xsd:element name="payment" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="limits" minOccurs="0" maxOccurs="unbounded" nillable="true">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+                          <xsd:element name="total">
+                            <xsd:complexType>
+                              <xsd:sequence>
+                                <xsd:element name="currency" type="xsd:string"/>
+                                <xsd:element name="amount" type="xsd:decimal"/>
+                              </xsd:sequence>
+                            </xsd:complexType>
+                          </xsd:element>
+                          <xsd:element name="available">
+                            <xsd:complexType>
+                              <xsd:sequence>
+                                <xsd:element name="currency" type="xsd:string"/>
+                                <xsd:element name="amount" type="xsd:decimal"/>
+                              </xsd:sequence>
+                            </xsd:complexType>
+                          </xsd:element>
+                          <xsd:element name="type" type="xsd:string"/>
+                        </xsd:sequence>
+                      </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="cardOwnershipType" type="xsd:string"/>
+                    <xsd:element name="primaryCardId" type="xsd:string"/>
+                    <xsd:element name="cardCurrency" type="xsd:string"/>
+                    <xsd:element name="internationalUsage" type="xsd:boolean"/>
+                    <!-- <xsd:element name="cardType" type="xsd:string"/> -->
+                  </xsd:sequence>
+                </xsd:complexType>
+                <!-- Validity Structure -->
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <!-- Request Structure -->
+  <xsd:complexType name="RequestType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="referenceNo" type="xsd:string"/>
+      <xsd:element name="interfaceId" type="xsd:string"/>
+      <xsd:element name="entity" type="xsd:string"/>
+      <xsd:element name="headersMap" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="queryMap" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="hostName" type="xsd:string"/>
+      <xsd:element name="id" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType> 
+  <!-- Response Structure -->
+  <!-- Result Structure -->
+  <xsd:complexType name="ResultType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="externalReferenceId" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="status" type="xsd:string"/>
+      <xsd:element name="errorList" nillable="true" minOccurs="0" maxOccurs="unbounded">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="code" type="xsd:string"/>
+            <xsd:element name="message" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="warningList" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- Credit Card Structure -->
+  <xsd:complexType name="ValidityType">
+    <xsd:sequence>
+      <xsd:element name="start" type="xsd:string"/>
+      <xsd:element name="end" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- Card Product Details -->
+  <xsd:complexType name="CardProductDetailsType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="id" type="xsd:string"/>
+      <xsd:element name="description" type="xsd:string"/>
+      <xsd:element name="expiryDate" type="xsd:string"/>
+      <xsd:element name="cardBrand" type="xsd:string"/>
+      <xsd:element name="cardCategory" type="xsd:string"/>
+      <xsd:element name="issuer" type="xsd:string"/>
+      <xsd:element name="CardTechType" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- Due Type -->
+  <xsd:complexType name="DueType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="billedAmount">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="currency" type="xsd:string"/>
+            <xsd:element name="amount" type="xsd:decimal"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="unbilledAmount">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="currency" type="xsd:string"/>
+            <xsd:element name="amount" type="xsd:decimal"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="minimumAmount">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="currency" type="xsd:string"/>
+            <xsd:element name="amount" type="xsd:decimal"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="billedDate" type="xsd:string"/>
+      <xsd:element name="paymentDueDate" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- Limits -->
+  <xsd:complexType name="LimitListType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="total">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="currency" type="xsd:string"/>
+            <xsd:element name="amount" type="xsd:decimal"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="available">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="currency" type="xsd:string"/>
+            <xsd:element name="amount" type="xsd:decimal"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="type" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <!-- Currency Amount -->
+  <xsd:complexType name="CurrencyAmountType">
+    <xsd:sequence>
+      <xsd:element name="currency" type="xsd:string"/>
+      <xsd:element name="amount" type="xsd:decimal"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>
