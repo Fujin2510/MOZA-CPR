@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            targetNamespace="http://www.mozabanca.org/obdx/outward_remittance_list"
+            xmlns="http://www.mozabanca.org/obdx/outward_remittance_list"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            nxsd:version="JSON"
+            nxsd:encoding="UTF-8">
+
+  <xsd:element name="Request"  type="RequestType"/>
+  <xsd:element name="Response" type="ResponseType"/>
+  
+  <xsd:complexType name="RequestType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="referenceNo"     type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="interfaceId"     type="xsd:string"/>
+      <xsd:element name="entity"          type="xsd:string"/>
+      <xsd:element name="headersMap">
+        <xsd:complexType/>
+      </xsd:element>
+      <xsd:element name="queryMap" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="hostName"  type="xsd:string"/>
+    <xsd:element name="accountList" type="xsd:string" maxOccurs="unbounded" minOccurs="0" nillable="true"/>
+      <xsd:element name="fromAmount" type="MoneyType"/>
+      <xsd:element name="toAmount"   type="MoneyType"/>
+      <xsd:element name="fromDate"   type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="toDate"     type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="currency"   type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="maxRecords" type="xsd:integer"/>
+      <xsd:element name="partyId"    type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="MoneyType">
+    <xsd:sequence>
+      <xsd:element name="currency" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="amount"   type="xsd:decimal" minOccurs="0" nillable="true"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="AddressType">
+    <xsd:sequence>
+      <xsd:element name="line1"   type="xsd:string"/>
+      <xsd:element name="line2"   type="xsd:string"/>
+      <xsd:element name="city"    type="xsd:string" />
+      <xsd:element name="state"   type="xsd:string"/>
+      <xsd:element name="country" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="AccountType">
+    <xsd:sequence>
+      <xsd:element name="accountId"  type="xsd:string"/>
+      <xsd:element name="bankCode"   type="xsd:string"/>
+      <xsd:element name="branchCode" type="xsd:string"/>
+      <xsd:element name="currency"   type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+
+  <xsd:complexType name="ResponseType">
+    <xsd:sequence>
+      <xsd:element name="data"     type="DataType"/>
+      <xsd:element name="messages" type="MessagesType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="DataType">
+    <xsd:sequence>
+      <xsd:element name="result" type="ResultType"/>
+      <xsd:element name="outwardremittances" type="OutwardRemittanceType" maxOccurs="unbounded" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="ResultType">
+    <xsd:sequence>
+      <xsd:element name="status" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="OutwardRemittanceType">
+    <xsd:sequence>
+      <xsd:element name="fundReceivedDate"  type="xsd:string"/>
+      <xsd:element name="fundCreditedDate"  type="xsd:string"/>
+      <xsd:element name="orderingPartyId"   type="xsd:string"/>
+      <xsd:element name="debitAmount"       type="MoneyType1"/>
+      <xsd:element name="payeeName"         type="xsd:string"/>
+      <xsd:element name="payeeBankName"     type="xsd:string"/>
+      <xsd:element name="payeeAddress"      type="AddressType"/>
+      <xsd:element name="payeeBankAddress"  type="AddressType"/>
+      <xsd:element name="partyId"           type="xsd:string"/>
+      <xsd:element name="paymentDate"       type="xsd:string"/>
+      <xsd:element name="purposeId"         type="xsd:string"/>
+      <xsd:element name="remarks"           type="xsd:string"/>
+      <xsd:element name="bankCharges"       type="MoneyType" />
+      <xsd:element name="exchangeRate"      type="xsd:decimal" />
+      <xsd:element name="transactionAmount" type="MoneyType"/>
+      <xsd:element name="debitAccount"      type="AccountType"/>
+      <xsd:element name="creditAccount"     type="AccountType"/>
+      <xsd:element name="txnReferenceId"    type="xsd:string"/>
+      <xsd:element name="paymentStatus"     type="xsd:string"/>
+      <xsd:element name="paymentType"       type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <xsd:complexType name="MoneyType1">
+    <xsd:sequence>
+      <xsd:element name="currency" type="xsd:string"/>
+      <xsd:element name="amount"   type="xsd:decimal"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <xsd:complexType name="MessagesType">
+    <xsd:sequence>
+      <xsd:element name="keyId"                 type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="status"               type="xsd:string"/>
+      <xsd:element name="codes"  type="xsd:string" minOccurs="0" nillable="true" maxOccurs="unbounded"/>
+      <xsd:element name="requestId"            type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="httpStatusCode"       type="xsd:string"/>
+      <xsd:element name="overrideAuthLevelsReqd" type="xsd:string" minOccurs="0" nillable="true"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

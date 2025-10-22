@@ -1,0 +1,1436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="GetAllInternalBankTransfer/Resources/CTFI_PS"/>
+            <con:binding>
+                <con:name>CTFI_PS_ptt-binding</con:name>
+                <con:namespace>http://xmlns.oracle.com/LOT2/GetAllInternalBankTransfer/CTFI_PS</con:namespace>
+            </con:binding>
+        </con:binding>
+        <oper:operations xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations">
+            <oper:monitoring enabled="true" level="service" aggregationInterval="1440"/>
+        </oper:operations>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router errorHandler="error-N3f57ff91.4791a35.0.198c285ed53.N7ef7">
+        <con:pipeline type="response" name="response-N3f57ffb6.27fbe906.0.197cf383ace.N7fca">
+            <con:stage id="_StageId-N3f57ffb6.27fbe906.0.197cf383ace.N7fc8" name="Stage1">
+                <con:context/>
+                <con:actions/>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="error" name="error-N3f57ff91.4791a35.0.198c285ed53.N7ef7">
+            <con:stage id="_StageId-N3f57ff91.4791a35.0.198c285ed53.N7ef6" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:ifThenElse xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.4791a35.0.198c285ed53.N7e63</con2:id>
+                        <con1:case id="_BranchId-N3f57ff91.4791a35.0.198c285ed53.N7e62">
+                            <con1:condition>
+                                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$inbound/ctx:service/ctx:operation = 'instructionList'</con2:xqueryText>
+                            </con1:condition>
+                            <con1:actions>
+                                <con1:replace varName="body" contents-only="true">
+                                    <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.4791a35.0.198c285ed53.N7e61</con2:id>
+                                    <con1:expr>
+                                        <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config"><![CDATA[<Response xmlns="http://www.mozabank.org/instruction_list" >
+<data>
+		<dictionaryArray/>
+		<referenceNo/>
+		<result>
+			<dictionaryArray/>
+			<externalReferenceId/>
+			<status>FAILURE</status>
+			<errorList>
+				<code>ERR001</code>
+				<message>Invalid backend response</message>
+			</errorList>
+			<warningList/>
+		</result>
+		<hasMore/>
+		<totalRecords/>
+		<startSequence/>
+	</data> 
+    </Response>]]></con2:xqueryText>
+                                    </con1:expr>
+                                </con1:replace>
+                                <con2:report xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                    <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.4791a35.0.198c285ed53.N7e60</con3:id>
+                                    <con2:expr>
+                                        <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$fault</con3:xqueryText>
+                                    </con2:expr>
+                                    <con2:labels>
+                                        <con2:key>RepeatTransferSummaryService - Error</con2:key>
+                                        <con2:varName>fault</con2:varName>
+                                        <con2:value>
+                                            <con3:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">./text()</con3:xpathText>
+                                        </con2:value>
+                                    </con2:labels>
+                                </con2:report>
+                                <con2:log xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                    <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.4791a35.0.198c285ed53.N7e5f</con3:id>
+                                    <con2:logLevel>debug</con2:logLevel>
+                                    <con2:expr>
+                                        <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$fault</con3:xqueryText>
+                                    </con2:expr>
+                                    <con2:message>RepeatTransferSummaryService - Error</con2:message>
+                                </con2:log>
+                            </con1:actions>
+                        </con1:case>
+                        <con1:case id="_BranchId-N3f57ff91.4791a35.0.198c285ed53.N7e5e">
+                            <con1:condition>
+                                <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$inbound/ctx:service/ctx:operation = 'instructionRead'</con2:xqueryText>
+                            </con1:condition>
+                            <con1:actions>
+                                <con1:replace varName="body" contents-only="true">
+                                    <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.4791a35.0.198c285ed53.N7e5d</con2:id>
+                                    <con1:expr>
+                                        <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config"><![CDATA[<Response xmlns="http://www.mozabank.org/instruction_read" >
+<data>
+		<dictionaryArray/>
+		<referenceNo/>
+		<result>
+			<dictionaryArray/>
+			<externalReferenceId/>
+			<status>FAILURE</status>
+			<errorList>
+				<code>ERR001</code>
+				<message>Invalid backend response</message>
+			</errorList>
+			<warningList/>
+		</result>
+		<hasMore/>
+		<totalRecords/>
+		<startSequence/>
+	</data> 
+    </Response>]]></con2:xqueryText>
+                                    </con1:expr>
+                                </con1:replace>
+                                <con2:report xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                    <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.4791a35.0.198c285ed53.N7e5c</con3:id>
+                                    <con2:expr>
+                                        <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$fault</con3:xqueryText>
+                                    </con2:expr>
+                                    <con2:labels>
+                                        <con2:key>RepeatTransferDetailsService - Error</con2:key>
+                                        <con2:varName>fault</con2:varName>
+                                        <con2:value>
+                                            <con3:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">./text()</con3:xpathText>
+                                        </con2:value>
+                                    </con2:labels>
+                                </con2:report>
+                                <con2:log xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                    <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.4791a35.0.198c285ed53.N7e5b</con3:id>
+                                    <con2:logLevel>debug</con2:logLevel>
+                                    <con2:expr>
+                                        <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$fault</con3:xqueryText>
+                                    </con2:expr>
+                                    <con2:message>RepeatTransferDetailsService - Error</con2:message>
+                                </con2:log>
+                            </con1:actions>
+                        </con1:case>
+                        <con1:default/>
+                    </con1:ifThenElse>
+                    <con1:reply isError="false" xmlns:con1="http://www.bea.com/wli/sb/stages/config">
+                        <con1:id>_ActionId-N3f57ff91.4791a35.0.198c285ed53.N7e27</con1:id>
+                    </con1:reply>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="request-N3f57ffb6.27fbe906.0.197cf383ace.N7fcb">
+            <con:stage id="_StageId-N3f57ffb6.27fbe906.0.197cf383ace.N7fc9" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:assign varName="InitialRequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffb6.27fbe906.0.197cf383ace.N7fc4</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body/*</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="accountId" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffcb.N282451d4.0.197ef39d20c.N7ffa</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">string($InitialRequest/*:accountList[1])</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="userId" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffb6.27fbe906.0.197cf383ace.N7d8e</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">substring-before(substring-after($inbound/ctx:transport/ctx:request/tp:headers/tp:user-header[@name='X_OBDX_SESSION_PARAM']/@value,'~'),'~')</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="SessionVar" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffb6.27fbe906.0.197cf383ace.N7e7c</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$inbound/ctx:transport/ctx:request/tp:headers/tp:user-header[@name='X_OBDX_SESSION_PARAM']/@value</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:wsCallout xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffb6.27fbe906.0.197cf383ace.N7fc1</con2:id>
+                        <con1:service ref="AuthenticatorService/AuthenticatorBS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>Operation1</con1:operation>
+                        <con1:request>
+                            <con1:body wrapped="false">AuthenticatorRequest</con1:body>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body wrapped="false">AuthenticatorResponse</con1:body>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con1:assign varName="AuthenticatorRequest">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffb6.27fbe906.0.197cf383ace.N7fbe</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config"><![CDATA[<moz:Request xmlns:moz="http://www.mozabank.org">
+    <moz:username>channel_obdx_app</moz:username>
+    <moz:password>Moz@Random123#</moz:password>
+</moz:Request>]]></con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:requestTransform>
+                        <con1:responseTransform>
+                            <con1:assign varName="accessToken">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffb6.27fbe906.0.197cf383ace.N7fbb</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$AuthenticatorResponse/*:access_token</con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:responseTransform>
+                    </con1:wsCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="request-N3f57ffb6.27fbe906.0.197cf383ace.N7f89">
+            <con:stage id="_StageId-N3f57ffb6.27fbe906.0.197cf383ace.N7e9a" name="Stage2">
+                <con:context>
+                    <con1:varNsDecl prefix="out" namespace="http://www.mozabanca.org/obdx/outward_remittance_details" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                    <con1:varNsDecl prefix="ins" namespace="http://www.mozabanca.org/obdx/instruction_read" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:assign varName="ReqUUID" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.4791a35.0.198c285ed53.N7df2</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn-bea:uuid()</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:report xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.4791a35.0.198c285ed53.N7def</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">concat('RequestUUID :',$ReqUUID,' | ',fn-bea:serialize($body))</con2:xqueryText>
+                        </con1:expr>
+                        <con1:labels>
+                            <con1:key>RepeatTransferSummaryService - Request</con1:key>
+                            <con1:varName>body</con1:varName>
+                            <con1:value>
+                                <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">./text()</con2:xpathText>
+                            </con1:value>
+                        </con1:labels>
+                    </con1:report>
+                    <con1:log xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.4791a35.0.198c285ed53.N7deb</con2:id>
+                        <con1:logLevel>debug</con1:logLevel>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">concat('RequestUUID :',$ReqUUID,' | ',fn-bea:serialize($body))</con2:xqueryText>
+                        </con1:expr>
+                        <con1:message>RepeatTransferSummaryService - Request</con1:message>
+                    </con1:log>
+                    <con1:assign varName="CDODRequestMapping" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffb6.27fbe906.0.197cf383ace.N7e96</con2:id>
+                        <con1:expr>
+                            <con:xqueryTransform xmlns:con="http://www.bea.com/wli/sb/stages/config">
+                                <con:resource ref="GetAllInternalBankTransfer/Mapping/CDODRequest"/>
+                                <con:param name="Request">
+                                    <con:path>$InitialRequest</con:path>
+                                </con:param>
+                            </con:xqueryTransform>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:nxsdTranslation xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffb6.27fbe906.0.197cf383ace.N7e93</con2:id>
+                        <con1:type>XML-To-Native</con1:type>
+                        <con1:sourceExpr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$CDODRequestMapping</con2:xqueryText>
+                        </con1:sourceExpr>
+                        <con1:nxsd ref="GetAllInternalBankTransfer/XSD/CDOD"/>
+                        <con1:schemaElement xmlns:cdod="http://www.mozabanca.org/cdod">cdod:Request</con1:schemaElement>
+                        <con1:assign-variable>CDODnXSD</con1:assign-variable>
+                        <con1:enforceSchemaOrder>false</con1:enforceSchemaOrder>
+                    </con1:nxsdTranslation>
+                    <con1:assign varName="CDODJson" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffb6.27fbe906.0.197cf383ace.N7e8f</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn-bea:binary-to-text($CDODnXSD[@ref],$text)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:javaCallout varName="CDODEncode" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffb6.27fbe906.0.197cf383ace.N7e8c</con2:id>
+                        <con1:archive ref="DebitCardList/Resources/JsonToStringUrl"/>
+                        <con1:className>demo.MainClass</con1:className>
+                        <con1:method>public static java.lang.String encodeJsonToRequestParam(java.lang.String)</con1:method>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$CDODJson</con2:xqueryText>
+                        </con1:expr>
+                        <con1:return-param-as-ref>false</con1:return-param-as-ref>
+                    </con1:javaCallout>
+                    <con1:wsCallout xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffb6.27fbe906.0.197cf383ace.N7e89</con2:id>
+                        <con1:service ref="BankAccountDetails/CDOD_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>Operation1</con1:operation>
+                        <con1:request>
+                            <con1:body wrapped="false">Request</con1:body>
+                            <con1:header/>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body wrapped="false">CDODResponse</con1:body>
+                            <con1:header/>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con1:assign varName="Request">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffb6.27fbe906.0.197cf383ace.N7e86</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">&lt;cdod:RequestEncoded xmlns:cdod="http://www.mozabanca.org/cdod">
+    &lt;cdod:RequestString>{$CDODEncode}&lt;/cdod:RequestString>
+&lt;/cdod:RequestEncoded></con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                            <con1:transport-headers copy-all="false">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffcb.74ab3ee5.0.197ededb332.N7ffe</con2:id>
+                                <con1:header-set>outbound-request</con1:header-set>
+                                <con1:header value="expression" name="Authorization">
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">concat('Bearer ',$accessToken)</con2:xqueryText>
+                                </con1:header>
+                            </con1:transport-headers>
+                        </con1:requestTransform>
+                        <con1:responseTransform>
+                            <con1:assign varName="CDODResponse">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffcb.906b03c.0.197f49aad98.N7f58</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$CDODResponse</con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:responseTransform>
+                    </con1:wsCallout>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57ff91.19c66081.0.19850811afb.N78f2" name="Stage4">
+                <con:context>
+                    <con1:varNsDecl prefix="out" namespace="http://www.mozabanca.org/obdx/outward_remittance_details" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                    <con1:varNsDecl prefix="ins" namespace="http://www.mozabanca.org/obdx/instruction_read" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/publish/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffcb.906b03c.0.197f49aad98.N7f8f</con2:id>
+                        <con1:service ref="SessionParams/SessionProcess" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>execute</con1:operation>
+                        <con1:outboundTransform>
+                            <con2:replace varName="body" contents-only="true" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffcb.906b03c.0.197f49aad98.N7f8c</con3:id>
+                                <con2:expr>
+                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config"><![CDATA[(: Assign fromDate and toDate as strings formatted yyyymmdd :)
+let $from := current-date() + xs:yearMonthDuration("P6M")
+let $yearFrom := string(year-from-date($from))
+let $monthFrom := month-from-date($from)
+let $dayFrom := day-from-date($from)
+let $monthFromStr := if ($monthFrom lt 10) then concat('0', $monthFrom) else string($monthFrom)
+let $dayFromStr := if ($dayFrom lt 10) then concat('0', $dayFrom) else string($dayFrom)
+let $fromDate := concat($yearFrom, $monthFromStr, $dayFromStr)
+
+let $to := current-date()
+let $yearTo := string(year-from-date($to))
+let $monthTo := month-from-date($to)
+let $dayTo := day-from-date($to)
+let $monthToStr := if ($monthTo lt 10) then concat('0', $monthTo) else string($monthTo)
+let $dayToStr := if ($dayTo lt 10) then concat('0', $dayTo) else string($dayTo)
+let $toDate := concat($yearTo, $monthToStr, $dayToStr)
+
+return
+<ses:SessionData xmlns:ses="http://www.mozabank.org/sessionprocess">
+    <ses:Session>{$SessionVar}</ses:Session>
+    <ses:UserId>{substring-before(substring-after($inbound/ctx:transport/ctx:request/tp:headers/tp:user-header[@name='X_OBDX_SESSION_PARAM']/@value,'~'),'~')}</ses:UserId> 
+    <ses:AccountId>{string($InitialRequest/*:accountList[1])}</ses:AccountId>
+    <ses:FromDate>{$toDate }</ses:FromDate>
+   <ses:ToDate>{$fromDate}</ses:ToDate>
+    <ses:Status>{string($InitialRequest/*:status)}</ses:Status>
+</ses:SessionData>]]></con:xqueryText>
+                                </con2:expr>
+                            </con2:replace>
+                        </con1:outboundTransform>
+                    </con1:route>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57ff91.4791a35.0.198c285ed53.N7f31" name="Stage5">
+                <con:context>
+                    <con1:userNsDecl prefix="ins" namespace="http://www.mozabanca.org/obdx/instruction_list" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:wsCallout xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.4791a35.0.198c285ed53.N7f2d</con2:id>
+                        <con1:service ref="SessionParams/QuerySessionParams" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>execute</con1:operation>
+                        <con1:request>
+                            <con1:body wrapped="false">QueryRequest</con1:body>
+                            <con1:header/>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body wrapped="false">QueryResponse</con1:body>
+                            <con1:header/>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con1:assign varName="QueryRequest">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.4791a35.0.198c285ed53.N7f2c</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">&lt;ses:Query xmlns:ses="http://www.mozabank.org/sessionprocess">
+    &lt;ses:QueryParam>{fn:data($body/ins:Request/ins:partyId)}&lt;/ses:QueryParam>
+&lt;/ses:Query></con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:requestTransform>
+                        <con1:responseTransform/>
+                    </con1:wsCallout>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57ffb6.27fbe906.0.197cf383ace.N7f87" name="Stage1">
+                <con:context>
+                    <con1:userNsDecl prefix="ins" namespace="http://www.mozabanca.org/obdx/instruction_list" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                    <con1:varNsDecl prefix="out" namespace="http://www.mozabanca.org/obdx/outward_remittance_details" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                    <con1:varNsDecl prefix="ins1" namespace="http://www.mozabanca.org/obdx/instruction_read" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:assign varName="userId" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffb6.27fbe906.0.197cf383ace.N7f1b</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">substring-before(substring-after($inbound/ctx:transport/ctx:request/tp:headers/tp:user-header[@name='X_OBDX_SESSION_PARAM']/@value,'~'),'~')</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="RequestMapping" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffb6.27fbe906.0.197cf383ace.N7f4e</con2:id>
+                        <con1:expr>
+                            <con:xqueryTransform xmlns:con="http://www.bea.com/wli/sb/stages/config">
+                                <con:resource ref="GetAllInternalBankTransfer/Mapping/InstructionListRequest"/>
+                                <con:param name="accountId">
+                                    <con:path>fn:data($QueryResponse/*:AccountId)</con:path>
+                                </con:param>
+                                <con:param name="Request">
+                                    <con:path>$InitialRequest</con:path>
+                                </con:param>
+                                <con:param name="externalStatus">
+                                    <con:path>fn:data($QueryResponse/*:Status)</con:path>
+                                </con:param>
+                            </con:xqueryTransform>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:nxsdTranslation xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffb6.27fbe906.0.197cf383ace.N7f48</con2:id>
+                        <con1:type>XML-To-Native</con1:type>
+                        <con1:sourceExpr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$RequestMapping</con2:xqueryText>
+                        </con1:sourceExpr>
+                        <con1:nxsd ref="GetAllInternalBankTransfer/XSD/CTFI"/>
+                        <con1:schemaElement xmlns:ctfi="http://www.mozabanca.org/ctfi">ctfi:Request</con1:schemaElement>
+                        <con1:assign-variable>nXSDValue</con1:assign-variable>
+                        <con1:enforceSchemaOrder>false</con1:enforceSchemaOrder>
+                    </con1:nxsdTranslation>
+                    <con1:assign varName="jsonValue" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffb6.27fbe906.0.197cf383ace.N7f41</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn-bea:binary-to-text($nXSDValue[@ref],$text)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:javaCallout varName="EncodeUrl" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffb6.27fbe906.0.197cf383ace.N7f3b</con2:id>
+                        <con1:archive ref="DebitCardList/Resources/JsonToStringUrl"/>
+                        <con1:className>demo.MainClass</con1:className>
+                        <con1:method>public static java.lang.String encodeJsonToRequestParam(java.lang.String)</con1:method>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$jsonValue</con2:xqueryText>
+                        </con1:expr>
+                        <con1:return-param-as-ref>false</con1:return-param-as-ref>
+                    </con1:javaCallout>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57ff91.19c66081.0.19850811afb.N7912" name="Stage3">
+                <con:context>
+                    <con1:varNsDecl prefix="out" namespace="http://www.mozabanca.org/obdx/outward_remittance_details" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                    <con1:varNsDecl prefix="ins" namespace="http://www.mozabanca.org/obdx/instruction_read" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:assign varName="userId" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.19c66081.0.19850811afb.N790f</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">substring-before(substring-after($inbound/ctx:transport/ctx:request/tp:headers/tp:user-header[@name='X_OBDX_SESSION_PARAM']/@value,'~'),'~')</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="GetAllOtherBankreqRequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.19c66081.0.19850811afb.N790c</con2:id>
+                        <con1:expr>
+                            <con:xqueryTransform xmlns:con="http://www.bea.com/wli/sb/stages/config">
+                                <con:resource ref="GetAllInternalBankTransfer/OtherMapping/InstructionListRequestOther"/>
+                                <con:param name="accountId">
+                                    <con:path>fn:data($QueryResponse/*:AccountId)</con:path>
+                                </con:param>
+                                <con:param name="Request">
+                                    <con:path>$InitialRequest</con:path>
+                                </con:param>
+                                <con:param name="externalStatus">
+                                    <con:path>fn:data($QueryResponse/*:Status)</con:path>
+                                </con:param>
+                                <con:param name="userIdVar">
+                                    <con:path>$userId</con:path>
+                                </con:param>
+                            </con:xqueryTransform>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:nxsdTranslation xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.19c66081.0.19850811afb.N7909</con2:id>
+                        <con1:type>XML-To-Native</con1:type>
+                        <con1:sourceExpr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">$GetAllOtherBankreqRequest</con:xqueryText>
+                        </con1:sourceExpr>
+                        <con1:nxsd ref="GetAllInternalBankTransfer/XSD/CTFO"/>
+                        <con1:schemaElement xmlns:ctfo="http://www.mozabanca.org/obdx/CTFO">ctfo:Request</con1:schemaElement>
+                        <con1:assign-variable>INSTRUCTION_LISTBin</con1:assign-variable>
+                        <con1:enforceSchemaOrder>false</con1:enforceSchemaOrder>
+                    </con1:nxsdTranslation>
+                    <con1:assign varName="INSTRUCTION_LISTJSON" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.19c66081.0.19850811afb.N7906</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn-bea:binary-to-text($INSTRUCTION_LISTBin[@ref],$text)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:javaCallout varName="EncodeUrl1" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.19c66081.0.19850811afb.N7903</con2:id>
+                        <con1:archive ref="DebitCardList/Resources/JsonToStringUrl"/>
+                        <con1:className>demo.MainClass</con1:className>
+                        <con1:method>public static java.lang.String encodeJsonToRequestParam(java.lang.String)</con1:method>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$INSTRUCTION_LISTJSON</con2:xqueryText>
+                        </con1:expr>
+                        <con1:return-param-as-ref>false</con1:return-param-as-ref>
+                    </con1:javaCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="request-N3f57ffcb.N3eb91de0.0.197e8ae2335.N7f55">
+            <con:stage id="_StageId-N3f57ffcb.N3eb91de0.0.197e8ae2335.N7f53" name="Stage1">
+                <con:context>
+                    <con1:userNsDecl prefix="out" namespace="http://www.mozabanca.org/obdx/outward_remittance_list" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:assign varName="RequestMapping" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffcb.N3eb91de0.0.197e8ae2335.N7f4f</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="GetAllInternalBankTransfer/Mapping/OutwardListRequest"/>
+                                <con2:param name="Request">
+                                    <con2:path>$InitialRequest</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:log xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffcb.5bdc6f5.0.197eec03037.N7ffe</con2:id>
+                        <con1:logLevel>debug</con1:logLevel>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$InitialRequest/*:accountList</con2:xqueryText>
+                        </con1:expr>
+                    </con1:log>
+                    <con1:log xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffcb.5bdc6f5.0.197eec03037.N7ffb</con2:id>
+                        <con1:logLevel>debug</con1:logLevel>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$InitialRequest/accountList</con2:xqueryText>
+                        </con1:expr>
+                    </con1:log>
+                    <con1:wsCallout xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffcb.906b03c.0.197f49aad98.N7ffe</con2:id>
+                        <con2:disabled xmlns:con2="http://www.bea.com/wli/sb/stages/config">true</con2:disabled>
+                        <con1:service ref="SessionParams/SessionProcess" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>execute</con1:operation>
+                        <con1:request>
+                            <con1:body wrapped="false">Request</con1:body>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body wrapped="false">Response</con1:body>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con1:assign varName="Request">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffcb.906b03c.0.197f49aad98.N7ffb</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config"><![CDATA[<ses:SessionData xmlns:ses="http://www.mozabank.org/sessionprocess">
+    <ses:Session>{$SessionVar}</ses:Session>
+    <ses:UserId>{substring-before(substring-after($inbound/ctx:transport/ctx:request/tp:headers/tp:user-header[@name='X_OBDX_SESSION_PARAM']/@value,'~'),'~')}</ses:UserId> 
+    <ses:PartyName></ses:PartyName>
+    <ses:BranchCode></ses:BranchCode>
+    <ses:AccountId>{string($InitialRequest/*:accountList[1])}</ses:AccountId>
+</ses:SessionData>]]></con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:requestTransform>
+                        <con1:responseTransform/>
+                    </con1:wsCallout>
+                    <con1:nxsdTranslation xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffcb.N3eb91de0.0.197e8ae2335.N7f4c</con2:id>
+                        <con1:type>XML-To-Native</con1:type>
+                        <con1:sourceExpr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$RequestMapping</con2:xqueryText>
+                        </con1:sourceExpr>
+                        <con1:nxsd ref="GetAllInternalBankTransfer/XSD/CTFI"/>
+                        <con1:schemaElement xmlns:ctfi="http://www.mozabanca.org/ctfi">ctfi:Request</con1:schemaElement>
+                        <con1:assign-variable>nXSDValue</con1:assign-variable>
+                    </con1:nxsdTranslation>
+                    <con1:assign varName="jsonValue" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffcb.N3eb91de0.0.197e8ae2335.N7f49</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn-bea:binary-to-text($nXSDValue[@ref],$text)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:javaCallout varName="encodeUrl" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffcb.N3eb91de0.0.197e8ae2335.N7f46</con2:id>
+                        <con1:archive ref="DebitCardList/Resources/JsonToStringUrl"/>
+                        <con1:className>demo.MainClass</con1:className>
+                        <con1:method>public static java.lang.String encodeJsonToRequestParam(java.lang.String)</con1:method>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$jsonValue</con2:xqueryText>
+                        </con1:expr>
+                        <con1:return-param-as-ref>false</con1:return-param-as-ref>
+                    </con1:javaCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57ffb6.27fbe906.0.197cf383ace.N7e49">
+            <con:stage id="_StageId-N3f57ffb6.27fbe906.0.197cf383ace.N7e47" name="Stage1">
+                <con:context/>
+                <con:actions/>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57ffcb.N3eb91de0.0.197e8ae2335.N7f54">
+            <con:stage id="_StageId-N3f57ffcb.N3eb91de0.0.197e8ae2335.N7f52" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffcb.N3eb91de0.0.197e8ae2335.N7f43</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="GetAllInternalBankTransfer/Mapping/OutwardListResponse"/>
+                                <con2:param name="Response">
+                                    <con2:path>$body/*</con2:path>
+                                </con2:param>
+                                <con2:param name="userIdVariable">
+                                    <con2:path>$userId</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="request-N3f57ffb6.27fbe906.0.197cf383ace.N7e4a">
+            <con:stage id="_StageId-N3f57ffb6.27fbe906.0.197cf383ace.N7e2e" name="Stage2">
+                <con:context>
+                    <con1:userNsDecl prefix="ins" namespace="http://www.mozabanca.org/obdx/instruction_read" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:wsCallout xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffb6.27fbe906.0.197cf383ace.N7e2d</con2:id>
+                        <con1:service ref="SessionParams/QuerySessionParams" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>execute</con1:operation>
+                        <con1:request>
+                            <con1:body wrapped="false">QueryRequest</con1:body>
+                            <con1:header/>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body wrapped="false">QueryResponse</con1:body>
+                            <con1:header/>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con1:assign varName="QueryRequest">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffb6.27fbe906.0.197cf383ace.N7e2a</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">&lt;ses:Query xmlns:ses="http://www.mozabank.org/sessionprocess">
+    &lt;ses:QueryParam>{fn:data($body/ins:Request/ins:partyId)}&lt;/ses:QueryParam>
+&lt;/ses:Query></con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:requestTransform>
+                        <con1:responseTransform/>
+                    </con1:wsCallout>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57fefe.N7fa1eb1.0.197ff149274.N7f9e" name="Stage3">
+                <con:context>
+                    <con1:varNsDecl prefix="out" namespace="http://www.mozabanca.org/obdx/outward_remittance_details" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                    <con1:varNsDecl prefix="ins" namespace="http://www.mozabanca.org/obdx/instruction_read" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:assign varName="ReqUUID" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.4791a35.0.198c285ed53.N7ddb</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn-bea:uuid()</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:report xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.4791a35.0.198c285ed53.N7dd8</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">concat('RequestUUID :',$ReqUUID,' | ',fn-bea:serialize($body))</con2:xqueryText>
+                        </con1:expr>
+                        <con1:labels>
+                            <con1:key>RepeatTransferDetailsService - Request</con1:key>
+                            <con1:varName>body</con1:varName>
+                            <con1:value>
+                                <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">./text()</con2:xpathText>
+                            </con1:value>
+                        </con1:labels>
+                    </con1:report>
+                    <con1:log xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.4791a35.0.198c285ed53.N7dd5</con2:id>
+                        <con1:logLevel>debug</con1:logLevel>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">concat('RequestUUID :',$ReqUUID,' | ',fn-bea:serialize($body))</con2:xqueryText>
+                        </con1:expr>
+                        <con1:message>RepeatTransferDetailsService - Request</con1:message>
+                    </con1:log>
+                    <con1:assign varName="RequestMapping" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fefe.N7fa1eb1.0.197ff149274.N7f9b</con2:id>
+                        <con1:expr>
+                            <con:xqueryTransform xmlns:con="http://www.bea.com/wli/sb/stages/config">
+                                <con:resource ref="GetAllInternalBankTransfer/Mapping/CDODReq1"/>
+                                <con:param name="Request">
+                                    <con:path>$InitialRequest</con:path>
+                                </con:param>
+                                <con:param name="userIdVar">
+                                    <con:path>fn:data($QueryResponse/*:AccountId)</con:path>
+                                </con:param>
+                            </con:xqueryTransform>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:nxsdTranslation xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fefe.N7fa1eb1.0.197ff149274.N7f97</con2:id>
+                        <con1:type>XML-To-Native</con1:type>
+                        <con1:sourceExpr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$RequestMapping</con2:xqueryText>
+                        </con1:sourceExpr>
+                        <con1:nxsd ref="GetAllInternalBankTransfer/XSD/CDOD"/>
+                        <con1:schemaElement xmlns:cdod="http://www.mozabanca.org/cdod">cdod:Request</con1:schemaElement>
+                        <con1:assign-variable>nXSD</con1:assign-variable>
+                        <con1:enforceSchemaOrder>false</con1:enforceSchemaOrder>
+                    </con1:nxsdTranslation>
+                    <con1:assign varName="JsonValue" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fefe.N7fa1eb1.0.197ff149274.N7f93</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn-bea:binary-to-text($nXSD[@ref],$text)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:javaCallout varName="EncodeUrl" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fefe.N7fa1eb1.0.197ff149274.N7f90</con2:id>
+                        <con1:archive ref="DebitCardList/Resources/JsonToStringUrl"/>
+                        <con1:className>demo.MainClass</con1:className>
+                        <con1:method>public static java.lang.String encodeJsonToRequestParam(java.lang.String)</con1:method>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$JsonValue</con2:xqueryText>
+                        </con1:expr>
+                        <con1:return-param-as-ref>false</con1:return-param-as-ref>
+                    </con1:javaCallout>
+                    <con1:wsCallout xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fefe.N7fa1eb1.0.197ff149274.N7f8c</con2:id>
+                        <con1:service ref="BankAccountDetails/CDOD_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>Operation1</con1:operation>
+                        <con1:request>
+                            <con1:body wrapped="false">Request</con1:body>
+                            <con1:header/>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body wrapped="false">CDODResponse</con1:body>
+                            <con1:header/>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con1:assign varName="Request">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fefe.N7fa1eb1.0.197ff149274.N7f88</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">&lt;cdod:RequestEncoded xmlns:cdod="http://www.mozabanca.org/cdod">
+    &lt;cdod:RequestString>{$EncodeUrl}&lt;/cdod:RequestString>
+&lt;/cdod:RequestEncoded></con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                            <con1:transport-headers copy-all="false">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fefe.N7fa1eb1.0.197ff149274.N7f85</con2:id>
+                                <con1:header-set>outbound-request</con1:header-set>
+                                <con1:header value="expression" name="Authorization">
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">concat('Bearer ',$accessToken)</con2:xqueryText>
+                                </con1:header>
+                            </con1:transport-headers>
+                        </con1:requestTransform>
+                        <con1:responseTransform/>
+                    </con1:wsCallout>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57ffb6.27fbe906.0.197cf383ace.N7e48" name="Stage1">
+                <con:context>
+                    <con1:varNsDecl prefix="out" namespace="http://www.mozabanca.org/obdx/outward_remittance_details" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                    <con1:varNsDecl prefix="ins" namespace="http://www.mozabanca.org/obdx/instruction_read" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:assign varName="RequestMapping" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffb6.27fbe906.0.197cf383ace.N7e44</con2:id>
+                        <con1:expr>
+                            <con:xqueryTransform xmlns:con="http://www.bea.com/wli/sb/stages/config">
+                                <con:resource ref="GetAllInternalBankTransfer/Mapping/InstructionReadRequest"/>
+                                <con:param name="accountId">
+                                    <con:path>fn:data($QueryResponse/*:AccountId)</con:path>
+                                </con:param>
+                                <con:param name="endDate">
+                                    <con:path>fn:data($QueryResponse/*:ToDate)</con:path>
+                                </con:param>
+                                <con:param name="Request">
+                                    <con:path>$InitialRequest</con:path>
+                                </con:param>
+                                <con:param name="startDate">
+                                    <con:path>fn:data($QueryResponse/*:FromDate)</con:path>
+                                </con:param>
+                            </con:xqueryTransform>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:nxsdTranslation xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffb6.27fbe906.0.197cf383ace.N7e40</con2:id>
+                        <con1:type>XML-To-Native</con1:type>
+                        <con1:sourceExpr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$RequestMapping</con2:xqueryText>
+                        </con1:sourceExpr>
+                        <con1:nxsd ref="GetAllInternalBankTransfer/XSD/INSTRUCTION_READ"/>
+                        <con1:schemaElement xmlns:ins="http://www.mozabanca.org/obdx/instruction_read">ins:Request</con1:schemaElement>
+                        <con1:assign-variable>nXSDValue</con1:assign-variable>
+                        <con1:enforceSchemaOrder>false</con1:enforceSchemaOrder>
+                    </con1:nxsdTranslation>
+                    <con1:assign varName="JsonValue" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffb6.27fbe906.0.197cf383ace.N7e3b</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn-bea:binary-to-text($nXSDValue[@ref],$text)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:javaCallout varName="EncodeUrl" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffb6.27fbe906.0.197cf383ace.N7e38</con2:id>
+                        <con1:archive ref="DebitCardList/Resources/JsonToStringUrl"/>
+                        <con1:className>demo.MainClass</con1:className>
+                        <con1:method>public static java.lang.String encodeJsonToRequestParam(java.lang.String)</con1:method>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$JsonValue</con2:xqueryText>
+                        </con1:expr>
+                        <con1:return-param-as-ref>false</con1:return-param-as-ref>
+                    </con1:javaCallout>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57ff91.19c66081.0.19850811afb.N7902" name="Stage4">
+                <con:context>
+                    <con1:varNsDecl prefix="out" namespace="http://www.mozabanca.org/obdx/outward_remittance_details" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                    <con1:varNsDecl prefix="ins" namespace="http://www.mozabanca.org/obdx/instruction_read" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:assign varName="INSTRUCTION_READRequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.19c66081.0.19850811afb.N78ff</con2:id>
+                        <con1:expr>
+                            <con:xqueryTransform xmlns:con="http://www.bea.com/wli/sb/stages/config">
+                                <con:resource ref="GetAllInternalBankTransfer/OtherMapping/InstructionReadRequestOther"/>
+                                <con:param name="accountID">
+                                    <con:path>fn:data($QueryResponse/*:AccountId)</con:path>
+                                </con:param>
+                                <con:param name="endDate">
+                                    <con:path>fn:data($QueryResponse/*:ToDate)</con:path>
+                                </con:param>
+                                <con:param name="Request">
+                                    <con:path>$InitialRequest</con:path>
+                                </con:param>
+                                <con:param name="startDate">
+                                    <con:path>fn:data($QueryResponse/*:FromDate)</con:path>
+                                </con:param>
+                            </con:xqueryTransform>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:nxsdTranslation xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.19c66081.0.19850811afb.N78fc</con2:id>
+                        <con1:type>XML-To-Native</con1:type>
+                        <con1:sourceExpr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$INSTRUCTION_READRequest</con2:xqueryText>
+                        </con1:sourceExpr>
+                        <con1:nxsd ref="GetAllInternalBankTransfer/XSD/CTFO"/>
+                        <con1:schemaElement xmlns:ctfo="http://www.mozabanca.org/obdx/CTFO">ctfo:Request</con1:schemaElement>
+                        <con1:assign-variable>INSTRUCTION_READRequestBin</con1:assign-variable>
+                        <con1:enforceSchemaOrder>false</con1:enforceSchemaOrder>
+                    </con1:nxsdTranslation>
+                    <con1:assign varName="INSTRUCTION_READJson" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.19c66081.0.19850811afb.N78f9</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn-bea:binary-to-text($INSTRUCTION_READRequestBin[@ref],$text)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:javaCallout varName="EncodeUrl1" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.19c66081.0.19850811afb.N78f5</con2:id>
+                        <con1:archive ref="DebitCardList/Resources/JsonToStringUrl"/>
+                        <con1:className>demo.MainClass</con1:className>
+                        <con1:method>public static java.lang.String encodeJsonToRequestParam(java.lang.String)</con1:method>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$INSTRUCTION_READJson</con2:xqueryText>
+                        </con1:expr>
+                        <con1:return-param-as-ref>false</con1:return-param-as-ref>
+                    </con1:javaCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57ffb6.27fbe906.0.197cf383ace.N7f88">
+            <con:stage id="_StageId-N3f57ffb6.27fbe906.0.197cf383ace.N7f86" name="Stage1">
+                <con:context>
+                    <con1:userNsDecl prefix="ins" namespace="http://www.mozabanca.org/obdx/instruction_list" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions/>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="request-N3f57ffcb.N3eb91de0.0.197e8ae2335.N7f06">
+            <con:stage id="_StageId-N3f57ffcb.N3eb91de0.0.197e8ae2335.N7f04" name="Stage1">
+                <con:context>
+                    <con1:userNsDecl prefix="out" namespace="http://www.mozabanca.org/obdx/outward_remittance_details" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:wsCallout xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffcb.N3eb91de0.0.197e8ae2335.N7ee5</con2:id>
+                        <con1:service ref="SessionParams/QuerySessionParams" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>execute</con1:operation>
+                        <con1:request>
+                            <con1:body wrapped="false">QueryRequest</con1:body>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body wrapped="false">QueryResponse</con1:body>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con1:assign varName="QueryRequest">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffcb.N3eb91de0.0.197e8ae2335.N7ee2</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">&lt;ses:Query xmlns:ses="http://www.mozabank.org/sessionprocess">
+   &lt;ses:QueryParam>{substring-before(substring-after($inbound/ctx:transport/ctx:request/tp:headers/tp:user-header[@name='X_OBDX_SESSION_PARAM']/@value,'~'),'~')}&lt;/ses:QueryParam> 
+&lt;/ses:Query></con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:requestTransform>
+                        <con1:responseTransform/>
+                    </con1:wsCallout>
+                    <con1:assign varName="RequestMapping" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffcb.N3eb91de0.0.197e8ae2335.N7f00</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="GetAllInternalBankTransfer/Mapping/OutwardDetailRequest"/>
+                                <con2:param name="accountId">
+                                    <con2:path>fn:data($QueryResponse/*:AccountId)</con2:path>
+                                </con2:param>
+                                <con2:param name="userIdVar">
+                                    <con2:path>$userId</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:nxsdTranslation xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffcb.N3eb91de0.0.197e8ae2335.N7efd</con2:id>
+                        <con1:type>XML-To-Native</con1:type>
+                        <con1:sourceExpr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$RequestMapping</con2:xqueryText>
+                        </con1:sourceExpr>
+                        <con1:nxsd ref="GetAllInternalBankTransfer/XSD/CTFI"/>
+                        <con1:schemaElement xmlns:ctfi="http://www.mozabanca.org/ctfi">ctfi:Request</con1:schemaElement>
+                        <con1:assign-variable>nXSDValue</con1:assign-variable>
+                    </con1:nxsdTranslation>
+                    <con1:assign varName="JsonValue" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffcb.N3eb91de0.0.197e8ae2335.N7efa</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn-bea:binary-to-text($nXSDValue[@ref],$text)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:javaCallout varName="EncodeUrl" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffcb.N3eb91de0.0.197e8ae2335.N7ef7</con2:id>
+                        <con1:archive ref="DebitCardList/Resources/JsonToStringUrl"/>
+                        <con1:className>demo.MainClass</con1:className>
+                        <con1:method>public static java.lang.String encodeJsonToRequestParam(java.lang.String)</con1:method>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$JsonValue</con2:xqueryText>
+                        </con1:expr>
+                        <con1:return-param-as-ref>false</con1:return-param-as-ref>
+                    </con1:javaCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57ffcb.N3eb91de0.0.197e8ae2335.N7f05">
+            <con:stage id="_StageId-N3f57ffcb.N3eb91de0.0.197e8ae2335.N7f03" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffcb.N3eb91de0.0.197e8ae2335.N7eea</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="GetAllInternalBankTransfer/Mapping/OutwardDetailResponse"/>
+                                <con2:param name="Response">
+                                    <con2:path>$body/*</con2:path>
+                                </con2:param>
+                                <con2:param name="userIdVar">
+                                    <con2:path>$userId</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="Pipeline Pair Node1">
+                <con:request>request-N3f57ffb6.27fbe906.0.197cf383ace.N7fcb</con:request>
+                <con:response>response-N3f57ffb6.27fbe906.0.197cf383ace.N7fca</con:response>
+            </con:pipeline-node>
+            <con:branch-node type="operation" id="_FlowId-N3f57ffb6.27fbe906.0.197cf383ace.N7fc7" name="BranchNode1">
+                <con:context/>
+                <con:branch-table>
+                    <con:branch name="instructionList">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="Pipeline Pair Node2">
+                                <con:request>request-N3f57ffb6.27fbe906.0.197cf383ace.N7f89</con:request>
+                                <con:response>response-N3f57ffb6.27fbe906.0.197cf383ace.N7f88</con:response>
+                            </con:pipeline-node>
+                            <con:branch-node type="condition" id="_FlowId-N3f57ff91.19c66081.0.19850811afb.N7ad4" name="BranchNode2">
+                                <con:context>
+                                    <con1:userNsDecl prefix="ins" namespace="http://www.mozabanca.org/obdx/instruction_list" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                                </con:context>
+                                <con:branch-table variable="body">
+                                    <con:xpath>
+                                        <con1:xpathText xmlns:con1="http://www.bea.com/wli/sb/stages/config">$InitialRequest/*:paymentType</con1:xpathText>
+                                    </con:xpath>
+                                    <con:branch name="Branch1">
+                                        <con:operator>equals</con:operator>
+                                        <con:value>'CTFI'</con:value>
+                                        <con:flow>
+                                            <con:route-node name="RouteNode5">
+                                                <con:context>
+                                                    <con1:varNsDecl prefix="out" namespace="http://www.mozabanca.org/obdx/outward_remittance_details" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                                                    <con1:varNsDecl prefix="ins" namespace="http://www.mozabanca.org/obdx/instruction_read" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                                                </con:context>
+                                                <con:actions>
+                                                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                                                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.19c66081.0.19850811afb.N7ad3</con2:id>
+                                                        <con1:service ref="GetAllInternalBankTransfer/CTFI_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                                        <con1:operation>Operation1</con1:operation>
+                                                        <con1:outboundTransform>
+                                                            <con2:replace varName="body" contents-only="true" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.19c66081.0.19850811afb.N7ad2</con3:id>
+                                                                <con2:expr>
+                                                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;CTFIEncodedRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://www.mozabanca.org/ctfi CTFI.xsd" xmlns="http://www.mozabanca.org/ctfi">
+  &lt;RequestString>{$EncodeUrl}&lt;/RequestString>
+&lt;/CTFIEncodedRequest></con:xqueryText>
+                                                                </con2:expr>
+                                                            </con2:replace>
+                                                            <con2:transport-headers copy-all="false" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.19c66081.0.19850811afb.N7ad1</con3:id>
+                                                                <con2:header-set>outbound-request</con2:header-set>
+                                                                <con2:header value="expression" name="Authorization">
+                                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat('Bearer ',$accessToken)</con3:xqueryText>
+                                                                </con2:header>
+                                                            </con2:transport-headers>
+                                                        </con1:outboundTransform>
+                                                        <con1:responseTransform>
+                                                            <con2:replace varName="body" contents-only="true" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.N1829a4a7.0.1985a75bf10.N7f2f</con3:id>
+                                                                <con2:expr>
+                                                                    <con:xqueryTransform xmlns:con="http://www.bea.com/wli/sb/stages/config">
+                                                                        <con:resource ref="GetAllInternalBankTransfer/Mapping/InstructionListResponse"/>
+                                                                        <con:param name="Response">
+                                                                            <con:path>$body/*</con:path>
+                                                                        </con:param>
+                                                                        <con:param name="userIdVariable">
+                                                                            <con:path>$userId</con:path>
+                                                                        </con:param>
+                                                                        <con:param name="CDODResponse">
+                                                                            <con:path>$CDODResponse</con:path>
+                                                                        </con:param>
+                                                                        <con:param name="refNo">
+                                                                            <con:path>string($InitialRequest/*:externalReferenceNo)</con:path>
+                                                                        </con:param>
+                                                                    </con:xqueryTransform>
+                                                                </con2:expr>
+                                                            </con2:replace>
+                                                            <con2:report xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.4791a35.0.198c285ed53.N7de8</con3:id>
+                                                                <con2:expr>
+                                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat('ResponseUUID :',$ReqUUID,' | ',fn-bea:serialize($body))</con3:xqueryText>
+                                                                </con2:expr>
+                                                                <con2:labels>
+                                                                    <con2:key>InternalRepeatTransferSummaryService - Response</con2:key>
+                                                                    <con2:varName>body</con2:varName>
+                                                                    <con2:value>
+                                                                        <con3:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">./text()</con3:xpathText>
+                                                                    </con2:value>
+                                                                </con2:labels>
+                                                            </con2:report>
+                                                            <con2:log xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.4791a35.0.198c285ed53.N7de5</con3:id>
+                                                                <con2:logLevel>debug</con2:logLevel>
+                                                                <con2:expr>
+                                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat('ResponseUUID :',$ReqUUID,' | ',fn-bea:serialize($body))</con3:xqueryText>
+                                                                </con2:expr>
+                                                                <con2:message>InternalRepeatTransferSummaryService - Response</con2:message>
+                                                            </con2:log>
+                                                        </con1:responseTransform>
+                                                    </con1:route>
+                                                </con:actions>
+                                            </con:route-node>
+                                        </con:flow>
+                                    </con:branch>
+                                    <con:branch name="Branch2">
+                                        <con:operator>equals</con:operator>
+                                        <con:value>'CTFO'</con:value>
+                                        <con:flow>
+                                            <con:route-node name="RouteNode6">
+                                                <con:context>
+                                                    <con1:varNsDecl prefix="out" namespace="http://www.mozabanca.org/obdx/outward_remittance_details" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                                                    <con1:varNsDecl prefix="ins" namespace="http://www.mozabanca.org/obdx/instruction_read" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                                                </con:context>
+                                                <con:actions>
+                                                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                                                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.19c66081.0.19850811afb.N7ad0</con2:id>
+                                                        <con1:service ref="GetAllOtherBankTransfer/CTFO-MSB" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                                        <con1:operation>CTFOGET</con1:operation>
+                                                        <con1:outboundTransform>
+                                                            <con2:replace varName="body" contents-only="true" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.19c66081.0.19850811afb.N7acf</con3:id>
+                                                                <con2:expr>
+                                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">&lt;ctfo:RequestEncoded xmlns:ctfo="http://www.mozabanca.org/obdx/CTFO">
+    &lt;ctfo:requestString>{$EncodeUrl1}&lt;/ctfo:requestString>
+&lt;/ctfo:RequestEncoded></con3:xqueryText>
+                                                                </con2:expr>
+                                                            </con2:replace>
+                                                            <con2:transport-headers copy-all="false" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.19c66081.0.19850811afb.N7ace</con3:id>
+                                                                <con2:header-set>outbound-request</con2:header-set>
+                                                                <con2:header value="expression" name="Authorization">
+                                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat('Bearer ',$accessToken)</con3:xqueryText>
+                                                                </con2:header>
+                                                            </con2:transport-headers>
+                                                        </con1:outboundTransform>
+                                                        <con1:responseTransform>
+                                                            <con2:replace varName="body" contents-only="true" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.N1829a4a7.0.1985a75bf10.N7f2c</con3:id>
+                                                                <con2:expr>
+                                                                    <con:xqueryTransform xmlns:con="http://www.bea.com/wli/sb/stages/config">
+                                                                        <con:resource ref="GetAllInternalBankTransfer/OtherMapping/InstructionListResponseOther"/>
+                                                                        <con:param name="Response">
+                                                                            <con:path>$body/*</con:path>
+                                                                        </con:param>
+                                                                        <con:param name="userIdVariable">
+                                                                            <con:path>$userId</con:path>
+                                                                        </con:param>
+                                                                        <con:param name="CDODResponse">
+                                                                            <con:path>$CDODResponse</con:path>
+                                                                        </con:param>
+                                                                        <con:param name="refNo">
+                                                                            <con:path>string($InitialRequest/*:externalReferenceNo)</con:path>
+                                                                        </con:param>
+                                                                    </con:xqueryTransform>
+                                                                </con2:expr>
+                                                            </con2:replace>
+                                                            <con2:report xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.4791a35.0.198c285ed53.N7de2</con3:id>
+                                                                <con2:expr>
+                                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat('ResponseUUID :',$ReqUUID,' | ',fn-bea:serialize($body))</con3:xqueryText>
+                                                                </con2:expr>
+                                                                <con2:labels>
+                                                                    <con2:key>DomesticRepeatTransferSummaryService - Response</con2:key>
+                                                                    <con2:varName>body</con2:varName>
+                                                                    <con2:value>
+                                                                        <con3:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">./text()</con3:xpathText>
+                                                                    </con2:value>
+                                                                </con2:labels>
+                                                            </con2:report>
+                                                            <con2:log xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.4791a35.0.198c285ed53.N7ddf</con3:id>
+                                                                <con2:logLevel>debug</con2:logLevel>
+                                                                <con2:expr>
+                                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat('ResponseUUID :',$ReqUUID,' | ',fn-bea:serialize($body))</con3:xqueryText>
+                                                                </con2:expr>
+                                                                <con2:message>DomesticRepeatTransferSummaryService - Response</con2:message>
+                                                            </con2:log>
+                                                        </con1:responseTransform>
+                                                    </con1:route>
+                                                </con:actions>
+                                            </con:route-node>
+                                        </con:flow>
+                                    </con:branch>
+                                    <con:default-branch>
+                                        <con:flow/>
+                                    </con:default-branch>
+                                </con:branch-table>
+                            </con:branch-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="outwardList">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="Pipeline Pair Node3">
+                                <con:request>request-N3f57ffcb.N3eb91de0.0.197e8ae2335.N7f55</con:request>
+                                <con:response>response-N3f57ffcb.N3eb91de0.0.197e8ae2335.N7f54</con:response>
+                            </con:pipeline-node>
+                            <con:route-node name="RouteNode2">
+                                <con:context/>
+                                <con:actions>
+                                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffcb.N3eb91de0.0.197e8ae2335.N7f3e</con2:id>
+                                        <con1:service ref="GetAllInternalBankTransfer/CTFI_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>Operation1</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con2:replace varName="body" contents-only="true" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffcb.N3eb91de0.0.197e8ae2335.N7f3b</con3:id>
+                                                <con2:expr>
+                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">&lt;CTFIEncodedRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://www.mozabanca.org/ctfi CTFI.xsd" xmlns="http://www.mozabanca.org/ctfi">
+  &lt;RequestString>{$encodeUrl}&lt;/RequestString>
+&lt;/CTFIEncodedRequest></con3:xqueryText>
+                                                </con2:expr>
+                                            </con2:replace>
+                                            <con2:transport-headers xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffcb.N3eb91de0.0.197e8ae2335.N7f38</con3:id>
+                                                <con2:header-set>outbound-request</con2:header-set>
+                                                <con2:header value="expression" name="Authorization">
+                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat('Bearer ',$accessToken)</con3:xqueryText>
+                                                </con2:header>
+                                            </con2:transport-headers>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform/>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="instructionRead">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="Pipeline Pair Node4">
+                                <con:request>request-N3f57ffb6.27fbe906.0.197cf383ace.N7e4a</con:request>
+                                <con:response>response-N3f57ffb6.27fbe906.0.197cf383ace.N7e49</con:response>
+                            </con:pipeline-node>
+                            <con:branch-node type="condition" id="_FlowId-N3f57ff91.19c66081.0.19850811afb.N7a18" name="BranchNode3">
+                                <con:context>
+                                    <con1:userNsDecl prefix="ins1" namespace="http://www.mozabanca.org/obdx/instruction_read" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                                    <con1:userNsDecl prefix="ins" namespace="http://www.mozabanca.org/obdx/instruction_list" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                                </con:context>
+                                <con:branch-table variable="body">
+                                    <con:xpath>
+                                        <con1:xpathText xmlns:con1="http://www.bea.com/wli/sb/stages/config">$InitialRequest/*:paymentType</con1:xpathText>
+                                    </con:xpath>
+                                    <con:branch name="Branch1">
+                                        <con:operator>equals</con:operator>
+                                        <con:value>'CTFI'</con:value>
+                                        <con:flow>
+                                            <con:route-node name="RouteNode1">
+                                                <con:context>
+                                                    <con1:varNsDecl prefix="out" namespace="http://www.mozabanca.org/obdx/outward_remittance_details" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                                                    <con1:varNsDecl prefix="ins" namespace="http://www.mozabanca.org/obdx/instruction_read" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                                                </con:context>
+                                                <con:actions>
+                                                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                                                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.19c66081.0.19850811afb.N7a17</con2:id>
+                                                        <con1:service ref="GetAllInternalBankTransfer/CTFI_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                                        <con1:operation>Operation1</con1:operation>
+                                                        <con1:outboundTransform>
+                                                            <con2:replace varName="body" contents-only="true" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.19c66081.0.19850811afb.N7a16</con3:id>
+                                                                <con2:expr>
+                                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">&lt;CTFIEncodedRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://www.mozabanca.org/ctfi CTFI.xsd" xmlns="http://www.mozabanca.org/ctfi">
+  &lt;RequestString>{$EncodeUrl}&lt;/RequestString>
+&lt;/CTFIEncodedRequest></con3:xqueryText>
+                                                                </con2:expr>
+                                                            </con2:replace>
+                                                            <con2:transport-headers copy-all="false" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.19c66081.0.19850811afb.N7a15</con3:id>
+                                                                <con2:header-set>outbound-request</con2:header-set>
+                                                                <con2:header value="expression" name="Authorization">
+                                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat('Bearer ',$accessToken)</con3:xqueryText>
+                                                                </con2:header>
+                                                            </con2:transport-headers>
+                                                        </con1:outboundTransform>
+                                                        <con1:responseTransform>
+                                                            <con1:replace varName="body" contents-only="true" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.N1829a4a7.0.1985a75bf10.N7e94</con2:id>
+                                                                <con1:expr>
+                                                                    <con:xqueryTransform xmlns:con="http://www.bea.com/wli/sb/stages/config">
+                                                                        <con:resource ref="GetAllInternalBankTransfer/Mapping/InstructionReadResponse"/>
+                                                                        <con:param name="Response">
+                                                                            <con:path>$body/*</con:path>
+                                                                        </con:param>
+                                                                        <con:param name="userIdVariable">
+                                                                            <con:path>$userId</con:path>
+                                                                        </con:param>
+                                                                        <con:param name="refNo">
+                                                                            <con:path>string($InitialRequest/*:siReferenceNo)</con:path>
+                                                                        </con:param>
+                                                                        <con:param name="value">
+                                                                            <con:path>string($CDODResponse/*:operationData/*:CDOD_O_0003)</con:path>
+                                                                        </con:param>
+                                                                    </con:xqueryTransform>
+                                                                </con1:expr>
+                                                            </con1:replace>
+                                                            <con2:report xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.4791a35.0.198c285ed53.N7dd1</con3:id>
+                                                                <con2:expr>
+                                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat('ResponseUUID :',$ReqUUID,' | ',fn-bea:serialize($body))</con3:xqueryText>
+                                                                </con2:expr>
+                                                                <con2:labels>
+                                                                    <con2:key>InternalRepeatTransferDetailsService - Response</con2:key>
+                                                                    <con2:varName>body</con2:varName>
+                                                                    <con2:value>
+                                                                        <con3:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">./text()</con3:xpathText>
+                                                                    </con2:value>
+                                                                </con2:labels>
+                                                            </con2:report>
+                                                            <con2:log xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.4791a35.0.198c285ed53.N7dce</con3:id>
+                                                                <con2:logLevel>debug</con2:logLevel>
+                                                                <con2:expr>
+                                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat('ResponseUUID :',$ReqUUID,' | ',fn-bea:serialize($body))</con3:xqueryText>
+                                                                </con2:expr>
+                                                                <con2:message>InternalRepeatTransferDetailsService - Response</con2:message>
+                                                            </con2:log>
+                                                        </con1:responseTransform>
+                                                    </con1:route>
+                                                </con:actions>
+                                            </con:route-node>
+                                        </con:flow>
+                                    </con:branch>
+                                    <con:branch name="Branch2">
+                                        <con:operator>equals</con:operator>
+                                        <con:value>'CTFO'</con:value>
+                                        <con:flow>
+                                            <con:route-node name="RouteNode8">
+                                                <con:context>
+                                                    <con1:varNsDecl prefix="out" namespace="http://www.mozabanca.org/obdx/outward_remittance_details" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                                                    <con1:varNsDecl prefix="ins" namespace="http://www.mozabanca.org/obdx/instruction_read" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                                                </con:context>
+                                                <con:actions>
+                                                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                                                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.19c66081.0.19850811afb.N7a14</con2:id>
+                                                        <con1:service ref="GetAllOtherBankTransfer/CTFO-MSB" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                                        <con1:operation>CTFOGET</con1:operation>
+                                                        <con1:outboundTransform>
+                                                            <con2:replace varName="body" contents-only="true" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.19c66081.0.19850811afb.N7a13</con3:id>
+                                                                <con2:expr>
+                                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">&lt;ctfo:RequestEncoded xmlns:ctfo="http://www.mozabanca.org/obdx/CTFO">
+    &lt;ctfo:requestString>{$EncodeUrl1}&lt;/ctfo:requestString>
+&lt;/ctfo:RequestEncoded></con3:xqueryText>
+                                                                </con2:expr>
+                                                            </con2:replace>
+                                                            <con2:transport-headers copy-all="false" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.19c66081.0.19850811afb.N7a12</con3:id>
+                                                                <con2:header-set>outbound-request</con2:header-set>
+                                                                <con2:header value="expression" name="Authorization">
+                                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat('Bearer ',$accessToken)</con3:xqueryText>
+                                                                </con2:header>
+                                                            </con2:transport-headers>
+                                                        </con1:outboundTransform>
+                                                        <con1:responseTransform>
+                                                            <con1:replace varName="body" contents-only="true" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                                                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.N1829a4a7.0.1985a75bf10.N7e61</con2:id>
+                                                                <con1:expr>
+                                                                    <con:xqueryTransform xmlns:con="http://www.bea.com/wli/sb/stages/config">
+                                                                        <con:resource ref="GetAllInternalBankTransfer/OtherMapping/InstructionReadResponseOther"/>
+                                                                        <con:param name="Response">
+                                                                            <con:path>$body/*</con:path>
+                                                                        </con:param>
+                                                                        <con:param name="userIdVariable">
+                                                                            <con:path>$userId</con:path>
+                                                                        </con:param>
+                                                                        <con:param name="refNo">
+                                                                            <con:path>string($InitialRequest/*:siReferenceNo)</con:path>
+                                                                        </con:param>
+                                                                        <con:param name="value">
+                                                                            <con:path>string($CDODResponse/*:operationData/*:CDOD_O_0003)</con:path>
+                                                                        </con:param>
+                                                                    </con:xqueryTransform>
+                                                                </con1:expr>
+                                                            </con1:replace>
+                                                            <con2:report xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.4791a35.0.198c285ed53.N7dcb</con3:id>
+                                                                <con2:expr>
+                                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat('ResponseUUID :',$ReqUUID,' | ',fn-bea:serialize($body))</con3:xqueryText>
+                                                                </con2:expr>
+                                                                <con2:labels>
+                                                                    <con2:key>DomesticRepeatTransferDetailsService - Response</con2:key>
+                                                                    <con2:varName>body</con2:varName>
+                                                                    <con2:value>
+                                                                        <con3:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">./text()</con3:xpathText>
+                                                                    </con2:value>
+                                                                </con2:labels>
+                                                            </con2:report>
+                                                            <con2:log xmlns:con2="http://www.bea.com/wli/sb/stages/logging/config">
+                                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ff91.4791a35.0.198c285ed53.N7dc7</con3:id>
+                                                                <con2:logLevel>debug</con2:logLevel>
+                                                                <con2:expr>
+                                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat('ResponseUUID :',$ReqUUID,' | ',fn-bea:serialize($body))</con3:xqueryText>
+                                                                </con2:expr>
+                                                                <con2:message>DomesticRepeatTransferDetailsService - Response</con2:message>
+                                                            </con2:log>
+                                                        </con1:responseTransform>
+                                                    </con1:route>
+                                                </con:actions>
+                                            </con:route-node>
+                                        </con:flow>
+                                    </con:branch>
+                                    <con:default-branch>
+                                        <con:flow/>
+                                    </con:default-branch>
+                                </con:branch-table>
+                            </con:branch-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="outwardDetails">
+                        <con:operator>equals</con:operator>
+                        <con:value/>
+                        <con:flow>
+                            <con:pipeline-node name="Pipeline Pair Node5">
+                                <con:request>request-N3f57ffcb.N3eb91de0.0.197e8ae2335.N7f06</con:request>
+                                <con:response>response-N3f57ffcb.N3eb91de0.0.197e8ae2335.N7f05</con:response>
+                            </con:pipeline-node>
+                            <con:route-node name="RouteNode4">
+                                <con:context/>
+                                <con:actions>
+                                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffcb.N3eb91de0.0.197e8ae2335.N7ef3</con2:id>
+                                        <con1:service ref="GetAllInternalBankTransfer/CTFI_BS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                                        <con1:operation>Operation1</con1:operation>
+                                        <con1:outboundTransform>
+                                            <con2:replace varName="body" contents-only="true" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffcb.N3eb91de0.0.197e8ae2335.N7ef0</con3:id>
+                                                <con2:expr>
+                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">&lt;CTFIEncodedRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                    xsi:schemaLocation="http://www.mozabanca.org/ctfi CTFI.xsd" xmlns="http://www.mozabanca.org/ctfi">
+  &lt;RequestString>{$EncodeUrl}&lt;/RequestString>
+&lt;/CTFIEncodedRequest></con3:xqueryText>
+                                                </con2:expr>
+                                            </con2:replace>
+                                            <con2:transport-headers xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57ffcb.N3eb91de0.0.197e8ae2335.N7eed</con3:id>
+                                                <con2:header-set>outbound-request</con2:header-set>
+                                                <con2:header value="expression" name="Authorization">
+                                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat('Bearer ',$accessToken)</con3:xqueryText>
+                                                </con2:header>
+                                            </con2:transport-headers>
+                                        </con1:outboundTransform>
+                                        <con1:responseTransform/>
+                                    </con1:route>
+                                </con:actions>
+                            </con:route-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:default-branch>
+                        <con:flow/>
+                    </con:default-branch>
+                </con:branch-table>
+            </con:branch-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>
