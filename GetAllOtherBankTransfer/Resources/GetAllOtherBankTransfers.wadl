@@ -1,0 +1,62 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="http://www.mozabanca.org/obdx/INSTRUCTION_LIST" xmlns:ns0="http://www.mozabanca.org/obdx/OUTWARD_REMITTANCE_LIST" xmlns="http://wadl.dev.java.net/2009/02" xmlns:ns4="http://www.mozabanca.org/obdx/CANCEL_INSTRUCTION" xmlns:ns2="http://www.mozabanca.org/obdx/OUTWARD_REMITTANCE_DETAILS" xmlns:ns3="http://www.mozabanca.org/obdx/INSTRUCTION_READ">
+   <doc title="GetAllOtherBankTransfers">RestService</doc>
+   <grammars>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabanca.org/obdx/INSTRUCTION_LIST" schemaLocation="../INSTRUCTION_LIST.xsd"/>
+        </xsd:schema>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabanca.org/obdx/OUTWARD_REMITTANCE_LIST" schemaLocation="../OUTWARD_REMITTANCE_LIST.xsd"/>
+        </xsd:schema>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabanca.org/obdx/OUTWARD_REMITTANCE_DETAILS" schemaLocation="../OUTWARD_REMITTANCE_DETAILS.xsd"/>
+        </xsd:schema>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabanca.org/obdx/INSTRUCTION_READ" schemaLocation="../INSTRUCTION_READ.xsd"/>
+        </xsd:schema>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabanca.org/obdx/CANCEL_INSTRUCTION" schemaLocation="../CANCEL_INSTRUCTION.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/INSTRUCTION_LIST">
+         <method name="POST" soa:wsdlOperation="INSTRUCTIONLIST">
+            <request>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabanca.org/obdx/INSTRUCTION_LIST"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabanca.org/obdx/INSTRUCTION_LIST"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/OUTWARD_REMITTANCE_LIST">
+         <method name="POST" soa:wsdlOperation="OUTWARDREMITTANCELIST">
+            <request>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabanca.org/obdx/OUTWARD_REMITTANCE_LIST"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabanca.org/obdx/OUTWARD_REMITTANCE_LIST"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/OUTWARD_REMITTANCE_DETAILS">
+         <method name="POST" soa:wsdlOperation="OUTWARDREMITTANSEDETAILS">
+            <request>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabanca.org/obdx/OUTWARD_REMITTANCE_DETAILS"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabanca.org/obdx/OUTWARD_REMITTANCE_DETAILS"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/INSTRUCTION_READ">
+         <method name="POST" soa:wsdlOperation="INSTRUCTIONREAD">
+            <request>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabanca.org/obdx/INSTRUCTION_READ"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabanca.org/obdx/INSTRUCTION_READ"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>
