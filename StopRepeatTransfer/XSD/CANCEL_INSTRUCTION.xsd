@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            targetNamespace="http://www.mozabanca.org/CANCEL_INSTRUCTION"
+            xmlns="http://www.mozabanca.org/CANCEL_INSTRUCTION"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            nxsd:version="JSON"
+            nxsd:encoding="UTF-8">
+
+  <xsd:element name="CANCEL_INSTRUCTION_Request" type="CancelInstructionRequestType"/>
+  <xsd:element name="CANCEL_INSTRUCTION_Response" type="CancelInstructionResponseType"/>
+
+  <!-- Request Structure -->
+  <xsd:complexType name="CancelInstructionRequestType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="referenceNo" type="xsd:string"/>
+      <xsd:element name="interfaceId" type="xsd:string"/>
+      <xsd:element name="entity" type="xsd:string"/>
+      <xsd:element name="headersMap" type="HeadersMapType"/>
+      <xsd:element name="queryMap" minOccurs="0" nillable="true">
+        <xsd:complexType/>
+      </xsd:element>
+      <xsd:element name="hostName" type="xsd:string"/>
+      <xsd:element name="contractReferenceId" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Response Structure -->
+  <xsd:complexType name="CancelInstructionResponseType">
+    <xsd:sequence>
+    <xsd:element name="data">
+    <xsd:complexType>
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="referenceNo" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="result" type="ResultType"/>
+      <xsd:element name="hasMore" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="totalRecords" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="startSequence" type="xsd:string" minOccurs="0" nillable="true"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  </xsd:element>
+  </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Reusable Headers Map -->
+  <xsd:complexType name="HeadersMapType">
+    <xsd:sequence>
+      <xsd:element name="correlID" type="xsd:string"/>
+      <xsd:element name="msgID" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Reusable Result Structure -->
+  <xsd:complexType name="ResultType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="externalReferenceId" type="xsd:string"/>
+      <xsd:element name="status" type="xsd:string"/>
+      <xsd:element name="errorList" nillable="true" minOccurs="0" maxOccurs="unbounded">
+      <xsd:complexType>
+      <xsd:sequence>
+      <xsd:element name="code" type="xsd:string"/>
+      <xsd:element name="message" type="xsd:string"/>
+      </xsd:sequence>
+      </xsd:complexType>
+      </xsd:element>      
+      <xsd:element name="warningList" type="xsd:string" minOccurs="0" nillable="true"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

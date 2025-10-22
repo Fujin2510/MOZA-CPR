@@ -1,0 +1,20 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns0="http://www.mozabanca.org/CANCEL_INSTRUCTION" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="Stop_Transfer">RestService</doc>
+   <grammars>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabanca.org/CANCEL_INSTRUCTION" schemaLocation="../XSD/CANCEL_INSTRUCTION.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/stp">
+         <method name="POST" soa:wsdlOperation="Operation1">
+            <request>
+               <representation mediaType="application/json" element="cns:CANCEL_INSTRUCTION_Request" xmlns:cns="http://www.mozabanca.org/CANCEL_INSTRUCTION"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:CANCEL_INSTRUCTION_Response" xmlns:cns="http://www.mozabanca.org/CANCEL_INSTRUCTION"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

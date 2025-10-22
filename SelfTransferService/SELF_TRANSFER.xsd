@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema 
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+    xmlns:tns="http://www.mozabank.org/selfTransfer"
+    targetNamespace="http://www.mozabank.org/selfTransfer" 
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified"
+    nxsd:stream="json"
+    nxsd:format="JSON"
+    nxsd:version="NXSD"
+    nxsd:encoding="UTF-8">
+
+  <!-- Root Elements -->
+  <xsd:element name="Request" type="tns:SelfTransferRequestType"/>
+  <xsd:element name="Response" type="tns:SelfTransferResponseType"/>
+
+  <!-- Request Type -->
+  <xsd:complexType name="SelfTransferRequestType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:anyType" minOccurs="0"/>
+      <xsd:element name="referenceNo" type="xsd:string"/>
+      <xsd:element name="interfaceId" type="xsd:string"/>
+      <xsd:element name="entity" type="xsd:string"/>
+      <xsd:element name="headersMap" type="tns:HeadersMapType"/>
+      <xsd:element name="queryMap" type="xsd:anyType" minOccurs="0"/>
+      <xsd:element name="hostName" type="xsd:string"/>
+      <xsd:element name="partyId" type="xsd:string"/>
+      <xsd:element name="debitAccountId" type="xsd:string"/>
+      <xsd:element name="creditAccountId" type="xsd:string"/>
+      <xsd:element name="amount" type="tns:CurrencyAmountType"/>
+      <xsd:element name="paymentDate" type="tns:DateWrapperType"/>
+      <xsd:element name="remarks" type="xsd:string"/>
+      <xsd:element name="dealId" type="xsd:anyType" minOccurs="0"/>
+      <xsd:element name="sourceCode" type="xsd:string"/>
+      <xsd:element name="txnBranch" type="xsd:string"/>
+      <xsd:element name="hostCode" type="xsd:string"/>
+      <xsd:element name="paymentMethod" type="xsd:string"/>
+      <xsd:element name="networkCode" type="xsd:string"/>
+      <xsd:element name="transferType" type="xsd:string"/>
+      <xsd:element name="prefundedPayments" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- HeadersMapType -->
+  <xsd:complexType name="HeadersMapType">
+    <xsd:sequence>
+      <xsd:element name="branchID" type="xsd:string"/>
+      <xsd:element name="msgID" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- CurrencyAmountType -->
+  <xsd:complexType name="CurrencyAmountType">
+    <xsd:sequence>
+      <xsd:element name="currency" type="xsd:string"/>
+      <xsd:element name="amount" type="xsd:decimal"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- DateWrapperType -->
+  <xsd:complexType name="DateWrapperType">
+    <xsd:sequence>
+      <xsd:element name="calendarDayOfWeek" type="xsd:string"/>
+      <xsd:element name="weekOfYear" type="xsd:int"/>
+      <xsd:element name="monthDateTime" type="xsd:long"/>
+      <xsd:element name="monthDate" type="xsd:int"/>
+      <xsd:element name="lastDayOfMonth" type="xsd:int"/>
+      <xsd:element name="sqltimestamp" type="xsd:long"/>
+      <xsd:element name="dateString" type="xsd:string"/>
+      <xsd:element name="yearMonthDate" type="xsd:int"/>
+      <xsd:element name="year" type="xsd:int"/>
+      <xsd:element name="dayOfMonth" type="xsd:int"/>
+      <xsd:element name="time" type="xsd:long"/>
+      <xsd:element name="timestamp" type="xsd:long"/>
+      <xsd:element name="leapYear" type="xsd:boolean"/>
+      <xsd:element name="dayOfYear" type="xsd:int"/>
+      <xsd:element name="month" type="xsd:int"/>
+      <xsd:element name="dayOfWeek" type="xsd:int"/>
+      <xsd:element name="millis" type="xsd:long"/>
+      <xsd:element name="yearMonth" type="xsd:int"/>
+      <xsd:element name="sqlDate" type="xsd:long"/>
+      <xsd:element name="infinite" type="xsd:boolean"/>
+      <xsd:element name="null" type="xsd:boolean"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Response Type -->
+  <xsd:complexType name="SelfTransferResponseType">
+    <xsd:sequence>
+      <xsd:element name="data">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="dictionaryArray" type="xsd:anyType" minOccurs="0"/>
+            <xsd:element name="referenceNo" type="xsd:anyType" minOccurs="0"/>
+            <xsd:element name="result" type="tns:ResultType"/>
+            <xsd:element name="hasMore" type="xsd:anyType" minOccurs="0"/>
+            <xsd:element name="totalRecords" type="xsd:anyType" minOccurs="0"/>
+            <xsd:element name="startSequence" type="xsd:anyType" minOccurs="0"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- ResultType -->
+  <xsd:complexType name="ResultType" nxsd:mapOrder="dictionaryArray externalReferenceId status errorList warningList">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:anyType" minOccurs="0"/>
+      <xsd:element name="externalReferenceId" type="xsd:string"/>
+      <xsd:element name="status" type="xsd:string"/>
+      <xsd:element name="errorList" nillable="true" minOccurs="0" maxOccurs="unbounded">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="code" type="xsd:string"/>
+            <xsd:element name="message" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="warningList" type="xsd:anyType" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>
