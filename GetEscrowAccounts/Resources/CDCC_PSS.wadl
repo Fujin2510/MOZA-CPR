@@ -1,0 +1,20 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns0="http://www.mozabank.org/CCC_ACCOUNT_READ" xmlns="http://wadl.dev.java.net/2009/02">
+   <doc title="CDCC_PSS">RestService</doc>
+   <grammars>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org/CCC_ACCOUNT_READ" schemaLocation="../OBDX_Schema/CCC_ACCOUNT_READ.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/accountRead">
+         <method name="POST" soa:wsdlOperation="CDCC">
+            <request>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabank.org/CCC_ACCOUNT_READ"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabank.org/CCC_ACCOUNT_READ"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

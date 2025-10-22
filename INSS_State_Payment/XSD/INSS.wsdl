@@ -1,0 +1,290 @@
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://msb.mozabanco.co.mz" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="PagamentoContribuicaoWs" targetNamespace="http://msb.mozabanco.co.mz">
+<wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://msb.mozabanco.co.mz" elementFormDefault="unqualified" targetNamespace="http://msb.mozabanco.co.mz" version="1.0">
+<xs:element name="Consulta" type="tns:Consulta"/>
+<xs:element name="ConsultaResponse" type="tns:ConsultaResponse"/>
+<xs:element name="DownloadComprovativo" type="tns:DownloadComprovativo"/>
+<xs:element name="DownloadComprovativoResponse" type="tns:DownloadComprovativoResponse"/>
+<xs:element name="Pagar" type="tns:Pagar"/>
+<xs:element name="PagarResponse" type="tns:PagarResponse"/>
+<xs:complexType name="Consulta">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="input" type="tns:pagamentoContribuicaoInput"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="pagamentoContribuicaoInput">
+<xs:complexContent>
+<xs:extension base="tns:serviceInput">
+<xs:sequence>
+<xs:element minOccurs="0" name="nome" type="xs:string"/>
+<xs:element minOccurs="0" name="numConta" type="xs:integer"/>
+<xs:element minOccurs="0" name="numGuiaPagContribuicao" type="xs:integer"/>
+<xs:element minOccurs="0" name="username" type="xs:string"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="serviceInput">
+<xs:sequence>
+<xs:element minOccurs="0" name="chaveConfirmacao" type="tns:chaveConfirmacao"/>
+<xs:element minOccurs="0" name="sessao" type="tns:serviceSession"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="chaveConfirmacao">
+<xs:sequence>
+<xs:element minOccurs="0" name="chave" type="xs:string"/>
+<xs:element minOccurs="0" name="posicoes" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="serviceSession">
+<xs:sequence>
+<xs:element minOccurs="0" name="id" type="xs:string"/>
+<xs:element minOccurs="0" name="versao" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="ConsultaResponse">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="output" type="tns:pagamentoContribuicaoOutput"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="pagamentoContribuicaoOutput">
+<xs:complexContent>
+<xs:extension base="tns:serviceOutput">
+<xs:sequence>
+<xs:element minOccurs="0" name="base64File" type="xs:string"/>
+<xs:element minOccurs="0" name="codAgencia" type="xs:string"/>
+<xs:element minOccurs="0" name="codAgenciaINSS" type="xs:int"/>
+<xs:element minOccurs="0" name="codAutenticacao" type="xs:string"/>
+<xs:element minOccurs="0" name="codControloINSS" type="xs:string"/>
+<xs:element minOccurs="0" name="codMsgRetorno" type="xs:string"/>
+<xs:element minOccurs="0" name="codTipoContribuicao" type="xs:string"/>
+<xs:element minOccurs="0" name="comprovativo" type="xs:string"/>
+<xs:element minOccurs="0" name="dataHoraProcessamento" type="xs:string"/>
+<xs:element minOccurs="0" name="dataHoraRecebimento" type="xs:string"/>
+<xs:element minOccurs="0" name="dataLimitePagamento" type="xs:string"/>
+<xs:element minOccurs="0" name="dataPagamento" type="xs:string"/>
+<xs:element minOccurs="0" name="formPagamento" type="xs:string"/>
+<xs:element minOccurs="0" name="identificacaoBanco" type="xs:string"/>
+<xs:element minOccurs="0" name="instrucoes" type="xs:string"/>
+<xs:element minOccurs="0" name="localPagamento" type="xs:string"/>
+<xs:element minOccurs="0" name="mesReferencia" type="xs:long"/>
+<xs:element minOccurs="0" name="msgErroINSS" type="xs:string"/>
+<xs:element minOccurs="0" name="msgRetorno" type="xs:string"/>
+<xs:element minOccurs="0" name="nome" type="xs:string"/>
+<xs:element minOccurs="0" name="nomeContribuinte" type="xs:string"/>
+<xs:element minOccurs="0" name="nomeCredito" type="xs:string"/>
+<xs:element minOccurs="0" name="nuit" type="xs:long"/>
+<xs:element minOccurs="0" name="numAutorizacao" type="xs:integer"/>
+<xs:element minOccurs="0" name="numConta" type="xs:integer"/>
+<xs:element minOccurs="0" name="numContaCreditoINSS" type="xs:integer"/>
+<xs:element minOccurs="0" name="numGuiaPagContribuicao" type="xs:integer"/>
+<xs:element minOccurs="0" name="numINSS" type="xs:long"/>
+<xs:element minOccurs="0" name="numIdentificacaoBanco" type="xs:int"/>
+<xs:element minOccurs="0" name="numOperacao" type="xs:integer"/>
+<xs:element minOccurs="0" name="pagamentoContribuicaoGoodResponse" type="tns:pagamentoContribuicaoGoodResponse"/>
+<xs:element minOccurs="0" name="protocoloRetorno" type="xs:string"/>
+<xs:element minOccurs="0" name="seqMovimento" type="xs:integer"/>
+<xs:element minOccurs="0" name="tipoContribuicao" type="xs:string"/>
+<xs:element minOccurs="0" name="transationBadResponse" type="tns:transationBadResponse"/>
+<xs:element minOccurs="0" name="valContibuicao" type="xs:decimal"/>
+<xs:element minOccurs="0" name="valJurosMora" type="xs:decimal"/>
+<xs:element minOccurs="0" name="valMulta" type="xs:decimal"/>
+<xs:element minOccurs="0" name="valPago" type="xs:decimal"/>
+<xs:element minOccurs="0" name="valTotalPagar" type="xs:decimal"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="serviceOutput">
+<xs:sequence>
+<xs:element minOccurs="0" name="sessao" type="tns:serviceSession"/>
+<xs:element minOccurs="0" name="status" type="tns:serviceStatus"/>
+<xs:element minOccurs="0" name="transactionId" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="pagamentoContribuicaoGoodResponse">
+<xs:complexContent>
+<xs:extension base="tns:transationGoodResponse">
+<xs:sequence/>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType abstract="true" name="transationGoodResponse">
+<xs:complexContent>
+<xs:extension base="tns:transationResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="refAnulacao" type="xs:string"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType abstract="true" name="transationResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="messageGuid" type="xs:string"/>
+<xs:element minOccurs="0" name="status" type="xs:string"/>
+<xs:element name="transationLogNumber" type="xs:int"/>
+<xs:element minOccurs="0" name="transationName" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="transationBadResponse">
+<xs:complexContent>
+<xs:extension base="tns:transationResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="message" type="xs:string"/>
+<xs:element name="messagesNumber" type="xs:int"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="serviceStatus">
+<xs:sequence>
+<xs:element name="codigo" type="xs:int"/>
+<xs:element minOccurs="0" name="detalhes" type="tns:serviceStatusDetailList"/>
+<xs:element minOccurs="0" name="executado" type="xs:string"/>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="mensagens" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="serviceStatusDetailList">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="detalhe" nillable="true" type="tns:serviceStatusDetail"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="serviceStatusDetail">
+<xs:sequence>
+<xs:element minOccurs="0" name="causa" type="xs:string"/>
+<xs:element minOccurs="0" name="codigo" type="xs:string"/>
+<xs:element minOccurs="0" name="mensagem" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="DownloadComprovativo">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="input" type="tns:downloadComprovativoInput"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="downloadComprovativoInput">
+<xs:complexContent>
+<xs:extension base="tns:serviceInput">
+<xs:sequence>
+<xs:element minOccurs="0" name="numGuia" type="xs:decimal"/>
+<xs:element minOccurs="0" name="seqMovimento" type="xs:decimal"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="DownloadComprovativoResponse">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="output" type="tns:downloadComprovativoOutput"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="downloadComprovativoOutput">
+<xs:complexContent>
+<xs:extension base="tns:serviceOutput">
+<xs:sequence>
+<xs:element minOccurs="0" name="comprovativo" type="tns:comprovativoINSS"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="comprovativoINSS">
+<xs:sequence>
+<xs:element minOccurs="0" name="conta" type="xs:decimal"/>
+<xs:element minOccurs="0" name="contaCredito" type="xs:decimal"/>
+<xs:element minOccurs="0" name="data" type="xs:string"/>
+<xs:element minOccurs="0" name="dataOperacao" type="xs:string"/>
+<xs:element minOccurs="0" name="ficheiroBase64" type="xs:string"/>
+<xs:element minOccurs="0" name="hora" type="xs:string"/>
+<xs:element minOccurs="0" name="metodoPagamento" type="xs:string"/>
+<xs:element minOccurs="0" name="moeda" type="xs:string"/>
+<xs:element minOccurs="0" name="nomeBalcao" type="xs:string"/>
+<xs:element minOccurs="0" name="nomeContaCredito" type="xs:string"/>
+<xs:element minOccurs="0" name="nomeDebito" type="xs:string"/>
+<xs:element name="numBalcao" type="xs:long"/>
+<xs:element minOccurs="0" name="numGuia" type="xs:decimal"/>
+<xs:element minOccurs="0" name="numInss" type="xs:decimal"/>
+<xs:element minOccurs="0" name="numOperacao" type="xs:decimal"/>
+<xs:element minOccurs="0" name="operador" type="xs:string"/>
+<xs:element minOccurs="0" name="situMovimentoA" type="xs:string"/>
+<xs:element minOccurs="0" name="situMovimentoB" type="xs:string"/>
+<xs:element minOccurs="0" name="valorPago" type="xs:decimal"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="Pagar">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="input" type="tns:pagamentoContribuicaoInput"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="PagarResponse">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="output" type="tns:pagamentoContribuicaoOutput"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
+</wsdl:types>
+<wsdl:message name="Consulta">
+<wsdl:part element="tns:Consulta" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="DownloadComprovativo">
+<wsdl:part element="tns:DownloadComprovativo" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="Pagar">
+<wsdl:part element="tns:Pagar" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="DownloadComprovativoResponse">
+<wsdl:part element="tns:DownloadComprovativoResponse" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="PagarResponse">
+<wsdl:part element="tns:PagarResponse" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="ConsultaResponse">
+<wsdl:part element="tns:ConsultaResponse" name="parameters"> </wsdl:part>
+</wsdl:message>
+<wsdl:portType name="PagamentoContribuicao">
+<wsdl:operation name="Consulta">
+<wsdl:input message="tns:Consulta" name="Consulta"> </wsdl:input>
+<wsdl:output message="tns:ConsultaResponse" name="ConsultaResponse"> </wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="DownloadComprovativo">
+<wsdl:input message="tns:DownloadComprovativo" name="DownloadComprovativo"> </wsdl:input>
+<wsdl:output message="tns:DownloadComprovativoResponse" name="DownloadComprovativoResponse"> </wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="Pagar">
+<wsdl:input message="tns:Pagar" name="Pagar"> </wsdl:input>
+<wsdl:output message="tns:PagarResponse" name="PagarResponse"> </wsdl:output>
+</wsdl:operation>
+</wsdl:portType>
+<wsdl:binding name="PagamentoContribuicaoWsSoapBinding" type="tns:PagamentoContribuicao">
+<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+<wsdl:operation name="Consulta">
+<soap:operation soapAction="Consulta" style="document"/>
+<wsdl:input name="Consulta">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="ConsultaResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="DownloadComprovativo">
+<soap:operation soapAction="DownloadComprovativo" style="document"/>
+<wsdl:input name="DownloadComprovativo">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="DownloadComprovativoResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="Pagar">
+<soap:operation soapAction="Pagar" style="document"/>
+<wsdl:input name="Pagar">
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output name="PagarResponse">
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:service name="PagamentoContribuicaoWs">
+<wsdl:port binding="tns:PagamentoContribuicaoWsSoapBinding" name="PagamentoContribuicaoPort">
+<soap:address location="http://svdcpmwd02:9084/MozaServiceBus/PagamentoContribuicao/PagamentoContribuicaoWs"/>
+</wsdl:port>
+</wsdl:service>
+</wsdl:definitions>

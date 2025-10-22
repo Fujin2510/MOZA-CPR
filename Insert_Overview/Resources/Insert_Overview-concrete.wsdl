@@ -1,0 +1,12 @@
+<wsdl:definitions targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ServiceBusApplication/Insert_Overview/Insert_Overview" name="Insert_Overview-concrete" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <wsdl:import location="Insert_Overview.wsdl" namespace="http://xmlns.oracle.com/pcbpel/adapter/db/ServiceBusApplication/Insert_Overview/Insert_Overview"/>
+    <wsdl:binding name="Insert_Overview_ptt-binding" type="ins:Insert_Overview_ptt" xmlns:ins="http://xmlns.oracle.com/pcbpel/adapter/db/ServiceBusApplication/Insert_Overview/Insert_Overview">
+        <soap:binding style="document" transport="http://www.bea.com/wli/sb/transports/jca"/>
+        <wsdl:operation name="merge">
+            <soap:operation soapAction="merge"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

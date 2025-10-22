@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            xmlns:tns="http://www.mozabank.org/emitir_extractos"
+            targetNamespace="http://www.mozabank.org/emitir_extractos"
+            elementFormDefault="qualified"
+              attributeFormDefault="unqualified"  
+             nxsd:version="JSON" nxsd:encoding="UTF-8">
+
+  <!-- Root Elements -->
+  <xsd:element name="Request" type="tns:RequestType"/>
+  <xsd:element name="Response" type="tns:ResponseType"/>
+
+  <!-- Request Structure -->
+  <xsd:complexType name="RequestType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="referenceNo" type="xsd:string"/>
+      <xsd:element name="interfaceId" type="xsd:string"/>
+      <xsd:element name="entity" type="xsd:string"/>
+      <xsd:element name="headersMap" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="queryMap" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="hostName" type="xsd:string"/>
+      <xsd:element name="id" type="xsd:string"/>
+      <xsd:element name="q" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="sortBy" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="count" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="fromAmount" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="toAmount" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Response Structure -->
+  <xsd:complexType name="ResponseType">
+    <xsd:sequence>
+      <xsd:element name="data">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="referenceNo" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="result" type="tns:ResultType"/>
+            <xsd:element name="hasMore" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="totalRecords" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="startSequence" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="creditCardStatementList" type="tns:StatementListType" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Result -->
+  <xsd:complexType name="ResultType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="externalReferenceId" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="status" type="xsd:string"/>
+      <xsd:element name="errorList" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="warningList" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Statement List -->
+  <xsd:complexType name="StatementListType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="openingBalance" type="xsd:decimal"/>
+      <xsd:element name="earnedPoints" type="xsd:decimal"/>
+      <xsd:element name="redeemedPoints" type="xsd:decimal"/>
+      <xsd:element name="closingBalance" type="xsd:decimal"/>
+      <xsd:element name="id" type="xsd:string"/>
+      <xsd:element name="statementDate" type="xsd:string"/>
+      <xsd:element name="statmentItems" type="tns:StatementItemsType" maxOccurs="unbounded"/>
+      <xsd:element name="fromDate" type="xsd:string"/>
+      <xsd:element name="toDate" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Transaction Items -->
+  <xsd:complexType name="StatementItemsType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="transactionDate" type="xsd:string"/>
+      <xsd:element name="serialNumber" type="xsd:string"/>
+      <xsd:element name="transactionDescription" type="xsd:string"/>
+      <xsd:element name="transactionAmount" type="tns:AmountType"/>
+      <xsd:element name="crdrFlag" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Amount Type -->
+  <xsd:complexType name="AmountType">
+    <xsd:sequence>
+      <xsd:element name="currency" type="xsd:string"/>
+      <xsd:element name="amount" type="xsd:decimal"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

@@ -1,0 +1,20 @@
+<wsdl:definitions name="Insert_Overview" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/ServiceBusApplication/Insert_Overview/Insert_Overview" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/ServiceBusApplication/Insert_Overview/Insert_Overview" xmlns:jca="http://xmlns.oracle.com/pcbpel/wsdl/jca/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:top="http://xmlns.oracle.com/pcbpel/adapter/db/top/Insert_Overview" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <plt:partnerLinkType name="Insert_Overview_plt">
+    <plt:role name="Insert_Overview_role">
+      <plt:portType name="tns:Insert_Overview_ptt"/>
+    </plt:role>
+  </plt:partnerLinkType>
+    <wsdl:types>
+      <schema xmlns="http://www.w3.org/2001/XMLSchema">
+        <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/Insert_Overview" schemaLocation="Insert_Overview_table.xsd"/>
+      </schema>
+    </wsdl:types>
+    <wsdl:message name="OverviewWidgetCollection_msg">
+        <wsdl:part name="OverviewWidgetCollection" element="top:OverviewWidgetCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="Insert_Overview_ptt">
+        <wsdl:operation name="merge">
+            <wsdl:input message="tns:OverviewWidgetCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>
