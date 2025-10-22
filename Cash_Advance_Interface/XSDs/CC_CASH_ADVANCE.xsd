@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            targetNamespace="http://www.mozabanca.org/CC_CASH_ADVANCE"
+            xmlns="http://www.mozabanca.org/CC_CASH_ADVANCE" elementFormDefault="qualified"
+            attributeFormDefault="unqualified" nxsd:version="JSON" nxsd:encoding="UTF-8">
+
+
+  <!-- Root Elements -->
+  <xsd:element name="Request" type="RequestType"/>
+  <xsd:element name="Response" type="ResponseType"/>
+
+  <!-- Request Type -->
+  <xsd:complexType name="RequestType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="referenceNo" type="xsd:string"/>
+      <xsd:element name="interfaceId" type="xsd:string"/>
+      <xsd:element name="entity" type="xsd:string"/>
+      <xsd:element name="headersMap" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="queryMap" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="hostName" type="xsd:string"/>
+      <xsd:element name="id" type="xsd:string"/>
+      <xsd:element name="amount" type="CurrencyAmountType"/>
+      <xsd:element name="cardDescription" type="xsd:string"/>
+      <xsd:element name="accountDescription" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Response Type -->
+  <xsd:complexType name="ResponseType">
+    <xsd:sequence>
+     <xsd:element name="data">
+       <xsd:complexType>
+       <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="referenceNo" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="result" type="ResultType"/>
+      <xsd:element name="hasMore" type="xsd:boolean" minOccurs="0"/>
+      <xsd:element name="totalRecords" type="xsd:int" minOccurs="0"/>
+      <xsd:element name="startSequence" type="xsd:int" minOccurs="0"/>
+      <xsd:element name="referenceNo" type="xsd:string"/>
+      <xsd:element name="currencytype" type="xsd:string"/>
+      <xsd:element name="processedAmount" type="xsd:decimal"/>
+      <xsd:element name="transactionID" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  </xsd:element>
+  </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Common Result Structure -->
+  <xsd:complexType name="ResultType">
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="externalReferenceId" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="status" type="xsd:string"/>
+      <xsd:element name="errorList" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="warningList" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Currency Amount Type -->
+  <xsd:complexType name="CurrencyAmountType">
+    <xsd:sequence>
+      <xsd:element name="currency" type="xsd:string"/>
+      <xsd:element name="amount" type="xsd:decimal"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>

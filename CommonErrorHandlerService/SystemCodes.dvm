@@ -1,0 +1,29 @@
+<dvm name="SystemCodes" xmlns="http://xmlns.oracle.com/dvm">
+  <description/>
+  <columns>
+    <column name="MSBCode"/>
+    <column name="OBDXCode"/>
+    <column name="ErrorMessageEN"/>
+    <column name="ErrorMessagePT"/>
+  </columns>
+  <rows>
+    <row>
+      <cell>B</cell>
+      <cell>ERR001</cell>
+      <cell>Invalid backend response</cell>
+      <cell>Invalid backend responsePT</cell>
+    </row>
+    <row>
+      <cell>906</cell>
+      <cell>ERR001</cell>
+      <cell>Invalid Session</cell>
+      <cell>Invalid Session PT</cell>
+    </row>
+    <row>
+      <cell>ERR004</cell>
+      <cell>DIGX_CMOV_ERR_001</cell>
+      <cell>The interval between dates must not exceed 1 months.</cell>
+      <cell>The interval between dates must not exceed 1 months PT.</cell>
+    </row>
+  </rows>
+</dvm>

@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="CreditCard/Resources/CreditCardAccountPartySummary"/>
+            <con:binding>
+                <con:name>CreditCardAccountPartySummary_ptt-binding</con:name>
+                <con:namespace>http://xmlns.oracle.com/MozaApplication/CreditCard/CreditCardAccountPartySummary</con:namespace>
+            </con:binding>
+        </con:binding>
+        <oper:operations xmlns:oper="http://xmlns.oracle.com/servicebus/pipeline/operations">
+            <oper:monitoring enabled="true" level="service" aggregationInterval="1440"/>
+        </oper:operations>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:pipeline type="request" name="request-N3f57fffd.N36e76368.0.1976779627e.N7eed">
+            <con:stage id="_StageId-N3f57fffd.N36e76368.0.1976779627e.N7c19" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:assign varName="InitialRequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffd.N36e76368.0.1976779627e.N7337</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body/*</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:wsCallout xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57e23e.N41b26944.0.19782464c19.N7c94</con2:id>
+                        <con1:service ref="AuthenticatorService/AuthenticationService" xsi:type="ref:ProxyRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:request>
+                            <con1:payload wrapped="false">AuthenticatorRequest</con1:payload>
+                        </con1:request>
+                        <con1:response>
+                            <con1:payload wrapped="false">AuthenticatorResponse</con1:payload>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con1:assign varName="AuthenticatorRequest">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57e23e.N41b26944.0.19782464c19.N7c93</con2:id>
+                                <con1:expr>
+                                    <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">&lt;Request/></con:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:requestTransform>
+                        <con1:responseTransform>
+                            <con1:assign varName="AccessToken">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57e23e.N41b26944.0.19782464c19.N7c92</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$AuthenticatorResponse/*:access_token</con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:responseTransform>
+                    </con1:wsCallout>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57fffd.N36e76368.0.1976779627e.N751b" name="Request Params Stage">
+                <con:context>
+                    <con1:userNsDecl prefix="ccdo" namespace="http://www.mozabank.org/ccdo_party_casa_accounts_list" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                    <con1:varNsDecl prefix="ccdo1" namespace="http://www.mozabank.org/ccdo_casa_product_details" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                    <con1:varNsDecl prefix="ccdo2" namespace="http://www.mozabank.org/ccdo_branch_list" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                    <con1:varNsDecl prefix="casa" namespace="http://www.mozabank.org/casa_statement_item_list" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:assign varName="idVar" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffd.N36e76368.0.1976779627e.N751a</con2:id>
+                        <con2:disabled xmlns:con2="http://www.bea.com/wli/sb/stages/config">true</con2:disabled>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">'0469929'</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:javaScript xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffd.N36e76368.0.1976779627e.N7519</con2:id>
+                        <con2:disabled xmlns:con2="http://www.bea.com/wli/sb/stages/config">true</con2:disabled>
+                        <con1:script>process.idVar = process.body.id</con1:script>
+                    </con1:javaScript>
+                    <con1:assign varName="userIdVar" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffd.N36e76368.0.1976779627e.N7518</con2:id>
+                        <con2:disabled xmlns:con2="http://www.bea.com/wli/sb/stages/config">true</con2:disabled>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">substring-before(substring-after($inbound/ctx:transport/ctx:request/tp:headers/tp:user-header[@name='X_OBDX_SESSION_PARAM']/@value,'~'),'~')</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="CreditCardCCCARequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffd.N36e76368.0.1976779627e.N7517</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="CreditCard/XqueryRequest/CCCA_CDCA_Request"/>
+                                <con2:param name="OBDX_Request">
+                                    <con2:path>$InitialRequest</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:nxsdTranslation xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffd.N36e76368.0.1976779627e.N7516</con2:id>
+                        <con1:type>XML-To-Native</con1:type>
+                        <con1:sourceExpr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$CreditCardCCCARequest</con2:xqueryText>
+                        </con1:sourceExpr>
+                        <con1:nxsd ref="CreditCardGetAllProducts/Resources/XSD/CCCA"/>
+                        <con1:schemaElement xmlns:ccc="http://www.mozabank.org/CCCACreditCard">ccc:Request</con1:schemaElement>
+                        <con1:assign-variable>CreditCardCCCARequestListBin</con1:assign-variable>
+                        <con1:enforceSchemaOrder>false</con1:enforceSchemaOrder>
+                    </con1:nxsdTranslation>
+                    <con1:assign varName="CreditCardCCCARequestJSON" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffd.N36e76368.0.1976779627e.N7515</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn-bea:binary-to-text($CreditCardCCCARequestListBin[@ref],$text)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="CreditCardCCCAJSONRequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffd.N36e76368.0.1976779627e.N7514</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn:replace($CreditCardCCCARequestJSON,'null','""')</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="PartyCasaAccountListtJSONTest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffd.N36e76368.0.1976779627e.N7513</con2:id>
+                        <con1:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">'{
+  "user": "aaugusto3",
+  "password": "",
+  "origin": "P",
+  "channelCode": "INT",
+  "version": "R30",
+  "licenceKey": "licenseKey",
+  "sessionId": "d900bbe2",
+  "transactionCode": "CCDO",
+  "operationData": {
+    "CCDO_I_0001": "99",
+    "CCDO_I_0004": "S",
+    "CCDO_I_0005": "S"
+  }
+}'</con:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:javaCallout varName="CreditCardCCCARequestEncoded" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffd.N36e76368.0.1976779627e.N7512</con2:id>
+                        <con1:archive ref="DebitCardList/Resources/JsonToStringUrl"/>
+                        <con1:className>demo.MainClass</con1:className>
+                        <con1:method>public static java.lang.String encodeJsonToRequestParam(java.lang.String)</con1:method>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$CreditCardCCCAJSONRequest</con2:xqueryText>
+                        </con1:expr>
+                        <con1:return-param-as-ref>false</con1:return-param-as-ref>
+                    </con1:javaCallout>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57fffd.N36e76368.0.1976779627e.N7eec">
+            <con:stage id="_StageId-N3f57fffd.N36e76368.0.1976779627e.N728e" name="Request Params Stage">
+                <con:context>
+                    <con1:userNsDecl prefix="ccdo" namespace="http://www.mozabank.org/ccdo_party_casa_accounts_list" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                    <con1:userNsDecl prefix="car" namespace="http://www.mozabank.org/CARDAC_PARTYLIST_SUMMARY" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                    <con1:varNsDecl prefix="casa" namespace="http://www.mozabank.org/casa_statement_item_list" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                    <con1:varNsDecl prefix="ccdo2" namespace="http://www.mozabank.org/ccdo_branch_list" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                    <con1:varNsDecl prefix="ccdo1" namespace="http://www.mozabank.org/ccdo_casa_product_details" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:assign varName="CredtCardReadCCARRequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffd.N36e76368.0.1976779627e.N728c</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="CreditCard/XqueryRequest/CCAR_Request"/>
+                                <con2:param name="OBDX_Request">
+                                    <con2:path>$InitialRequest</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:nxsdTranslation xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffd.N36e76368.0.1976779627e.N728b</con2:id>
+                        <con1:type>XML-To-Native</con1:type>
+                        <con1:sourceExpr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$CredtCardReadCCARRequest</con2:xqueryText>
+                        </con1:sourceExpr>
+                        <con1:nxsd ref="CreditCardGetAllProducts/Resources/XSD/CCAR"/>
+                        <con1:schemaElement xmlns:ccar="http://www.mozabank.org/CCARCreditCard">ccar:Request</con1:schemaElement>
+                        <con1:assign-variable>CredtCardReadCCARRequestBin</con1:assign-variable>
+                        <con1:enforceSchemaOrder>false</con1:enforceSchemaOrder>
+                    </con1:nxsdTranslation>
+                    <con1:assign varName="CredtCardReadCCARRequestJSON" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffd.N36e76368.0.1976779627e.N728a</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn-bea:binary-to-text($CredtCardReadCCARRequestBin[@ref],$text)</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="CredtCardReadCCARJSONRequest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffd.N36e76368.0.1976779627e.N7289</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn:replace($CredtCardReadCCARRequestJSON,'null','""')</con2:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:assign varName="PartyCasaAccountListtJSONTest" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffd.N36e76368.0.1976779627e.N7288</con2:id>
+                        <con1:expr>
+                            <con:xqueryText xmlns:con="http://www.bea.com/wli/sb/stages/config">'{
+  "user": "aaugusto3",
+  "password": "",
+  "origin": "P",
+  "channelCode": "INT",
+  "version": "R30",
+  "licenceKey": "licenseKey",
+  "sessionId": "d900bbe2",
+  "transactionCode": "CCDO",
+  "operationData": {
+    "CCDO_I_0001": "99",
+    "CCDO_I_0004": "S",
+    "CCDO_I_0005": "S"
+  }
+}'</con:xqueryText>
+                        </con1:expr>
+                    </con1:assign>
+                    <con1:javaCallout varName="CredtCardReadCCARJSONRequestEncoded" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffd.N36e76368.0.1976779627e.N7287</con2:id>
+                        <con1:archive ref="DebitCardList/Resources/JsonToStringUrl"/>
+                        <con1:className>demo.MainClass</con1:className>
+                        <con1:method>public static java.lang.String encodeJsonToRequestParam(java.lang.String)</con1:method>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$CredtCardReadCCARJSONRequest</con2:xqueryText>
+                        </con1:expr>
+                        <con1:return-param-as-ref>false</con1:return-param-as-ref>
+                    </con1:javaCallout>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57fffd.N36e76368.0.1976779627e.N721c" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con1:wsCallout xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffd.N36e76368.0.1976779627e.N713b</con2:id>
+                        <con1:service ref="CreditCardGetAllProducts/CCARServiceBS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>CCAR</con1:operation>
+                        <con1:request>
+                            <con1:body wrapped="false">CCARServiceRequest</con1:body>
+                        </con1:request>
+                        <con1:response>
+                            <con1:body wrapped="false">CCARServiceResponse</con1:body>
+                        </con1:response>
+                        <con1:requestTransform>
+                            <con4:transport-headers copy-all="false" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config" xmlns:con4="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con2:id>_ActionId-N3f57fffd.N36e76368.0.1976779627e.N713a</con2:id>
+                                <con3:header-set>outbound-request</con3:header-set>
+                                <con3:header value="expression" name="Authorization">
+                                    <con2:xqueryText>concat('Bearer ',$AccessToken)</con2:xqueryText>
+                                </con3:header>
+                                <con3:header value="expression" name="Content-Type">
+                                    <con2:xqueryText>'application/json'</con2:xqueryText>
+                                </con3:header>
+                            </con4:transport-headers>
+                            <con1:assign varName="CCARServiceRequest">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffd.N36e76368.0.1976779627e.N7139</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">&lt;ccar:RequestString xmlns:ccar="http://www.mozabank.org/CCARCreditCard">
+    &lt;ccar:request>{$CredtCardReadCCARJSONRequestEncoded}&lt;/ccar:request>
+&lt;/ccar:RequestString></con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:requestTransform>
+                        <con1:responseTransform>
+                            <con1:assign varName="OpenDate">
+                                <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffd.N36e76368.0.1976779627e.N7103</con2:id>
+                                <con1:expr>
+                                    <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">fn:data($CCARServiceResponse/*:operationData/*:CCAR_O_0003[*:CCAR_O_0003_0013 = 'CARC']/*:CCAR_O_0003_0007)</con2:xqueryText>
+                                </con1:expr>
+                            </con1:assign>
+                        </con1:responseTransform>
+                    </con1:wsCallout>
+                    <con1:replace varName="body" contents-only="true" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffd.N36e76368.0.1976779627e.N71ad</con2:id>
+                        <con1:expr>
+                            <con2:xqueryTransform xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:resource ref="CreditCard/XqueryResponse/Response"/>
+                                <con2:param name="CCCA_CDCA_Response">
+                                    <con2:path>$CCCAReponse</con2:path>
+                                </con2:param>
+                                <con2:param name="CCAR_Response">
+                                    <con2:path>$CCARServiceResponse</con2:path>
+                                </con2:param>
+                            </con2:xqueryTransform>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="Pipeline Pair Node1">
+                <con:request>request-N3f57fffd.N36e76368.0.1976779627e.N7eed</con:request>
+                <con:response>response-N3f57fffd.N36e76368.0.1976779627e.N7eec</con:response>
+            </con:pipeline-node>
+            <con:route-node name="RouteNode1">
+                <con:context/>
+                <con:actions>
+                    <con1:route xmlns:con1="http://www.bea.com/wli/sb/stages/routing/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffd.N36e76368.0.1976779627e.N736d</con2:id>
+                        <con1:service ref="CreditCardGetAllProducts/CCCAServiceBS" xsi:type="ref:BusinessServiceRef" xmlns:ref="http://www.bea.com/wli/sb/reference"/>
+                        <con1:operation>CCCA</con1:operation>
+                        <con1:outboundTransform>
+                            <con3:transport-headers copy-all="false" xmlns:con3="http://www.bea.com/wli/sb/stages/transform/config" xmlns:con2="http://www.bea.com/wli/sb/stages/config">
+                                <con2:id>_ActionId-N3f57fffd.N36e76368.0.1976779627e.N736c</con2:id>
+                                <con3:header-set>outbound-request</con3:header-set>
+                                <con3:header value="expression" name="Authorization">
+                                    <con2:xqueryText>concat('Bearer ',$AccessToken)</con2:xqueryText>
+                                </con3:header>
+                                <con3:header value="expression" name="Content-Type">
+                                    <con2:xqueryText>'application/json'</con2:xqueryText>
+                                </con3:header>
+                            </con3:transport-headers>
+                            <con2:replace varName="body" contents-only="true" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffd.N36e76368.0.1976779627e.N736b</con3:id>
+                                <con2:expr>
+                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">&lt;ccc:RequestString xmlns:ccc="http://www.mozabank.org/CCCACreditCard">
+    &lt;ccc:request>{$CreditCardCCCARequestEncoded}&lt;/ccc:request> 
+&lt;/ccc:RequestString></con3:xqueryText>
+                                </con2:expr>
+                            </con2:replace>
+                        </con1:outboundTransform>
+                        <con1:responseTransform>
+                            <con2:assign varName="CCCAReponse" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                                <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fffd.N36e76368.0.1976779627e.N736a</con3:id>
+                                <con2:expr>
+                                    <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">$body/*</con3:xqueryText>
+                                </con2:expr>
+                            </con2:assign>
+                        </con1:responseTransform>
+                    </con1:route>
+                </con:actions>
+            </con:route-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

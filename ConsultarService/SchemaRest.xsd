@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            targetNamespace="http://www.mozabank.org/nxsd/REST" elementFormDefault="qualified"  
+             nxsd:version="JSON">
+  <xsd:element name="Request">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="body">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="consultarElementosEntidadeResponse">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="output">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element name="status">
+                            <xsd:complexType>
+                              <xsd:sequence>
+                                <xsd:element name="codigo"/>
+                                <xsd:element name="executado" type="xsd:string"/>
+                              </xsd:sequence>
+                            </xsd:complexType>
+                          </xsd:element>
+                          <xsd:element name="actProfissional" type="xsd:string"/>
+                          <xsd:element name="catFiscal" type="xsd:string"/>
+                          <xsd:element name="codActSecundario" type="xsd:string"/>
+                          <xsd:element name="codActividade" type="xsd:string"/>
+                          <xsd:element name="codPais" type="xsd:string"/>
+                          <xsd:element name="codPostal" type="xsd:string"/>
+                          <xsd:element name="codResidencia" type="xsd:string"/>
+                          <xsd:element name="codSectorial" type="xsd:string"/>
+                          <xsd:element name="contacto" type="xsd:string"/>
+                          <xsd:element name="contacto1" type="xsd:string"/>
+                          <xsd:element name="contacto2" type="xsd:string"/>
+                          <xsd:element name="datNascimento" type="xsd:string"/>
+                          <xsd:element name="desPostal" type="xsd:string"/>
+                          <xsd:element name="email1" type="xsd:string"/>
+                          <xsd:element name="email2" type="xsd:string"/>
+                          <xsd:element name="entPatronal" type="xsd:string"/>
+                          <xsd:element name="estCivil" type="xsd:string"/>
+                          <xsd:element name="funcao" type="xsd:string"/>
+                          <xsd:element name="habilitacoes" type="xsd:string"/>
+                          <!-- lstDocumento array -->
+                          <xsd:element name="lstDocumento" maxOccurs="unbounded">
+                            <xsd:complexType>
+                              <xsd:sequence>
+                                <xsd:element name="numDocumento" type="xsd:string"/>
+                                <xsd:element name="tipDocumento" type="xsd:string"/>
+                                <xsd:element name="cheDigDocumento" type="xsd:string"/>
+                                <xsd:element name="datEmissao" type="xsd:string"/>
+                                <xsd:element name="datValidade" type="xsd:string"/>
+                                <xsd:element name="desNatDocumento" type="xsd:string"/>
+                                <xsd:element name="desPaiEmissao" type="xsd:string"/>
+                                <xsd:element name="desSituacao" type="xsd:string"/>
+                                <xsd:element name="desTipIdentificacao" type="xsd:string"/>
+                                <xsd:element name="docComImagem" type="xsd:string"/>
+                                <xsd:element name="natDocumento" type="xsd:string"/>
+                                <xsd:element name="numOrdem" type="xsd:string"/>
+                                <xsd:element name="paiEmissao" type="xsd:string"/>
+                                <xsd:element name="refEmissao" type="xsd:string"/>
+                                <xsd:element name="situacao" type="xsd:string"/>
+                              </xsd:sequence>
+                            </xsd:complexType>
+                          </xsd:element>
+                          <xsd:element name="moeCapitalSocial" type="xsd:string"/>
+                          <xsd:element name="moeEncargos" type="xsd:string"/>
+                          <xsd:element name="moeRendAnual" type="xsd:string"/>
+                          <xsd:element name="moeRendMensal" type="xsd:string"/>
+                          <xsd:element name="moeVolFacturacao" type="xsd:string"/>
+                          <xsd:element name="morada" type="xsd:string"/>
+                          <xsd:element name="morada2" type="xsd:string"/>
+                          <xsd:element name="nacionalidade" type="xsd:string"/>
+                          <xsd:element name="natEntidade" type="xsd:string"/>
+                          <xsd:element name="naturalidade" type="xsd:string"/>
+                          <xsd:element name="nomConservatoria" type="xsd:string"/>
+                          <xsd:element name="nomEntidade" type="xsd:string"/>
+                          <xsd:element name="nomMae" type="xsd:string"/>
+                          <xsd:element name="nomPai" type="xsd:string"/>
+                          <xsd:element name="numAgregado" type="xsd:string"/>
+                          <xsd:element name="numCentralRisco" type="xsd:string"/>
+                          <xsd:element name="numEntidade" type="xsd:string"/>
+                          <xsd:element name="numFilhos" type="xsd:string"/>
+                          <xsd:element name="numMatricula" type="xsd:string"/>
+                          <xsd:element name="numpublicacao" type="xsd:string"/>
+                          <xsd:element name="profissao" type="xsd:string"/>
+                          <xsd:element name="recEmail" type="xsd:string"/>
+                          <xsd:element name="recSMS" type="xsd:string"/>
+                          <xsd:element name="regCasamento" type="xsd:string"/>
+                          <xsd:element name="rndAnual"/>
+                          <xsd:element name="rndMensal"/>
+                          <xsd:element name="sede" type="xsd:string"/>
+                          <xsd:element name="sexo" type="xsd:string"/>
+                          <xsd:element name="telefone1" type="xsd:string"/>
+                          <xsd:element name="telefone2" type="xsd:string"/>
+                          <xsd:element name="telefone3" type="xsd:string"/>
+                          <xsd:element name="tipEntidade" type="xsd:string"/>
+                          <xsd:element name="tipMorada" type="xsd:string"/>
+                          <xsd:element name="tipSociedade" type="xsd:string"/>
+                          <xsd:element name="uniCapitalsocial" type="xsd:string"/>
+                          <xsd:element name="vinculo" type="xsd:string"/>
+                          <xsd:element name="nuib" type="xsd:string"/>
+                        </xsd:sequence>
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="input">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="user" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+<xsd:annotation xmlns="">
+   <xsd:appinfo>USEHEADER=false</xsd:appinfo>
+</xsd:annotation>
+</xsd:schema>
