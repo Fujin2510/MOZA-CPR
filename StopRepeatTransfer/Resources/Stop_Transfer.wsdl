@@ -1,0 +1,34 @@
+<wsdl:definitions name="Stop_Transfer" targetNamespace="http://xmlns.oracle.com/GetDebitCardDetails/StopRepeatTransfer/Stop_Transfer" xmlns:tns="http://xmlns.oracle.com/GetDebitCardDetails/StopRepeatTransfer/Stop_Transfer" xmlns:inp1="http://www.mozabanca.org/CANCEL_INSTRUCTION" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <plnk:partnerLinkType name="Stop_Transfer">
+        <plnk:role name="Stop_TransferProvider" portType="tns:Stop_Transfer_ptt"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://www.mozabanca.org/CANCEL_INSTRUCTION" schemaLocation="../XSD/CANCEL_INSTRUCTION.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="Operation1_inputMessage">
+        <wsdl:part name="request" element="inp1:CANCEL_INSTRUCTION_Request"/>
+    </wsdl:message>
+    <wsdl:message name="Operation1_outputMessage">
+        <wsdl:part name="reply" element="inp1:CANCEL_INSTRUCTION_Response"/>
+    </wsdl:message>
+    <wsdl:portType name="Stop_Transfer_ptt">
+        <wsdl:operation name="Operation1">
+            <wsdl:input message="tns:Operation1_inputMessage"/>
+            <wsdl:output message="tns:Operation1_outputMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="Stop_Transfer_ptt-binding" type="tns:Stop_Transfer_ptt">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="Operation1">
+            <soap:operation soapAction="Operation1"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

@@ -1,0 +1,53 @@
+<wsdl:definitions name="CDOD_MSB" targetNamespace="http://xmlns.oracle.com/ServiceBusApplication34/SelfInternalTransferServices/CDOD_MSB" xmlns:tns="http://xmlns.oracle.com/ServiceBusApplication34/SelfInternalTransferServices/CDOD_MSB" xmlns:inp1="http://www.mozabank.org/cdod" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+    <plnk:partnerLinkType name="CDOD_MSB">
+        <plnk:role name="CDOD_MSBProvider" portType="tns:CDOD_MSB_ptt"/>
+    </plnk:partnerLinkType>
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="http://www.mozabank.org/cdod" schemaLocation="../Schema/MSBSchema/CDOD.xsd"/>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="CDOD_inputMessage">
+        <wsdl:part name="request" element="inp1:Request"/>
+    </wsdl:message>
+    <wsdl:message name="CDOD_outputMessage">
+        <wsdl:part name="reply" element="inp1:Response"/>
+    </wsdl:message>
+    <wsdl:message name="CDOD_MSB_inputMessage">
+        <wsdl:part name="request" element="inp1:RequestEncoded"/>
+    </wsdl:message>
+    <wsdl:message name="CDOD_MSB_outputMessage">
+        <wsdl:part name="reply" element="inp1:Response"/>
+    </wsdl:message>
+    <wsdl:portType name="CDOD_MSB_ptt">
+        <wsdl:operation name="CDOD">
+            <wsdl:input message="tns:CDOD_inputMessage"/>
+            <wsdl:output message="tns:CDOD_outputMessage"/>
+        </wsdl:operation>
+        <wsdl:operation name="CDOD_MSB">
+            <wsdl:input message="tns:CDOD_MSB_inputMessage"/>
+            <wsdl:output message="tns:CDOD_MSB_outputMessage"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="CDOD_MSB_ptt-binding" type="tns:CDOD_MSB_ptt">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="CDOD">
+            <soap:operation soapAction="CDOD"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="CDOD_MSB">
+            <soap:operation soapAction="CDOD_MSB"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+</wsdl:definitions>

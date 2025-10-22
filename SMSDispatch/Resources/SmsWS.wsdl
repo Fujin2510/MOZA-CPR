@@ -1,0 +1,393 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://msb.mozabanco.co.mz" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="SmsWS" targetNamespace="http://msb.mozabanco.co.mz">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://msb.mozabanco.co.mz" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://msb.mozabanco.co.mz">
+  <xs:element name="consultarEstadoSms" type="tns:consultarEstadoSms"/>
+  <xs:element name="consultarEstadoSmsResponse" type="tns:consultarEstadoSmsResponse"/>
+  <xs:element name="enviarSms" type="tns:enviarSms"/>
+  <xs:element name="enviarSmsResponse" type="tns:enviarSmsResponse"/>
+  <xs:element name="isAlive" type="tns:isAlive"/>
+  <xs:element name="isAliveResponse" type="tns:isAliveResponse"/>
+  <xs:element name="lerProximaSms" type="tns:lerProximaSms"/>
+  <xs:element name="lerProximaSmsResponse" type="tns:lerProximaSmsResponse"/>
+  <xs:element name="lerSms" type="tns:lerSms"/>
+  <xs:element name="lerSmsResponse" type="tns:lerSmsResponse"/>
+  <xs:complexType name="lerSms">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:lerSmsInput"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="lerSmsInput">
+    <xs:complexContent>
+      <xs:extension base="tns:serviceInput">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="idSms" type="xs:integer"/>
+          <xs:element minOccurs="0" name="marComoProcessada" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="serviceInput">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="chaveConfirmacao" type="tns:chaveConfirmacao"/>
+      <xs:element minOccurs="0" name="sessao" type="tns:serviceSession"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="chaveConfirmacao">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="chave" type="xs:string"/>
+      <xs:element minOccurs="0" name="posicoes" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serviceSession">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="xs:string"/>
+      <xs:element minOccurs="0" name="versao" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="lerSmsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:lerSmsOutput"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="lerSmsOutput">
+    <xs:complexContent>
+      <xs:extension base="tns:serviceOutput">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="horaRecepcao" type="xs:string"/>
+          <xs:element minOccurs="0" name="idConector" type="xs:int"/>
+          <xs:element minOccurs="0" name="idSms" type="xs:integer"/>
+          <xs:element minOccurs="0" name="indProcessamento" type="xs:string"/>
+          <xs:element minOccurs="0" name="mensagem" type="xs:string"/>
+          <xs:element minOccurs="0" name="numero" type="xs:integer"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="serviceOutput">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="sessao" type="tns:serviceSession"/>
+      <xs:element minOccurs="0" name="status" type="tns:serviceStatus"/>
+      <xs:element minOccurs="0" name="transactionId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serviceStatus">
+    <xs:sequence>
+      <xs:element name="codigo" type="xs:int"/>
+      <xs:element minOccurs="0" name="detalhes" type="tns:serviceStatusDetailList"/>
+      <xs:element minOccurs="0" name="executado" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="mensagens" nillable="true" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serviceStatusDetailList">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="detalhe" nillable="true" type="tns:serviceStatusDetail"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serviceStatusDetail">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="causa" type="xs:string"/>
+      <xs:element minOccurs="0" name="codigo" type="xs:string"/>
+      <xs:element minOccurs="0" name="mensagem" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="enviarSms">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:sendSmsInput"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="sendSmsInput">
+    <xs:complexContent>
+      <xs:extension base="tns:serviceInput">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="destinatario" type="xs:string"/>
+          <xs:element minOccurs="0" name="mensagem" type="xs:string"/>
+          <xs:element minOccurs="0" name="relEntrega" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="enviarSmsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:sendSmsOutput"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="sendSmsOutput">
+    <xs:complexContent>
+      <xs:extension base="tns:serviceOutput">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="smsStatus" type="tns:smsStatus"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="smssEnviadas" nillable="true" type="tns:sms"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="smsStatus">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="codigo" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="detalhes" nillable="true" type="tns:detalhe"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="detalhe">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="codigo" type="xs:string"/>
+      <xs:element minOccurs="0" name="mensagem" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="sms">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="destinatario" type="xs:string"/>
+      <xs:element minOccurs="0" name="idMensagem" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="consultarEstadoSms">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:consultaEstadoSmsInput"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="consultaEstadoSmsInput">
+    <xs:complexContent>
+      <xs:extension base="tns:serviceInput">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="idSms" type="xs:integer"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="consultarEstadoSmsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:consultaEstadoSmsOutput"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="consultaEstadoSmsOutput">
+    <xs:complexContent>
+      <xs:extension base="tns:serviceOutput">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="conEntEnvio" type="xs:string"/>
+          <xs:element minOccurs="0" name="conEstEntrega" type="xs:string"/>
+          <xs:element minOccurs="0" name="flag" type="xs:string"/>
+          <xs:element minOccurs="0" name="horaEstado" type="xs:string"/>
+          <xs:element minOccurs="0" name="horaRecepcao" type="xs:string"/>
+          <xs:element minOccurs="0" name="idSms" type="xs:integer"/>
+          <xs:element minOccurs="0" name="numTentativas" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="isAlive">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:isAliveInput"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="isAliveInput">
+    <xs:complexContent>
+      <xs:extension base="tns:serviceInput">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="isAliveResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:isAliveOutput"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="isAliveOutput">
+    <xs:complexContent>
+      <xs:extension base="tns:serviceOutput">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="isAlive" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="lerProximaSms">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:lerProximaSmsInput"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="lerProximaSmsInput">
+    <xs:complexContent>
+      <xs:extension base="tns:serviceOutput">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="idSms" type="xs:integer"/>
+          <xs:element minOccurs="0" name="marComoProcessada" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="lerProximaSmsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:lerProximaSmsOutput"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="lerProximaSmsOutput">
+    <xs:complexContent>
+      <xs:extension base="tns:serviceOutput">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="horaRecepcao" type="xs:string"/>
+          <xs:element minOccurs="0" name="idConector" type="xs:int"/>
+          <xs:element minOccurs="0" name="idSms" type="xs:integer"/>
+          <xs:element minOccurs="0" name="indProcessamento" type="xs:string"/>
+          <xs:element minOccurs="0" name="mensagem" type="xs:string"/>
+          <xs:element minOccurs="0" name="numero" type="xs:integer"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Exception" type="tns:Exception"/>
+  <xs:complexType name="Exception">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="enviarSms">
+    <wsdl:part element="tns:enviarSms" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="enviarSmsResponse">
+    <wsdl:part element="tns:enviarSmsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="consultarEstadoSmsResponse">
+    <wsdl:part element="tns:consultarEstadoSmsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="consultarEstadoSms">
+    <wsdl:part element="tns:consultarEstadoSms" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="isAlive">
+    <wsdl:part element="tns:isAlive" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="lerProximaSmsResponse">
+    <wsdl:part element="tns:lerProximaSmsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Exception">
+    <wsdl:part element="tns:Exception" name="Exception">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="lerSms">
+    <wsdl:part element="tns:lerSms" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="isAliveResponse">
+    <wsdl:part element="tns:isAliveResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="lerSmsResponse">
+    <wsdl:part element="tns:lerSmsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="lerProximaSms">
+    <wsdl:part element="tns:lerProximaSms" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="Sms">
+    <wsdl:operation name="lerSms">
+      <wsdl:input message="tns:lerSms" name="lerSms">
+    </wsdl:input>
+      <wsdl:output message="tns:lerSmsResponse" name="lerSmsResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="enviarSms">
+      <wsdl:input message="tns:enviarSms" name="enviarSms">
+    </wsdl:input>
+      <wsdl:output message="tns:enviarSmsResponse" name="enviarSmsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="consultarEstadoSms">
+      <wsdl:input message="tns:consultarEstadoSms" name="consultarEstadoSms">
+    </wsdl:input>
+      <wsdl:output message="tns:consultarEstadoSmsResponse" name="consultarEstadoSmsResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="isAlive">
+      <wsdl:input message="tns:isAlive" name="isAlive">
+    </wsdl:input>
+      <wsdl:output message="tns:isAliveResponse" name="isAliveResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="lerProximaSms">
+      <wsdl:input message="tns:lerProximaSms" name="lerProximaSms">
+    </wsdl:input>
+      <wsdl:output message="tns:lerProximaSmsResponse" name="lerProximaSmsResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:Exception" name="Exception">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SmsWSSoapBinding" type="tns:Sms">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="lerSms">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="lerSms">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="lerSmsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="enviarSms">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="enviarSms">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="enviarSmsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="consultarEstadoSms">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="consultarEstadoSms">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="consultarEstadoSmsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="isAlive">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="isAlive">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="isAliveResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="lerProximaSms">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="lerProximaSms">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="lerProximaSmsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="Exception">
+        <soap:fault name="Exception" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SmsWS">
+    <wsdl:port binding="tns:SmsWSSoapBinding" name="SmsPort">
+      <soap:address location="http://svdcpmwd02:9084/MozaServiceBus/Sms/SmsWS"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

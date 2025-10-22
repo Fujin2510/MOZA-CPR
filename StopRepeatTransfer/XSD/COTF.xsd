@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            targetNamespace="http://www.mozabanca.org/COTF"
+            xmlns="http://www.mozabanca.org/COTF"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            nxsd:version="JSON"
+            nxsd:encoding="UTF-8">
+
+  <xsd:element name="COTF_Request" type="COTFRequestType"/>
+   <xsd:element name="COTFRequestEncodedRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="RequestString" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="COTF_Response" type="COTFResponseType"/>
+
+  <!-- Request Type -->
+  <xsd:complexType name="COTFRequestType">
+    <xsd:sequence>
+      <xsd:element name="user" type="xsd:string"/>
+      <xsd:element name="password" type="xsd:string"/>
+      <xsd:element name="origin" type="xsd:string"/>
+      <xsd:element name="channelCode" type="xsd:string"/>
+      <xsd:element name="version" type="xsd:string"/>
+      <xsd:element name="licenceKey" type="xsd:string"/>
+      <xsd:element name="sessionId" type="xsd:string"/>
+      <xsd:element name="transactionCode" type="xsd:string"/>
+      <xsd:element name="operationData" type="OperationDataRequestType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="OperationDataRequestType">
+    <xsd:sequence>
+      <xsd:element name="COTF_I_0001" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Response Type -->
+  <xsd:complexType name="COTFResponseType">
+    <xsd:sequence>
+      <xsd:element name="transactionCode" type="xsd:string"/>
+      <xsd:element name="operationData" type="xsd:string" minOccurs="0" maxOccurs="unbounded" nxsd:jsonArray="true"/>
+      <xsd:element name="channelOperationLogKey" type="xsd:string"/>
+      <xsd:element name="coreLogKey" type="xsd:string"/>
+      <xsd:element name="coreCancelationCode" type="xsd:string"/>
+      <xsd:element name="errorCode" type="xsd:string"/>
+      <xsd:element name="errorMessage">
+        <xsd:complexType>
+          <xsd:sequence>
+          <xsd:element name="messages" type="xsd:string"  maxOccurs="unbounded" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="validation" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="layoutVersion" type="xsd:string"/>
+      <xsd:element name="user" type="xsd:string"/>
+      <xsd:element name="password" type="xsd:string"/>
+      <xsd:element name="station" type="xsd:string"/>
+      <xsd:element name="licenceKey" type="xsd:string"/>
+      <xsd:element name="encryption" type="xsd:string"/>
+      <xsd:element name="code" type="xsd:string"/>
+      <xsd:element name="version" type="xsd:string"/>
+      <xsd:element name="sessionId" type="xsd:string"/>
+      <xsd:element name="language" type="xsd:string"/>
+      <xsd:element name="channelCode" type="xsd:string"/>
+      <xsd:element name="origin" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+
+</xsd:schema>

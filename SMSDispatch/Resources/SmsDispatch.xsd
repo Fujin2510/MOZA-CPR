@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+              xmlns:tns="http://www.mozabank.org/OBDX/SMS"
+              targetNamespace="http://www.mozabank.org/OBDX/SMS" elementFormDefault="qualified"
+              attributeFormDefault="unqualified" nxsd:stream="json" nxsd:version="JSON" nxsd:encoding="UTF-8">
+
+  <!-- Request -->
+ <xsd:element name="Request">
+  <xsd:complexType>
+    <xsd:sequence>
+      <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="referenceNo" type="xsd:string"/>
+      <xsd:element name="interfaceId" type="xsd:string"/>
+      <xsd:element name="entity" type="xsd:string"/>
+      <xsd:element name="headersMap" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="queryMap" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="hostName" type="xsd:string"/>
+      <xsd:element name="recipient" type="xsd:string"/>
+	  <xsd:element name="messageContent" type="xsd:string"/>
+	  <xsd:element name="deliveryReportRequestFlag" type="xsd:boolean"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  </xsd:element>
+
+<!-- Response -->
+<xsd:element name="Response">
+  <xsd:complexType>
+    <xsd:sequence>
+      <xsd:element name="data">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="result">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="status" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+            <xsd:element name="recipient" type="xsd:string"/>
+            <xsd:element name="uniqueMsgId" type="xsd:string"/>
+		  </xsd:sequence>
+		</xsd:complexType>
+	  </xsd:element>
+	  <xsd:element name="messages">
+		<xsd:complexType>
+		  <xsd:sequence>
+            <xsd:element name="keyId" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="status" type="xsd:string"/>
+            <xsd:element name="codes" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="requestId" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="httpStatusCode" type="xsd:string"/>
+            <xsd:element name="overrideAuthLevelsReqd" type="xsd:string" minOccurs="0" nillable="true"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+ </xsd:element>
+</xsd:schema>
