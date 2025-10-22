@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            xmlns:tns="http://www.mozabank.org/PartyAddressList"
+            targetNamespace="http://www.mozabank.org/PartyAddressList" elementFormDefault="qualified"
+            attributeFormDefault="unqualified" nxsd:version="JSON" nxsd:encoding="US-ASCII">
+  <!-- Request Element -->
+  <xsd:element name="Request">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+        <xsd:element name="referenceNo" type="xsd:string" minOccurs="1"/>
+        <xsd:element name="interfaceId" type="xsd:string" minOccurs="1"/>
+        <xsd:element name="entity" type="xsd:string" minOccurs="1"/>
+        <xsd:element name="headersMap" type="xsd:string" minOccurs="0" nillable="true"/>
+        <xsd:element name="queryMap" type="xsd:string" minOccurs="0" nillable="true"/>
+        <xsd:element name="hostName" type="xsd:string" minOccurs="1"/>
+        <xsd:element name="partyId" type="xsd:string" minOccurs="1"/>
+        <xsd:element name="branch" type="xsd:string" minOccurs="0" nillable="true"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <!-- Response Element -->
+  <xsd:element name="Response">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="data">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+        <xsd:element name="referenceNo" type="xsd:string" minOccurs="0" nillable="true"/>
+        <xsd:element name="result">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+              <xsd:element name="externalReferenceId" type="xsd:string" minOccurs="0" nillable="true"/>
+              <xsd:element name="status" type="xsd:string" minOccurs="1"/>
+              <xsd:element name="errorList" maxOccurs="unbounded" minOccurs="0" nillable="true">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="code" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="message" type="xsd:string" minOccurs="0" nillable="true"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+              <xsd:element name="warningList" type="xsd:string" minOccurs="0" nillable="true"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+        <xsd:element name="hasMore" type="xsd:boolean" minOccurs="0" nillable="true"/>
+        <xsd:element name="totalRecords" type="xsd:int" minOccurs="0" nillable="true"/>
+        <xsd:element name="startSequence" type="xsd:int" minOccurs="0" nillable="true"/>
+        <!--address info-->
+        <xsd:element name="addressInfo" minOccurs="0" maxOccurs="unbounded">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0"/>
+              <xsd:element name="address">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="line1" type="xsd:string" minOccurs="1"/>
+                    <xsd:element name="line2" type="xsd:string" minOccurs="1"/>
+                    <xsd:element name="line3" type="xsd:string" minOccurs="0" nillable="true"/>
+                    <xsd:element name="line4" type="xsd:string" minOccurs="0" nillable="true"/>
+                    <xsd:element name="line5" type="xsd:string" minOccurs="0" nillable="true"/>
+                    <xsd:element name="line6" type="xsd:string" minOccurs="0" nillable="true"/>
+                    <xsd:element name="line7" type="xsd:string" minOccurs="0" nillable="true"/>
+                    <xsd:element name="line8" type="xsd:string" minOccurs="0" nillable="true"/>
+                    <xsd:element name="line9" type="xsd:string" minOccurs="0" nillable="true"/>
+                    <xsd:element name="line10" type="xsd:string" minOccurs="0" nillable="true"/>
+                    <xsd:element name="line11" type="xsd:string" minOccurs="0" nillable="true"/>
+                    <xsd:element name="line12" type="xsd:string" minOccurs="0" nillable="true"/>
+                    <xsd:element name="city" type="xsd:string" minOccurs="0" nillable="true"/>
+                    <xsd:element name="addressTypeDescription" type="xsd:string" minOccurs="1"/>
+                    <xsd:element name="state" type="xsd:string" minOccurs="0" nillable="true"/>
+                    <xsd:element name="country" type="xsd:string" minOccurs="1"/>
+                    <xsd:element name="zipCode" type="xsd:string" minOccurs="0" nillable="true"/>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="type" type="xsd:string"/>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+   </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

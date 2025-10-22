@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            xmlns:tns="http://www.mozabank.org/PartyContactList"
+            targetNamespace="http://www.mozabank.org/PartyContactList" elementFormDefault="qualified"
+            attributeFormDefault="unqualified" nxsd:version="JSON" nxsd:encoding="US-ASCII">
+  <!-- Request Element -->
+  <xsd:element name="Request">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+        <xsd:element name="referenceNo" type="xsd:string" minOccurs="1"/>
+        <xsd:element name="interfaceId" type="xsd:string" minOccurs="1"/>
+        <xsd:element name="entity" type="xsd:string" minOccurs="1"/>
+        <xsd:element name="headersMap" type="xsd:string" minOccurs="0" nillable="true"/>
+        <xsd:element name="queryMap" type="xsd:string" minOccurs="0" nillable="true"/>
+        <xsd:element name="hostName" type="xsd:string" minOccurs="1"/>
+        <xsd:element name="partyId" type="xsd:string" minOccurs="1"/>
+        <xsd:element name="branch" type="xsd:string" minOccurs="0" nillable="true"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <!-- Response Element -->
+  <xsd:element name="Response">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="data">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+              <xsd:element name="referenceNo" type="xsd:string" minOccurs="0" nillable="true"/>
+              <xsd:element name="result">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+                    <xsd:element name="externalReferenceId" type="xsd:string" minOccurs="0" nillable="true"/>
+                    <xsd:element name="status" type="xsd:string" minOccurs="1"/>
+                   <xsd:element name="errorList" maxOccurs="unbounded" minOccurs="0" nillable="true">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="code" type="xsd:string" minOccurs="0" nillable="true"/>
+            <xsd:element name="message" type="xsd:string" minOccurs="0" nillable="true"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+                    <xsd:element name="warningList" type="xsd:string" minOccurs="0" nillable="true"/>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="hasMore" type="xsd:boolean" minOccurs="0" nillable="true"/>
+              <xsd:element name="totalRecords" type="xsd:int" minOccurs="0" nillable="true"/>
+              <xsd:element name="startSequence" type="xsd:int" minOccurs="0" nillable="true"/>
+              <!-- Contact Info -->
+              <xsd:element name="contactInfo" minOccurs="0" maxOccurs="unbounded">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+                    <xsd:element name="isEmailCommunicationAllowed" type="xsd:boolean" minOccurs="0" nillable="true"/>
+                    <xsd:element name="preferredModeOfCommunication" type="xsd:string" minOccurs="0" nillable="true"/>
+                    <xsd:element name="contactType" type="xsd:string"/>
+                    <xsd:element name="phone" minOccurs="0">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+                          <xsd:element name="areaCode" type="xsd:string"/>
+                          <xsd:element name="number" type="xsd:string"/>
+                          <xsd:element name="extension" type="xsd:string" minOccurs="0" nillable="true"/>
+                        </xsd:sequence>
+                      </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="fax" minOccurs="0" nillable="true">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element name="dictionaryArray" type="xsd:string" minOccurs="0" nillable="true"/>
+                          <xsd:element name="areaCode" type="xsd:string"/>
+                          <xsd:element name="number" type="xsd:string"/>
+                        </xsd:sequence>
+                      </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="email" type="xsd:string" minOccurs="0" nillable="true"/>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

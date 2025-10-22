@@ -1,0 +1,72 @@
+<application xmlns:soa="http://www.oracle.com/soa/rest" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns0="http://www.mozabanca.org/DOMESTIC_TRANSFER_NEFT" xmlns="http://wadl.dev.java.net/2009/02" xmlns:ns1="http://www.mozabanca.org/obdx/SepaSI" xmlns:ns3="http://www.mozabanca.org/obdx/SepaCreditTransfer" xmlns:ns2="http://www.mozabanca.org/obdx/AccountDetails" xmlns:ns4="http://www.mozabank.org">
+   <doc title="PTFZ_PS">RestService</doc>
+   <grammars>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabanca.org/DOMESTIC_TRANSFER_NEFT" schemaLocation="../Schema/DOMESTIC_TRANSFER_NEFT.xsd"/>
+        </xsd:schema>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabanca.org/obdx/SepaSI" schemaLocation="../Schema/SEPA_SI.xsd"/>
+        </xsd:schema>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabanca.org/obdx/AccountDetails" schemaLocation="../Schema/ACCOUNT_DETAILS.xsd"/>
+        </xsd:schema>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabanca.org/obdx/SepaCreditTransfer" schemaLocation="../Schema/SEPA_CREDIT_TRANSFER.xsd"/>
+        </xsd:schema>
+      <xsd:schema>
+            <xsd:import namespace="http://www.mozabank.org" schemaLocation="../Schema/BRANCH_DATE.xsd"/>
+        </xsd:schema>
+   </grammars>
+   <resources>
+      <resource path="/domesticTransfer">
+         <method name="POST" soa:wsdlOperation="Operation1">
+            <request>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabanca.org/DOMESTIC_TRANSFER_NEFT"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabanca.org/DOMESTIC_TRANSFER_NEFT"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/sepa_si">
+         <method name="POST" soa:wsdlOperation="Operation2">
+            <request>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabanca.org/obdx/SepaSI"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabanca.org/obdx/SepaSI"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/account_details">
+         <method name="POST" soa:wsdlOperation="Operation3">
+            <request>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabanca.org/obdx/AccountDetails"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabanca.org/obdx/AccountDetails"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/sepaCreditTransfer">
+         <method name="POST" soa:wsdlOperation="Operation4">
+            <request>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabanca.org/obdx/SepaCreditTransfer"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabanca.org/obdx/SepaCreditTransfer"/>
+            </response>
+         </method>
+      </resource>
+      <resource path="/branchDate">
+         <method name="POST" soa:wsdlOperation="BranchDate">
+            <request>
+               <representation mediaType="application/json" element="cns:Request" xmlns:cns="http://www.mozabank.org"/>
+            </request>
+            <response status="200">
+               <representation mediaType="application/json" element="cns:Response" xmlns:cns="http://www.mozabank.org"/>
+            </response>
+         </method>
+      </resource>
+   </resources>
+</application>

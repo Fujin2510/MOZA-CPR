@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:nxsd="http://xmlns.oracle.com/pcbpel/nxsd"
+            targetNamespace="http://www.mozabanca.org/scheduledTransfer"
+            xmlns="http://www.mozabanca.org/scheduledTransfer"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified"
+            nxsd:version="JSON" nxsd:encoding="UTF-8">
+
+  <!-- Root Elements -->
+  <xsd:element name="Request" type="RequestType"/>
+  <xsd:element name="Response" type="ResponseType"/>
+  
+     <xsd:element name="PTFZEncodedRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="RequestString" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <!-- Request Structure -->
+  <xsd:complexType name="RequestType">
+    <xsd:sequence>
+      <xsd:element name="user" type="xsd:string"/>
+      <xsd:element name="password" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="origin" type="xsd:string"/>
+      <xsd:element name="channelCode" type="xsd:string"/>
+      <xsd:element name="version" type="xsd:string"/>
+      <xsd:element name="licenceKey" type="xsd:string"/>
+      <xsd:element name="sessionId" type="xsd:string"/>
+      <xsd:element name="transactionCode" type="xsd:string"/>
+      <xsd:element name="operationData" type="PTFZOperationDataRequestType"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="PTFZOperationDataRequestType">
+    <xsd:sequence>
+      <xsd:element name="PTFZ_I_0001" type="xsd:string"/>
+      <xsd:element name="PTFZ_I_0002" type="xsd:string"/>
+      <xsd:element name="PTFZ_I_0003" type="xsd:string"/>
+      <xsd:element name="PTFZ_I_0004" type="xsd:string"/>
+      <xsd:element name="PTFZ_I_0005" type="xsd:string"/>
+      <xsd:element name="PTFZ_I_0006" type="xsd:string"/>
+      <xsd:element name="PTFZ_I_0007" type="xsd:string"/>
+      <xsd:element name="PTFZ_I_0008" type="xsd:string"/>
+      <xsd:element name="PTFZ_I_0009" type="xsd:string"/>
+      <xsd:element name="PTFZ_I_0010" type="xsd:string"/>
+      <xsd:element name="PTFZ_I_0011" type="xsd:string"/>
+      <xsd:element name="PTFZ_I_0012" type="xsd:string"/>
+      <xsd:element name="PTFZ_I_0013" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <!-- Response Structure -->
+  <xsd:complexType name="ResponseType">
+    <xsd:sequence>
+      <xsd:element name="transactionCode" type="xsd:string"/>
+      <xsd:element name="operationData" type="PTFZOperationDataResponseType"/>
+      <xsd:element name="channelOperationLogKey" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="coreLogKey" type="xsd:string"/>
+      <xsd:element name="coreCancelationCode" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="errorCode" type="xsd:int"/>
+      <xsd:element name="errorMessage">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="messages" type="xsd:string" maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="validation" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="layoutVersion" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="user" type="xsd:string"/>
+      <xsd:element name="password" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="station" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="licenceKey" type="xsd:string"/>
+      <xsd:element name="encryption" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="code" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="version" type="xsd:string"/>
+      <xsd:element name="sessionId" type="xsd:string"/>
+      <xsd:element name="language" type="xsd:string" minOccurs="0" nillable="true"/>
+      <xsd:element name="channelCode" type="xsd:string"/>
+      <xsd:element name="origin" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="PTFZOperationDataResponseType">
+    <xsd:sequence>
+      <xsd:element name="PTFZ_I_0001" type="xsd:string"/>
+      <xsd:element name="PTFZ_I_0002" type="xsd:string"/>
+      <xsd:element name="PTFZ_I_0003" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+</xsd:schema>
